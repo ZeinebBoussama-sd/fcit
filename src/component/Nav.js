@@ -43,7 +43,8 @@ function Nav() {
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li class="nav-item dropright">
                   <a
-                    class="dropdown-item nav-link dropdown-toggle"
+                    class="dropdown-item
+ nav-link dropdown-toggle"
                     href="#"
                     id="navbarDropdown"
                     role="button"

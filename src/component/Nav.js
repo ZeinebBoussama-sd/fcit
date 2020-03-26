@@ -37,8 +37,7 @@ function Nav() {
                 aria-haspopup='true'
                 aria-expanded='false'
               >
-                {' '}
-                Dropdown{' '}
+                Dropdown
               </a>
               <ul
                 class='dropdown-menu'

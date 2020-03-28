@@ -1,7 +1,10 @@
 import React from "react";
 import logofcit from "../foundation/logo/logofcit3.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {fa-mobile-alt' } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMobileAlt,
+  faEnvelopeOpenText
+} from "@fortawesome/free-solid-svg-icons";
 function Footer() {
   return (
     <div>
@@ -17,10 +20,11 @@ function Footer() {
             technologies de l'information.
           </div>
           <div class="col-lg-2 text-center font-italic">
+            <FontAwesomeIcon icon={faEnvelopeOpenText} color="blue" />
             contact@fc4it.net espace.clients@fc4it.net
           </div>
           <div class="col-lg-3 text-center font-italic">
-            <FontAwesomeIcon icon="fa-mobile-alt" color="blue" />
+            <FontAwesomeIcon icon={faMobileAlt} color="blue" />
             Tél: +21656563753 Office:+21656563643/+21656563633/ +21656563833
           </div>
           <div class="col-lg-3 text-center font-italic">

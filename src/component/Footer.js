@@ -13,7 +13,7 @@ function Footer() {
         <div class="row">
           <div class="col-lg-1">
             <a href="#">
-              <img src={logofcit} height="100" width="100" alt=""></img>
+              <img src={logofcit} height="100" width="100" alt="" />
             </a>
           </div>
           <div class="col-lg-3 text-left font-italic ">

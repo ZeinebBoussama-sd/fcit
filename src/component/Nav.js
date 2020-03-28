@@ -19,7 +19,7 @@ function Nav() {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <a class="navbar-brand" href="#">
-              <img src={logofcit} height="30" alt=""></img>
+              <img src={logofcit} height="30" alt="" />
             </a>
             <li class="nav-item active">
               <a class="nav-link" href="#">

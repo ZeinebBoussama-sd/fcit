@@ -1,6 +1,3 @@
-#nav {
-  height: 60px;
-}
 .navbar-nav li:hover > ul.dropdown-menu {
   display: block;
 }
@@ -16,9 +13,15 @@
   background-image: url("../foundation/home/methodologie-formation.jpg");
   background-size: cover;
   background-position: center;
-  min-height: 75vh;
+  min-height: 93vh;
   position: initial;
 }
+.pt1_text {
+  padding: 15% 0% 0% 43%;
+  text-align: left;
+  color: white;
+}
+
 .pt2 {
   background-image: url("../foundation/home/technologie.jpg");
   background-size: cover;
@@ -27,18 +30,12 @@
   position: initial;
 }
 .pt2_text {
-  position: relative;
-  top: 30%;
-  left: 4%;
-  padding-right: 33%;
   text-align: left;
   color: rgb(11, 8, 192);
 }
-.pt1_text {
-  position: relative;
-  top: 30%;
-  left: 4%;
-  padding-right: 33%;
-  text-align: left;
-  color: white;
+.pt21_text {
+  padding: 0% 0% 0% 44%;
+}
+.pt22_text {
+  padding: 20% 0% 0% 30%;
 }

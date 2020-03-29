@@ -3,7 +3,7 @@ import logofcit from "../foundation/logo/logofcit3.png";
 function Nav() {
   return (
     <div>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark " id="nav">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
         <button
           class="navbar-toggler"
           type="button"

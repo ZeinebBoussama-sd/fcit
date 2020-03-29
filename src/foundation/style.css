@@ -12,3 +12,30 @@
   left: 100%;
   margin-top: -6px;
 }
+.img-gd {
+  width: 1349px;
+  height: 400px;
+}
+.div-img {
+  position: absolute;
+  top: 200px;
+  width: 600px;
+  height: 400px;
+}
+.h1-img1 {
+  color: white;
+  margin: 40px;
+  width: 800px;
+}
+.h1-img2 {
+  color: blue;
+  margin-left: 308px;
+  margin-top: 90px;
+  margin-right: -560px;
+}
+.h5-img2 {
+  color: blue;
+  margin-left: 660px;
+  margin-top: -75px;
+  margin-right: -494px;
+}

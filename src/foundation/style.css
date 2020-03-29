@@ -12,11 +12,26 @@
   left: 100%;
   margin-top: -6px;
 }
+.pt1 {
+  background-image: url('../foundation/home/methodologie-formation.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 75vh;
+  position: initial;
+}
+.pt1_text {
+  position: relative;
+  top: 30%;
+  left: 4%;
+  padding-right: 33%;
+  text-align: left;
+  color: white;
+}
 .img-gd {
   width: 1349px;
   height: 400px;
 }
-.div-img {
+.c {
   position: absolute;
   top: 200px;
   width: 600px;

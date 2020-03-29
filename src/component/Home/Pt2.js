@@ -1,5 +1,5 @@
 import React from "react";
-import technologie from "../../foundation/pt2/technologie.jpg";
+import technologie from "../../foundation/home/technologie.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
 function Pt2() {
   return (

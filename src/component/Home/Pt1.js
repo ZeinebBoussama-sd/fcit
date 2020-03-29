@@ -1,5 +1,5 @@
 import React from "react";
-import formation from "../../foundation/pt1/methodologie-formation.jpg";
+import formation from "../../foundation/home/methodologie-formation.jpg";
 import "bootstrap/dist/css/bootstrap.min.css";
 function Pt1() {
   return (

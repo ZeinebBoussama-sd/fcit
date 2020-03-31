@@ -1,10 +1,16 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import logofcit from "../../foundation/logo/logofcit3.png";
 function Pt3() {
   return (
     <div>
-      <div class="row">
+      <div
+        class="row"
+        style={{
+          backgroundColor: "CadetBlue",
+          padding: "20px 49px 20px 49px",
+          marginRight: "0px"
+        }}
+      >
         <div class="col-md-4  ">
           <center>
             <img

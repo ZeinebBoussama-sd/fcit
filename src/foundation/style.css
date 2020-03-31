@@ -40,7 +40,7 @@
 }
 .pt21_text {
   position: absolute;
-  top: 190vh;
+  top: 200vh;
   left: 30%;
 }
 .pt22_text {
@@ -49,5 +49,5 @@
   left: 20%;
 }
 #h3-color {
-  color: blue;
+  color: navy;
 }

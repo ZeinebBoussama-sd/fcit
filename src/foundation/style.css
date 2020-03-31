@@ -10,32 +10,44 @@
   margin-top: -6px;
 }
 .pt1 {
-  background-image: url("../foundation/home/methodologie-formation.jpg");
+  background-image: linear-gradient(rgba(27, 81, 239, 0.2), rgba(1, 1, 6, 0.95)),
+    url(/static/media/methodologie-formation.093f846a.jpg);
   background-size: cover;
   background-position: center;
   min-height: 93vh;
   position: initial;
 }
 .pt1_text {
-  padding: 15% 0% 0% 43%;
-  text-align: left;
+  position: absolute;
+  bottom: 40vh;
+  left: 40%;
   color: white;
 }
 
 .pt2 {
-  background-image: url("../foundation/home/technologie.jpg");
+  background-image: linear-gradient(
+      rgba(5, 5, 6, 0.63),
+      rgba(108, 108, 162, 0.57)
+    ),
+    url("../foundation/home/technologie.jpg");
   background-size: cover;
   background-position: center;
   min-height: 75vh;
   position: initial;
 }
 .pt2_text {
-  text-align: left;
-  color: rgb(11, 8, 192);
+  color: white;
 }
 .pt21_text {
-  padding: 0% 0% 0% 44%;
+  position: absolute;
+  top: 190vh;
+  left: 30%;
 }
 .pt22_text {
-  padding: 20% 0% 0% 30%;
+  position: absolute;
+  top: 240vh;
+  left: 20%;
+}
+#h3-color {
+  color: blue;
 }

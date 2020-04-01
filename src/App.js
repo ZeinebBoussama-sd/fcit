@@ -1,8 +1,9 @@
 import React from "react";
 import Nav from "./component/Nav";
+import Home from "./pages/Home";
+import Footer from "./component/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./foundation/style.css";
-import Footer from "./component/Footer";
 import "@fortawesome/fontawesome-free";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 function App() {
@@ -13,7 +14,7 @@ function App() {
           <Nav />
         </header>
         <Switch>
-          <Route />
+          <Route path="/" exact component={Home} />
           <Route />
           <Route />
           <Route />

@@ -3,7 +3,7 @@ import logofcit from "../foundation/logo/logofcit3.png";
 function Nav() {
   return (
     <div>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark " id="nav">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
         <button
           class="navbar-toggler"
           type="button"
@@ -18,7 +18,7 @@ function Nav() {
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
               <img src={logofcit} height="30" alt="" />
             </a>
             <li class="nav-item active">

@@ -1,7 +1,7 @@
 import React from "react";
-function Apropos() {
+function Apropospt1() {
   return (
-    <div class name="Apropos">
+    <div>
       <p>FCIT: QUI SOMMES-NOUS ?</p>
       <h3>Le spécialiste de la formation continue</h3>
       <p>
@@ -13,4 +13,4 @@ function Apropos() {
     </div>
   );
 }
-export default Apropos;
+export default Apropospt1;

@@ -16,7 +16,6 @@ function App() {
         <Switch>
           <Route />
           <Route path="/Apropos" exact component={Apropos} />
-          />
           <Route />
           <Route />
         </Switch>

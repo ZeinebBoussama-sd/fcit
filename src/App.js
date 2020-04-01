@@ -5,7 +5,7 @@ import "./foundation/style.css";
 import Footer from "./component/Footer";
 import "@fortawesome/fontawesome-free";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Apropos from "../../fcit/src/pages/Apropos.js";
+import Apropos from "./pages/Apropos";
 function App() {
   return (
     <div className="App">
@@ -15,7 +15,7 @@ function App() {
         </header>
         <Switch>
           <Route />
-          <Route path="/Apropos" exact component={Apropos} />
+          <Route path="/apropos" exact component={Apropos} />
           <Route />
           <Route />
         </Switch>

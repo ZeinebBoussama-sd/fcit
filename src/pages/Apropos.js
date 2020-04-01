@@ -1,5 +1,5 @@
 import React from "react";
-import Apropos from "../component/Apropos/Apropos";
+import Apropospt1 from "../component/Apropos/Apropospt1";
 function Apropos() {
   return (
     <div>

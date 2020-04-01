@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./foundation/style.css";
 import "@fortawesome/fontawesome-free";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Apropos from "./pages/Apropos";
 function App() {
   return (
     <div className="App">
@@ -14,8 +15,8 @@ function App() {
           <Nav />
         </header>
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route />
+          <Route path="/" exact component={Home}/>
+          <Route path="/apropos" exact component={Apropos} />
           <Route />
           <Route />
         </Switch>

@@ -22,7 +22,7 @@ function Nav() {
               <img src={logofcit} height="30" alt="" />
             </a>
             <li class="nav-item active">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="/">
                 Accueil <span class="sr-only">(current)</span>
               </a>
             </li>

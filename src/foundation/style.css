@@ -11,7 +11,7 @@
 }
 .pt1 {
   background-image: linear-gradient(rgba(27, 81, 239, 0.2), rgba(1, 1, 6, 0.95)),
-    url(/static/media/methodologie-formation.093f846a.jpg);
+    url("../foundation/home/methodologie-formation.jpg");
   background-size: cover;
   background-position: center;
   min-height: 93vh;
@@ -50,4 +50,15 @@
 }
 #h3-color {
   color: navy;
+}
+
+.div-color-space {
+  background-color: MIDNIGHTBLUE;
+  color: white;
+  padding: 50px;
+}
+.div-color-space2 {
+  color: midnightblue;
+
+  padding: 50px;
 }

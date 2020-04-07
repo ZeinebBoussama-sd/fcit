@@ -14,21 +14,21 @@ function Pt4() {
     >
       <div class="col-4">
         <center>
-          <a href="https://www.orsys.fr/">
+          <a href="https://www.orsys.fr/" target="_blanc">
             <img src={orsys} alt="" />
           </a>
         </center>
       </div>
       <div class="col-4">
         <center>
-          <a href="https://www.plb.fr/">
+          <a href="https://www.plb.fr/" target="_blanc">
             <img src={PLB} alt="" />
           </a>
         </center>
       </div>
       <div class="col-4">
         <center>
-          <a href="https://www.ib-formation.fr/">
+          <a href="https://www.ib-formation.fr/" target="_blanc">
             <img src={ib} alt="" />
           </a>
         </center>

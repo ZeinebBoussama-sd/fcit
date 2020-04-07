@@ -15,7 +15,7 @@ function App() {
           <Nav />
         </header>
         <Switch>
-          <Route path="/" exact component={Home}/>
+          <Route path="/" exact component={Home} />
           <Route path="/apropos" exact component={Apropos} />
           <Route />
           <Route />

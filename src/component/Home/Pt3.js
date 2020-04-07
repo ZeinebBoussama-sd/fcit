@@ -6,7 +6,6 @@ function Pt3() {
       <div
         class="row"
         style={{
-          backgroundColor: "CadetBlue",
           padding: "20px 49px 20px 49px",
           marginRight: "0px"
         }}

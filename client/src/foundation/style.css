@@ -13,19 +13,18 @@
 }
 
 /* ################# */
-
+.height-9 {
+  height: 93vh;
+}
+.height-5 {
+  height: 50vh;
+}
 .pt1 {
   background-image: linear-gradient(rgba(27, 81, 239, 0.2), rgba(1, 1, 6, 0.95)),
     url('../foundation/home/methodologie-formation.jpg');
   background-size: cover;
   background-position: center;
-  min-height: 93vh;
   margin-top: 86px;
-}
-.pt1_text {
-  position: absolute;
-  bottom: 40vh;
-  left: 40%;
 }
 
 .pt2 {
@@ -36,7 +35,6 @@
     url('../foundation/home/technologie.jpg');
   background-size: cover;
   background-position: center;
-  height: 50vh;
 }
 
 #h3-color {

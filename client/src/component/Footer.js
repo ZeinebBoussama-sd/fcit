@@ -12,7 +12,7 @@ function Footer() {
       <div className='row pt-4 pb-3'>
         <div className='col-lg-1'>
           <a href='/'>
-            <img src={logofcit} height='100' width='100' alt='' />
+            <img src={logofcit} width='139' alt='' />
           </a>
         </div>
         <div className='col-lg-3 text-left font-italic '>

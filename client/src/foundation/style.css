@@ -1,0 +1,56 @@
+/* ####### Sub menu ########## */
+
+.navbar-nav li:hover > ul.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+}
+
+/* ################# */
+
+.pt1 {
+  background-image: linear-gradient(rgba(27, 81, 239, 0.2), rgba(1, 1, 6, 0.95)),
+    url('../foundation/home/methodologie-formation.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 93vh;
+  margin-top: 86px;
+}
+.pt1_text {
+  position: absolute;
+  bottom: 40vh;
+  left: 40%;
+}
+
+.pt2 {
+  background-image: linear-gradient(
+      rgba(5, 5, 6, 0.63),
+      rgba(108, 108, 162, 0.57)
+    ),
+    url('../foundation/home/technologie.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 75vh;
+  position: initial;
+}
+
+#h3-color {
+  color: navy;
+}
+
+.div-color-space {
+  background-color: MIDNIGHTBLUE;
+  color: white;
+  padding: 50px;
+}
+.div-color-space2 {
+  color: midnightblue;
+
+  padding: 50px;
+}

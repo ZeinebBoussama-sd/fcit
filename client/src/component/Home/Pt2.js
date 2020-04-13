@@ -3,7 +3,7 @@ import React from 'react';
 function Pt2() {
   return (
     <div className='pt2 text-white'>
-      <div className='container' style={{ minHeight: '75vh' }}>
+      <div className='container' style={{ height: '50vh' }}>
         <div className='row'>
           <div className='col-md-6 offset-md-6 mt-5'>
             <h1>Formation & consulting information technology </h1>

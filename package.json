@@ -25,4 +25,5 @@
     "concurrently": "^5.1.0",
     "graphql": "^15.0.0",
     "nodemon": "^2.0.3"
-  
+  }
+}

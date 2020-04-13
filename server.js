@@ -98,13 +98,10 @@ type Fichier{
     urlfichier: String
 }
 
-
-
-  type Query {
-    books: [Book]
-    authors: [Author]
-  }
-`;
+type Query {
+  books: [Book]
+  authors: [Author]
+}`;
 const resolvers = {
   Query: {
     books: () => books

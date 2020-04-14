@@ -9,13 +9,14 @@ function Pt3Item(props) {
     <div className='col-md-4  '>
       <center>
         <img
+          className='px-auto rounded-circle'
           src={img}
           alt={alt}
-          className='rounded-circle'
           height='140px'
           width='140px'
-          style={{ background: 'blue' }}
+          style={{ background: '#0074ff' }}
         />
+
         <h3 id='h3-color'>{title}</h3>
         <p>{text}</p>
       </center>

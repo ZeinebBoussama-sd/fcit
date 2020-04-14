@@ -19,6 +19,18 @@
 .height-5 {
   height: 50vh;
 }
+.mt-7 {
+  margin-top: 4rem !important;
+}
+.mt-8 {
+  margin-top: 4.5rem !important;
+}
+.mt-9 {
+  margin-top: 5rem !important;
+}
+.bg-midnight {
+  background-color: midnightblue;
+}
 .pt1 {
   background-image: linear-gradient(rgba(27, 81, 239, 0.2), rgba(1, 1, 6, 0.95)),
     url('../foundation/home/methodologie-formation.jpg');
@@ -49,4 +61,10 @@
 .div-color-space2 {
   color: midnightblue;
   padding: 50px;
+}
+.drop-shadow {
+  filter: drop-shadow(2px 4px 6px black);
+}
+.no-list-style {
+  list-style-type: none;
 }

@@ -5,9 +5,9 @@ import ib from '../../foundation/home/ib.png';
 
 function Pt4() {
   return (
-    <div className='bg-info'>
+    <div>
       <div className='container'>
-        <div className='row  pt-2 pb-2'>
+        <div className='row  pt-5 pb-5'>
           <div className='col-md-4 pt-4 pb-3'>
             <center>
               <a href='https://www.orsys.fr/' target='_blanc'>
@@ -15,7 +15,7 @@ function Pt4() {
               </a>
             </center>
           </div>
-          <div className='col-md-4 pt-4 pb-3'>
+          <div className='col-md-4 pt-4 pb-3 drop-shadow'>
             <center>
               <a href='https://www.plb.fr/' target='_blanc'>
                 <img src={PLB} alt='' />

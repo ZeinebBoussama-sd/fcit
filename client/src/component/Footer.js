@@ -10,9 +10,9 @@ function Footer() {
   return (
     <div className='container-fluid bg-dark text-white'>
       <div className='row pt-4 pb-3'>
-        <div className='col-lg-1'>
+        <div className='col-lg-2'>
           <a href='/'>
-            <img src={logofcit} width='139' alt='' />
+            <img src={logofcit} height='100' alt='' />
           </a>
         </div>
         <div className='col-lg-3 text-left font-italic '>
@@ -23,34 +23,66 @@ function Footer() {
         </div>
         <div className='col-lg-2 text-left font-italic'>
           <p>
-            <FontAwesomeIcon icon={faEnvelopeOpenText} color='cornflowerblue	' />
-            contact@fc4it.net{' '}
+            <FontAwesomeIcon
+              icon={faEnvelopeOpenText}
+              className='mr-1'
+              color='cornflowerblue'
+            />
+            <a className='text-white' href='mailto:contact@fc4it.net'>
+              contact@fc4it.net
+            </a>
           </p>
 
           <p>
-            <FontAwesomeIcon icon={faEnvelopeOpenText} color='cornflowerblue	' />
-            espace.clients@fc4it.net
+            <FontAwesomeIcon
+              icon={faEnvelopeOpenText}
+              className='mr-1'
+              color='cornflowerblue'
+            />
+            <a className='text-white' href='mailto:espace.clients@fc4it.net'>
+              espace.clients@fc4it.net
+            </a>
           </p>
+        </div>
+        <div className='col-lg-2 text-left font-italic'>
+          <p>
+            <FontAwesomeIcon
+              icon={faPhoneVolume}
+              className='mr-1'
+              color='cornflowerblue'
+            />
+            Tél: +21656563753
+          </p>
+          <div>
+            <FontAwesomeIcon
+              icon={faPhoneVolume}
+              className='mr-1'
+              color='cornflowerblue'
+            />
+            Office:
+            <ul className='no-list-style'>
+              <li>+21656563643</li>
+              <li>+21656563633</li>
+              <li>+21656563833</li>
+            </ul>
+          </div>
         </div>
         <div className='col-lg-3 text-left font-italic'>
           <p>
-            <FontAwesomeIcon icon={faPhoneVolume} color='cornflowerblue	' />
-            Tél: +21656563753{' '}
-          </p>
-
-          <p>
-            <FontAwesomeIcon icon={faPhoneVolume} color='cornflowerblue	' />
-            Office:+21656563643/+21656563633/ +21656563833{' '}
-          </p>
-        </div>
-        <div className='col-lg-3 text-left font-italic'>
-          <p>
-            <FontAwesomeIcon icon={faMapMarkerAlt} color='cornflowerblue	' />
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              className='mr-1'
+              color='cornflowerblue'
+            />
             Centre Millenium 2éme étage-Bureau N°19 Route de la Marsa, Sidi
             Daoud La Marsa
           </p>
-          <p>
-            <FontAwesomeIcon icon={faMapMarkerAlt} color='cornflowerblue	' />
+          <p className='mt-2'>
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              className='mr-1'
+              color='cornflowerblue'
+            />
             Mindup, Bureau 1, 8 avenue de l’université Manar1 , Tunis, Tunisie
           </p>
         </div>

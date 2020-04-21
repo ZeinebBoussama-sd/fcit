@@ -1,7 +1,8 @@
 const { ApolloServer } = require("apollo-server");
-
-const db = require("./connector");
-
+const typeDefs = require("./schema");
+const db = require("./src/connector");
+const resolvers = require("./src/resolvers");
+const formateur = require("./src/modals/formateur");
 //test connection
 db.authenticate()
   .then(() => {
@@ -10,7 +11,8 @@ db.authenticate()
   .catch((err) => {
     console.error("Unable to connect to the database:", err);
   });
-
+user;
+db.sync();
 const server = new ApolloServer({ typeDefs, resolvers });
 
 server.listen().then(({ url }) => {

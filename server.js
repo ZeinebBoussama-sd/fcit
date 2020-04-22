@@ -28,6 +28,7 @@ support;
 participant;
 theme;
 IngenieuPedagogique;
+theme.hasOne(formation);
 db.sync();
 const server = new ApolloServer({ typeDefs, resolvers });
 

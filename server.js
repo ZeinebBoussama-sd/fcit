@@ -2,15 +2,7 @@ const { ApolloServer } = require("apollo-server");
 const typeDefs = require("./schema");
 const db = require("./src/connector");
 const resolvers = require("./src/resolvers");
-const formateur = require("./src/modals/formateur");
-const formation = require("./src/modals/formation");
-const demandeformation = require("./src/modals/demandeformation");
-const session = require("./src/modals/session");
-const fichier = require("./src/modals/fichier");
-const support = require("./src/modals/support");
-const participant = require("./src/modals/participant");
-const theme = require("./src/modals/theme");
-const IngenieuPedagogique = require("./src/modals/ingenieurpedagogique");
+const modals = require("./src/modals/modals");
 //test connection
 db.authenticate()
   .then(() => {
@@ -19,16 +11,7 @@ db.authenticate()
   .catch((err) => {
     console.error("Unable to connect to the database:", err);
   });
-formateur;
-formation;
-session;
-demandeformation;
-fichier;
-support;
-participant;
-theme;
-IngenieuPedagogique;
-theme.hasOne(formation);
+modals;
 db.sync();
 const server = new ApolloServer({ typeDefs, resolvers });
 

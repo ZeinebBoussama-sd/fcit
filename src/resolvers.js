@@ -13,5 +13,6 @@ const resolvers = {
   Query: {
     books: () => books,
   },
+  Mutation: {},
 };
 module.exports = resolvers;

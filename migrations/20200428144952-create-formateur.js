@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       nom_f: { allowNull: false, type: Sequelize.STRING },
-      prenom_f: { allowNull: false, type: Sequelize.STRING,
+      prenom_f: { allowNull: false, type: Sequelize.STRING },
 
       classe_f: Sequelize.STRING,
       fonction_f: Sequelize.STRING,

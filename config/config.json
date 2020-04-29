@@ -1,11 +1,6 @@
 {
   "development": {
-    "username": null,
-    "password": null,
-    "database": "fcit",
-    "config": {
-      "dialect": "sqlite",
-      "storage": "./fcit.sqlite"
-    }
+    "dialect": "sqlite",
+    "storage": "./database.sqlite"
   }
 }

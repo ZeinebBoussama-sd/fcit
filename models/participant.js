@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Participant.associate = function (models) {
-    Participant.belongsToMany(Session, { through: "Participer" });
+    Participant.belongsToMany(models.Session, { through: "Participer" });
 
     // associations can be defined here
   };

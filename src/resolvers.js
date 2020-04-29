@@ -1,4 +1,4 @@
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 const resolvers = {
   Query: {
     async user(root, { id }, { models }) {
@@ -11,7 +11,7 @@ const resolvers = {
       return models.Recipe.findById(id);
     },
   },
-  Mutation: {
+  /* Mutation: {
     async createUser(root, { name, email, password }, { models }) {
       return models.User.create({
         name,
@@ -26,7 +26,7 @@ const resolvers = {
     ) {
       return models.Recipe.create({ userId, title, ingredients, direction });
     },
-  },
+  }, */
   User: {
     async recipes(user) {
       return user.getRecipes();

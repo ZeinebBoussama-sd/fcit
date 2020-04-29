@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
   );
   IngenieurPedagogique.associate = function (models) {
     IngenieurPedagogique.hasMany(models.Validation);
-    // associations can be defined here
   };
   return IngenieurPedagogique;
 };

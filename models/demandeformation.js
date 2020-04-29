@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   DemandeFormation.associate = function (models) {
     DemandeFormation.belongsTo(models.Formation);
+
     // associations can be defined here
   };
   return DemandeFormation;

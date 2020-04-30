@@ -9,8 +9,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  Validation.associate = function (models) {
-    // associations can be defined here
-  };
+
   return Validation;
 };

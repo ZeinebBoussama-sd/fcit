@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     Session.belongsTo(models.Formation);
     Session.belongsTo(models.Formateur);
     Session.belongsTo(models.Support);
-    // associations can be defined here
+    Session.belongsTo(models.Client);
   };
   return Session;
 };

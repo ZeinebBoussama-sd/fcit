@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     Support.hasMany(models.Session);
     Support.hasMany(models.Fichier);
     Support.hasMany(models.Validation);
-    // associations can be defined here
   };
   return Support;
 };

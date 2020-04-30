@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Formation = sequelize.define(
     "Formation",
     {
-      intituleformation: { allowNull: false, type: DataTypes.STRING },
+      intitule: { allowNull: false, type: DataTypes.STRING },
       durée_formation: DataTypes.INTEGER,
       horaire_formation: DataTypes.INTEGER,
       nbre_min_part: DataTypes.INTEGER,
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     Formation.belongsTo(models.Theme);
     Formation.hasMany(models.Session);
     Formation.belongsToMany(models.Formateur, {
-      through: "models.Formateur_Formation",
+      through: "Formateur_Formation",
     });
     Formation.belongsToMany(models.MotCle, { through: "C" });
     Formation.belongsToMany(models.Filieres_metiers, { through: "D" });

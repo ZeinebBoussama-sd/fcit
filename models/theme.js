@@ -7,8 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  Theme.associate = function (models) {
-    // associations can be defined here
-  };
+
   return Theme;
 };

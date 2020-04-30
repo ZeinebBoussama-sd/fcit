@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
   Formateur.associate = function (models) {
     Formateur.hasMany(models.Session);
     Formateur.hasMany(models.Validation);
-    // associations can be defined here
   };
   return Formateur;
 };

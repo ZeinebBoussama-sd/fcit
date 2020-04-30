@@ -7,8 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  Filieres_metiers.associate = function (models) {
-    // associations can be defined here
-  };
+
   return Filieres_metiers;
 };

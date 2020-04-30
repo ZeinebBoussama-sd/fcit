@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
   );
   Fichier.associate = function (models) {
     Fichier.belongsTo(models.Support);
-    // associations can be defined here
   };
   return Fichier;
 };

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       tel_ing: DataTypes.INTEGER,
       NSS_ing: DataTypes.INTEGER,
       salaire_ing: DataTypes.FLOAT,
-      specialité_ing: DataTypes.STRING,
+      specialite_ing: DataTypes.STRING,
       adr_ing: DataTypes.STRING,
     },
     {}

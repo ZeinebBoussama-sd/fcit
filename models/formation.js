@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     "Formation",
     {
       intitule: { allowNull: false, type: DataTypes.STRING },
-      durée_formation: DataTypes.INTEGER,
+      duree_formation: DataTypes.INTEGER,
       horaire_formation: DataTypes.INTEGER,
       nbre_min_part: DataTypes.INTEGER,
       nbre_max_part: DataTypes.INTEGER,
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     Formation.belongsToMany(models.Formateur, {
       through: "Formateur_Formation",
     });
-    Formation.belongsToMany(models.MotCle, { through: "C" });
+    Formation.belongsToMany(models.MotCle, { through: "FormationMotCle" });
     Formation.belongsToMany(models.Filieres_metiers, { through: "D" });
   };
   return Formation;

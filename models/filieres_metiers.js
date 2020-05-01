@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Filieres_metiers = sequelize.define(
     "Filieres_metiers",
     {
-      intitulé_filiere: DataTypes.STRING,
+      intitule_filiere: DataTypes.STRING,
     },
     {}
   );

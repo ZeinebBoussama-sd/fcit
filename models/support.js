@@ -4,10 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     titre_support: DataTypes.STRING,
     date_support: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
     },
   });
   Support.associate = function (models) {

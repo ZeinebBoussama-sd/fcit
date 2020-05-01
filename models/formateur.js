@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       tel_f: DataTypes.INTEGER,
       NSS: DataTypes.INTEGER,
       salaire_f: DataTypes.FLOAT,
-      specialité_f: DataTypes.STRING,
+      specialite_f: DataTypes.STRING,
       adr_f: DataTypes.STRING,
       date_dajout: DataTypes.DATE,
     },

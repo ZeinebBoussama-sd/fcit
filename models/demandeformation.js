@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       etat_demande: DataTypes.STRING,
       prix_prevu: DataTypes.FLOAT,
       lieu_prevu: DataTypes.STRING,
-      durée_prévu: DataTypes.INTEGER,
+      duree_prevu: DataTypes.INTEGER,
       horaire_prevu: DataTypes.STRING,
       mode_demande: DataTypes.STRING,
     },

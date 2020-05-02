@@ -3,15 +3,16 @@ const { gql } = require("apollo-server");
 const typeDefs = gql`
   scalar Date
 
-  type MyType {
-    created: Date
-  }
   type Client {
     id: ID!
     nom_client: String!
     email_client: String!
     tel_client: Int!
     Adr_client: String
+    Session: [Session]
+    DemandeFormation: [DemandeFormation]
+    Personne: Personne
+    Societe: Societe
   }
   type Personne {
     id: ID!
@@ -32,6 +33,8 @@ const typeDefs = gql`
     duree_prevu: Int
     horaire_prevu: String
     mode_demande: String
+    Client: Client!
+    Formation: Formation!
   }
   type Fichier {
     id: ID!
@@ -40,14 +43,18 @@ const typeDefs = gql`
     taille_max: Int
     url_fichier: String!
     nature_support: String
+    Support: Support!
   }
   type Filieres_metiers {
     id: ID!
     intitule_filiere: String!
+    Formation: [Formation]
   }
-  type Formateur_formation {
+  type Formateur_Formation {
     validation_f: Boolean
     date_validation: Date
+    Formation: Formation!
+    Formateur: Formateur!
   }
 
   type Formateur {
@@ -64,6 +71,9 @@ const typeDefs = gql`
     specialite_f: String
     adr_f: String
     date_dajout: Date
+    Formation: [Formation]
+    Session: [Session]
+    Validation: [Validation]
   }
   type Formation {
     id: ID!
@@ -77,6 +87,12 @@ const typeDefs = gql`
     prix_formation: String
     Participant: String
     prerequis: String
+    DemandeFormation: [DemandeFormation]
+    Theme: Theme
+    Filieres_metiers: [Filieres_metiers]
+    MotCle: [MotCle]
+    Formateur: [Formateur]
+    Session: [Session]
   }
   type IngenieurPedagogique {
     id: ID!
@@ -89,20 +105,25 @@ const typeDefs = gql`
     salaire_ing: Float
     specialite_ing: String
     adr_ing: String
+    Validation: [Validation]!
   }
   type MotCle {
     id: ID!
+    Formation: [Formation]
   }
   type Participant {
     id: ID!
     nom_partcipant: String
     prenom_partcipant: String
     carte_identite: Int!
+    Session: [Session]!
   }
   type Participer {
     rapport_eval: String
     note_QCM: Float
     date_eval: Date
+    Session: Session!
+    Participant: Participant!
   }
   type Session {
     id: ID!
@@ -119,37 +140,86 @@ const typeDefs = gql`
     perdiem: Float
     autres_frais: Float
     note_eval_formateur: Int
+    Formation: Formation!
+
+    Support: Support!
+    Client: Client!
+    Participant: [Participant]!
+    Formateur: Formateur
   }
   type Support {
     id: ID!
     titre_support: String
     date_support: Date
+    Session: [Session]
+    Validation: [Validation]!
+    Fichier: [Fichier]!
   }
   type Theme {
     id: ID!
     nom_theme: String
+    Formation: [Formation]
   }
   type Validation {
     date_val: Date
     decision: String
     remarque: String
+    Formateur: Formateur!
+    IngenieurPedagogique: IngenieurPedagogique!
+    Support: Support!
   }
-
   type Query {
-    user(id: Int!): User
-    allRecipes: [Recipe!]!
-    recipe(id: Int!): Recipe
+    Client(id: ID!): Client!
+    allClient: [Client!]!
+    Personne(id: ID!): Personne!
+    Societe(id: ID!): Societe!
+    DemandeFormation(id: ID!): DemandeFormation!
+    Theme(id: ID!): Theme!
+    Formation(id: ID!): Formation!
+    Session(id: ID!): Session!
+    Formateur(id: ID!): Formateur!
+    Support(id: ID!): Support!
+    Fichier(id: ID!): Fichier!
+    MotCle(id: ID!): MotCle!
+    IngenieurPedagogique(id: ID!): IngenieurPedagogique!
+    Participant(id: ID!): Participant!
+    Validation(id: ID!): Validation!
+    Filieres_metiers(id: ID!): Filieres_metiers!
+    Formateur_Formation(id: ID!): Formateur_Formation!
+    Participer(id: ID!): Participer!
   }
 
   type Mutation {
-    createUser(name: String!, email: String!, password: String!): User!
-    createRecipe(
-      userId: Int!
-      title: String!
-      ingredients: String!
-      direction: String!
-    ): Recipe!
+    createClient(
+      id: ID!
+      nom_client: String!
+      email_client: String!
+      tel_client: Int!
+      Adr_client: String
+    ): Client!
+    createPersonne(id: ID!, cin_p: Int!): Personne!
   }
 `;
 
 module.exports = typeDefs;
+/*  createClient(
+      nom_client: String!
+      email_client: String!
+      tel_client: Int!
+      Adr_client: String
+    ): Client! */
+//  type Query {
+//     user(id: Int!): User
+//     allRecipes: [Recipe!]!
+//     recipe(id: Int!): Recipe
+//   }
+
+//   type Mutation {
+//     createUser(name: String!, email: String!, password: String!): User!
+//     createRecipe(
+//       userId: Int!
+//       title: String!
+//       ingredients: String!
+//       direction: String!
+//     ): Recipe!
+//   }

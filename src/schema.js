@@ -11,12 +11,13 @@ const typeDefs = gql`
     Adr_client: String
     Session: [Session]
     DemandeFormation: [DemandeFormation]
-    Personne: Personne
-    Societe: Societe
+    personne: Personne
+    societe: Societe
   }
   type Personne {
     id: ID!
     cin_p: Int!
+    client: Client
   }
   type Societe {
     id: ID!
@@ -169,24 +170,24 @@ const typeDefs = gql`
     Support: Support!
   }
   type Query {
-    Client(id: ID!): Client!
+    client(id: ID!): Client
     allClient: [Client!]!
-    Personne(id: ID!): Personne!
-    Societe(id: ID!): Societe!
-    DemandeFormation(id: ID!): DemandeFormation!
-    Theme(id: ID!): Theme!
-    Formation(id: ID!): Formation!
-    Session(id: ID!): Session!
-    Formateur(id: ID!): Formateur!
-    Support(id: ID!): Support!
-    Fichier(id: ID!): Fichier!
-    MotCle(id: ID!): MotCle!
-    IngenieurPedagogique(id: ID!): IngenieurPedagogique!
-    Participant(id: ID!): Participant!
-    Validation(id: ID!): Validation!
-    Filieres_metiers(id: ID!): Filieres_metiers!
-    Formateur_Formation(id: ID!): Formateur_Formation!
-    Participer(id: ID!): Participer!
+    personne(id: ID!): Personne
+    societe(id: ID!): Societe
+    demandeformation(id: ID!): DemandeFormation
+    theme(id: ID!): Theme
+    formation(id: ID!): Formation
+    session(id: ID!): Session
+    formateur(id: ID!): Formateur
+    support(id: ID!): Support
+    fichier(id: ID!): Fichier
+    motcle(id: ID!): MotCle
+    ingenieurpedagogique(id: ID!): IngenieurPedagogique
+    participant(id: ID!): Participant
+    validation(id: ID!): Validation
+    filieres_metiers(id: ID!): Filieres_metiers
+    formateur_formation(id: ID!): Formateur_Formation
+    participer(id: ID!): Participer
   }
 
   type Mutation {

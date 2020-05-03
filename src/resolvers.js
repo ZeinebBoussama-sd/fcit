@@ -19,59 +19,59 @@ const resolvers = {
     },
   }),
   Query: {
-    async Client(root, { nom_client }, { models }) {
-      return models.Client.findById(nom_client);
+    async client(root, { id }, { models }) {
+      return models.Client.findById(id);
     },
     async allClient(root, args, { models }) {
       return models.Client.findAll();
     },
-    async Personne(root, { cin_p }, { models }) {
-      return models.Personne.findById(cin_p);
+    async personne(root, { id }, { models }) {
+      return models.Personne.findById(id);
     },
-    async Societe(root, { mat_fisc_sc }, { models }) {
-      return models.Societe.findById(mat_fisc_sc);
+    async societe(root, { id }, { models }) {
+      return models.Societe.findById(id);
     },
-    async DemandeFormation(root, { date_demande }, { models }) {
-      return models.DemandeFormation.findById(date_demande);
+    async demandeformation(root, { id }, { models }) {
+      return models.DemandeFormation.findById(id);
     },
-    async Fichier(root, { nom_fichier }, { models }) {
-      return models.Fichier.findById(nom_fichier);
+    async fichier(root, { id }, { models }) {
+      return models.Fichier.findById(id);
     },
-    async Filieres_metiers(root, { intitule_filiere }, { models }) {
-      return models.Filieres_metiers.findById(intitule_filiere);
+    async filieres_metiers(root, { id }, { models }) {
+      return models.Filieres_metiers.findById(id);
     },
-    async Formateur_Formation(root, { date_validation }, { models }) {
-      return models.Formateur_Formation.findById(date_validation);
+    async formateur_formation(root, { id }, { models }) {
+      return models.Formateur_Formation.findById(id);
     },
-    async Formateur(root, { nom_formateur }, { models }) {
-      return models.Formateur.findById(nom_formateur);
+    async formateur(root, { id }, { models }) {
+      return models.Formateur.findById(id);
     },
-    async Formation(root, { intitule }, { models }) {
-      return models.Formation.findById(intitule);
+    async formation(root, { id }, { models }) {
+      return models.Formation.findById(id);
     },
-    async IngenieurPedagogique(root, { id }, { models }) {
+    async ingenieurpedagogique(root, { id }, { models }) {
       return models.Recipe.findById(id);
     },
-    async MotCle(root, { id }, { models }) {
+    async motcle(root, { id }, { models }) {
       return models.MotCle.findById(id);
     },
-    async Participant(root, { carte_identite }, { models }) {
-      return models.Participant.findById(carte_identite);
+    async participant(root, { id }, { models }) {
+      return models.Participant.findById(id);
     },
-    async Participer(root, { date_eval }, { models }) {
-      return models.Participer.findById(date_eval);
+    async participer(root, { id }, { models }) {
+      return models.Participer.findById(id);
     },
-    async Session(root, { id }, { models }) {
+    async session(root, { id }, { models }) {
       return models.Session.findById(id);
     },
-    async Support(root, { titre_support }, { models }) {
-      return models.Support.findById(titre_support);
+    async support(root, { id }, { models }) {
+      return models.Support.findById(id);
     },
-    async Theme(root, { nom_theme }, { models }) {
-      return models.Theme.findById(nom_theme);
+    async theme(root, { id }, { models }) {
+      return models.Theme.findById(id);
     },
-    async Validation(root, { date_val }, { models }) {
-      return models.Validation.findById(date_val);
+    async validation(root, { id }, { models }) {
+      return models.Validation.findById(id);
     },
   },
 
@@ -95,13 +95,13 @@ const resolvers = {
     },
   },
   Client: {
-    async Personne(Client) {
-      return Client.getPersonne();
+    async personne(client) {
+      return client.getPersonne();
     },
   },
   Personne: {
-    async Client(Personne) {
-      return Personne.getClient();
+    async client(personne) {
+      return personne.getClient();
     },
   },
 };

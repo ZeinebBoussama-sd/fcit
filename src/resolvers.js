@@ -78,7 +78,14 @@ const resolvers = {
   Mutation: {
     async createClient(
       root,
-      { nom_client, email_client, tel_client, Adr_client, PersonneId }
+      {
+        nom_client,
+        email_client,
+        tel_client,
+        Adr_client,
+        PersonneId,
+        SocieteId,
+      }
     ) {
       return models.Client.create({
         nom_client,
@@ -86,6 +93,7 @@ const resolvers = {
         tel_client,
         Adr_client,
         PersonneId,
+        SocieteId,
       });
     },
     async createPersonne(root, { cin_p }) {
@@ -93,15 +101,58 @@ const resolvers = {
         cin_p,
       });
     },
+    async createSociete(root, { mat_fisc_sc }) {
+      return models.Societe.create({
+        mat_fisc_sc,
+      });
+    },
+    async createDemandeFormation(
+      root,
+      {
+        date_demande,
+        date_deb_prevue,
+        type_demande,
+        etat_demande,
+        prix_prevu,
+        lieu_prevu,
+        duree_prevu,
+        horaire_prevu,
+        mode_demande,
+        ClientId,
+        FormationId,
+      }
+    ) {
+      return models.DemandeFormation.create({
+        date_demande,
+        date_deb_prevue,
+        type_demande,
+        etat_demande,
+        prix_prevu,
+        lieu_prevu,
+        duree_prevu,
+        horaire_prevu,
+        mode_demande,
+        ClientId,
+        FormationId,
+      });
+    },
   },
   Client: {
     async personne(client) {
       return client.getPersonne();
     },
+    async societe(client) {
+      return client.getSociete;
+    },
   },
   Personne: {
     async client(personne) {
       return personne.getClient();
+    },
+  },
+  Societe: {
+    async client(societe) {
+      return societe.getClient();
     },
   },
 };

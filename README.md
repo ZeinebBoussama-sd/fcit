@@ -1,15 +1,17 @@
+download/install 'node' from www.nodejs.org
+
 ## Step 1
 
 open terminal
 go to folder fcit and write:
-npm run install
+npm install
 
 ## Step 2
 
 write in terminal:
 cd client
 with this command we go to folder client
-npm run install
+npm install
 
 ## step 3
 

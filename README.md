@@ -18,3 +18,7 @@ whrite in terminal
 ..cd
 after that run the command :
 npm run dev
+
+the server will start in : localhost:4000
+
+and the client will start in : localhost:3000

@@ -20,58 +20,58 @@ const resolvers = {
   }),
   Query: {
     async client(root, { id }, { models }) {
-      return models.Client.findById(id);
+      return models.Client.findByPk(id);
     },
     async allClient(root, args, { models }) {
       return models.Client.findAll();
     },
     async personne(root, { id }, { models }) {
-      return models.Personne.findById(id);
+      return models.Personne.findByPk(id);
     },
     async societe(root, { id }, { models }) {
-      return models.Societe.findById(id);
+      return models.Societe.findByPk(id);
     },
     async demandeformation(root, { id }, { models }) {
-      return models.DemandeFormation.findById(id);
+      return models.DemandeFormation.findByPk(id);
     },
     async fichier(root, { id }, { models }) {
-      return models.Fichier.findById(id);
+      return models.Fichier.findByPk(id);
     },
     async filieres_metiers(root, { id }, { models }) {
-      return models.Filieres_metiers.findById(id);
+      return models.Filieres_metiers.findByPk(id);
     },
     async formateur_formation(root, { id }, { models }) {
-      return models.Formateur_Formation.findById(id);
+      return models.Formateur_Formation.findByPk(id);
     },
     async formateur(root, { id }, { models }) {
-      return models.Formateur.findById(id);
+      return models.Formateur.findByPk(id);
     },
     async formation(root, { id }, { models }) {
-      return models.Formation.findById(id);
+      return models.Formation.findByPk(id);
     },
     async ingenieurpedagogique(root, { id }, { models }) {
-      return models.Recipe.findById(id);
+      return models.Recipe.findByPk(id);
     },
     async motcle(root, { id }, { models }) {
-      return models.MotCle.findById(id);
+      return models.MotCle.findByPk(id);
     },
     async participant(root, { id }, { models }) {
-      return models.Participant.findById(id);
+      return models.Participant.findByPk(id);
     },
     async participer(root, { id }, { models }) {
-      return models.Participer.findById(id);
+      return models.Participer.findByPk(id);
     },
     async session(root, { id }, { models }) {
-      return models.Session.findById(id);
+      return models.Session.findByPk(id);
     },
     async support(root, { id }, { models }) {
-      return models.Support.findById(id);
+      return models.Support.findByPk(id);
     },
     async theme(root, { id }, { models }) {
-      return models.Theme.findById(id);
+      return models.Theme.findByPk(id);
     },
     async validation(root, { id }, { models }) {
-      return models.Validation.findById(id);
+      return models.Validation.findByPk(id);
     },
   },
 
@@ -136,6 +136,224 @@ const resolvers = {
         FormationId,
       });
     },
+    async createFichier(
+      root,
+      {
+        nom_fichier,
+        type_fichier,
+        taille_max,
+        url_fichier,
+        nature_support,
+        SupportId,
+      }
+    ) {
+      return models.Fichier.create({
+        type_fichier,
+        taille_max,
+        url_fichier,
+        nature_support,
+        SupportId,
+      });
+    },
+    async createFilieres_metiers(root, { intitule_filiere }) {
+      return models.Filieres_metiers.create({
+        intitule_filiere,
+      });
+    },
+    async createFormateur_Formation(
+      root,
+      { validation_f, date_validation, FormationId, FormateurId }
+    ) {
+      return models.Formateur_Formation.create({
+        validation_f,
+        date_validation,
+        FormationId,
+        FormateurId,
+      });
+    },
+    async createFormateur(
+      root,
+      {
+        nom_f,
+        prenom_f,
+        classe_f,
+        fonction_f,
+        cv_f,
+        email_f,
+        NSS,
+        salaire_f,
+        specialite_f,
+        adr_f,
+        date_dajout,
+      }
+    ) {
+      return models.Formateur.create({
+        nom_f,
+        prenom_f,
+        classe_f,
+        fonction_f,
+        cv_f,
+        email_f,
+        tel_f,
+        NSS,
+        salaire_f,
+        specialite_f,
+        adr_f,
+        date_dajout,
+      });
+    },
+    createFormation(
+      root,
+      {
+        intitule,
+        duree_formation,
+        horaire_formation,
+        nbre_min_part,
+        nbre_max_part,
+        description_formation,
+        catagorie_formation,
+        prix_formation,
+        Participant,
+        prerequis,
+        ThemeId,
+      }
+    ) {
+      return models.Formation.create({
+        intitule,
+        duree_formation,
+        horaire_formation,
+        nbre_min_part,
+        nbre_max_part,
+        description_formation,
+        catagorie_formation,
+        prix_formation,
+        Participant,
+        prerequis,
+        ThemeId,
+      });
+    },
+
+    createIngenieurPedagogique(
+      root,
+      {
+        nom_ing,
+        prenom_ing,
+        cv_ing,
+        email_ing,
+        tel_ing,
+        NSS_ing,
+        salaire_ing,
+        specialite_ing,
+        adr_ing,
+      }
+    ) {
+      return models.IngenieurPedagogique.create({
+        nom_ing,
+        prenom_ing,
+        cv_ing,
+        email_ing,
+        tel_ing,
+        NSS_ing,
+        salaire_ing,
+        specialite_ing,
+        adr_ing,
+      });
+    },
+    createParticipant(
+      root,
+      { nom_partcipant, prenom_partcipant, carte_identite }
+    ) {
+      return models.Participant.create({
+        nom_partcipant,
+        prenom_partcipant,
+        carte_identite,
+      });
+    },
+    createParticiper(
+      root,
+      { rapport_eval, note_QCM, date_eval, ParticipantId, SessionId }
+    ) {
+      return models.Participer.create({
+        rapport_eval,
+        note_QCM,
+        date_eval,
+        ParticipantId,
+        SessionId,
+      });
+    },
+    createSession(
+      root,
+      {
+        type_sess,
+        mode_session,
+        date_deb_sess,
+        duree_sess,
+        horaire_sess,
+        lieu_sess,
+        prix_session,
+        honoraire_sess,
+        frais_sejour,
+        frais_transport,
+        perdiem,
+        autres_frais,
+        note_eval_formateur,
+        ClientId,
+        FormationId,
+        FormateurId,
+        SupportId,
+      }
+    ) {
+      return models.Session.create({
+        type_sess,
+        mode_session,
+        date_deb_sess,
+        duree_sess,
+        horaire_sess,
+        lieu_sess,
+        prix_session,
+        honoraire_sess,
+        frais_sejour,
+        frais_transport,
+        perdiem,
+        autres_frais,
+        note_eval_formateur,
+        ClientId,
+        FormationId,
+        FormateurId,
+        SupportId,
+      });
+    },
+    createSupport(root, { titre_support, date_support }) {
+      return models.Support.create({
+        titre_support,
+        date_support,
+      });
+    },
+    createTheme(root, { nom_theme }) {
+      return models.Theme.create({
+        nom_theme,
+      });
+    },
+    createValidation(
+      root,
+      {
+        date_val,
+        decision,
+        remarque,
+        FormateurId,
+        IngenieurPedagogiqueId,
+        SupportId,
+      }
+    ) {
+      return models.Validation.create({
+        ate_val,
+        decision,
+        remarque,
+        FormateurId,
+        IngenieurPedagogiqueId,
+        SupportId,
+      });
+    },
   },
   Client: {
     async personne(client) {
@@ -143,6 +361,12 @@ const resolvers = {
     },
     async societe(client) {
       return client.getSociete;
+    },
+    async demandeformation(client) {
+      return client.getDemandeFormation;
+    },
+    async session(client) {
+      return client.getSession;
     },
   },
   Personne: {
@@ -153,6 +377,125 @@ const resolvers = {
   Societe: {
     async client(societe) {
       return societe.getClient();
+    },
+  },
+  DemandeFormation: {
+    async client(demandeformation) {
+      return demandeformation.getClient;
+    },
+    async formation(demandeformation) {
+      return demandeformation.getFormation;
+    },
+  },
+  Fichier: {
+    async support(fichier) {
+      return fichier.getSupport;
+    },
+  },
+  Filieres_metiers: {
+    async formation(filieres_metiers) {
+      return filieres_metiers.getFormation;
+    },
+  },
+  Formateur_Formation: {
+    async formateur(formateur_formation) {
+      return formateur_formation.getFormation;
+    },
+    async formation(formateur_formation) {
+      return formateur_formation.getformateur;
+    },
+  },
+  Formateur: {
+    async session(formateur) {
+      return formateur.getSession;
+    },
+    async formation(formateur) {
+      return formateur.getFormation;
+    },
+    async validation(formateur) {
+      return formateur.getValidation;
+    },
+  },
+  Formation: {
+    async demandeformation(formation) {
+      return formation.getDemandeFormation;
+    },
+    async theme(formation) {
+      return formation.getTheme;
+    },
+    async filieres_metiers(formation) {
+      return formation.getFilieres_metiers;
+    },
+    async motcle(formation) {
+      return formation.getMotCle;
+    },
+    async session(formation) {
+      return formation.getSession;
+    },
+    async formateur(formation) {
+      return formation.getformateur;
+    },
+  },
+  IngenieurPedagogique: {
+    async validation(ingenieurpedagogique) {
+      return ingenieurpedagogique.getValidation;
+    },
+  },
+  Participant: {
+    async session(participant) {
+      return participant.getSession;
+    },
+  },
+  Participer: {
+    async participant(participer) {
+      return participer.getParticipant;
+    },
+    async session(participer) {
+      return participer.getSession;
+    },
+  },
+  Session: {
+    async formateur(session) {
+      return session.getformateur;
+    },
+    async participant(session) {
+      return session.getParticipant;
+    },
+    async client(session) {
+      return session.getClient;
+    },
+    async formation(session) {
+      return session.getFormation;
+    },
+    async support(session) {
+      return session.getSupport;
+    },
+  },
+  Support: {
+    async session(support) {
+      return support.getSession;
+    },
+    async validation(support) {
+      return support.getValidation;
+    },
+    async fichier(support) {
+      return support.getFichier;
+    },
+  },
+  Theme: {
+    async formation(theme) {
+      return theme.getFormation;
+    },
+  },
+  Validation: {
+    async formateur(validation) {
+      return validation.getformateur;
+    },
+    async ingenieurpedagogique(validation) {
+      return validation.getIngenieurPedagogique;
+    },
+    async support(validation) {
+      return validation.getSupport;
     },
   },
 };

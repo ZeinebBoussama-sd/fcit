@@ -9,8 +9,8 @@ const typeDefs = gql`
     email_client: String!
     tel_client: Int!
     Adr_client: String
-    Session: [Session]
-    DemandeFormation: [DemandeFormation]
+    session: [Session]
+    demandeformation: [DemandeFormation]
     personne: Personne
     societe: Societe
   }
@@ -170,33 +170,34 @@ const typeDefs = gql`
     support: Support!
   }
   type Query {
-    client(id: ID!): Client
+    client(id: ID, nom_client: String): Client
     allClient: [Client!]!
-    personne(id: ID!): Personne
-    societe(id: ID!): Societe
-    demandeformation(id: ID!): DemandeFormation
-    theme(id: ID!): Theme
-    formation(id: ID!): Formation
-    session(id: ID!): Session
-    formateur(id: ID!): Formateur
-    support(id: ID!): Support
-    fichier(id: ID!): Fichier
-    motcle(id: ID!): MotCle
-    ingenieurpedagogique(id: ID!): IngenieurPedagogique
-    participant(id: ID!): Participant
-    validation(id: ID!): Validation
-    filieres_metiers(id: ID!): Filieres_metiers
-    formateur_formation(id: ID!): Formateur_Formation
-    participer(id: ID!): Participer
+    personne(id: ID, cin_p: Int): Personne
+    societe(id: ID, mat_fisc_sc: Int): Societe
+    demandeformation(id: ID): DemandeFormation
+    theme(id: ID, nom_theme: String): Theme
+    formation(id: ID, intitule: String): Formation
+    session(id: ID): Session
+    formateur(id: ID, nom_f: String): Formateur
+    support(id: ID, titre_support: String): Support
+    fichier(id: ID, nom_fichier: String): Fichier
+    motcle(id: ID): MotCle
+    ingenieurpedagogique(id: ID, nom_ing: String): IngenieurPedagogique
+    participant(id: ID, cin_p: Int): Participant
+    validation(id: ID): Validation
+    filieres_metiers(id: ID, intitule_filiere: String): Filieres_metiers
+    formateur_formation(id: ID): Formateur_Formation
+    participer(id: ID): Participer
   }
 
   type Mutation {
     createClient(
-      id: ID!
       nom_client: String!
       email_client: String!
       tel_client: Int!
       Adr_client: String
+      PersonneId: Int
+      SocieteId: Int
     ): Client!
 
     createPersonne(id: ID!, cin_p: Int!): Personne!
@@ -214,6 +215,8 @@ const typeDefs = gql`
       duree_prevu: Int
       horaire_prevu: String
       mode_demande: String
+      ClientId: Int!
+      FormationId: Int!
     ): DemandeFormation!
 
     createFichier(
@@ -223,13 +226,19 @@ const typeDefs = gql`
       taille_max: Int
       url_fichier: String!
       nature_support: String
+      SupportId: Int!
     ): Fichier!
 
-    createFilier_metier(id: ID!, intitule_filiere: String!): Filieres_metiers!
+    createFilieres_metiers(
+      id: ID!
+      intitule_filiere: String!
+    ): Filieres_metiers!
 
     createFormateur_Formation(
       validation_f: Boolean
       date_validation: Date
+      FormationId: Int!
+      FormateurId: Int!
     ): Formateur_Formation!
 
     createFormateur(
@@ -260,6 +269,7 @@ const typeDefs = gql`
       prix_formation: String
       Participant: String
       prerequis: String
+      ThemeId: Int
     ): Formation!
 
     createIngenieurPedagogique(
@@ -274,18 +284,24 @@ const typeDefs = gql`
       specialite_ing: String
       adr_ing: String
     ): IngenieurPedagogique
+
     createMotCle(id: ID!): MotCle!
+
     createParticipant(
       id: ID!
       nom_partcipant: String
       prenom_partcipant: String
       carte_identite: Int!
     ): Participant!
+
     createParticiper(
       rapport_eval: String
       note_QCM: Float
       date_eval: Date
+      ParticipantId: Int!
+      SessionId: Int!
     ): Participer!
+
     createSession(
       id: ID!
       type_sess: String
@@ -301,6 +317,10 @@ const typeDefs = gql`
       perdiem: Float
       autres_frais: Float
       note_eval_formateur: Int
+      ClientId: Int
+      FormationId: Int
+      FormateurId: Int
+      SupportId: Int
     ): Session!
 
     createSupport(id: ID!, titre_support: String, date_support: Date): Support!
@@ -311,6 +331,9 @@ const typeDefs = gql`
       date_val: Date
       decision: String
       remarque: String
+      FormateurId: Int
+      IngenieurPedagogiqueId: Int
+      SupportId: Int
     ): Validation!
   }
 `;

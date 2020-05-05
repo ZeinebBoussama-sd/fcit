@@ -189,7 +189,16 @@ const typeDefs = gql`
     formateur_formation(id: ID): Formateur_Formation
     participer(id: ID): Participer
   }
-
+  interface MutationResponse {
+    code: String!
+    success: Boolean!
+    message: String!
+  }
+  type DeleteClientMutationResponse implements MutationResponse {
+    code: String!
+    success: Boolean!
+    message: String!
+  }
   type Mutation {
     createClient(
       nom_client: String!
@@ -199,7 +208,16 @@ const typeDefs = gql`
       PersonneId: Int
       SocieteId: Int
     ): Client!
-
+    deleteClient(id: ID!): DeleteClientMutationResponse
+    updateClient(
+      id: ID
+      nom_client: String
+      email_client: String
+      tel_client: Int
+      Adr_client: String
+      PersonneId: Int
+      SocieteId: Int
+    ): Client!
     createPersonne(id: ID!, cin_p: Int!): Personne!
 
     createSociete(id: ID!, mat_fisc_sc: Int!): Societe!

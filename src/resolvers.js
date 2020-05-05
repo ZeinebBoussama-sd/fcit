@@ -85,7 +85,8 @@ const resolvers = {
         Adr_client,
         PersonneId,
         SocieteId,
-      }
+      },
+      { models }
     ) {
       return models.Client.create({
         nom_client,
@@ -96,12 +97,40 @@ const resolvers = {
         SocieteId,
       });
     },
-    async createPersonne(root, { cin_p }) {
+    async deleteClient(root, { id }, { models }) {
+      return models.Client.destroy({ where: { id: id } });
+    },
+    async updateClient(
+      root,
+      {
+        id,
+        nom_client,
+        email_client,
+        tel_client,
+        Adr_client,
+        PersonneId,
+        SocieteId,
+      },
+      { models }
+    ) {
+      return models.Client.update(
+        {
+          nom_client,
+          email_client,
+          tel_client,
+          Adr_client,
+          PersonneId,
+          SocieteId,
+        },
+        { where: { id: id } }
+      );
+    },
+    async createPersonne(root, { cin_p }, { models }) {
       return models.Personne.create({
         cin_p,
       });
     },
-    async createSociete(root, { mat_fisc_sc }) {
+    async createSociete(root, { mat_fisc_sc }, { models }) {
       return models.Societe.create({
         mat_fisc_sc,
       });
@@ -120,7 +149,8 @@ const resolvers = {
         mode_demande,
         ClientId,
         FormationId,
-      }
+      },
+      { models }
     ) {
       return models.DemandeFormation.create({
         date_demande,
@@ -145,7 +175,8 @@ const resolvers = {
         url_fichier,
         nature_support,
         SupportId,
-      }
+      },
+      { models }
     ) {
       return models.Fichier.create({
         type_fichier,
@@ -155,14 +186,15 @@ const resolvers = {
         SupportId,
       });
     },
-    async createFilieres_metiers(root, { intitule_filiere }) {
+    async createFilieres_metiers(root, { intitule_filiere }, { models }) {
       return models.Filieres_metiers.create({
         intitule_filiere,
       });
     },
     async createFormateur_Formation(
       root,
-      { validation_f, date_validation, FormationId, FormateurId }
+      { validation_f, date_validation, FormationId, FormateurId },
+      { models }
     ) {
       return models.Formateur_Formation.create({
         validation_f,
@@ -185,7 +217,8 @@ const resolvers = {
         specialite_f,
         adr_f,
         date_dajout,
-      }
+      },
+      { models }
     ) {
       return models.Formateur.create({
         nom_f,
@@ -216,7 +249,8 @@ const resolvers = {
         Participant,
         prerequis,
         ThemeId,
-      }
+      },
+      { models }
     ) {
       return models.Formation.create({
         intitule,
@@ -245,7 +279,8 @@ const resolvers = {
         salaire_ing,
         specialite_ing,
         adr_ing,
-      }
+      },
+      { models }
     ) {
       return models.IngenieurPedagogique.create({
         nom_ing,
@@ -261,7 +296,8 @@ const resolvers = {
     },
     createParticipant(
       root,
-      { nom_partcipant, prenom_partcipant, carte_identite }
+      { nom_partcipant, prenom_partcipant, carte_identite },
+      { models }
     ) {
       return models.Participant.create({
         nom_partcipant,
@@ -271,7 +307,8 @@ const resolvers = {
     },
     createParticiper(
       root,
-      { rapport_eval, note_QCM, date_eval, ParticipantId, SessionId }
+      { rapport_eval, note_QCM, date_eval, ParticipantId, SessionId },
+      { models }
     ) {
       return models.Participer.create({
         rapport_eval,
@@ -301,7 +338,8 @@ const resolvers = {
         FormationId,
         FormateurId,
         SupportId,
-      }
+      },
+      { models }
     ) {
       return models.Session.create({
         type_sess,
@@ -323,13 +361,13 @@ const resolvers = {
         SupportId,
       });
     },
-    createSupport(root, { titre_support, date_support }) {
+    createSupport(root, { titre_support, date_support }, { models }) {
       return models.Support.create({
         titre_support,
         date_support,
       });
     },
-    createTheme(root, { nom_theme }) {
+    createTheme(root, { nom_theme }, { models }) {
       return models.Theme.create({
         nom_theme,
       });
@@ -343,7 +381,8 @@ const resolvers = {
         FormateurId,
         IngenieurPedagogiqueId,
         SupportId,
-      }
+      },
+      { models }
     ) {
       return models.Validation.create({
         ate_val,

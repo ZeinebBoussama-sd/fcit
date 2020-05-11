@@ -8,10 +8,16 @@ import './foundation/style.css';
 import '@fortawesome/fontawesome-free';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Apropos from './pages/Apropos';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
 
 function App() {
+  const client = new ApolloClient({
+    uri: 'http://localhost:4000',
+  });
+
   return (
-    <div className='App'>
+    <ApolloProvider client={client}>
       <BrowserRouter>
         <Nav />
         <Switch>
@@ -21,7 +27,7 @@ function App() {
         </Switch>
         <Footer />
       </BrowserRouter>
-    </div>
+    </ApolloProvider>
   );
 }
 

@@ -9,6 +9,8 @@ const typeDefs = gql`
     email_client: String!
     tel_client: Int!
     Adr_client: String
+    PersonneId: Int
+    SocieteId: Int
     session: [Session]
     demandeformation: [DemandeFormation]
     personne: Personne

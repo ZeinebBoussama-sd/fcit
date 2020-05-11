@@ -18,8 +18,8 @@ function Admin() {
   return (
     <div className=' mt-9 '>
       hallo :
-      {data.allClient.map(({ id, nom_Client }) => (
-        <p key={id}>{nom_Client}</p>
+      {data.allClient.map(({ id, nom_client }) => (
+        <p key={id}>{nom_client}</p>
       ))}
     </div>
   );

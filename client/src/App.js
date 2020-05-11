@@ -12,11 +12,13 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 function App() {
+  // Create a client
   const client = new ApolloClient({
     uri: 'http://localhost:4000',
   });
 
   return (
+    //<ApolloProvider client={client}> connect client to react
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Nav />

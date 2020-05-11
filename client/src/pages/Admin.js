@@ -16,7 +16,8 @@ function Admin() {
   if (error) return <p>Error :(</p>;
 
   return (
-    <div className=' mt-8 '>
+    <div className=' mt-9 '>
+      hallo :
       {data.allClient.map(({ id, nom_Client }) => (
         <p key={id}>{nom_Client}</p>
       ))}

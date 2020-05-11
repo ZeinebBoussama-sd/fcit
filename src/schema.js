@@ -218,12 +218,12 @@ const typeDefs = gql`
       PersonneId: Int
       SocieteId: Int
     ): Client!
-    createPersonne(id: ID!, cin_p: Int!): Personne!
+    createPersonne(id: ID, cin_p: Int!): Personne!
 
-    createSociete(id: ID!, mat_fisc_sc: Int!): Societe!
+    createSociete(id: ID, mat_fisc_sc: Int!): Societe!
 
     createDemandeFormation(
-      id: ID!
+      id: ID
       date_demande: Date!
       date_deb_prevue: Date
       type_demande: String
@@ -238,7 +238,7 @@ const typeDefs = gql`
     ): DemandeFormation!
 
     createFichier(
-      id: ID!
+      id: ID
       nom_fichier: String
       type_fichier: String
       taille_max: Int
@@ -247,10 +247,7 @@ const typeDefs = gql`
       SupportId: Int!
     ): Fichier!
 
-    createFilieres_metiers(
-      id: ID!
-      intitule_filiere: String!
-    ): Filieres_metiers!
+    createFilieres_metiers(id: ID, intitule_filiere: String!): Filieres_metiers!
 
     createFormateur_Formation(
       validation_f: Boolean
@@ -260,7 +257,7 @@ const typeDefs = gql`
     ): Formateur_Formation!
 
     createFormateur(
-      id: ID!
+      id: ID
       nom_f: String!
       prenom_f: String!
       classe_f: String
@@ -276,7 +273,7 @@ const typeDefs = gql`
     ): Formateur!
 
     createFormation(
-      id: ID!
+      id: ID
       intitule: String!
       duree_formation: Int
       horaire_formation: Int
@@ -291,7 +288,7 @@ const typeDefs = gql`
     ): Formation!
 
     createIngenieurPedagogique(
-      id: ID!
+      id: ID
       nom_ing: String!
       prenom_ing: String!
       cv_ing: String
@@ -303,10 +300,10 @@ const typeDefs = gql`
       adr_ing: String
     ): IngenieurPedagogique
 
-    createMotCle(id: ID!): MotCle!
+    createMotCle(id: ID): MotCle!
 
     createParticipant(
-      id: ID!
+      id: ID
       nom_partcipant: String
       prenom_partcipant: String
       carte_identite: Int!
@@ -321,7 +318,7 @@ const typeDefs = gql`
     ): Participer!
 
     createSession(
-      id: ID!
+      id: ID
       type_sess: String
       mode_session: String
       date_deb_sess: Date
@@ -341,9 +338,9 @@ const typeDefs = gql`
       SupportId: Int
     ): Session!
 
-    createSupport(id: ID!, titre_support: String, date_support: Date): Support!
+    createSupport(id: ID, titre_support: String, date_support: Date): Support!
 
-    createTheme(id: ID!, nom_theme: String): Theme!
+    createTheme(id: ID, nom_theme: String): Theme!
 
     createValidation(
       date_val: Date

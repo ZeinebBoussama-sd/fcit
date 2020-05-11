@@ -1,14 +1,14 @@
 import React from 'react';
 function Apropospt1() {
   return (
-    <div>
-      <div class='row mt-8 '>
-        <div class='col-md-6 bg-midnight text-white'>
+    <div className='container-fluid'>
+      <div className='row mt-9 '>
+        <div className='col-md-6 bg-midnight text-white'>
           <em className='container'>
             <div className='px-5 py-5'>
-              <p>
-                <center>FCIT: QUI SOMMES-NOUS ? </center>
-              </p>
+              <center>
+                <p>FCIT: QUI SOMMES-NOUS ? </p>
+              </center>
               <h2>Le spécialiste de la formation continue</h2>
               <p>
                 FCIT est un organisme de formations informatiques à Tunis
@@ -20,12 +20,12 @@ function Apropospt1() {
             </div>
           </em>
         </div>
-        <div class='col-md-6 container'>
+        <div className='col-md-6 container'>
           <em className='container'>
             <div className='px-5 py-5'>
-              <h2>
-                <center>Vous vouliez nous joindre ? </center>
-              </h2>
+              <center>
+                <h2>Vous vouliez nous joindre ? </h2>
+              </center>
               <p>vous avez des competances joiniez nous</p>
               <button> renjoigner nous</button>
             </div>

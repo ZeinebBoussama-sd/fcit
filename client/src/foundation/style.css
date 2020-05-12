@@ -33,7 +33,7 @@
 }
 .pt1 {
   background-image: linear-gradient(rgba(27, 81, 239, 0.2), rgba(1, 1, 6, 0.95)),
-    url('../foundation/home/methodologie-formation.jpg');
+    url("../foundation/home/methodologie-formation.jpg");
   background-size: cover;
   background-position: center;
   margin-top: 86px;
@@ -44,7 +44,7 @@
       rgba(5, 5, 6, 0.83),
       rgba(108, 108, 162, 0.57)
     ),
-    url('../foundation/home/technologie.jpg');
+    url("../foundation/home/technologie.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -67,4 +67,41 @@
 }
 .no-list-style {
   list-style-type: none;
+}
+.sidebar {
+  background: #2f323a;
+  margin-top: 70px;
+  padding-top: 30px;
+  position: fixed;
+  left: 0;
+  width: 250px;
+  height: 100%;
+}
+.sidebar .logodb {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  margin-bottom: 10px;
+}
+.sidebar .h3 {
+  color: #ccc;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.sidebar a {
+  color: fff;
+  display: block;
+  width: 100%;
+  line-height: 60px;
+  text-decoration: none;
+  padding-left: 40px;
+  box-sizing: border-box;
+  transition: 0.5s;
+  transition-property: background;
+}
+.sidebar a:hover {
+  background: #19b3d3;
+}
+.sidebar i {
+  padding-right: 10px;
 }

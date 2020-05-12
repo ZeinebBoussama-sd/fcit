@@ -1,26 +1,15 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-
+import React from "react";
 function Admin() {
-  const { loading, error, data } = useQuery(gql`
-    {
-      allClient {
-        id
-        nom_client
-      }
-    }
-  `);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
   return (
-    <div className=' mt-9 '>
-      hallo :
-      {data.allClient.map(({ id, nom_client }) => (
-        <p key={id}>{nom_client}</p>
-      ))}
+    <div class="sidebar">
+      <a href="#">
+        <i class=""></i>
+        <span>Formation</span>
+      </a>
+      <a href="#">
+        <i class=""></i>
+        <span>Formateur</span>
+      </a>
     </div>
   );
 }

@@ -27,7 +27,6 @@ function App() {
           <Route path="/apropos" exact component={Apropos} />
           <Route path="/admin" exact component={Admin} />
         </Switch>
-        <Footer />
       </BrowserRouter>
     </ApolloProvider>
   );

@@ -8,7 +8,7 @@ function Admin() {
   return (
     <BrowserRouter>
       <div className='row'>
-        <nav className='col-md-2 sidebar mt-9'>
+        <nav className='col-md-2 sidebar pt-3 mt-9'>
           <label for='check'>
             <FontAwesomeIcon icon={faBars} className='mr-1' id='sidebar_btn' />
           </label>

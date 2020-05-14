@@ -134,29 +134,7 @@ function AddFormation() {
                     handleReset,
                   } = props;
                   return (
-                    <form
-                      onSubmit={handleSubmit}
-                      //   onSubmit={(e) => {
-                      //     debugger;
-                      //     e.preventDefault();
-                      //   addFormation({
-                      //     variables: {
-                      //       prix_formation: '',
-                      //       ThemeId: '',
-                      //       catagorie_formation: '',
-                      //       description_formation: '',
-                      //       duree_formation: '',
-                      //       prerequis: '',
-                      //       intitule: '',
-                      //       nbre_min_part: '',
-                      //       horaire_formation: '',
-                      //       nbre_max_part: '',
-                      //       Participant: '',
-                      //     },
-                      //   });
-                      //     input.value = '';
-                      //   }}
-                    >
+                    <form onSubmit={handleSubmit}>
                       <div className='form-group'>
                         <label
                           htmlFor='intitule-name'

@@ -28,18 +28,12 @@
 .mt-9 {
   margin-top: 5rem !important;
 }
-.mt-10 {
-  margin-top: 5.5rem !important;
-}
-.mt-11 {
-  margin-top: 6rem !important;
-}
 .bg-midnight {
   background-color: midnightblue;
 }
 .pt1 {
   background-image: linear-gradient(rgba(27, 81, 239, 0.2), rgba(1, 1, 6, 0.95)),
-    url('../foundation/home/methodologie-formation.jpg');
+    url("../foundation/home/methodologie-formation.jpg");
   background-size: cover;
   background-position: center;
   margin-top: 86px;
@@ -50,7 +44,7 @@
       rgba(5, 5, 6, 0.83),
       rgba(108, 108, 162, 0.57)
     ),
-    url('../foundation/home/technologie.jpg');
+    url("../foundation/home/technologie.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -76,12 +70,13 @@
 }
 .sidebar {
   background: #2f323a;
-  top: 6px;
-  bottom: 0;
+  margin-top: 70px;
+  padding-top: 16px;
+  /* position: fixed; */
   left: 0;
   width: 250px;
   transition: 0.5;
-  min-height: 93vh;
+  min-height: 95vh;
 }
 .sidebar2 {
   top: 0;
@@ -119,7 +114,7 @@ label #sidebar_btn {
   width: 100%;
   line-height: 60px;
   text-decoration: none;
-  padding-left: 40px;
+  padding-left: 160px;
   box-sizing: border-box;
   transition: 0.5s;
   transition-property: color;
@@ -129,7 +124,7 @@ label #sidebar_btn:hover {
 }
 
 #check:checked ~ .sidebar {
-  left: -190px;
+  left: -170px;
 }
 
 #check:checked ~ .sidebar a span {

@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   scalar Date
@@ -91,6 +91,7 @@ const typeDefs = gql`
     prix_formation: String
     participant: String
     prerequis: String
+    ThemeId: Int
     demandeformation: [DemandeFormation]
     theme: Theme
     filieres_metiers: [Filieres_metiers]
@@ -173,12 +174,13 @@ const typeDefs = gql`
   }
   type Query {
     client(id: ID, nom_client: String): Client
-    allClient: [Client!]!
+    allClients: [Client!]!
     personne(id: ID, cin_p: Int): Personne
     societe(id: ID, mat_fisc_sc: Int): Societe
     demandeformation(id: ID): DemandeFormation
     theme(id: ID, nom_theme: String): Theme
     formation(id: ID, intitule: String): Formation
+    allFormations: [Formation!]!
     session(id: ID): Session
     formateur(id: ID, nom_f: String): Formateur
     support(id: ID, titre_support: String): Support

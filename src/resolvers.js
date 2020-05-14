@@ -1,10 +1,10 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require("graphql");
-const { Kind } = require("graphql/language");
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: "Date",
-    description: "Date custom scalar type",
+    name: 'Date',
+    description: 'Date custom scalar type',
     parseValue(value) {
       return new Date(value); // value from the client
     },
@@ -22,7 +22,7 @@ const resolvers = {
     async client(root, { id }, { models }) {
       return models.Client.findByPk(id);
     },
-    async allClient(root, args, { models }) {
+    async allClients(root, args, { models }) {
       return models.Client.findAll();
     },
     async personne(root, { id }, { models }) {
@@ -48,6 +48,9 @@ const resolvers = {
     },
     async formation(root, { id }, { models }) {
       return models.Formation.findByPk(id);
+    },
+    async allFormations(root, args, { models }) {
+      return models.Formation.findAll();
     },
     async ingenieurpedagogique(root, { id }, { models }) {
       return models.Recipe.findByPk(id);

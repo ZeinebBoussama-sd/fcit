@@ -1,10 +1,10 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import AddFormation from './AddFormation';
-import { QueryFormation } from '../GraphQl/Query';
+import { GetFormation } from '../GraphQl/Query';
 
 function Formation() {
-  const { loading, error, data } = useQuery(QueryFormation);
+  const { loading, error, data } = useQuery(GetFormation);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
 

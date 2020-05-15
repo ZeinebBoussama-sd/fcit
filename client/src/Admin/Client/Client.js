@@ -1,10 +1,10 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import AddClient from './AddClient';
-import { QueryClient } from '../GraphQl/Query';
+import { GetClient } from '../GraphQl/Query';
 
 function Client() {
-  const { loading, error, data } = useQuery(QueryClient);
+  const { loading, error, data } = useQuery(GetClient);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
 

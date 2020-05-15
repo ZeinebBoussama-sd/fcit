@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost';
 
-export const QueryFormation = gql`
+export const GetFormation = gql`
   {
     allFormations {
       id
@@ -21,7 +21,7 @@ export const QueryFormation = gql`
   }
 `;
 
-export const QueryClient = gql`
+export const GetClient = gql`
   {
     allClients {
       id

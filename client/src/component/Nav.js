@@ -121,7 +121,7 @@ function Nav() {
           </li>
         </ul>
         <ul className='nav justify-content-end'>
-          <button className='btn btn-light'>S'authentifier</button>
+          <button className='btn btn-outline-success'>S'authentifier</button>
         </ul>
       </div>
     </nav>

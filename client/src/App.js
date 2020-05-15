@@ -12,6 +12,7 @@ import '@fortawesome/fontawesome-free';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import NotFound from './pages/NotFound';
 
 function App() {
   // Create a client
@@ -30,6 +31,7 @@ function App() {
           <Route path='/admin' exact component={Admin} />
           <Route path='/admin1' exact component={Admin1} />
           <Route path='/admin2' exact component={Admin2} />
+          <Route path='/' component={NotFound} />
         </Switch>
         <Footer />
       </BrowserRouter>

@@ -179,6 +179,7 @@ const typeDefs = gql`
     societe(id: ID, mat_fisc_sc: Int): Societe
     demandeformation(id: ID): DemandeFormation
     theme(id: ID, nom_theme: String): Theme
+    allThemes: [Theme!]!
     formation(id: ID, intitule: String): Formation
     allFormations: [Formation!]!
     session(id: ID): Session
@@ -337,7 +338,7 @@ const typeDefs = gql`
 
     createSupport(titre_support: String, date_support: Date): Support!
 
-    createTheme(nom_theme: String): Theme!
+    createTheme(nom_theme: String!): Theme!
 
     createValidation(
       date_val: Date

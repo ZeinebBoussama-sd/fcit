@@ -1,10 +1,10 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
+const { GraphQLScalarType } = require("graphql");
+const { Kind } = require("graphql/language");
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: 'Date',
-    description: 'Date custom scalar type',
+    name: "Date",
+    description: "Date custom scalar type",
     parseValue(value) {
       return new Date(value); // value from the client
     },
@@ -72,6 +72,9 @@ const resolvers = {
     },
     async theme(root, { id }, { models }) {
       return models.Theme.findByPk(id);
+    },
+    async allThemes(root, args, { models }) {
+      return models.Theme.findAll();
     },
     async validation(root, { id }, { models }) {
       return models.Validation.findByPk(id);

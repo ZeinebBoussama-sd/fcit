@@ -4,8 +4,22 @@ import { useMutation } from "@apollo/react-hooks";
 import { Formik } from "formik";
 
 function AddClient() {
+  const ADD_PERSONNE = gql`
+    mutation create_personne($cin_p: Int!) {
+      createPersonne(cin_p: $cin_p) {
+        nom_client
+      }
+    }
+  `;
+  const ADD_SOCIETE = gql`
+    mutation create_societe($mat_fisc_sc: Int!) {
+      createSociete(mat_fisc_sc: $mat_fisc_sc) {
+        mat_fisc_sc
+      }
+    }
+  `;
   const ADD_CLIENT = gql`
-    mutation create_formation(
+    mutation create_client(
       $nom_client: String!
       $email_client: String!
       $tel_client: Int!
@@ -30,6 +44,8 @@ function AddClient() {
       }
     }
   `;
+  // const [addPersonne, { data }] = useMutation(ADD_PERSONNE);
+  // const [addSociete, { data }] = useMutation(ADD_SOCIETE);
   const [addClient, { data }] = useMutation(ADD_CLIENT);
   return (
     <div>
@@ -78,7 +94,18 @@ function AddClient() {
                 }}
                 onSubmit={async (values) => {
                   await new Promise((resolve) => setTimeout(resolve, 500));
+                  // addSociete({
+                  //   variables: {
+                  //     mat_fisc_sc: values.mat_fisc_sc,
+                  //   },
+                  // });
+                  // addPersonne({
+                  //   variables: {
+                  //     cin_p: values.cin_p,
+                  //   },
+                  // });
                   debugger;
+                  console.log("p", data);
                   addClient({
                     variables: {
                       nom_client: values.nom_client,
@@ -120,6 +147,35 @@ function AddClient() {
                           id="nom_client"
                           onChange={handleChange}
                           value={values.nom_client}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="CIN" className="col-form-label">
+                          CIN:
+                        </label>
+                        <input
+                          required
+                          type="text"
+                          className="form-control"
+                          id="cin_p"
+                          onChange={handleChange}
+                          value={values.cin_p}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label
+                          htmlFor="Matricule Fiscale"
+                          className="col-form-label"
+                        >
+                          Matricule Fiscale:
+                        </label>
+                        <input
+                          required
+                          type="text"
+                          className="form-control"
+                          id="mat_fisc_sc"
+                          onChange={handleChange}
+                          value={values.mat_fisc_sc}
                         />
                       </div>
                       <div className="form-group">

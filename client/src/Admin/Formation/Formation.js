@@ -1,32 +1,13 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import AddFormation from './AddFormation';
+import { QueryFormation } from '../GraphQl/Query';
 
 function Formation() {
-  const { loading, error, data } = useQuery(gql`
-    {
-      allFormations {
-        id
-        intitule
-        duree_formation
-        horaire_formation
-        nbre_min_part
-        nbre_max_part
-        description_formation
-        catagorie_formation
-        prix_formation
-        prerequis
-        participant
-        theme {
-          nom_theme
-        }
-      }
-    }
-  `);
-
+  const { loading, error, data } = useQuery(QueryFormation);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
+
   return (
     <div className='mt-11 '>
       <AddFormation />

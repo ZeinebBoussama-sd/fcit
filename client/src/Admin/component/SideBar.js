@@ -11,7 +11,7 @@ import {
   faChalkboardTeacher,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function SideBar(props) {
   const [active, setactive] = useState(false);
@@ -19,7 +19,7 @@ function SideBar(props) {
     active ? setactive(false) : setactive(true);
   };
   return (
-    <nav id='sidebar' className={` ${active ? 'active' : ''}`}>
+    <nav id='sidebar' className={`${active ? 'mini' : ''}`}>
       <div className='sidebar-header'>
         {active ? (
           <button
@@ -42,56 +42,74 @@ function SideBar(props) {
 
       <ul className='list-unstyled components'>
         <li>
-          <Link to='/admin/formation'>
+          <NavLink
+            to='/admin/formation'
+            activeStyle={{ color: 'red', borderRight: 'solid 4px red' }}
+          >
             <FontAwesomeIcon
               icon={faGraduationCap}
               className='mr-1'
               id='sidebar_btn'
             />
             <span>formation</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to='/admin/client'>
+          <NavLink
+            to='/admin/client'
+            activeStyle={{ color: 'red', borderRight: 'solid 4px red' }}
+          >
             <FontAwesomeIcon icon={faUsers} className='mr-1' id='sidebar_btn' />
             <span>Client</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to='/admin/session'>
+          <NavLink
+            to='/admin/session'
+            activeStyle={{ color: 'red', borderRight: 'solid 4px red' }}
+          >
             <FontAwesomeIcon
               icon={faDiagnoses}
               className='mr-1'
               id='sidebar_btn'
             />
             <span>Session </span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to='/admin/formateur'>
+          <NavLink
+            to='/admin/formateur'
+            activeStyle={{ color: 'red', borderRight: 'solid 4px red' }}
+          >
             <FontAwesomeIcon
               icon={faChalkboardTeacher}
               className='mr-1'
               id='sidebar_btn'
             />
             <span>Formateur</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to='/admin/ingenieur_pedagogique'>
+          <NavLink
+            to='/admin/ingenieur_pedagogique'
+            activeStyle={{ color: 'red', borderRight: 'solid 4px red' }}
+          >
             <FontAwesomeIcon icon={faBrain} className='mr-1' id='sidebar_btn' />
             <span>Ingenieur Pedagogique</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to='/admin/support'>
+          <NavLink
+            to='/admin/support'
+            activeStyle={{ color: 'red', borderRight: 'solid 4px red' }}
+          >
             <FontAwesomeIcon
               icon={faLaptop}
               className='mr-1'
               id='sidebar_btn'
             />
             <span>Support</span>
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>

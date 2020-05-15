@@ -93,19 +93,21 @@
   color: #fff;
   transition: all 0.3s;
 }
-
-#sidebar.active {
+#sidebar button {
+  color: #007aff;
+}
+#sidebar.mini {
   min-width: 80px;
   max-width: 80px;
   text-align: center;
 }
 
-#sidebar.active .sidebar-header h3,
-#sidebar.active .CTAs {
+#sidebar.mini .sidebar-header h3,
+#sidebar.mini .CTAs {
   display: none;
 }
 
-#sidebar.active .sidebar-header strong {
+#sidebar.mini .sidebar-header strong {
   display: block;
 }
 
@@ -113,27 +115,27 @@
   text-align: left;
 }
 
-#sidebar.active ul li a {
+#sidebar.mini ul li a {
   padding: 20px 10px;
   text-align: center;
   font-size: 0.85em;
 }
-#sidebar.active ul li a svg {
+#sidebar.mini ul li a svg {
   text-align: center;
   font-size: 2.85em;
 }
-#sidebar.active ul li a span {
+#sidebar.mini ul li a span {
   display: none;
 }
 
-#sidebar.active ul li a i {
+#sidebar.mini ul li a i {
   margin-right: 0;
   display: block;
   font-size: 1.8em;
   margin-bottom: 5px;
 }
 
-#sidebar.active ul ul a {
+#sidebar.mini ul ul a {
   padding: 10px !important;
 }
 
@@ -191,10 +193,10 @@
     margin-left: 0px !important;
   }
 
-  #sidebar.active {
+  #sidebar.mini {
     margin-left: 0 !important;
   }
-  #sidebar.active ul li a span {
+  #sidebar.mini ul li a span {
     display: none;
     font-size: 0.85em;
   }

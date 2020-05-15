@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import logofcit from '../foundation/logo/logofcit3.png';
+import { NavLink } from 'react-router-dom';
 
 function Nav() {
-  const [navActive, setNavActive] = useState('');
   return (
     <nav className='navbar navbar-expand-lg fixed-top navbar-dark bg-dark '>
       <a className='navbar-brand' href='/'>
@@ -12,97 +12,113 @@ function Nav() {
         className='navbar-toggler'
         type='button'
         data-toggle='collapse'
-        data-target='#navbarSupportedContent'
-        aria-controls='navbarSupportedContent'
+        data-target='#navbarToggler'
+        aria-controls='navbarToggler'
         aria-expanded='false'
         aria-label='Toggle navigation'
       >
         <span className='navbar-toggler-icon'></span>
       </button>
 
-      <div className='collapse navbar-collapse' id='navbarSupportedContent'>
-        <ul className='navbar-nav mr-auto'>
-          <li className={`nav-item ${navActive === 'Accueil' ? 'active' : ''}`}>
-            <a
+      <div className='collapse navbar-collapse' id='navbarToggler'>
+        <ul className='navbar-nav mr-auto mt-2 mt-lg-0'>
+          <li className='nav-item'>
+            <NavLink
               className='nav-link'
-              href='/'
-              name='Accueil'
-              onClick={() => setNavActive('Accueil')}
+              exact
+              to='/'
+              // activeStyle={{
+              //   color: 'red',
+              //   borderBottom: 'solid 4px red',
+              //   background: 'blue',
+              // }}
             >
-              Accueil
-            </a>
+              Accueil<span className='sr-only'>(current)</span>
+            </NavLink>
           </li>
-          <li className={`nav-item ${navActive === 'propos' ? 'active' : ''}`}>
-            <a
-              className='nav-link'
-              href='/apropos'
-              name='propos'
-              onClick={() => setNavActive('propos')}
-            >
+          <li className={`nav-item `}>
+            <NavLink className='nav-link' to='/apropos' exact name='propos'>
               A propos
-            </a>
+            </NavLink>
           </li>
           <li className='nav-item dropdown'>
-            <a
+            <NavLink
               className='nav-link dropdown-toggle'
-              href='http://example.com'
-              id='navbarDropdownMenuLink'
+              exact
+              to='/solution'
+              // id='navbarDropdownMenuLink'
               data-toggle='dropdown'
               aria-haspopup='true'
               aria-expanded='false'
             >
               Nos solutions
-            </a>
+            </NavLink>
             <ul
               className='dropdown-menu'
-              aria-labelledby='navbarDropdownMenuLink'
+              // aria-labelledby='navbarDropdownMenuLink'
               style={{ top: '38px' }}
             >
               <li>
-                <a className='dropdown-item' href='#'>
+                <NavLink className='dropdown-item' exact to='/seminaire'>
                   Séminaire
-                </a>
+                </NavLink>
               </li>
               <li>
                 <div className='dropdown-divider'></div>
-                <a className='dropdown-item' href='#'>
+                <NavLink className='dropdown-item' exact to='/consulting'>
                   Consulting
-                </a>
+                </NavLink>
               </li>
               <div className='dropdown-divider'></div>
-              <li className='dropdown-submenu'>
-                <a className='dropdown-item dropdown-toggle' href='#'>
+              <li className='dropdown-submenu dropright'>
+                <NavLink
+                  className='dropdown-item dropdown-toggle'
+                  exact
+                  to='/formation'
+                >
                   Formations
-                </a>
+                </NavLink>
                 <ul className='dropdown-menu'>
                   <li>
-                    <a className='dropdown-item' href='#'>
+                    <NavLink
+                      className='dropdown-item'
+                      exact
+                      to='/nos_formations'
+                    >
                       Nos Formations
-                    </a>
+                    </NavLink>
                   </li>
                   <li>
                     <div className='dropdown-divider'></div>
-                    <a className='dropdown-item' href='#'>
+                    <NavLink
+                      className='dropdown-item'
+                      exact
+                      to='/cursus_metiers'
+                    >
                       Cursus Métiers
-                    </a>
+                    </NavLink>
                   </li>
                   <li>
                     <div className='dropdown-divider'></div>
-                    <a className='dropdown-item' href='#'>
+                    <NavLink className='dropdown-item' exact to='/reconversion'>
                       Reconversion
-                    </a>
+                    </NavLink>
                   </li>
                   <li>
                     <div className='dropdown-divider'></div>
-                    <a className='dropdown-item' href='#'>
+                    <NavLink className='dropdown-item' exact to='/sur_mesure'>
                       Sur Mesure
-                    </a>
+                    </NavLink>
                   </li>
                   <li>
                     <div className='dropdown-divider'></div>
-                    <a className='dropdown-item' href='#'>
+                    <NavLink
+                      className='dropdown-item'
+                      exact
+                      to='/top_formations'
+                    >
                       Top Formations
-                    </a>
+                    </NavLink>
                   </li>
                 </ul>
               </li>
@@ -110,14 +126,14 @@ function Nav() {
           </li>
 
           <li className='nav-item'>
-            <a className='nav-link' href='#'>
+            <NavLink className='nav-link' exact to='/nos_centres'>
               Nos Centres
-            </a>
+            </NavLink>
           </li>
           <li className='nav-item'>
-            <a className='nav-link' href='#'>
+            <NavLink className='nav-link' exact to='/admin'>
               Contact
-            </a>
+            </NavLink>
           </li>
         </ul>
         <ul className='nav justify-content-end'>

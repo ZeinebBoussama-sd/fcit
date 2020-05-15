@@ -3,8 +3,6 @@ import Nav from './component/Nav';
 import Home from './pages/Home';
 import Apropos from './pages/Apropos';
 import Admin from './pages/Admin';
-import Admin1 from './pages/Admin1';
-import Admin2 from './pages/Admin2';
 import Footer from './component/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './foundation/style.css';
@@ -29,8 +27,6 @@ function App() {
           <Route path='/' exact component={Home} />
           <Route path='/apropos' exact component={Apropos} />
           <Route path='/admin' exact component={Admin} />
-          <Route path='/admin1' exact component={Admin1} />
-          <Route path='/admin2' exact component={Admin2} />
           <Route path='/' component={NotFound} />
         </Switch>
         <Footer />

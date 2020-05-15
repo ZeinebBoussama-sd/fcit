@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   scalar Date
@@ -18,12 +18,12 @@ const typeDefs = gql`
   }
   type Personne {
     id: ID!
-    cin_p: Int!
+    cin_p: Int
     client: Client!
   }
   type Societe {
     id: ID!
-    mat_fisc_sc: Int!
+    mat_fisc_sc: Int
     client: Client!
   }
   type DemandeFormation {

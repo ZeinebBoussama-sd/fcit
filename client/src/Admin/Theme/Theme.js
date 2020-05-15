@@ -13,10 +13,12 @@ function Theme() {
   `);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
+  console.log("data", data);
+
   return (
-    <div className="mt-11 ">
+    <div className="mt-11">
       <AddTheme />
-      <table className=" table table-hover">
+      <table className="table table-hover">
         <thead>
           <tr>
             <th scope="col">#</th>

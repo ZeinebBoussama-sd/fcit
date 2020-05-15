@@ -5,6 +5,7 @@ import {
   faUsers,
   faLaptop,
   faBrain,
+  faPaintBrush,
   faDiagnoses,
   faGraduationCap,
   faChalkboardTeacher,
@@ -67,9 +68,8 @@ function SideBar(props) {
             to="/admin/thema"
             activeStyle={{ color: "red", borderRight: "solid 4px red" }}
           >
-            {" "}
             <FontAwesomeIcon
-              icon={faLaptop}
+              icon={faPaintBrush}
               className="mr-1"
               id="sidebar_btn"
             />

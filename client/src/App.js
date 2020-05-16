@@ -27,7 +27,7 @@ function App() {
           <Route path='/' exact component={Home} />
           <Route path='/apropos' exact component={Apropos} />
           <Route path='/admin' exact component={Admin} />
-          <Route path='/' component={NotFound} />
+          <Route path='*' component={NotFound} />
         </Switch>
         <Footer />
       </BrowserRouter>

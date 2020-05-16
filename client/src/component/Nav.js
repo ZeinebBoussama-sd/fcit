@@ -54,7 +54,7 @@ function Nav() {
               Nos solutions
             </NavLink>
             <ul
-              className='dropdown-menu'
+              className='dropdown-menu navdropdown bg-dark'
               // aria-labelledby='navbarDropdownMenuLink'
               style={{ top: '38px' }}
             >
@@ -78,7 +78,7 @@ function Nav() {
                 >
                   Formations
                 </NavLink>
-                <ul className='dropdown-menu'>
+                <ul className='dropdown-menu bg-dark'>
                   <li>
                     <NavLink
                       className='dropdown-item'
@@ -131,13 +131,15 @@ function Nav() {
             </NavLink>
           </li>
           <li className='nav-item'>
-            <NavLink className='nav-link' exact to='/admin'>
+            <NavLink className='nav-link' exact to='/contact'>
               Contact
             </NavLink>
           </li>
         </ul>
         <ul className='nav justify-content-end'>
-          <button className='btn btn-outline-success'>S'authentifier</button>
+          <NavLink className='nav-link' exact to='/admin'>
+            <button className='btn btn-outline-success'>S'authentifier</button>
+          </NavLink>
         </ul>
       </div>
     </nav>

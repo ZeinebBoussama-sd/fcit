@@ -6,10 +6,16 @@
 .dropdown-submenu {
   position: relative;
 }
+.navdropdown li a {
+  color: white;
+}
+.navdropdown ul li a {
+  color: #ffffff;
+}
 .dropdown-submenu > .dropdown-menu {
   top: 0;
-  left: 100%;
-  margin-top: -6px;
+  left: 99%;
+  margin-top: -8px;
 }
 
 /* ################# */

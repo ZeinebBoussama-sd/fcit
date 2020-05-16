@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 export const GetFormation = gql`
   {
@@ -35,6 +35,30 @@ export const GetClient = gql`
       societe {
         mat_fisc_sc
       }
+    }
+  }
+`;
+export const GetTheme = gql`
+  {
+    allThemes {
+      id
+      nom_theme
+    }
+  }
+`;
+export const GetIngenieurPedagogique = gql`
+  {
+    allIngenieurPedagogiques {
+      id
+      nom_ing
+      prenom_ing
+      cv_ing
+      email_ing
+      tel_ing
+      NSS_ing
+      salaire_ing
+      specialite_ing
+      adr_ing
     }
   }
 `;

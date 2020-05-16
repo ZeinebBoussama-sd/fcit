@@ -188,6 +188,7 @@ const typeDefs = gql`
     fichier(id: ID, nom_fichier: String): Fichier
     motcle(id: ID): MotCle
     ingenieurpedagogique(id: ID, nom_ing: String): IngenieurPedagogique
+    allIngenieurPedagogiques: [IngenieurPedagogique!]!
     participant(id: ID, cin_p: Int): Participant
     validation(id: ID): Validation
     filieres_metiers(id: ID, intitule_filiere: String): Filieres_metiers
@@ -352,24 +353,3 @@ const typeDefs = gql`
 `;
 
 module.exports = typeDefs;
-/*  createClient(
-      nom_client: String!
-      email_client: String!
-      tel_client: Int!
-      Adr_client: String
-    ): Client! */
-//  type Query {
-//     user(id: Int!): User
-//     allRecipes: [Recipe!]!
-//     recipe(id: Int!): Recipe
-//   }
-
-//   type Mutation {
-//     createUser(name: String!, email: String!, password: String!): User!
-//     createRecipe(
-//       userId: Int!
-//       title: String!
-//       ingredients: String!
-//       direction: String!
-//     ): Recipe!
-//   }

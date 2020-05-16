@@ -65,7 +65,7 @@ function SideBar(props) {
         </li>
         <li>
           <NavLink
-            to="/admin/thema"
+            to="/admin/theme"
             activeStyle={{ color: "red", borderRight: "solid 4px red" }}
           >
             <FontAwesomeIcon

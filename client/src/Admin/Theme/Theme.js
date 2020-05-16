@@ -1,16 +1,9 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
 import AddTheme from "./AddTheme";
+import { GetTheme } from "../GraphQl/Query";
 function Theme() {
-  const { loading, error, data } = useQuery(gql`
-    {
-      allThemes {
-        id
-        nom_theme
-      }
-    }
-  `);
+  const { loading, error, data } = useQuery(GetTheme);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
   console.log("data", data);

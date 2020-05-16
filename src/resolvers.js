@@ -55,6 +55,9 @@ const resolvers = {
     async ingenieurpedagogique(root, { id }, { models }) {
       return models.Recipe.findByPk(id);
     },
+    async allIngenieurPedagogiques(root, args, { models }) {
+      return models.IngenieurPedagogique.findAll();
+    },
     async motcle(root, { id }, { models }) {
       return models.MotCle.findByPk(id);
     },

@@ -32,7 +32,7 @@ function Formation() {
           {data.allFormations &&
             data.allFormations.map((formation, idx) => (
               <tr key={idx}>
-                <th scope='row'>{idx}</th>
+                <th scope='row'>{idx + 1}</th>
                 <td>{formation.intitule}</td>
                 <td>{formation.duree_formation}</td>
                 <td>{formation.horaire_formation}</td>

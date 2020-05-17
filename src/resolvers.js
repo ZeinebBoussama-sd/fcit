@@ -1,10 +1,10 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require("graphql");
-const { Kind } = require("graphql/language");
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: "Date",
-    description: "Date custom scalar type",
+    name: 'Date',
+    description: 'Date custom scalar type',
     parseValue(value) {
       return new Date(value); // value from the client
     },
@@ -85,26 +85,47 @@ const resolvers = {
   },
 
   Mutation: {
-    async createClient(
-      root,
-      {
-        nom_client,
-        email_client,
-        tel_client,
-        Adr_client,
-        PersonneId,
-        SocieteId,
-      },
-      { models }
-    ) {
-      return models.Client.create({
-        nom_client,
-        email_client,
-        tel_client,
-        Adr_client,
-        PersonneId,
-        SocieteId,
+    async createClient(root, args, { models }) {
+      //looking if you add both cin-p and mat_fisc_sc
+      if (args.personne & args.societe)
+        throw new Error("can't add both Person and societe");
+
+      //lookin after person
+      const findperson =
+        args.personne &&
+        (await models.Personne.findOne({
+          where: { cin_p: args.personne },
+        }));
+      if (findperson) throw new Error('this cin_p is already created');
+
+      //looking after societe
+      const findsociete =
+        args.personne &&
+        (await models.Societe.findOne({
+          where: { mat_fisc_sc: args.personne },
+        }));
+      if (findsociete) throw new Error('this mat_fisc_sc is already created');
+
+      // if you have cin_p you create it.
+      const addperson =
+        args.personne &&
+        (await models.Personne.create({ cin_p: args.personne }));
+
+      // if you have mat_fisc_sc you create it.
+      const addsociete =
+        args.societe &&
+        (await models.Societe.create({ mat_fisc_sc: args.societe }));
+
+      // create client
+      const addClient = await models.Client.create({
+        nom_client: args.nom_client,
+        email_client: args.email_client,
+        tel_client: args.tel_client,
+        Adr_client: args.Adr_client,
+        PersonneId: addperson && addperson.id,
+        SocieteId: addsociete && addsociete.id,
       });
+      return addClient;
     },
     async deleteClient(root, { id }, { models }) {
       return models.Client.destroy({ where: { id: id } });

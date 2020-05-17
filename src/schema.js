@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   scalar Date
@@ -211,10 +211,14 @@ const typeDefs = gql`
       email_client: String!
       tel_client: Int!
       Adr_client: String
+      personne: Int
+      societe: Int
       PersonneId: Int
       SocieteId: Int
     ): Client!
+
     deleteClient(id: ID!): DeleteClientMutationResponse
+
     updateClient(
       id: ID
       nom_client: String
@@ -224,6 +228,7 @@ const typeDefs = gql`
       PersonneId: Int
       SocieteId: Int
     ): Client!
+
     createPersonne(cin_p: Int!): Personne!
 
     createSociete(mat_fisc_sc: Int!): Societe!

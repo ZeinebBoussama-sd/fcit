@@ -1,6 +1,7 @@
 // const bcrypt = require("bcryptjs");
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
+const { ApolloError } = require('apollo-server-core');
 const resolvers = {
   Date: new GraphQLScalarType({
     name: 'Date',
@@ -88,7 +89,7 @@ const resolvers = {
     async createClient(root, args, { models }) {
       //looking if you add both cin-p and mat_fisc_sc
       if (args.personne & args.societe)
-        throw new Error("can't add both Person and societe");
+        throw new ApolloError("can't add both Person and societe");
 
       //lookin after person
       const findperson =
@@ -96,7 +97,7 @@ const resolvers = {
         (await models.Personne.findOne({
           where: { cin_p: args.personne },
         }));
-      if (findperson) throw new Error('this cin_p is already created');
+      if (findperson) throw new ApolloError('this cin_p is already created');
 
       //looking after societe
       const findsociete =
@@ -104,7 +105,8 @@ const resolvers = {
         (await models.Societe.findOne({
           where: { mat_fisc_sc: args.personne },
         }));
-      if (findsociete) throw new Error('this mat_fisc_sc is already created');
+      if (findsociete)
+        throw new ApolloError('this mat_fisc_sc is already created');
 
       // if you have cin_p you create it.
       const addperson =

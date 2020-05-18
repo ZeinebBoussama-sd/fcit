@@ -31,7 +31,13 @@ function AddClient() {
       }
     }
   `;
-  const [addClient, { data }] = useMutation(ADD_CLIENT);
+  const [
+    addClient,
+    { loading: mutationLoading, error: mutationError },
+  ] = useMutation(ADD_CLIENT);
+
+  // debugger;
+
   return (
     <div>
       <button
@@ -55,9 +61,11 @@ function AddClient() {
         <div className='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
           <div className='modal-content'>
             <div className='modal-header'>
-              <h5 className='modal-title' id='exampleModalLabel'>
-                Add Client
-              </h5>
+              <div>
+                <h5 className='modal-title' id='exampleModalLabel'>
+                  Add Client
+                </h5>
+              </div>
               <button
                 type='button'
                 className='close'
@@ -80,18 +88,23 @@ function AddClient() {
                   SocieteId: undefined,
                 }}
                 onSubmit={async (values) => {
-                  await new Promise((resolve) => setTimeout(resolve, 500));
+                  try {
+                    // new Promise((resolve) => setTimeout(resolve, 500));
+                    await addClient({
+                      variables: {
+                        nom_client: values.nom_client,
+                        email_client: values.email_client,
+                        tel_client: values.tel_client,
+                        Adr_client: values.Adr_client,
+                        personne: values.cin_p ? values.cin_p : null,
+                        societe: values.mat_fisc_sc ? values.mat_fisc_sc : null,
+                      },
+                    });
+                  } catch (e) {
+                    debugger;
 
-                  addClient({
-                    variables: {
-                      nom_client: values.nom_client,
-                      email_client: values.email_client,
-                      tel_client: values.tel_client,
-                      Adr_client: values.Adr_client,
-                      personne: values.cin_p,
-                      societe: values.mat_fisc_sc,
-                    },
-                  });
+                    console.error(e.message);
+                  }
                 }}
                 //  validationSchema={Yup.object().shape({
                 // nbre_min_part: Yup.string().string().required("Required"),
@@ -137,10 +150,7 @@ function AddClient() {
                         />
                       </div>
                       <div className='form-group'>
-                        <label
-                          htmlFor='Matricule Fiscale'
-                          className='col-form-label'
-                        >
+                        <label htmlFor='mat_fisc_sc' className='col-form-label'>
                           Matricule Fiscale:
                         </label>
                         <input

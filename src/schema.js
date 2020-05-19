@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   scalar Date
@@ -184,7 +184,9 @@ const typeDefs = gql`
     allFormations: [Formation!]!
     session(id: ID): Session
     formateur(id: ID, nom_f: String): Formateur
+    allFormateurs: [Formateur!]!
     support(id: ID, titre_support: String): Support
+    allSupports: [Support!]!
     fichier(id: ID, nom_fichier: String): Fichier
     motcle(id: ID): MotCle
     ingenieurpedagogique(id: ID, nom_ing: String): IngenieurPedagogique
@@ -289,7 +291,7 @@ const typeDefs = gql`
       description_formation: String
       catagorie_formation: String
       prix_formation: String
-      Participant: String
+      participant: String
       prerequis: String
       ThemeId: Int
     ): Formation!

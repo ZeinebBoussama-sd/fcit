@@ -62,3 +62,22 @@ export const GetIngenieurPedagogique = gql`
     }
   }
 `;
+export const GetFormateur = gql`
+  {
+    allFormateurs {
+      id
+      nom_f
+      prenom_f
+      classe_f
+      fonction_f
+      cv_f
+      email_f
+      tel_f
+      NSS
+      salaire_f
+      specialite_f
+      adr_f
+      date_dajout
+    }
+  }
+`;

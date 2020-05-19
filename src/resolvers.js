@@ -1,11 +1,11 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
-const { ApolloError } = require('apollo-server-core');
+const { GraphQLScalarType } = require("graphql");
+const { Kind } = require("graphql/language");
+const { ApolloError } = require("apollo-server-core");
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: 'Date',
-    description: 'Date custom scalar type',
+    name: "Date",
+    description: "Date custom scalar type",
     parseValue(value) {
       return new Date(value); // value from the client
     },
@@ -47,6 +47,9 @@ const resolvers = {
     async formateur(root, { id }, { models }) {
       return models.Formateur.findByPk(id);
     },
+    async allFormateurs(root, args, { models }) {
+      return models.Formateur.findAll();
+    },
     async formation(root, { id }, { models }) {
       return models.Formation.findByPk(id);
     },
@@ -74,6 +77,9 @@ const resolvers = {
     async support(root, { id }, { models }) {
       return models.Support.findByPk(id);
     },
+    async allSupports(root, args, { models }) {
+      return models.Support.findAll();
+    },
     async theme(root, { id }, { models }) {
       return models.Theme.findByPk(id);
     },
@@ -97,7 +103,7 @@ const resolvers = {
         (await models.Personne.findOne({
           where: { cin_p: args.personne },
         }));
-      if (findperson) throw new ApolloError('this cin_p is already created');
+      if (findperson) throw new ApolloError("this cin_p is already created");
 
       //looking after societe
       const findsociete =
@@ -106,7 +112,7 @@ const resolvers = {
           where: { mat_fisc_sc: args.personne },
         }));
       if (findsociete)
-        throw new ApolloError('this mat_fisc_sc is already created');
+        throw new ApolloError("this mat_fisc_sc is already created");
 
       // if you have cin_p you create it.
       const addperson =
@@ -244,6 +250,7 @@ const resolvers = {
         fonction_f,
         cv_f,
         email_f,
+        tel_f,
         NSS,
         salaire_f,
         specialite_f,
@@ -278,7 +285,7 @@ const resolvers = {
         description_formation,
         catagorie_formation,
         prix_formation,
-        Participant,
+        participant,
         prerequis,
         ThemeId,
       },
@@ -293,7 +300,7 @@ const resolvers = {
         description_formation,
         catagorie_formation,
         prix_formation,
-        Participant,
+        participant,
         prerequis,
         ThemeId,
       });

@@ -145,9 +145,9 @@ function AddIngenieurPedagogique() {
                           required
                           type="text"
                           className="form-control"
-                          id="nom_prenom"
+                          id="prenom_ing"
                           onChange={handleChange}
-                          value={values.nom_prenom}
+                          value={values.prenom_ing}
                         />
                       </div>
                       <div className="form-group">

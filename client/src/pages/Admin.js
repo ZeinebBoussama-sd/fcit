@@ -6,13 +6,14 @@ import Client from "../Admin/Client/Client";
 import Theme from "../Admin/Theme/Theme";
 import IngenieurPedagogique from "../Admin/IngenieurePedagogique/IngenieurPedagogique";
 import SideBar from "../Admin/component/SideBar";
+import Formateur from "../Admin/Formateur/Formateur";
 function Admin() {
   const routes = [
     { path: "/admin/formation", exact: true, component: () => <Formation /> },
     { path: "/admin/client", exact: true, component: () => <Client /> },
     { path: "/admin/theme", exact: true, component: () => <Theme /> },
     { path: "/admin/session", exact: true, component: () => <Apropos /> },
-    { path: "/admin/formateur", exact: true, component: () => <Apropos /> },
+    { path: "/admin/formateur", exact: true, component: () => <Formateur /> },
     {
       path: "/admin/ingenieur_pedagogique",
       exact: true,

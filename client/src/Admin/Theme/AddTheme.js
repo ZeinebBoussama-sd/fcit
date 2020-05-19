@@ -53,13 +53,15 @@ function AddTheme() {
                   nom_theme: "",
                 }}
                 onSubmit={async (values) => {
-                  await new Promise((resolve) => setTimeout(resolve, 500));
-                  addTheme({
-                    variables: {
-                      nom_theme: values.nom_theme,
-                    },
-                  });
-                  alert(JSON.stringify(values, null, 2));
+                  try {
+                    await addTheme({
+                      variables: {
+                        nom_theme: values.nom_theme,
+                      },
+                    });
+                  } catch (e) {
+                    console.error(e.message);
+                  }
                 }}
               >
                 {(props) => {

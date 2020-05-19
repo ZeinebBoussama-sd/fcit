@@ -98,24 +98,25 @@ function AddFormation() {
                   ThemeId: undefined,
                 }}
                 onSubmit={async (values) => {
-                  await new Promise((resolve) => setTimeout(resolve, 500));
-
-                  addFormation({
-                    variables: {
-                      intitule: values.intitule,
-                      duree_formation: values.duree_formation,
-                      horaire_formation: values.horaire_formation,
-                      nbre_min_part: values.nbre_min_part,
-                      nbre_max_part: values.nbre_max_part,
-                      description_formation: values.description_formation,
-                      catagorie_formation: values.catagorie_formation,
-                      prix_formation: values.prix_formation,
-                      prerequis: values.prerequis,
-                      participant: values.participant,
-                      ThemeId: values.ThemeId,
-                    },
-                  });
-                  alert(JSON.stringify(values, null, 2));
+                  try {
+                    await addFormation({
+                      variables: {
+                        intitule: values.intitule,
+                        duree_formation: values.duree_formation,
+                        horaire_formation: values.horaire_formation,
+                        nbre_min_part: values.nbre_min_part,
+                        nbre_max_part: values.nbre_max_part,
+                        description_formation: values.description_formation,
+                        catagorie_formation: values.catagorie_formation,
+                        prix_formation: values.prix_formation,
+                        prerequis: values.prerequis,
+                        participant: values.participant,
+                        ThemeId: values.ThemeId,
+                      },
+                    });
+                  } catch (e) {
+                    console.error(e.message);
+                  }
                 }}
                 // validationSchema={Yup.object().shape({
                 //   email: Yup.string().email().required('Required'),

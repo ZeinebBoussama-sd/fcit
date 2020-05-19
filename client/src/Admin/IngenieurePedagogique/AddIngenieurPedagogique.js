@@ -92,22 +92,24 @@ function AddIngenieurPedagogique() {
                   adr_ing: undefined,
                 }}
                 onSubmit={async (values) => {
-                  await new Promise((resolve) => setTimeout(resolve, 500));
-                  AddIngenieurPedagogique({
-                    variables: {
-                      nom_ing: values.nom_ing,
-                      prenom_ing: values.prenom_ing,
-                      cv_ing: values.cv_ing,
-                      email_ing: values.email_ing,
-                      tel_ing: values.tel_ing,
-                      NSS_ing: values.NSS_ing,
-                      salaire_ing: values.salaire_ing,
+                  try {
+                    await AddIngenieurPedagogique({
+                      variables: {
+                        nom_ing: values.nom_ing,
+                        prenom_ing: values.prenom_ing,
+                        cv_ing: values.cv_ing,
+                        email_ing: values.email_ing,
+                        tel_ing: values.tel_ing,
+                        NSS_ing: values.NSS_ing,
+                        salaire_ing: values.salaire_ing,
 
-                      specialite_ing: values.specialite_ing,
-                      adr_ing: values.adr_ing,
-                    },
-                  });
-                  alert(JSON.stringify(values, null, 2));
+                        specialite_ing: values.specialite_ing,
+                        adr_ing: values.adr_ing,
+                      },
+                    });
+                  } catch (e) {
+                    console.error(e.message);
+                  }
                 }}
               >
                 {(props) => {

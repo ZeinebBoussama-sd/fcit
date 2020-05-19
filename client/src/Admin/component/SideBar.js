@@ -9,6 +9,7 @@ import {
   faDiagnoses,
   faGraduationCap,
   faChalkboardTeacher,
+  faCommentAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
@@ -41,6 +42,19 @@ function SideBar(props) {
       </div>
 
       <ul className="list-unstyled components">
+        <li>
+          <NavLink
+            to="/admin/demandeformation"
+            activeStyle={{ color: "red", borderRight: "solid 4px red" }}
+          >
+            <FontAwesomeIcon
+              icon={faCommentAlt}
+              className="mr-1"
+              id="sidebar_btn"
+            />
+            <span>Demande Formation</span>
+          </NavLink>
+        </li>
         <li>
           <NavLink
             to="/admin/formation"

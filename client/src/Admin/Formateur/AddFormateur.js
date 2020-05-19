@@ -102,24 +102,27 @@ function AddFormateur() {
                   date_dajout: undefined,
                 }}
                 onSubmit={async (values) => {
-                  await new Promise((resolve) => setTimeout(resolve, 500));
-                  AddFormateur({
-                    variables: {
-                      nom_f: values.nom_f,
-                      prenom_f: values.prenom_f,
-                      classe_f: values.classe_f,
-                      fonction_f: values.fonction_f,
-                      cv_f: values.cv_f,
-                      email_f: values.email_f,
-                      tel_f: values.tel_f,
-                      NSS: values.NSS,
-                      salaire_f: values.salaire_f,
-                      specialite_f: values.specialite_f,
-                      adr_f: values.adr_f,
-                      date_dajout: values.date_dajout,
-                    },
-                  });
-                  alert(JSON.stringify(values, null, 2));
+                  try {
+                    //  new Promise((resolve) => setTimeout(resolve, 500));
+                    await AddFormateur({
+                      variables: {
+                        nom_f: values.nom_f,
+                        prenom_f: values.prenom_f,
+                        classe_f: values.classe_f,
+                        fonction_f: values.fonction_f,
+                        cv_f: values.cv_f,
+                        email_f: values.email_f,
+                        tel_f: values.tel_f,
+                        NSS: values.NSS,
+                        salaire_f: values.salaire_f,
+                        specialite_f: values.specialite_f,
+                        adr_f: values.adr_f,
+                        date_dajout: values.date_dajout,
+                      },
+                    });
+                  } catch (e) {
+                    console.error(e.message);
+                  }
                 }}
               >
                 {(props) => {

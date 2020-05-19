@@ -104,7 +104,6 @@ function AddFormation() {
                 }}
                 onSubmit={async (values) => {
                   try {
-                    await new Promise((resolve) => setTimeout(resolve, 500));
                     await addFormation({
                       variables: {
                         intitule: values.intitule,

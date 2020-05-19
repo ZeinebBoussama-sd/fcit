@@ -35,6 +35,9 @@ const resolvers = {
     async demandeformation(root, { id }, { models }) {
       return models.DemandeFormation.findByPk(id);
     },
+    async allDemandeFormations(root, args, { models }) {
+      return models.DemandeFormation.findAll();
+    },
     async fichier(root, { id }, { models }) {
       return models.Fichier.findByPk(id);
     },

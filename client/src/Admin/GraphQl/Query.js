@@ -120,3 +120,20 @@ export const getSession = gql`
     }
   }
 `;
+export const GetDemandeFormation = gql`
+  {
+    allDemandeFormations {
+      date_demande
+      type_demande
+      etat_demande
+      prix_prevu
+      mode_demande
+      client {
+        nom_client
+      }
+      formation {
+        intitule
+      }
+    }
+  }
+`;

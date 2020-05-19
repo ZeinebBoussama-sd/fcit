@@ -7,19 +7,21 @@ import Theme from "../Admin/Theme/Theme";
 import IngenieurPedagogique from "../Admin/IngenieurePedagogique/IngenieurPedagogique";
 import SideBar from "../Admin/component/SideBar";
 import Formateur from "../Admin/Formateur/Formateur";
+import Support from "../Admin/Support/Support";
+import Session from "../Admin/Session/Session";
 function Admin() {
   const routes = [
     { path: "/admin/formation", exact: true, component: () => <Formation /> },
     { path: "/admin/client", exact: true, component: () => <Client /> },
     { path: "/admin/theme", exact: true, component: () => <Theme /> },
-    { path: "/admin/session", exact: true, component: () => <Apropos /> },
+    { path: "/admin/session", exact: true, component: () => <Session /> },
     { path: "/admin/formateur", exact: true, component: () => <Formateur /> },
     {
       path: "/admin/ingenieur_pedagogique",
       exact: true,
       component: () => <IngenieurPedagogique />,
     },
-    { path: "/admin/support", exact: true, component: () => <Apropos /> },
+    { path: "/admin/support", exact: true, component: () => <Support /> },
   ];
   return (
     <BrowserRouter>

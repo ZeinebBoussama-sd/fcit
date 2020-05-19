@@ -183,6 +183,7 @@ const typeDefs = gql`
     formation(id: ID, intitule: String): Formation
     allFormations: [Formation!]!
     session(id: ID): Session
+    allSessions: [Session!]!
     formateur(id: ID, nom_f: String): Formateur
     allFormateurs: [Formateur!]!
     support(id: ID, titre_support: String): Support

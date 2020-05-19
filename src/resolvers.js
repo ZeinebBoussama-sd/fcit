@@ -74,6 +74,9 @@ const resolvers = {
     async session(root, { id }, { models }) {
       return models.Session.findByPk(id);
     },
+    async allSessions(root, args, { models }) {
+      return models.Support.findAll();
+    },
     async support(root, { id }, { models }) {
       return models.Support.findByPk(id);
     },

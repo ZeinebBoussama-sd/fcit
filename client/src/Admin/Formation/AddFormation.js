@@ -99,7 +99,7 @@ function AddFormation() {
                 }}
                 onSubmit={async (values) => {
                   await new Promise((resolve) => setTimeout(resolve, 500));
-                  debugger;
+
                   addFormation({
                     variables: {
                       intitule: values.intitule,

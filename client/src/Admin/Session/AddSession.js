@@ -3,40 +3,52 @@ import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import { Formik } from "formik";
 
-function AddClient() {
-  const ADD_CLIENT = gql`
-    mutation create_client(
-      $nom_client: String!
-      $email_client: String!
-      $tel_client: Int!
-      $Adr_client: String
-      $personne: Int
-      $societe: Int
+function AddSession() {
+  const ADD_SESSION = gql`
+    mutation create_session(
+      $type_sess: String
+      $date_deb_sess: Date
+      $lieu_sess: String
+      $prix_session: Float
+      $client: String
+      $formation: String
+      $formateur: String
+      $support: String
     ) {
-      createClient(
-        nom_client: $nom_client
-        email_client: $email_client
-        tel_client: $tel_client
-        Adr_client: $Adr_client
-        personne: $personne
-        societe: $societe
+      createSession(
+        type_sess: $type_sess
+        date_deb_sess: $date_deb_sess
+        lieu_sess: $lieu_sess
+        prix_session: $prix_session
+        client: $client
+        formation: $formation
+        formateur: $formateur
+        support: $support
       ) {
-        nom_client
-        email_client
-        tel_client
-        Adr_client
-        personne {
-          cin_p
+        type_sess
+        date_deb_sess
+        lieu_sess
+        prix_session
+        client {
+          nom_client
+        }
+        formation {
+          intitule
+        }
+        formateur {
+          nom_f
+        }
+        support {
+          titre_support
         }
       }
     }
   `;
-  const [
-    addClient,
-    { loading: mutationLoading, error: mutationError },
-  ] = useMutation(ADD_CLIENT);
 
-  // debugger;
+  const [
+    AddSession,
+    { loading: mutationLoading, error: mutationError },
+  ] = useMutation(ADD_SESSION);
 
   return (
     <div>
@@ -47,7 +59,7 @@ function AddClient() {
         data-target="#exampleModal"
         data-whatever="@getbootstrap"
       >
-        Add Client
+        Add Session
       </button>
 
       <div
@@ -63,7 +75,7 @@ function AddClient() {
             <div className="modal-header">
               <div>
                 <h5 className="modal-title" id="exampleModalLabel">
-                  Add Client
+                  Add Session
                 </h5>
               </div>
               <button
@@ -78,35 +90,34 @@ function AddClient() {
             <div className="modal-body">
               <Formik
                 initialValues={{
-                  nom_client: "",
-                  email_client: undefined,
-                  tel_client: undefined,
-                  Adr_client: undefined,
-                  cin_p: undefined,
-                  mat_fisc_sc: undefined,
-                  PersonneId: undefined,
-                  SocieteId: undefined,
+                  type_sess: undefined,
+                  date_deb_sess: undefined,
+                  lieu_sess: undefined,
+                  prix_session: undefined,
+                  client: undefined,
+                  formation: undefined,
+                  formateur: undefined,
+                  support: undefined,
                 }}
                 onSubmit={async (values) => {
                   try {
                     // new Promise((resolve) => setTimeout(resolve, 500));
-                    await addClient({
+                    await AddSession({
                       variables: {
-                        nom_client: values.nom_client,
-                        email_client: values.email_client,
-                        tel_client: values.tel_client,
-                        Adr_client: values.Adr_client,
-                        personne: values.cin_p ? values.cin_p : null,
-                        societe: values.mat_fisc_sc ? values.mat_fisc_sc : null,
+                        type_sess: values.type_sess,
+                        date_deb_sess: values.date_deb_sess,
+                        lieu_sess: values.lieu_sess,
+                        prix_session: values.prix_session,
+                        client: values.nom_client,
+                        formation: values.intitule,
+                        formateur: values.nom_f,
+                        support: values.titre_support,
                       },
                     });
                   } catch (e) {
                     console.error(e.message);
                   }
                 }}
-                //  validationSchema={Yup.object().shape({
-                // nbre_min_part: Yup.string().string().required("Required"),
-                //  })}
               >
                 {(props) => {
                   const {
@@ -123,11 +134,58 @@ function AddClient() {
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
-                        <label htmlFor="nom" className="col-form-label">
-                          Nom Client:
+                        <label htmlFor="Type" className="col-form-label">
+                          Type:
                         </label>
                         <input
-                          required
+                          type="text"
+                          className="form-control"
+                          id="type_sess"
+                          onChange={handleChange}
+                          value={values.type_sess}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="Date Debut" className="col-form-label">
+                          Date Debut:
+                        </label>
+                        <input
+                          type="date"
+                          className="form-control"
+                          id="date_deb_sess"
+                          onChange={handleChange}
+                          value={values.date_deb_sess}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="Lieux" className="col-form-label">
+                          Lieux:
+                        </label>
+                        <input
+                          type="texte"
+                          className="form-control"
+                          id="lieu_sess"
+                          onChange={handleChange}
+                          value={values.lieu_sess}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="Prix" className="col-form-label">
+                          Prix:
+                        </label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="prix_session"
+                          onChange={handleChange}
+                          value={values.prix_session}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="Client" className="col-form-label">
+                          Client:
+                        </label>
+                        <input
                           type="text"
                           className="form-control"
                           id="nom_client"
@@ -136,64 +194,39 @@ function AddClient() {
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="CIN" className="col-form-label">
-                          CIN:
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          id="cin_p"
-                          onChange={handleChange}
-                          value={values.cin_p}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="mat_fisc_sc" className="col-form-label">
-                          Matricule Fiscale:
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          id="mat_fisc_sc"
-                          onChange={handleChange}
-                          value={values.mat_fisc_sc}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="Email" className="col-form-label">
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          className="form-control"
-                          id="email_client"
-                          onChange={handleChange}
-                          value={values.email_client}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="Tel" className="col-form-label">
-                          Telephone:
-                        </label>
-                        <input
-                          required
-                          type="number"
-                          className="form-control"
-                          id="tel_client"
-                          onChange={handleChange}
-                          value={values.tel_client}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="Adresse" className="col-form-label">
-                          Adresse:
+                        <label htmlFor="Formation" className="col-form-label">
+                          Formation:
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          id="Adr_client"
+                          id="intitule"
                           onChange={handleChange}
-                          value={values.Adr_client}
+                          value={values.intitule}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="Formateur" className="col-form-label">
+                          Formateur:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="nom_f"
+                          onChange={handleChange}
+                          value={values.nom_f}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="Support" className="col-form-label">
+                          Support:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id=" titre_support"
+                          onChange={handleChange}
+                          value={values.titre_support}
                         />
                       </div>
 
@@ -210,7 +243,7 @@ function AddClient() {
                           disabled={isSubmitting}
                           className="btn btn-primary"
                         >
-                          Add Client
+                          Add Session
                         </button>
                       </div>
                     </form>
@@ -224,4 +257,4 @@ function AddClient() {
     </div>
   );
 }
-export default AddClient;
+export default AddSession;

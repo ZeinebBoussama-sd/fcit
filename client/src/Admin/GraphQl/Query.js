@@ -81,3 +81,42 @@ export const GetFormateur = gql`
     }
   }
 `;
+export const GetSupport = gql`
+  {
+    allSupports {
+      titre_support
+      date_support
+      validation {
+        decision
+        ingenieurpedagogique {
+          nom_ing
+        }
+        formateur {
+          nom_f
+        }
+      }
+    }
+  }
+`;
+export const getSession = gql`
+  {
+    allSessions {
+      type_sess
+      date_deb_sess
+      lieu_sess
+      prix_session
+      client {
+        nom_client
+      }
+      formation {
+        intitule
+      }
+      formateur {
+        nom_f
+      }
+      support {
+        titre_support
+      }
+    }
+  }
+`;

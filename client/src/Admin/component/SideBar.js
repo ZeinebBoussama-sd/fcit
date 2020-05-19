@@ -51,7 +51,7 @@ function SideBar(props) {
               className="mr-1"
               id="sidebar_btn"
             />
-            <span>formation</span>
+            <span>Formation</span>
           </NavLink>
         </li>
         <li>

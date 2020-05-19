@@ -136,11 +136,8 @@ function AddFormation() {
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
-                        <label
-                          htmlFor="intitule-name"
-                          className="col-form-label"
-                        >
-                          intitule:
+                        <label htmlFor="intitulee" className="col-form-label">
+                          Intitule:
                         </label>
                         <input
                           type="text"
@@ -151,11 +148,8 @@ function AddFormation() {
                         />
                       </div>
                       <div className="form-group">
-                        <label
-                          htmlFor="duree_formation-text"
-                          className="col-form-label"
-                        >
-                          duree_formation:
+                        <label htmlFor="Durée" className="col-form-label">
+                          Durée:
                         </label>
                         <input
                           type="number"
@@ -166,11 +160,8 @@ function AddFormation() {
                         />
                       </div>
                       <div className="form-group">
-                        <label
-                          htmlFor="horaire_formation-name"
-                          className="col-form-label"
-                        >
-                          horaire_formation:
+                        <label htmlFor="Horaire" className="col-form-label">
+                          Horaire:
                         </label>
                         <input
                           type="number"
@@ -181,11 +172,8 @@ function AddFormation() {
                         />
                       </div>
                       <div className="form-group">
-                        <label
-                          htmlFor="nbre_min_part-text"
-                          className="col-form-label"
-                        >
-                          nbre_min_part:
+                        <label htmlFor="N.Min.Part" className="col-form-label">
+                          N.Min.Part:
                         </label>
                         <input
                           type="number"
@@ -196,11 +184,8 @@ function AddFormation() {
                         />
                       </div>
                       <div className="form-group">
-                        <label
-                          htmlFor="nbre_max_part-name"
-                          className="col-form-label"
-                        >
-                          nbre_max_part:
+                        <label htmlFor="N.Max.Part" className="col-form-label">
+                          N.Max.Part:
                         </label>
                         <input
                           type="number"
@@ -211,11 +196,8 @@ function AddFormation() {
                         />
                       </div>
                       <div className="form-group">
-                        <label
-                          htmlFor="description_formation-text"
-                          className="col-form-label"
-                        >
-                          description_formation:
+                        <label htmlFor="Description" className="col-form-label">
+                          Description:
                         </label>
                         <input
                           type="text"
@@ -226,11 +208,8 @@ function AddFormation() {
                         />
                       </div>
                       <div className="form-group">
-                        <label
-                          htmlFor="catagorie_formation-name"
-                          className="col-form-label"
-                        >
-                          catagorie_formation:
+                        <label htmlFor="Catagorie" className="col-form-label">
+                          Catagorie:
                         </label>
                         <input
                           type="text"
@@ -241,11 +220,8 @@ function AddFormation() {
                         />
                       </div>
                       <div className="form-group">
-                        <label
-                          htmlFor="prix_formation-text"
-                          className="col-form-label"
-                        >
-                          prix_formation:
+                        <label htmlFor="Prix" className="col-form-label">
+                          Prix:
                         </label>
                         <input
                           type="text"
@@ -256,11 +232,8 @@ function AddFormation() {
                         />
                       </div>
                       <div className="form-group">
-                        <label
-                          htmlFor="prerequis-text"
-                          className="col-form-label"
-                        >
-                          prerequis:
+                        <label htmlFor="Prerequis" className="col-form-label">
+                          Prerequis:
                         </label>
                         <input
                           type="text"
@@ -271,11 +244,8 @@ function AddFormation() {
                         />
                       </div>
                       <div className="form-group">
-                        <label
-                          htmlFor="participant-text"
-                          className="col-form-label"
-                        >
-                          participant:
+                        <label htmlFor="Participant" className="col-form-label">
+                          Participant:
                         </label>
                         <input
                           type="text"

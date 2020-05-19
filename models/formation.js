@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Formation = sequelize.define(
-    "Formation",
+    'Formation',
     {
       intitule: { allowNull: false, type: DataTypes.STRING },
       duree_formation: DataTypes.INTEGER,
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       description_formation: DataTypes.STRING,
       catagorie_formation: DataTypes.STRING,
       prix_formation: DataTypes.STRING,
-      Participant: DataTypes.STRING,
+      participant: DataTypes.STRING,
       prerequis: DataTypes.STRING,
     },
     {}
@@ -21,10 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     Formation.belongsTo(models.Theme);
     Formation.hasMany(models.Session);
     Formation.belongsToMany(models.Formateur, {
-      through: "Formateur_Formation",
+      through: 'Formateur_Formation',
     });
-    Formation.belongsToMany(models.MotCle, { through: "FormationMotCle" });
-    Formation.belongsToMany(models.Filieres_metiers, { through: "D" });
+    Formation.belongsToMany(models.MotCle, { through: 'FormationMotCle' });
+    Formation.belongsToMany(models.Filieres_metiers, { through: 'D' });
   };
   return Formation;
 };

@@ -178,6 +178,7 @@ const typeDefs = gql`
     personne(id: ID, cin_p: Int): Personne
     societe(id: ID, mat_fisc_sc: Int): Societe
     demandeformation(id: ID): DemandeFormation
+    allDemandeFormations: [DemandeFormation!]!
     theme(id: ID, nom_theme: String): Theme
     allThemes: [Theme!]!
     formation(id: ID, intitule: String): Formation

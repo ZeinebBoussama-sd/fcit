@@ -116,10 +116,9 @@ function AddFormation() {
                         prix_formation: values.prix_formation,
                         prerequis: values.prerequis,
                         participant: values.participant,
-                        ThemeId:
-                          values.ThemeId !== 0
-                            ? parseInt(values.ThemeId)
-                            : null,
+                        ThemeId: values.ThemeId
+                          ? parseInt(values.ThemeId)
+                          : null,
                       },
                     });
                     alert(JSON.stringify(values, null, 2));
@@ -273,7 +272,7 @@ function AddFormation() {
                           value={values.ThemeId}
                           id='ThemeId'
                         >
-                          <option value={0}>---chosse theme----</option>
+                          <option value=''>---chosse theme----</option>
                           {data.allThemes.map((theme) => {
                             return (
                               <option key={theme.id} value={theme.id}>

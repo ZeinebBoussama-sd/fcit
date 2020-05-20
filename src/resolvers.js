@@ -1,7 +1,7 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require("graphql");
-const { Kind } = require("graphql/language");
-const { ApolloError } = require("apollo-server-core");
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
+const { ApolloError } = require('apollo-server-core');
 const resolvers = {
   Date: new GraphQLScalarType({
     name: 'Date',
@@ -280,9 +280,9 @@ const resolvers = {
         date_dajout,
       });
     },
-    createFormation(root, args, { models }) {
+    async createFormation(root, args, { models }) {
       const addFormation = await models.Formation.create({
-        intitule :args.intitule,
+        intitule: args.intitule,
         duree_formation: args.duree_formation,
         horaire_formation: args.horaire_formation,
         nbre_min_part: args.nbre_min_part,
@@ -293,11 +293,11 @@ const resolvers = {
         participant: args.participant,
         prerequis: args.prerequis,
         ThemeId: args.ThemeId,
-      })
-      return addFormation
+      });
+      return addFormation;
     },
 
-    createIngenieurPedagogique(
+    async createIngenieurPedagogique(
       root,
       {
         nom_ing,
@@ -324,7 +324,7 @@ const resolvers = {
         adr_ing,
       });
     },
-    createParticipant(
+    async createParticipant(
       root,
       { nom_partcipant, prenom_partcipant, carte_identite },
       { models }
@@ -335,7 +335,7 @@ const resolvers = {
         carte_identite,
       });
     },
-    createParticiper(
+    async createParticiper(
       root,
       { rapport_eval, note_QCM, date_eval, ParticipantId, SessionId },
       { models }
@@ -348,7 +348,7 @@ const resolvers = {
         SessionId,
       });
     },
-    createSession(
+    async createSession(
       root,
       {
         type_sess,
@@ -391,18 +391,18 @@ const resolvers = {
         SupportId,
       });
     },
-    createSupport(root, { titre_support, date_support }, { models }) {
+    async createSupport(root, { titre_support, date_support }, { models }) {
       return models.Support.create({
         titre_support,
         date_support,
       });
     },
-    createTheme(root, { nom_theme }, { models }) {
+    async createTheme(root, { nom_theme }, { models }) {
       return models.Theme.create({
         nom_theme,
       });
     },
-    createValidation(
+    async createValidation(
       root,
       {
         date_val,

@@ -31,7 +31,7 @@ function Client() {
                 <td>{client.nom_client}</td>
                 <td>{client.email_client}</td>
                 <td>{client.tel_client}</td>
-                <td>{client.Adr_client}</td>
+                <td>{client.adr_client}</td>
                 <td>{client.personne && client.personne.cin_p}</td>
                 <td>{client.societe && client.societe.mat_fisc_sc}</td>
               </tr>

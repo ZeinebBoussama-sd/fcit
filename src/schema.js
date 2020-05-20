@@ -8,7 +8,7 @@ const typeDefs = gql`
     nom_client: String!
     email_client: String!
     tel_client: Int!
-    Adr_client: String
+    adr_client: String
     PersonneId: Int
     SocieteId: Int
     session: [Session]
@@ -214,7 +214,7 @@ const typeDefs = gql`
       nom_client: String!
       email_client: String!
       tel_client: Int!
-      Adr_client: String
+      adr_client: String
       personne: Int
       societe: Int
       PersonneId: Int
@@ -228,7 +228,7 @@ const typeDefs = gql`
       nom_client: String
       email_client: String
       tel_client: Int
-      Adr_client: String
+      adr_client: String
       PersonneId: Int
       SocieteId: Int
     ): Client!

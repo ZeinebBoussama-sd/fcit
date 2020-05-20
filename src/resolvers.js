@@ -113,9 +113,9 @@ const resolvers = {
 
       //looking after societe
       const findsociete =
-        args.personne &&
+        args.societe &&
         (await models.Societe.findOne({
-          where: { mat_fisc_sc: args.personne },
+          where: { mat_fisc_sc: args.societe },
         }));
       if (findsociete)
         throw new ApolloError("this mat_fisc_sc is already created");
@@ -135,7 +135,7 @@ const resolvers = {
         nom_client: args.nom_client,
         email_client: args.email_client,
         tel_client: args.tel_client,
-        Adr_client: args.Adr_client,
+        adr_client: args.adr_client,
         PersonneId: addperson && addperson.id,
         SocieteId: addsociete && addsociete.id,
       });
@@ -444,13 +444,13 @@ const resolvers = {
       return client.getPersonne();
     },
     async societe(client) {
-      return client.getSociete;
+      return client.getSociete();
     },
     async demandeformation(client) {
-      return client.getDemandeFormation;
+      return client.getDemandeFormation();
     },
     async session(client) {
-      return client.getSession;
+      return client.getSession();
     },
   },
   Personne: {
@@ -465,121 +465,121 @@ const resolvers = {
   },
   DemandeFormation: {
     async client(demandeformation) {
-      return demandeformation.getClient;
+      return demandeformation.getClient();
     },
     async formation(demandeformation) {
-      return demandeformation.getFormation;
+      return demandeformation.getFormation();
     },
   },
   Fichier: {
     async support(fichier) {
-      return fichier.getSupport;
+      return fichier.getSupport();
     },
   },
   Filieres_metiers: {
     async formation(filieres_metiers) {
-      return filieres_metiers.getFormation;
+      return filieres_metiers.getFormation();
     },
   },
   Formateur_Formation: {
     async formateur(formateur_formation) {
-      return formateur_formation.getFormation;
+      return formateur_formation.getFormation();
     },
     async formation(formateur_formation) {
-      return formateur_formation.getformateur;
+      return formateur_formation.getformateur();
     },
   },
   Formateur: {
     async session(formateur) {
-      return formateur.getSession;
+      return formateur.getSession();
     },
     async formation(formateur) {
-      return formateur.getFormation;
+      return formateur.getFormation();
     },
     async validation(formateur) {
-      return formateur.getValidation;
+      return formateur.getValidation();
     },
   },
   Formation: {
     async demandeformation(formation) {
-      return formation.getDemandeFormation;
+      return formation.getDemandeFormation();
     },
     async theme(formation) {
-      return formation.getTheme;
+      return formation.getTheme();
     },
     async filieres_metiers(formation) {
-      return formation.getFilieres_metiers;
+      return formation.getFilieres_metiers();
     },
     async motcle(formation) {
-      return formation.getMotCle;
+      return formation.getMotCle();
     },
     async session(formation) {
-      return formation.getSession;
+      return formation.getSession();
     },
     async formateur(formation) {
-      return formation.getformateur;
+      return formation.getformateur();
     },
   },
   IngenieurPedagogique: {
     async validation(ingenieurpedagogique) {
-      return ingenieurpedagogique.getValidation;
+      return ingenieurpedagogique.getValidation();
     },
   },
   Participant: {
     async session(participant) {
-      return participant.getSession;
+      return participant.getSession();
     },
   },
   Participer: {
     async participant(participer) {
-      return participer.getParticipant;
+      return participer.getParticipant();
     },
     async session(participer) {
-      return participer.getSession;
+      return participer.getSession();
     },
   },
   Session: {
     async formateur(session) {
-      return session.getformateur;
+      return session.getformateur();
     },
     async participant(session) {
-      return session.getParticipant;
+      return session.getParticipant();
     },
     async client(session) {
-      return session.getClient;
+      return session.getClient();
     },
     async formation(session) {
-      return session.getFormation;
+      return session.getFormation();
     },
     async support(session) {
-      return session.getSupport;
+      return session.getSupport();
     },
   },
   Support: {
     async session(support) {
-      return support.getSession;
+      return support.getSession();
     },
     async validation(support) {
-      return support.getValidation;
+      return support.getValidation();
     },
     async fichier(support) {
-      return support.getFichier;
+      return support.getFichier();
     },
   },
   Theme: {
     async formation(theme) {
-      return theme.getFormation;
+      return theme.getFormation();
     },
   },
   Validation: {
     async formateur(validation) {
-      return validation.getformateur;
+      return validation.getformateur();
     },
     async ingenieurpedagogique(validation) {
-      return validation.getIngenieurPedagogique;
+      return validation.getIngenieurPedagogique();
     },
     async support(validation) {
-      return validation.getSupport;
+      return validation.getSupport();
     },
   },
 };

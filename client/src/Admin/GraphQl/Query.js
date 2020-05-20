@@ -28,7 +28,7 @@ export const GetClient = gql`
       nom_client
       email_client
       tel_client
-      Adr_client
+      adr_client
       personne {
         cin_p
       }

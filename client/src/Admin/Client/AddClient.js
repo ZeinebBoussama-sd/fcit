@@ -9,7 +9,7 @@ function AddClient() {
       $nom_client: String!
       $email_client: String!
       $tel_client: Int!
-      $Adr_client: String
+      $adr_client: String
       $personne: Int
       $societe: Int
     ) {
@@ -17,16 +17,19 @@ function AddClient() {
         nom_client: $nom_client
         email_client: $email_client
         tel_client: $tel_client
-        Adr_client: $Adr_client
+        adr_client: $adr_client
         personne: $personne
         societe: $societe
       ) {
         nom_client
         email_client
         tel_client
-        Adr_client
+        adr_client
         personne {
           cin_p
+        }
+        societe {
+          mat_fisc_sc
         }
       }
     }
@@ -81,7 +84,7 @@ function AddClient() {
                   nom_client: "",
                   email_client: undefined,
                   tel_client: undefined,
-                  Adr_client: undefined,
+                  adr_client: undefined,
                   cin_p: undefined,
                   mat_fisc_sc: undefined,
                   PersonneId: undefined,
@@ -95,7 +98,7 @@ function AddClient() {
                         nom_client: values.nom_client,
                         email_client: values.email_client,
                         tel_client: values.tel_client,
-                        Adr_client: values.Adr_client,
+                        adr_client: values.adr_client,
                         personne: values.cin_p ? values.cin_p : null,
                         societe: values.mat_fisc_sc ? values.mat_fisc_sc : null,
                       },
@@ -164,6 +167,7 @@ function AddClient() {
                           Email
                         </label>
                         <input
+                          required
                           type="email"
                           className="form-control"
                           id="email_client"
@@ -191,9 +195,9 @@ function AddClient() {
                         <input
                           type="text"
                           className="form-control"
-                          id="Adr_client"
+                          id="adr_client"
                           onChange={handleChange}
-                          value={values.Adr_client}
+                          value={values.adr_client}
                         />
                       </div>
 

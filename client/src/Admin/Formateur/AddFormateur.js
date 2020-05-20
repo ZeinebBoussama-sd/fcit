@@ -257,7 +257,7 @@ function AddFormateur() {
                         <input
                           type="text"
                           className="form-control"
-                          id="salaire_f"
+                          id="specialite_f"
                           onChange={handleChange}
                           value={values.specialite_f}
                         />

@@ -34,14 +34,14 @@ function Formateur() {
               <th scope="row">{idx + 1}</th>
               <td>{formateur.nom_f}</td>
               <td>{formateur.prenom_f}</td>
-              <td>{formateur.class_f}</td>
+              <td>{formateur.classe_f}</td>
               <td>{formateur.fonction_f}</td>
               <td>{formateur.cv_f}</td>
               <td>{formateur.email_f}</td>
               <td>{formateur.tel_f}</td>
               <td>{formateur.NSS}</td>
               <td>{formateur.salaire_f}</td>
-              <td>{formateur.specialite_p}</td>
+              <td>{formateur.specialite_f}</td>
               <td>{formateur.adr_f}</td>
               <td>{formateur.date_dajout}</td>
             </tr>

@@ -195,6 +195,7 @@
   #sidebar {
     min-width: 80px;
     max-width: 80px;
+    min-height: 130vh;
     text-align: center;
     margin-left: 0px !important;
   }

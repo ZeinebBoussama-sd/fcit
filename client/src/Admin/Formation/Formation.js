@@ -42,7 +42,7 @@ function Formation() {
                 <td>{formation.prix_formation}</td>
                 <td>{formation.prerequis}</td>
                 <td>{formation.participant}</td>
-                <td>{formation.theme.nom_theme}</td>
+                <td>{formation.theme && formation.theme.nom_theme}</td>
               </tr>
             ))}
         </tbody>

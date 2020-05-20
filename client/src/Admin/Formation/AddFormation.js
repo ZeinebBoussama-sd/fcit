@@ -116,7 +116,10 @@ function AddFormation() {
                         prix_formation: values.prix_formation,
                         prerequis: values.prerequis,
                         participant: values.participant,
-                        ThemeId: values.ThemeId,
+                        ThemeId:
+                          values.ThemeId !== 0
+                            ? parseInt(values.ThemeId)
+                            : null,
                       },
                     });
                     alert(JSON.stringify(values, null, 2));
@@ -264,15 +267,16 @@ function AddFormation() {
                       </div>
                       <div className='form-group'>
                         <label htmlFor='Theme'>Theme</label>
-                        <select className='form-control' id='theme'>
-                          <option>---chosse theme----</option>
+                        <select
+                          className='form-control'
+                          onChange={handleChange}
+                          value={values.ThemeId}
+                          id='ThemeId'
+                        >
+                          <option value={0}>---chosse theme----</option>
                           {data.allThemes.map((theme) => {
                             return (
-                              <option
-                                key={theme.id}
-                                onChange={handleChange}
-                                value={values.theme}
-                              >
+                              <option key={theme.id} value={theme.id}>
                                 {theme.nom_theme}
                               </option>
                             );

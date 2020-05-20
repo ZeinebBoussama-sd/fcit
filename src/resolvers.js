@@ -4,8 +4,8 @@ const { Kind } = require("graphql/language");
 const { ApolloError } = require("apollo-server-core");
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: "Date",
-    description: "Date custom scalar type",
+    name: 'Date',
+    description: 'Date custom scalar type',
     parseValue(value) {
       return new Date(value); // value from the client
     },
@@ -109,7 +109,7 @@ const resolvers = {
         (await models.Personne.findOne({
           where: { cin_p: args.personne },
         }));
-      if (findperson) throw new ApolloError("this cin_p is already created");
+      if (findperson) throw new ApolloError('this cin_p is already created');
 
       //looking after societe
       const findsociete =
@@ -118,7 +118,7 @@ const resolvers = {
           where: { mat_fisc_sc: args.societe },
         }));
       if (findsociete)
-        throw new ApolloError("this mat_fisc_sc is already created");
+        throw new ApolloError('this mat_fisc_sc is already created');
 
       // if you have cin_p you create it.
       const addperson =
@@ -280,36 +280,21 @@ const resolvers = {
         date_dajout,
       });
     },
-    createFormation(
-      root,
-      {
-        intitule,
-        duree_formation,
-        horaire_formation,
-        nbre_min_part,
-        nbre_max_part,
-        description_formation,
-        catagorie_formation,
-        prix_formation,
-        participant,
-        prerequis,
-        ThemeId,
-      },
-      { models }
-    ) {
-      return models.Formation.create({
-        intitule,
-        duree_formation,
-        horaire_formation,
-        nbre_min_part,
-        nbre_max_part,
-        description_formation,
-        catagorie_formation,
-        prix_formation,
-        participant,
-        prerequis,
-        ThemeId,
-      });
+    createFormation(root, args, { models }) {
+      const addFormation = await models.Formation.create({
+        intitule :args.intitule,
+        duree_formation: args.duree_formation,
+        horaire_formation: args.horaire_formation,
+        nbre_min_part: args.nbre_min_part,
+        nbre_max_part: args.nbre_max_part,
+        description_formation: args.description_formation,
+        catagorie_formation: args.catagorie_formation,
+        prix_formation: args.prix_formation,
+        participant: args.participant,
+        prerequis: args.prerequis,
+        ThemeId: args.ThemeId,
+      })
+      return addFormation
     },
 
     createIngenieurPedagogique(

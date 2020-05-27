@@ -1,8 +1,8 @@
-import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import React from "react";
+import { useQuery } from "@apollo/react-hooks";
 
-import { getSession } from '../GraphQl/Query';
-import AddSession from './AddSession';
+import { getSession } from "../GraphQl/Query";
+import AddSession from "./AddSession";
 
 function Session() {
   const { loading, error, data } = useQuery(getSession);
@@ -10,28 +10,46 @@ function Session() {
   if (error) return <p>Error :{error}(</p>;
 
   return (
-    <div className='mt-11 '>
+    <div className="mt-11 ">
       <AddSession />
-      <div class='table-responsive'>
-        <table className=' table table-hover'>
+      <div className="table-responsive">
+        <table className=" table table-hover table-fixed">
           <thead>
             <tr>
-              <th scope='col'>#</th>
-              <th scope='col'>Type </th>
-              <th scope='col'>Date Debut </th>
-              <th scope='col'>Lieux</th>
-              <th scope='col'>Prix</th>
-              <th scope='col'>Client</th>
-              <th scope='col'>Formation</th>
-              <th scope='col'>Formateur</th>
-              <th scope='col'>Support</th>
+              <th scope="col" className="col-1">
+                #
+              </th>
+              <th scope="col" className="col-1">
+                Type{" "}
+              </th>
+              <th scope="col" className="col-2">
+                Date Debut{" "}
+              </th>
+              <th scope="col" className="col-1">
+                Lieux
+              </th>
+              <th scope="col" className="col-1">
+                Prix
+              </th>
+              <th scope="col" className="col-2">
+                Client
+              </th>
+              <th scope="col" className="col-2">
+                Formation
+              </th>
+              <th scope="col" className="col-1">
+                Formateur
+              </th>
+              <th scope="col" className="col-1">
+                Support
+              </th>
             </tr>
           </thead>
           <tbody>
             {data.allSessions &&
               data.allSessions.map((session, idx) => (
                 <tr key={idx}>
-                  <th scope='row'>{idx + 1}</th>
+                  <th scope="row">{idx + 1}</th>
                   <td>{session.type_sess}</td>
                   <td>{session.date_deb_sess}</td>
                   <td>{session.lieu_sess}</td>

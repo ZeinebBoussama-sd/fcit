@@ -1,11 +1,11 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
-const { ApolloError } = require('apollo-server-core');
+const { GraphQLScalarType } = require("graphql");
+const { Kind } = require("graphql/language");
+const { ApolloError } = require("apollo-server-core");
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: 'Date',
-    description: 'Date custom scalar type',
+    name: "Date",
+    description: "Date custom scalar type",
     parseValue(value) {
       return new Date(value); // value from the client
     },
@@ -109,7 +109,7 @@ const resolvers = {
         (await models.Personne.findOne({
           where: { cin_p: args.personne },
         }));
-      if (findperson) throw new ApolloError('this cin_p is already created');
+      if (findperson) throw new ApolloError("this cin_p is already created");
 
       //looking after societe
       const findsociete =
@@ -118,7 +118,7 @@ const resolvers = {
           where: { mat_fisc_sc: args.societe },
         }));
       if (findsociete)
-        throw new ApolloError('this mat_fisc_sc is already created');
+        throw new ApolloError("this mat_fisc_sc is already created");
 
       // if you have cin_p you create it.
       const addperson =

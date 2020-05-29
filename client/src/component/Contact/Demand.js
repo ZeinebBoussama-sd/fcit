@@ -1,6 +1,7 @@
 import React from "react";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
+import PerSociete from "./PerSociete";
 import { Formik } from "formik";
 import { GetFormation } from "../../Admin/GraphQl/Query";
 
@@ -59,6 +60,7 @@ function Demand() {
   if (error) return <p>Error :{error}(</p>;
   return (
     <div className="container mt-11">
+      <PerSociete />
       <Formik
         initialValues={{
           nom_client: "",

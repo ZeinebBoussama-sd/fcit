@@ -137,3 +137,30 @@ export const GetDemandeFormation = gql`
     }
   }
 `;
+
+export const GetPerson = gql`
+  query findperson($cin_p: Int) {
+    personne(cin_p: $cin_p) {
+      id
+      client {
+        nom_client
+        tel_client
+        adr_client
+        email_client
+      }
+    }
+  }
+`;
+export const GetSociete = gql`
+  query findsociete($mat_fisc_sc: Int) {
+    societe(mat_fisc_sc: $mat_fisc_sc) {
+      id
+      client {
+        nom_client
+        tel_client
+        adr_client
+        email_client
+      }
+    }
+  }
+`;

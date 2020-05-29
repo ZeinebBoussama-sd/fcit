@@ -26,11 +26,15 @@ const resolvers = {
     async allClients(root, args, { models }) {
       return models.Client.findAll();
     },
-    async personne(root, { id }, { models }) {
-      return models.Personne.findByPk(id);
+    async personne(root, res, { models }) {
+      return models.Personne.findOne({
+        where: { cin_p: res.cin_p },
+      });
     },
-    async societe(root, { id }, { models }) {
-      return models.Societe.findByPk(id);
+    async societe(root, res, { models }) {
+      return models.Societe.findOne({
+        where: { mat_fisc_sc: res.mat_fisc_sc },
+      });
     },
     async demandeformation(root, { id }, { models }) {
       return models.DemandeFormation.findByPk(id);

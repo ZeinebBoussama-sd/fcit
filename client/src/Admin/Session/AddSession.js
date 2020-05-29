@@ -36,12 +36,9 @@ function AddSession() {
   `;
 
   const [AddSession] = useMutation(ADD_SESSION);
-  const { loading, error, data } = useQuery(
-    GetClient,
-    GetFormation,
-    GetFormateur
-  );
-  console.log("get", data);
+  const GetClients = useQuery(GetClient);
+  const GetFormations = useQuery(GetFormation);
+  const GetFormateurs = useQuery(GetFormateur);
 
   return (
     <div>
@@ -187,8 +184,8 @@ function AddSession() {
                           id="ClientId"
                         >
                           <option value="">---choose Client----</option>
-                          {data &&
-                            data.allClients.map((client) => {
+                          {GetClients.data &&
+                            GetClients.data.allClients.map((client) => {
                               return (
                                 <option key={client.id} value={client.id}>
                                   {client.nom_client}
@@ -206,14 +203,19 @@ function AddSession() {
                           id="FormationId"
                         >
                           <option value="">---Choose Formation----</option>
-                          {data &&
-                            data.allFormations.map((formation) => {
-                              return (
-                                <option key={formation.id} value={formation.id}>
-                                  {formation.intitule}
-                                </option>
-                              );
-                            })}
+                          {GetFormations.data &&
+                            GetFormations.data.allFormations.map(
+                              (formation) => {
+                                return (
+                                  <option
+                                    key={formation.id}
+                                    value={formation.id}
+                                  >
+                                    {formation.intitule}
+                                  </option>
+                                );
+                              }
+                            )}
                         </select>
                       </div>
                       <div className="form-group">
@@ -225,14 +227,19 @@ function AddSession() {
                           id="FormateurId"
                         >
                           <option value="">---Choose Formateur----</option>
-                          {data &&
-                            data.allFormateurs.map((formateur) => {
-                              return (
-                                <option key={formateur.id} value={formateur.id}>
-                                  {formateur.nom_f}
-                                </option>
-                              );
-                            })}
+                          {GetFormateurs.data &&
+                            GetFormateurs.data.allFormateurs.map(
+                              (formateur) => {
+                                return (
+                                  <option
+                                    key={formateur.id}
+                                    value={formateur.id}
+                                  >
+                                    {formateur.nom_f}
+                                  </option>
+                                );
+                              }
+                            )}
                         </select>
                       </div>
 

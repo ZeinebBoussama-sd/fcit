@@ -20,6 +20,10 @@ function ClientInfo(props) {
             </div>
           ) : (
             <div>
+              <p className="text-red">
+                "Vous n'aviez pas un compte chez nous veuillez creer un "
+              </p>
+
               <AddClient ClientType={props.person} />
             </div>
           )}
@@ -38,7 +42,9 @@ function ClientInfo(props) {
             </div>
           ) : (
             <div>
-              <p className="text-red">"Not found societe"</p>
+              <p className="text-red">
+                "Vous n'aviez pas un compte chez nous veuillez creer un "
+              </p>
               {!props.res2.data.societe && (
                 <AddClient ClientType={props.person} />
               )}

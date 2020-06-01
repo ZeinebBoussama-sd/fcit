@@ -39,8 +39,6 @@ function AddClient() {
     { loading: mutationLoading, error: mutationError },
   ] = useMutation(ADD_CLIENT);
 
-  // debugger;
-
   return (
     <div>
       <button
@@ -50,7 +48,7 @@ function AddClient() {
         data-target="#exampleModal"
         data-whatever="@getbootstrap"
       >
-        Add Client
+        Ajouter Client
       </button>
 
       <div
@@ -66,7 +64,7 @@ function AddClient() {
             <div className="modal-header">
               <div>
                 <h5 className="modal-title" id="exampleModalLabel">
-                  Add Client
+                  Ajouter Client
                 </h5>
               </div>
               <button
@@ -107,9 +105,6 @@ function AddClient() {
                     console.error(e.message);
                   }
                 }}
-                //  validationSchema={Yup.object().shape({
-                // nbre_min_part: Yup.string().string().required("Required"),
-                //  })}
               >
                 {(props) => {
                   const {
@@ -138,6 +133,7 @@ function AddClient() {
                           value={values.nom_client}
                         />
                       </div>
+
                       <div className="form-group">
                         <label htmlFor="CIN" className="col-form-label">
                           CIN:
@@ -150,6 +146,7 @@ function AddClient() {
                           value={values.cin_p}
                         />
                       </div>
+
                       <div className="form-group">
                         <label htmlFor="mat_fisc_sc" className="col-form-label">
                           Matricule Fiscale:
@@ -162,6 +159,7 @@ function AddClient() {
                           value={values.mat_fisc_sc}
                         />
                       </div>
+
                       <div className="form-group">
                         <label htmlFor="Email" className="col-form-label">
                           Email
@@ -207,14 +205,14 @@ function AddClient() {
                           className="btn btn-secondary"
                           data-dismiss="modal"
                         >
-                          Close
+                          Fermer
                         </button>
                         <button
                           type="submit"
                           disabled={isSubmitting}
                           className="btn btn-primary"
                         >
-                          Add Client
+                          Fermer
                         </button>
                       </div>
                     </form>

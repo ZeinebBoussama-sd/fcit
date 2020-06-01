@@ -28,7 +28,7 @@ const typeDefs = gql`
   }
   type DemandeFormation {
     id: ID!
-    date_demande: Date!
+    date_demande: Date
     date_deb_prevue: Date
     type_demande: String
     etat_demande: String
@@ -37,6 +37,7 @@ const typeDefs = gql`
     duree_prevu: Int
     horaire_prevu: String
     mode_demande: String
+    createdAt: Date
     client: Client!
     formation: Formation!
   }
@@ -238,7 +239,7 @@ const typeDefs = gql`
     createSociete(mat_fisc_sc: Int!): Societe!
 
     createDemandeFormation(
-      date_demande: Date!
+      date_demande: Date
       date_deb_prevue: Date
       type_demande: String
       etat_demande: String

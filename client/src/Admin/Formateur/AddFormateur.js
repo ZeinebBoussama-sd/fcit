@@ -59,7 +59,7 @@ function AddFormateur() {
         data-target="#exampleModal"
         data-whatever="@getbootstrap"
       >
-        Add Formateur
+        Ajouter Formateur
       </button>
 
       <div
@@ -74,7 +74,7 @@ function AddFormateur() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Add Formateur
+                Ajouter Formateur
               </h5>
               <button
                 type="button"
@@ -293,14 +293,14 @@ function AddFormateur() {
                           className="btn btn-secondary"
                           data-dismiss="modal"
                         >
-                          Close
+                          Fermer
                         </button>
                         <button
                           type="submit"
                           disabled={isSubmitting}
                           className="btn btn-primary"
                         >
-                          Add Formateur
+                          Ajouter Formateur
                         </button>
                       </div>
                     </form>

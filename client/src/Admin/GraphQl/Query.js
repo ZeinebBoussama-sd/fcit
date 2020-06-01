@@ -134,6 +134,7 @@ export const GetDemandeFormation = gql`
       formation {
         intitule
       }
+      createdAt
     }
   }
 `;
@@ -143,6 +144,7 @@ export const GetPerson = gql`
     personne(cin_p: $cin_p) {
       id
       client {
+        id
         nom_client
         tel_client
         adr_client
@@ -156,6 +158,7 @@ export const GetSociete = gql`
     societe(mat_fisc_sc: $mat_fisc_sc) {
       id
       client {
+        id
         nom_client
         tel_client
         adr_client

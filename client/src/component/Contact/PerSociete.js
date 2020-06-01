@@ -1,16 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik } from "formik";
-import { useLazyQuery } from "@apollo/react-hooks";
-import { GetPerson, GetSociete } from "../../Admin/GraphQl/Query";
-import AddClient from "../../Admin/Client/AddClient";
 
-function PerSociete() {
-  const [person, setPerson] = useState("");
-  console.log("person", person);
-  const [getPerson, res] = useLazyQuery(GetPerson);
-  const [getSociete, res2] = useLazyQuery(GetSociete);
-  console.log("res", res);
-  console.log("res2", res2);
+function PerSociete(props) {
   return (
     <div className="">
       <h1>Demande:</h1>
@@ -22,7 +13,7 @@ function PerSociete() {
           name="inlineRadioOptions"
           id="inlineRadio1"
           value="option1"
-          onClick={() => setPerson("person")}
+          onClick={() => props.setPerson("person")}
         />
         <label className="form-check-label" htmlFor="inlineRadio1">
           Personne
@@ -35,31 +26,31 @@ function PerSociete() {
           name="inlineRadioOptions"
           id="inlineRadio2"
           value="option2"
-          onClick={() => setPerson("societe")}
+          onClick={() => props.setPerson("societe")}
         />
         <label className="form-check-label" htmlFor="inlineRadio2">
           Societe
         </label>
       </div>
-      {person === "person" && <p>Entrer votre carte d'identité</p>}
-      {person === "societe" && (
+      {props.person === "person" && <p>Entrer votre carte d'identité</p>}
+      {props.person === "societe" && (
         <p>Entrer la matricule fiscale de votre societé</p>
       )}
-      {(person === "person" || person === "societe") && (
+      {(props.person === "person" || props.person === "societe") && (
         <Formik
           initialValues={{
             cin: undefined,
           }}
           onSubmit={async (values) => {
             try {
-              if (person === "person") {
-                await getPerson({
+              if (props.person === "person") {
+                await props.getPerson({
                   variables: {
                     cin_p: values.cin,
                   },
                 });
-              } else if (person === "societe") {
-                await getSociete({
+              } else if (props.person === "societe") {
+                await props.getSociete({
                   variables: {
                     mat_fisc_sc: values.cin,
                   },
@@ -103,25 +94,6 @@ function PerSociete() {
             );
           }}
         </Formik>
-      )}
-      {person === "person" && res.data && (
-        <div>
-          <p>
-            {res.data.personne
-              ? res.data.personne.client.nom_client
-              : "Not found person"}
-          </p>
-        </div>
-      )}
-      {person === "societe" && res2.data && (
-        <div>
-          <p>
-            {res2.data.societe
-              ? res2.data.societe.client.nom_client
-              : "Not found societe"}
-          </p>
-          {!res2.data.societe && <AddClient />}
-        </div>
       )}
     </div>
   );

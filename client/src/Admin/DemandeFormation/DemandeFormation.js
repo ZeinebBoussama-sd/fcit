@@ -44,7 +44,7 @@ function DemandeFormation() {
                 <th scope="row" className="col-1">
                   {idx + 1}
                 </th>
-                <td className="col-2">{demandeformation.date_demande}</td>
+                <td className="col-2">{demandeformation.createdAt}</td>
                 <td className="col-1">{demandeformation.etat_demande}</td>
                 <td className="col-2">{demandeformation.client.nom_client}</td>
                 <td className="col-2">{demandeformation.formation.intitule}</td>

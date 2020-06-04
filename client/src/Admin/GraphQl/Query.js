@@ -1,14 +1,13 @@
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 
 export const GetFormation = gql`
   {
     allFormations {
-      id
+      CI_formation
+      code_formation
       intitule
       duree_formation
-      horaire_formation
       nbre_min_part
-      nbre_max_part
       description_formation
       catagorie_formation
       prix_formation
@@ -24,7 +23,8 @@ export const GetFormation = gql`
 export const GetClient = gql`
   {
     allClients {
-      id
+      code_client
+      pays_client
       nom_client
       email_client
       tel_client
@@ -41,7 +41,7 @@ export const GetClient = gql`
 export const GetTheme = gql`
   {
     allThemes {
-      id
+      code_theme
       nom_theme
     }
   }
@@ -49,7 +49,7 @@ export const GetTheme = gql`
 export const GetIngenieurPedagogique = gql`
   {
     allIngenieurPedagogiques {
-      id
+      code_IP
       nom_ing
       prenom_ing
       cv_ing
@@ -65,7 +65,7 @@ export const GetIngenieurPedagogique = gql`
 export const GetFormateur = gql`
   {
     allFormateurs {
-      id
+      code_formateur
       nom_f
       prenom_f
       classe_f
@@ -75,9 +75,17 @@ export const GetFormateur = gql`
       tel_f
       NSS
       salaire_f
-      specialite_f
       adr_f
       date_dajout
+      cin_f
+      copie_cin
+      passeport_f
+      copie_passeport
+      visa_f
+      val_visa
+      tarif_f
+      RIB_f
+      copie_RIB
     }
   }
 `;
@@ -123,10 +131,14 @@ export const getSession = gql`
 export const GetDemandeFormation = gql`
   {
     allDemandeFormations {
+      code_demande
       date_demande
       type_demande
       etat_demande
       prix_prevu
+      lieu_prevu
+      duree_prevu
+      horaire_prevu
       mode_demande
       client {
         nom_client
@@ -142,7 +154,7 @@ export const GetDemandeFormation = gql`
 export const GetPerson = gql`
   query findperson($cin_p: Int) {
     personne(cin_p: $cin_p) {
-      id
+      cin_p
       client {
         id
         nom_client
@@ -156,7 +168,7 @@ export const GetPerson = gql`
 export const GetSociete = gql`
   query findsociete($mat_fisc_sc: Int) {
     societe(mat_fisc_sc: $mat_fisc_sc) {
-      id
+      mat_fisc_sc
       client {
         id
         nom_client

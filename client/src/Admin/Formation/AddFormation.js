@@ -58,35 +58,33 @@ function AddFormation() {
             <div className='modal-body'>
               <Formik
                 initialValues={{
+                  code_formation: '',
                   intitule: '',
                   duree_formation: undefined,
-                  horaire_formation: undefined,
                   nbre_min_part: undefined,
-                  nbre_max_part: undefined,
                   description_formation: undefined,
                   catagorie_formation: undefined,
                   prix_formation: undefined,
                   prerequis: undefined,
                   participant: undefined,
-                  ThemeId: undefined,
+                  ThemeCodeTheme: undefined,
                 }}
                 onSubmit={async (values) => {
                   try {
                     await new Promise((resolve) => setTimeout(resolve, 500));
                     await addFormation({
                       variables: {
+                        code_formation: values.code_formation,
                         intitule: values.intitule,
                         duree_formation: values.duree_formation,
-                        horaire_formation: values.horaire_formation,
                         nbre_min_part: values.nbre_min_part,
-                        nbre_max_part: values.nbre_max_part,
                         description_formation: values.description_formation,
                         catagorie_formation: values.catagorie_formation,
                         prix_formation: values.prix_formation,
                         prerequis: values.prerequis,
                         participant: values.participant,
-                        ThemeId: values.ThemeId
-                          ? parseInt(values.ThemeId)
+                        ThemeCodeTheme: values.ThemeCodeTheme
+                          ? parseInt(values.ThemeCodeTheme)
                           : null,
                       },
                     });
@@ -115,6 +113,21 @@ function AddFormation() {
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className='form-group'>
+                        <label
+                          htmlFor='code_formation'
+                          className='col-form-label'
+                        >
+                          Code formation:
+                        </label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='code_formation'
+                          onChange={handleChange}
+                          value={values.code_formation}
+                        />
+                      </div>
+                      <div className='form-group'>
                         <label htmlFor='intitulee' className='col-form-label'>
                           Intitule:
                         </label>
@@ -139,18 +152,6 @@ function AddFormation() {
                         />
                       </div>
                       <div className='form-group'>
-                        <label htmlFor='Horaire' className='col-form-label'>
-                          Horaire:
-                        </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='horaire_formation'
-                          onChange={handleChange}
-                          value={values.horaire_formation || ''}
-                        />
-                      </div>
-                      <div className='form-group'>
                         <label htmlFor='N.Min.Part' className='col-form-label'>
                           N.Min.Part:
                         </label>
@@ -163,22 +164,11 @@ function AddFormation() {
                         />
                       </div>
                       <div className='form-group'>
-                        <label htmlFor='N.Max.Part' className='col-form-label'>
-                          N.Max.Part:
-                        </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='nbre_max_part'
-                          onChange={handleChange}
-                          value={values.nbre_max_part || ''}
-                        />
-                      </div>
-                      <div className='form-group'>
                         <label htmlFor='Description' className='col-form-label'>
                           Description:
                         </label>
-                        <input
+                        <textarea
+                          rows='4'
                           type='text'
                           className='form-control'
                           id='description_formation'
@@ -203,7 +193,7 @@ function AddFormation() {
                           Prix:
                         </label>
                         <input
-                          type='text'
+                          type='number'
                           className='form-control'
                           id='prix_formation'
                           onChange={handleChange}
@@ -239,13 +229,16 @@ function AddFormation() {
                         <select
                           className='form-control'
                           onChange={handleChange}
-                          value={values.ThemeId}
-                          id='ThemeId'
+                          value={values.ThemeCodeTheme}
+                          id='ThemeCodeTheme'
                         >
                           <option value=''>---choose theme----</option>
                           {data.allThemes.map((theme) => {
                             return (
-                              <option key={theme.id} value={theme.id}>
+                              <option
+                                key={theme.code_theme}
+                                value={theme.code_theme}
+                              >
                                 {theme.nom_theme}
                               </option>
                             );

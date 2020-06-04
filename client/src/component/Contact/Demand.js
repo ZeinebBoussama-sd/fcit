@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useLazyQuery } from "@apollo/react-hooks";
-import PerSociete from "./PerSociete";
-import { GetPerson, GetSociete } from "../../Admin/GraphQl/Query";
-import ClientInfo from "./ClientInfo";
-import AddClient from "./AddClient";
+import React, { useState, useEffect } from 'react';
+import { useLazyQuery } from '@apollo/react-hooks';
+import PerSociete from './PerSociete';
+import { GetPerson, GetSociete } from '../../Admin/GraphQl/Query';
+import ClientInfo from './ClientInfo';
+import AddClient from './AddClient';
 
 function Demand() {
   const [getPerson, res] = useLazyQuery(GetPerson);
   const [getSociete, res2] = useLazyQuery(GetSociete);
-  const [person, setPerson] = useState("");
+  const [person, setPerson] = useState('');
   const [getNumber, setNumber] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
   const [resClient, setResClient] = useState(null);
@@ -22,7 +22,7 @@ function Demand() {
 
   const showAddClient = () => {
     if (person && getNumber) {
-      if (person === "person") {
+      if (person === 'person') {
         if (!res.data) {
           setShowAdd(true);
         }
@@ -33,7 +33,7 @@ function Demand() {
             setShowAdd(true);
           }
         }
-      } else if (person === "societe") {
+      } else if (person === 'societe') {
         if (!res2.data) {
           setShowAdd(true);
         }
@@ -50,7 +50,7 @@ function Demand() {
     }
   };
   return (
-    <div className="container mt-11 minHeight-9">
+    <div className='container mt-11 minHeight-7'>
       <PerSociete
         getPerson={getPerson}
         getSociete={getSociete}

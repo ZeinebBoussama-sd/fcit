@@ -51,7 +51,7 @@ function IngenieurPedagogique() {
                 <td className="col-1">{ingenieur_pedagogique.nom_ing}</td>
                 <td className="col-1">{ingenieur_pedagogique.prenom_ing}</td>
                 <td className="col-1">{ingenieur_pedagogique.cv_ing}</td>
-                <td className="col-1">{ingenieur_pedagogique.email_ing}</td>
+                <td className="col-3">{ingenieur_pedagogique.email_ing}</td>
                 <td className="col-1">{ingenieur_pedagogique.tel_ing}</td>
                 <td className="col-1">{ingenieur_pedagogique.NSS_ing}</td>
                 <td className="col-1">{ingenieur_pedagogique.salaire_ing}</td>

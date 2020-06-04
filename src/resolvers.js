@@ -20,8 +20,8 @@ const resolvers = {
     },
   }),
   Query: {
-    async client(root, { id }, { models }) {
-      return models.Client.findByPk(id);
+    async client(root, { code_client }, { models }) {
+      return models.Client.findByPk(code_client);
     },
     async allClients(root, args, { models }) {
       return models.Client.findAll();
@@ -72,14 +72,14 @@ const resolvers = {
     async motcle(root, { id }, { models }) {
       return models.MotCle.findByPk(id);
     },
-    async participant(root, { id }, { models }) {
-      return models.Participant.findByPk(id);
+    async participant(root, { code_participant }, { models }) {
+      return models.Participant.findByPk(code_participant);
     },
     async participer(root, { id }, { models }) {
       return models.Participer.findByPk(id);
     },
-    async session(root, { id }, { models }) {
-      return models.Session.findByPk(id);
+    async session(root, { CI_session }, { models }) {
+      return models.Session.findByPk(CI_session);
     },
     async allSessions(root, args, { models }) {
       return models.Support.findAll();
@@ -90,8 +90,8 @@ const resolvers = {
     async allSupports(root, args, { models }) {
       return models.Support.findAll();
     },
-    async theme(root, { id }, { models }) {
-      return models.Theme.findByPk(id);
+    async theme(root, { code_theme }, { models }) {
+      return models.Theme.findByPk(code_theme);
     },
     async allThemes(root, args, { models }) {
       return models.Theme.findAll();
@@ -132,26 +132,32 @@ const resolvers = {
       // if you have mat_fisc_sc you create it.
       const addsociete =
         args.societe &&
-        (await models.Societe.create({ mat_fisc_sc: args.societe }));
+        (await models.Societe.create({
+          mat_fisc_sc: args.mat_fisc_sc,
+          responsable: args.responsable,
+        }));
 
       // create client
       const addClient = await models.Client.create({
+        code_client: args.code_client,
+        pays_client: args.pays_client,
         nom_client: args.nom_client,
         email_client: args.email_client,
         tel_client: args.tel_client,
         adr_client: args.adr_client,
-        PersonneId: addperson && addperson.id,
-        SocieteId: addsociete && addsociete.id,
+        PersonneId: addperson && addperson.cin_p,
+        SocieteId: addsociete && addsociete.mat_fisc_sc,
       });
       return addClient;
     },
-    async deleteClient(root, { id }, { models }) {
-      return models.Client.destroy({ where: { id: id } });
+    async deleteClient(root, { code_client }, { models }) {
+      return models.Client.destroy({ where: { code_client: code_client } });
     },
     async updateClient(
       root,
       {
-        id,
+        code_client,
+        pays_client,
         nom_client,
         email_client,
         tel_client,
@@ -163,6 +169,8 @@ const resolvers = {
     ) {
       return models.Client.update(
         {
+          code_client,
+          pays_client,
           nom_client,
           email_client,
           tel_client,
@@ -170,7 +178,7 @@ const resolvers = {
           PersonneId,
           SocieteId,
         },
-        { where: { id: id } }
+        { where: { code_client: code_client } }
       );
     },
     async createPersonne(root, { cin_p }, { models }) {
@@ -178,9 +186,10 @@ const resolvers = {
         cin_p,
       });
     },
-    async createSociete(root, { mat_fisc_sc }, { models }) {
+    async createSociete(root, { mat_fisc_sc, responsable }, { models }) {
       return models.Societe.create({
         mat_fisc_sc,
+        responsable,
       });
     },
     async createDemandeFormation(
@@ -234,8 +243,13 @@ const resolvers = {
         SupportId,
       });
     },
-    async createFilieres_metiers(root, { intitule_filiere }, { models }) {
+    async createFilieres_metiers(
+      root,
+      { code_intitule_filiere, intitule_filiere },
+      { models }
+    ) {
       return models.Filieres_metiers.create({
+        code_intitule_filiere,
         intitule_filiere,
       });
     },
@@ -254,6 +268,7 @@ const resolvers = {
     async createFormateur(
       root,
       {
+        code_formateur,
         nom_f,
         prenom_f,
         classe_f,
@@ -263,13 +278,22 @@ const resolvers = {
         tel_f,
         NSS,
         salaire_f,
-        specialite_f,
         adr_f,
         date_dajout,
+        cin_f,
+        copie_cin,
+        passeport_f,
+        copie_passeport,
+        visa_f,
+        val_visa,
+        tarif_f,
+        RIB_f,
+        copie_RIB,
       },
       { models }
     ) {
       return models.Formateur.create({
+        code_formateur,
         nom_f,
         prenom_f,
         classe_f,
@@ -279,18 +303,25 @@ const resolvers = {
         tel_f,
         NSS,
         salaire_f,
-        specialite_f,
         adr_f,
         date_dajout,
+        cin_f,
+        copie_cin,
+        passeport_f,
+        copie_passeport,
+        visa_f,
+        val_visa,
+        tarif_f,
+        RIB_f,
+        copie_RIB,
       });
     },
     async createFormation(root, args, { models }) {
       const addFormation = await models.Formation.create({
+        code_formation: args.code_formation,
         intitule: args.intitule,
         duree_formation: args.duree_formation,
-        horaire_formation: args.horaire_formation,
         nbre_min_part: args.nbre_min_part,
-        nbre_max_part: args.nbre_max_part,
         description_formation: args.description_formation,
         catagorie_formation: args.catagorie_formation,
         prix_formation: args.prix_formation,
@@ -339,6 +370,11 @@ const resolvers = {
         carte_identite,
       });
     },
+    async createMotCle(root, { motcle }, { models }) {
+      return models.MotCle.create({
+        motcle,
+      });
+    },
     async createParticiper(
       root,
       { rapport_eval, note_QCM, date_eval, ParticipantId, SessionId },
@@ -355,11 +391,14 @@ const resolvers = {
     async createSession(
       root,
       {
+        code_session,
         type_sess,
         mode_session,
         date_deb_sess,
         duree_sess,
-        horaire_sess,
+        hr_debut_j,
+        hr_fin_j,
+        hr_j,
         lieu_sess,
         prix_session,
         honoraire_sess,
@@ -376,11 +415,14 @@ const resolvers = {
       { models }
     ) {
       return models.Session.create({
+        code_session,
         type_sess,
         mode_session,
         date_deb_sess,
         duree_sess,
-        horaire_sess,
+        hr_debut_j,
+        hr_fin_j,
+        hr_j,
         lieu_sess,
         prix_session,
         honoraire_sess,
@@ -403,15 +445,18 @@ const resolvers = {
     },
     async createTheme(root, { nom_theme }, { models }) {
       return models.Theme.create({
+        code_theme,
         nom_theme,
       });
     },
     async createValidation(
       root,
       {
+        code_val,
         date_val,
-        decision,
         remarque,
+        decision_R,
+        decision_F,
         FormateurId,
         IngenieurPedagogiqueId,
         SupportId,
@@ -419,9 +464,11 @@ const resolvers = {
       { models }
     ) {
       return models.Validation.create({
-        ate_val,
-        decision,
+        code_val,
+        date_val,
         remarque,
+        decision_R,
+        decision_F,
         FormateurId,
         IngenieurPedagogiqueId,
         SupportId,

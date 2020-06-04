@@ -4,11 +4,12 @@ const typeDefs = gql`
   scalar Date
 
   type Client {
-    id: ID!
+    code_client: ID!
+    pays_client: String!
     nom_client: String!
     email_client: String!
-    tel_client: Int!
-    adr_client: String
+    tel_client: String!
+    adr_client: String!
     PersonneId: Int
     SocieteId: Int
     session: [Session]
@@ -17,13 +18,12 @@ const typeDefs = gql`
     societe: Societe
   }
   type Personne {
-    id: ID!
-    cin_p: Int
+    cin_p: Int!
     client: Client!
   }
   type Societe {
-    id: ID!
-    mat_fisc_sc: Int
+    mat_fisc_sc: String!
+    responsable: String!
     client: Client!
   }
   type DemandeFormation {
@@ -42,56 +42,63 @@ const typeDefs = gql`
     formation: Formation!
   }
   type Fichier {
-    id: ID!
-    nom_fichier: String
-    type_fichier: String
-    taille_max: Int
+    code_fichier: ID!
+    nom_fichier: String!
+    type_fichier: String!
+    taille_max: Int!
     url_fichier: String!
-    nature_support: String
+    nature_support: String!
     support: Support!
   }
   type Filieres_metiers {
-    id: ID!
+    code_intitule_filiere: String!
     intitule_filiere: String!
     formation: [Formation]
   }
   type Formateur_Formation {
-    validation_f: Boolean
-    date_validation: Date
+    validation_f: Boolean!
+    date_validation: Date!
     formation: Formation!
     formateur: Formateur!
   }
 
   type Formateur {
-    id: ID!
+    code_formateur: String!
     nom_f: String!
     prenom_f: String!
-    classe_f: String
-    fonction_f: String
-    cv_f: String
+    classe_f: String!
+    fonction_f: String!
+    cv_f: String!
     email_f: String!
-    tel_f: Int
+    tel_f: String!
     NSS: Int
     salaire_f: Float
-    specialite_f: String
-    adr_f: String
+    adr_f: String!
     date_dajout: Date
+    cin_f: Int
+    copie_cin: String
+    passeport_f: Int
+    copie_passeport: String
+    visa_f: String
+    val_visa: Date
+    tarif_f: Float
+    RIB_f: Int
+    copie_RIB: String
     formation: [Formation]
     session: [Session]
     validation: [Validation]
   }
   type Formation {
-    id: ID!
+    CI_formation: ID!
+    code_formation: String!
     intitule: String!
-    duree_formation: Int
-    horaire_formation: Int
-    nbre_min_part: Int
-    nbre_max_part: Int
-    description_formation: String
-    catagorie_formation: String
-    prix_formation: String
-    participant: String
-    prerequis: String
+    duree_formation: Int!
+    nbre_min_part: Int!
+    description_formation: String!
+    catagorie_formation: String!
+    prix_formation: Float!
+    participant: String!
+    prerequis: String!
     ThemeId: Int
     demandeformation: [DemandeFormation]
     theme: Theme
@@ -101,24 +108,24 @@ const typeDefs = gql`
     session: [Session]
   }
   type IngenieurPedagogique {
-    id: ID!
+    code_IP: ID!
     nom_ing: String!
     prenom_ing: String!
-    cv_ing: String
-    email_ing: String
-    tel_ing: Int
-    NSS_ing: Int
-    salaire_ing: Float
-    specialite_ing: String
-    adr_ing: String
+    cv_ing: String!
+    email_ing: String!
+    tel_ing: String!
+    NSS_ing: Int!
+    salaire_ing: Float!
+    specialite_ing: String!
+    adr_ing: String!
     validation: [Validation]!
   }
   type MotCle {
-    id: ID!
+    motcle: String!
     formation: [Formation]
   }
   type Participant {
-    id: ID!
+    code_participant: ID!
     nom_partcipant: String
     prenom_partcipant: String
     carte_identite: Int!
@@ -132,12 +139,15 @@ const typeDefs = gql`
     participant: Participant!
   }
   type Session {
-    id: ID!
-    type_sess: String
-    mode_session: String
-    date_deb_sess: Date
-    duree_sess: Int
-    horaire_sess: String
+    CI_sessi: ID!
+    code_session: String!
+    type_sess: String!
+    mode_session: String!
+    date_deb_sess: Date!
+    duree_sess: Int!
+    hr_debut_j: String!
+    hr_fin_j: String!
+    hr_j: String!
     lieu_sess: String
     prix_session: Float
     honoraire_sess: Float
@@ -153,50 +163,55 @@ const typeDefs = gql`
     formateur: Formateur
   }
   type Support {
-    id: ID!
-    titre_support: String
-    date_support: Date
+    code_support: ID!
+    titre_support: String!
+    date_support: Date!
     session: [Session]
     validation: [Validation]!
     fichier: [Fichier]!
   }
   type Theme {
-    id: ID!
-    nom_theme: String
+    code_theme: String!
+    nom_theme: String!
     formation: [Formation]
   }
   type Validation {
-    date_val: Date
-    decision: String
-    remarque: String
+    code_val: Int!
+    date_val: Date!
+    decision_R: Boolean!
+    decision_F: Boolean!
+    remarque: String!
     formateur: Formateur!
     ingenieurpedagogique: IngenieurPedagogique!
     support: Support!
   }
   type Query {
-    client(id: ID, nom_client: String): Client
+    client(code_client: ID, nom_client: String): Client
     allClients: [Client!]!
-    personne(id: ID, cin_p: Int): Personne
-    societe(id: ID, mat_fisc_sc: Int): Societe
+    personne(cin_p: Int): Personne
+    societe(mat_fisc_sc: String): Societe
     demandeformation(id: ID): DemandeFormation
     allDemandeFormations: [DemandeFormation!]!
-    theme(id: ID, nom_theme: String): Theme
+    theme(code_theme: String, nom_theme: String): Theme
     allThemes: [Theme!]!
-    formation(id: ID, intitule: String): Formation
+    formation(CI_formation: ID, intitule: String): Formation
     allFormations: [Formation!]!
-    session(id: ID): Session
+    session(CI_session: ID): Session
     allSessions: [Session!]!
-    formateur(id: ID, nom_f: String): Formateur
+    formateur(code_formateur: String, nom_f: String): Formateur
     allFormateurs: [Formateur!]!
-    support(id: ID, titre_support: String): Support
+    support(code_support: ID, titre_support: String): Support
     allSupports: [Support!]!
-    fichier(id: ID, nom_fichier: String): Fichier
-    motcle(id: ID): MotCle
-    ingenieurpedagogique(id: ID, nom_ing: String): IngenieurPedagogique
+    fichier(code_fichier: ID, nom_fichier: String): Fichier
+    motcle(motcle: String): MotCle
+    ingenieurpedagogique(code_IP: ID, nom_ing: String): IngenieurPedagogique
     allIngenieurPedagogiques: [IngenieurPedagogique!]!
-    participant(id: ID, cin_p: Int): Participant
-    validation(id: ID): Validation
-    filieres_metiers(id: ID, intitule_filiere: String): Filieres_metiers
+    participant(code_participant: ID, carte_identite: Int): Participant
+    validation(code_val: ID): Validation
+    filieres_metiers(
+      code_intitule_filiere: String
+      intitule_filiere: String
+    ): Filieres_metiers
     formateur_formation(id: ID): Formateur_Formation
     participer(id: ID): Participer
   }
@@ -212,20 +227,23 @@ const typeDefs = gql`
   }
   type Mutation {
     createClient(
+      code_client: String!
+      pays_client: String!
       nom_client: String!
       email_client: String!
       tel_client: Int!
-      adr_client: String
+      adr_client: String!
       personne: Int
       societe: Int
       PersonneId: Int
       SocieteId: Int
     ): Client!
 
-    deleteClient(id: ID!): DeleteClientMutationResponse
+    deleteClient(code_client: String!): DeleteClientMutationResponse
 
     updateClient(
-      id: ID
+      code_client: String
+      pays_client: String
       nom_client: String
       email_client: String
       tel_client: Int
@@ -236,7 +254,7 @@ const typeDefs = gql`
 
     createPersonne(cin_p: Int!): Personne!
 
-    createSociete(mat_fisc_sc: Int!): Societe!
+    createSociete(mat_fisc_sc: String!, responsable: String): Societe!
 
     createDemandeFormation(
       date_demande: Date
@@ -261,41 +279,52 @@ const typeDefs = gql`
       SupportId: Int!
     ): Fichier!
 
-    createFilieres_metiers(intitule_filiere: String!): Filieres_metiers!
+    createFilieres_metiers(
+      code_intitule_filiere: String!
+      intitule_filiere: String!
+    ): Filieres_metiers!
 
     createFormateur_Formation(
-      validation_f: Boolean
-      date_validation: Date
+      validation_f: Boolean!
+      date_validation: Date!
       FormationId: Int!
       FormateurId: Int!
     ): Formateur_Formation!
 
     createFormateur(
+      code_formateur: String!
       nom_f: String!
       prenom_f: String!
-      classe_f: String
-      fonction_f: String
-      cv_f: String
+      classe_f: String!
+      fonction_f: String!
+      cv_f: String!
       email_f: String!
-      tel_f: Int
+      tel_f: String!
       NSS: Int
       salaire_f: Float
-      specialite_f: String
-      adr_f: String
+      adr_f: String!
       date_dajout: Date
+      cin_f: Int
+      copie_cin: String
+      passeport_f: Int
+      copie_passeport: String
+      visa_f: String
+      val_visa: Date
+      tarif_f: Float
+      RIB_f: Int
+      copie_RIB: String
     ): Formateur!
 
     createFormation(
+      code_formation: String!
       intitule: String!
-      duree_formation: Int
-      horaire_formation: Int
-      nbre_min_part: Int
-      nbre_max_part: Int
-      description_formation: String
-      catagorie_formation: String
-      prix_formation: String
-      participant: String
-      prerequis: String
+      duree_formation: Int!
+      nbre_min_part: Int!
+      description_formation: String!
+      catagorie_formation: String!
+      prix_formation: Float
+      participant: String!
+      prerequis: String!
       ThemeId: Int
     ): Formation!
 
@@ -311,7 +340,7 @@ const typeDefs = gql`
       adr_ing: String
     ): IngenieurPedagogique
 
-    createMotCle(id: ID): MotCle!
+    createMotCle(motcle: String!): MotCle!
 
     createParticipant(
       nom_partcipant: String
@@ -328,11 +357,14 @@ const typeDefs = gql`
     ): Participer!
 
     createSession(
+      code_session: String
       type_sess: String
       mode_session: String
       date_deb_sess: Date
       duree_sess: Int
-      horaire_sess: String
+      hr_debut_j: String
+      hr_fin_j: String
+      hr_j: String
       lieu_sess: String
       prix_session: Float
       honoraire_sess: Float
@@ -349,12 +381,14 @@ const typeDefs = gql`
 
     createSupport(titre_support: String, date_support: Date): Support!
 
-    createTheme(nom_theme: String!): Theme!
+    createTheme(code_theme: String!, nom_theme: String!): Theme!
 
     createValidation(
-      date_val: Date
-      decision: String
-      remarque: String
+      code_val: Int!
+      date_val: Date!
+      decision_R: Boolean!
+      decision_F: Boolean!
+      remarque: String!
       FormateurId: Int
       IngenieurPedagogiqueId: Int
       SupportId: Int

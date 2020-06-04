@@ -2,6 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 
 function PerSociete(props) {
+  const getNumber = props.getNumber ? props.getNumber : "";
   return (
     <div className="">
       <h1>Demande:</h1>
@@ -38,8 +39,9 @@ function PerSociete(props) {
       )}
       {(props.person === "person" || props.person === "societe") && (
         <Formik
+          enableReinitialize
           initialValues={{
-            cin: undefined,
+            cin: getNumber,
           }}
           onSubmit={async (values) => {
             try {
@@ -56,6 +58,7 @@ function PerSociete(props) {
                   },
                 });
               }
+              props.setNumber(values.cin);
             } catch (e) {
               console.log("e", e);
             }

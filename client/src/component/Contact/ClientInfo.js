@@ -1,55 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AddDemande from "./AddDemande";
 import AddClient from "./AddClient";
 
 function ClientInfo(props) {
+  const [info, setInfo] = useState(null);
+
   const res = props.res.data;
   const res2 = props.res2.data;
+  const resClient = props.resClient;
+  useEffect(() => {});
+
+  if (props.person === "person") {
+    if (res && resClient) {
+      setInfo(null);
+    } else if (res) {
+      setInfo(res.personne.client);
+    } else if (resClient) {
+      setInfo(resClient.personne.client);
+    }
+  } else if (props.societe === "societe") {
+    if (res && resClient) {
+      setInfo(null);
+    }
+    if (res2) {
+      setInfo(res2.societe.client);
+    } else if (resClient) {
+      resClient.societe && setInfo(resClient.societe.client);
+    }
+  }
+  debugger;
   return (
     <div>
-      {props.person === "person" && res && (
+      {info ? (
         <div>
-          {res.personne ? (
-            <div>
-              <p>ID: {res.personne.client.id}</p>
-              <p>Name: {res.personne.client.nom_client}</p>
-              <p>Adress: {res.personne.client.adr_client}</p>
-              <p>Email: {res.personne.client.email_client}</p>
-              <p>Tel: {res.personne.client.tel_client}</p>
-              <AddDemande clientID={res.personne.client.id} />
-            </div>
-          ) : (
-            <div>
-              <p className="text-red">
-                "Vous n'aviez pas un compte chez nous veuillez creer un "
-              </p>
-
-              <AddClient ClientType={props.person} />
-            </div>
-          )}
+          <p>ID: {info.id}</p>
+          <p>Name: {info.nom_client}</p>
+          <p>Adress: {info.adr_client}</p>
+          <p>Email: {info.email_client}</p>
+          <p>Tel: {info.tel_client}</p>
+          <AddDemande clientID={info.id} />
         </div>
-      )}
-      {props.person === "societe" && res2 && (
+      ) : (
         <div>
-          {res2.societe ? (
-            <div>
-              <p>ID: {res2.societe.client.id}</p>
-              <p>Name: {res2.societe.client.nom_client}</p>
-              <p>Adress: {res2.societe.client.adr_client}</p>
-              <p>Email: {res2.societe.client.email_client}</p>
-              <p>Tel: {res2.societe.client.tel_client}</p>
-              <AddDemande clientID={res2.societe.client.id} />
-            </div>
-          ) : (
-            <div>
-              <p className="text-red">
-                "Vous n'aviez pas un compte chez nous veuillez creer un "
-              </p>
-              {!props.res2.data.societe && (
-                <AddClient ClientType={props.person} />
-              )}
-            </div>
-          )}
+          <p className="text-red">
+            "Vous n'aviez pas un compte chez nous veuillez creer un "
+          </p>
         </div>
       )}
     </div>

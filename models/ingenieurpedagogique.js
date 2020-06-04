@@ -3,15 +3,20 @@ module.exports = (sequelize, DataTypes) => {
   const IngenieurPedagogique = sequelize.define(
     "IngenieurPedagogique",
     {
-      nom_ing: { allowNull: false, type: DataTypes.STRING },
-      prenom_ing: { allowNull: false, type: DataTypes.STRING },
-      cv_ing: DataTypes.STRING,
-      email_ing: DataTypes.STRING,
-      tel_ing: DataTypes.INTEGER,
-      NSS_ing: DataTypes.INTEGER,
-      salaire_ing: DataTypes.FLOAT,
-      specialite_ing: DataTypes.STRING,
-      adr_ing: DataTypes.STRING,
+      code_IP: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      nom_ing: { allowNull: false, type: DataTypes.STRING(20) },
+      prenom_ing: { allowNull: false, type: DataTypes.STRING(20) },
+      cv_ing: { allowNull: false, type: DataTypes.STRING },
+      email_ing: { allowNull: false, type: DataTypes.STRING },
+      tel_ing: { allowNull: false, type: DataTypes.STRING(20) },
+      NSS_ing: { allowNull: false, type: DataTypes.INTEGER(10) },
+      salaire_ing: { allowNull: false, type: DataTypes.FLOAT(7, 3) },
+      specialite_ing: { allowNull: false, type: DataTypes.STRING(20) },
+      adr_ing: { allowNull: false, type: DataTypes.STRING },
     },
     {}
   );

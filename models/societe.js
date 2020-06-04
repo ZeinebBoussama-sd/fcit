@@ -2,7 +2,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Societe = sequelize.define("Societe", {
     mat_fisc_sc: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(15),
+      primaryKey: true,
+    },
+    responsable: {
+      type: DataTypes.STRING(15),
       allowNull: false,
     },
   });

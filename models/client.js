@@ -3,10 +3,21 @@ module.exports = (sequelize, DataTypes) => {
   const Client = sequelize.define(
     "Client",
     {
-      nom_client: DataTypes.STRING,
-      email_client: DataTypes.STRING,
-      tel_client: DataTypes.INTEGER,
-      adr_client: DataTypes.STRING,
+      code_client: {
+        type: DataTypes.STRING(5),
+        primaryKey: true,
+      },
+      pays_client: {
+        type: DataTypes.STRING(5),
+        allowNull: false,
+      },
+      nom_client: {
+        type: DataTypes.STRING(30),
+        allowNull: false,
+      },
+      email_client: { type: DataTypes.STRING, allowNull: false },
+      tel_client: { type: DataTypes.STRING(20), allowNull: false },
+      adr_client: { type: DataTypes.STRING(30), allowNull: false },
     },
     {}
   );

@@ -3,11 +3,21 @@ module.exports = (sequelize, DataTypes) => {
   const DemandeFormation = sequelize.define(
     "DemandeFormation",
     {
-      date_demande: DataTypes.DATE,
-      date_deb_prevue: DataTypes.DATE,
-      type_demande: DataTypes.STRING,
-      etat_demande: DataTypes.STRING,
-      prix_prevu: DataTypes.FLOAT,
+      code_demande: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      date_demande: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      type_demande: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+      },
+      etat_demande: { type: DataTypes.STRING(10), allowNull: false },
+      prix_prevu: { type: DataTypes.FLOAT(7, 3), allowNull: false },
       lieu_prevu: DataTypes.STRING,
       duree_prevu: DataTypes.INTEGER,
       horaire_prevu: DataTypes.STRING,

@@ -3,8 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const Formateur_Formation = sequelize.define(
     "Formateur_Formation",
     {
-      validation_f: DataTypes.BOOLEAN,
-      date_validation: DataTypes.DATE,
+      validation_f: { type: DataTypes.BOOLEAN, allowNull: false },
+      date_validation: { type: DataTypes.DATE, allowNull: false },
     },
     {}
   );

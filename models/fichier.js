@@ -3,11 +3,16 @@ module.exports = (sequelize, DataTypes) => {
   const Fichier = sequelize.define(
     "Fichier",
     {
-      nom_fichier: DataTypes.STRING,
-      type_fichier: DataTypes.STRING,
-      taille_max: DataTypes.INTEGER,
+      code_fichier: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      nom_fichier: { type: DataTypes.STRING, allowNull: false },
+      type_fichier: { type: DataTypes.STRING, allowNull: false },
+      taille_max: { type: DataTypes.INTEGER, allowNull: false },
       url_fichier: { allowNull: false, type: DataTypes.STRING },
-      nature_support: DataTypes.STRING,
+      nature_support: { type: DataTypes.STRING, allowNull: false },
     },
     {}
   );

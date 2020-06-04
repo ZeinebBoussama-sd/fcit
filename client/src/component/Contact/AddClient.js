@@ -34,23 +34,22 @@ function AddClient(props) {
       }
     }
   `;
-  const [
-    addClient,
-    { loading: mutationLoading, error: mutationError },
-  ] = useMutation(ADD_CLIENT);
+  const [addClient, res] = useMutation(ADD_CLIENT);
 
-  debugger;
-  console.log("props", props);
-
+  const ClientType = props.ClientType;
+  const getNumber = props.getNumber;
+  console.log("res", res);
+  props.setResClient(res.data);
   return (
     <Formik
+      enableReinitialize
       initialValues={{
         nom_client: "",
-        email_client: undefined,
+        email_client: "",
         tel_client: undefined,
         adr_client: undefined,
-        cin_p: undefined,
-        mat_fisc_sc: undefined,
+        cin_p: ClientType === "person" ? getNumber : undefined,
+        mat_fisc_sc: ClientType === "societe" ? getNumber : undefined,
         PersonneId: undefined,
         SocieteId: undefined,
       }}
@@ -98,12 +97,13 @@ function AddClient(props) {
                 value={values.nom_client}
               />
             </div>
-            {props.ClientType === "person" && (
+            {ClientType === "person" && (
               <div className="form-group">
                 <label htmlFor="CIN" className="col-form-label">
                   CIN:
                 </label>
                 <input
+                  disabled
                   type="number"
                   className="form-control"
                   id="cin_p"
@@ -112,12 +112,13 @@ function AddClient(props) {
                 />
               </div>
             )}
-            {props.ClientType === "societe" && (
+            {ClientType === "societe" && (
               <div className="form-group">
                 <label htmlFor="mat_fisc_sc" className="col-form-label">
                   Matricule Fiscale:
                 </label>
                 <input
+                  disabled
                   type="number"
                   className="form-control"
                   id="mat_fisc_sc"

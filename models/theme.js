@@ -3,7 +3,12 @@ module.exports = (sequelize, DataTypes) => {
   const Theme = sequelize.define(
     "Theme",
     {
-      nom_theme: DataTypes.STRING,
+      code_theme: {
+        type: DataTypes.STRING(5),
+        primaryKey: true,
+      },
+
+      nom_theme: { type: DataTypes.STRING(30), allowNull: false },
     },
     {}
   );

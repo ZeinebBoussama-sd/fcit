@@ -3,9 +3,14 @@ module.exports = (sequelize, DataTypes) => {
   const Participant = sequelize.define(
     "Participant",
     {
-      nom_partcipant: DataTypes.STRING,
-      prenom_partcipant: DataTypes.STRING,
-      carte_identite: { allowNull: false, type: DataTypes.INTEGER },
+      code_participant: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      nom_partcipant: { type: DataTypes.STRING(30), allowNull: false },
+      prenom_partcipant: { type: DataTypes.STRING(30), allowNull: false },
+      carte_identite: { allowNull: false, type: DataTypes.INTEGER(10) },
     },
     {}
   );

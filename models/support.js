@@ -1,9 +1,15 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
   const Support = sequelize.define("Support", {
-    titre_support: DataTypes.STRING,
+    code_support: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    titre_support: { type: DataTypes.STRING, allowNull: false },
     date_support: {
       type: DataTypes.DATE,
+      allowNull: false,
     },
   });
   Support.associate = function (models) {

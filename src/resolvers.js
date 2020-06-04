@@ -36,14 +36,14 @@ const resolvers = {
         where: { mat_fisc_sc: res.mat_fisc_sc },
       });
     },
-    async demandeformation(root, { id }, { models }) {
-      return models.DemandeFormation.findByPk(id);
+    async demandeformation(root, { code_demande }, { models }) {
+      return models.DemandeFormation.findByPk(code_demande);
     },
     async allDemandeFormations(root, args, { models }) {
       return models.DemandeFormation.findAll();
     },
-    async fichier(root, { id }, { models }) {
-      return models.Fichier.findByPk(id);
+    async fichier(root, { code_fichier }, { models }) {
+      return models.Fichier.findByPk(code_fichier);
     },
     async filieres_metiers(root, { id }, { models }) {
       return models.Filieres_metiers.findByPk(id);
@@ -51,26 +51,26 @@ const resolvers = {
     async formateur_formation(root, { id }, { models }) {
       return models.Formateur_Formation.findByPk(id);
     },
-    async formateur(root, { id }, { models }) {
-      return models.Formateur.findByPk(id);
+    async formateur(root, { code_formateur }, { models }) {
+      return models.Formateur.findByPk(code_formateur);
     },
     async allFormateurs(root, args, { models }) {
       return models.Formateur.findAll();
     },
-    async formation(root, { id }, { models }) {
-      return models.Formation.findByPk(id);
+    async formation(root, { CI_formation }, { models }) {
+      return models.Formation.findByPk(CI_formation);
     },
     async allFormations(root, args, { models }) {
       return models.Formation.findAll();
     },
-    async ingenieurpedagogique(root, { id }, { models }) {
-      return models.Recipe.findByPk(id);
+    async ingenieurpedagogique(root, { code_IP }, { models }) {
+      return models.Recipe.findByPk(code_IP);
     },
     async allIngenieurPedagogiques(root, args, { models }) {
       return models.IngenieurPedagogique.findAll();
     },
-    async motcle(root, { id }, { models }) {
-      return models.MotCle.findByPk(id);
+    async motcle(root, { motcle }, { models }) {
+      return models.MotCle.findByPk(motcle);
     },
     async participant(root, { code_participant }, { models }) {
       return models.Participant.findByPk(code_participant);
@@ -145,8 +145,8 @@ const resolvers = {
         email_client: args.email_client,
         tel_client: args.tel_client,
         adr_client: args.adr_client,
-        PersonneId: addperson && addperson.cin_p,
-        SocieteId: addsociete && addsociete.mat_fisc_sc,
+        PersonneCinP: addperson && addperson.cin_p,
+        SocieteMatFiscSc: addsociete && addsociete.mat_fisc_sc,
       });
       return addClient;
     },
@@ -162,8 +162,8 @@ const resolvers = {
         email_client,
         tel_client,
         Adr_client,
-        PersonneId,
-        SocieteId,
+        PersonneCinP,
+        SocieteMatFiscSc,
       },
       { models }
     ) {
@@ -175,8 +175,8 @@ const resolvers = {
           email_client,
           tel_client,
           Adr_client,
-          PersonneId,
-          SocieteId,
+          PersonneCinP,
+          SocieteMatFiscSc,
         },
         { where: { code_client: code_client } }
       );
@@ -184,43 +184,47 @@ const resolvers = {
     async createPersonne(root, { cin_p }, { models }) {
       return models.Personne.create({
         cin_p,
+        ClientCodeClient,
       });
     },
     async createSociete(root, { mat_fisc_sc, responsable }, { models }) {
       return models.Societe.create({
         mat_fisc_sc,
         responsable,
+        ClientCodeClient,
       });
     },
     async createDemandeFormation(
       root,
       {
         date_demande,
-        date_deb_prevue,
         type_demande,
         etat_demande,
         prix_prevu,
         lieu_prevu,
         duree_prevu,
-        horaire_prevu,
         mode_demande,
-        ClientId,
-        FormationId,
+        hr_deb_j_prev,
+        hr_fin_j_prev,
+        hr_j_prev,
+        ClientCodeClient,
+        FormationCIFormation,
       },
       { models }
     ) {
       return models.DemandeFormation.create({
         date_demande,
-        date_deb_prevue,
         type_demande,
         etat_demande,
         prix_prevu,
         lieu_prevu,
         duree_prevu,
-        horaire_prevu,
         mode_demande,
-        ClientId,
-        FormationId,
+        hr_deb_j_prev,
+        hr_fin_j_prev,
+        hr_j_prev,
+        ClientCodeClient,
+        FormationCIFormation,
       });
     },
     async createFichier(
@@ -231,7 +235,7 @@ const resolvers = {
         taille_max,
         url_fichier,
         nature_support,
-        SupportId,
+        SupportCodeSupport,
       },
       { models }
     ) {
@@ -240,7 +244,7 @@ const resolvers = {
         taille_max,
         url_fichier,
         nature_support,
-        SupportId,
+        SupportCodeSupport,
       });
     },
     async createFilieres_metiers(
@@ -255,14 +259,19 @@ const resolvers = {
     },
     async createFormateur_Formation(
       root,
-      { validation_f, date_validation, FormationId, FormateurId },
+      {
+        validation_f,
+        date_validation,
+        FormationCIFormation,
+        FormateurCodeFormateur,
+      },
       { models }
     ) {
       return models.Formateur_Formation.create({
         validation_f,
         date_validation,
-        FormationId,
-        FormateurId,
+        FormationCIFormation,
+        FormateurCodeFormateur,
       });
     },
     async createFormateur(
@@ -327,7 +336,7 @@ const resolvers = {
         prix_formation: args.prix_formation,
         participant: args.participant,
         prerequis: args.prerequis,
-        ThemeId: args.ThemeId,
+        ThemeCodeTheme: args.ThemeCodeTheme,
       });
       return addFormation;
     },
@@ -377,15 +386,21 @@ const resolvers = {
     },
     async createParticiper(
       root,
-      { rapport_eval, note_QCM, date_eval, ParticipantId, SessionId },
+      {
+        rapport_eval,
+        note_QCM,
+        date_eval,
+        ParticipantCodeParticipant,
+        SessionCISession,
+      },
       { models }
     ) {
       return models.Participer.create({
         rapport_eval,
         note_QCM,
         date_eval,
-        ParticipantId,
-        SessionId,
+        ParticipantCodeParticipant,
+        SessionCISession,
       });
     },
     async createSession(
@@ -407,10 +422,10 @@ const resolvers = {
         perdiem,
         autres_frais,
         note_eval_formateur,
-        ClientId,
-        FormationId,
-        FormateurId,
-        SupportId,
+        ClientCodeClient,
+        FormationCIFormation,
+        FormateurCodeFormateur,
+        SupportCodeSupport,
       },
       { models }
     ) {
@@ -431,10 +446,10 @@ const resolvers = {
         perdiem,
         autres_frais,
         note_eval_formateur,
-        ClientId,
-        FormationId,
-        FormateurId,
-        SupportId,
+        ClientCodeClient,
+        FormationCIFormation,
+        FormateurCodeFormateur,
+        SupportCodeSupport,
       });
     },
     async createSupport(root, { titre_support, date_support }, { models }) {
@@ -457,7 +472,7 @@ const resolvers = {
         remarque,
         decision_R,
         decision_F,
-        FormateurId,
+        FormateurCodeFormateur,
         IngenieurPedagogiqueId,
         SupportId,
       },
@@ -469,7 +484,7 @@ const resolvers = {
         remarque,
         decision_R,
         decision_F,
-        FormateurId,
+        FormateurCodeFormateur,
         IngenieurPedagogiqueId,
         SupportId,
       });

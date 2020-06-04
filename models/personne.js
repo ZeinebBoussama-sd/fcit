@@ -3,11 +3,11 @@ module.exports = (sequelize, DataTypes) => {
   const Personne = sequelize.define("Personne", {
     cin_p: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
+      allowNull: false,
     },
   });
   Personne.associate = function (models) {
-    Personne.hasOne(models.Client);
+    Personne.belongsTo(models.Client);
   };
   return Personne;
 };

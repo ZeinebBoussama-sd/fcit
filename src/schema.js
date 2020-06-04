@@ -10,8 +10,6 @@ const typeDefs = gql`
     email_client: String!
     tel_client: String!
     adr_client: String!
-    PersonneId: Int
-    SocieteId: Int
     session: [Session]
     demandeformation: [DemandeFormation]
     personne: Personne
@@ -27,7 +25,7 @@ const typeDefs = gql`
     client: Client!
   }
   type DemandeFormation {
-    id: ID!
+    code_demande: ID!
     date_demande: Date
     date_deb_prevue: Date
     type_demande: String
@@ -35,8 +33,10 @@ const typeDefs = gql`
     prix_prevu: Float
     lieu_prevu: String
     duree_prevu: Int
-    horaire_prevu: String
     mode_demande: String
+    hr_deb_j_prev: String
+    hr_fin_j_prev: String
+    hr_j_prev: Int
     createdAt: Date
     client: Client!
     formation: Formation!
@@ -99,7 +99,7 @@ const typeDefs = gql`
     prix_formation: Float!
     participant: String!
     prerequis: String!
-    ThemeId: Int
+    ThemeCodeTheme: String
     demandeformation: [DemandeFormation]
     theme: Theme
     filieres_metiers: [Filieres_metiers]
@@ -132,9 +132,9 @@ const typeDefs = gql`
     session: [Session]!
   }
   type Participer {
-    rapport_eval: String
-    note_QCM: Float
-    date_eval: Date
+    rapport_eval: String!
+    note_QCM: Float!
+    date_eval: Date!
     session: Session!
     participant: Participant!
   }
@@ -145,9 +145,9 @@ const typeDefs = gql`
     mode_session: String!
     date_deb_sess: Date!
     duree_sess: Int!
-    hr_debut_j: String!
+    hr_deb_j: String!
     hr_fin_j: String!
-    hr_j: String!
+    hr_j_session: String!
     lieu_sess: String
     prix_session: Float
     honoraire_sess: Float
@@ -190,7 +190,7 @@ const typeDefs = gql`
     allClients: [Client!]!
     personne(cin_p: Int): Personne
     societe(mat_fisc_sc: String): Societe
-    demandeformation(id: ID): DemandeFormation
+    demandeformation(code_demande: ID): DemandeFormation
     allDemandeFormations: [DemandeFormation!]!
     theme(code_theme: String, nom_theme: String): Theme
     allThemes: [Theme!]!
@@ -235,8 +235,6 @@ const typeDefs = gql`
       adr_client: String!
       personne: Int
       societe: Int
-      PersonneId: Int
-      SocieteId: Int
     ): Client!
 
     deleteClient(code_client: String!): DeleteClientMutationResponse
@@ -248,8 +246,6 @@ const typeDefs = gql`
       email_client: String
       tel_client: Int
       adr_client: String
-      PersonneId: Int
-      SocieteId: Int
     ): Client!
 
     createPersonne(cin_p: Int!): Personne!
@@ -266,8 +262,8 @@ const typeDefs = gql`
       duree_prevu: Int
       horaire_prevu: String
       mode_demande: String
-      ClientId: Int!
-      FormationId: Int!
+      ClientCodeClient: String!
+      FormationCIFormation: Int!
     ): DemandeFormation!
 
     createFichier(
@@ -276,7 +272,7 @@ const typeDefs = gql`
       taille_max: Int
       url_fichier: String!
       nature_support: String
-      SupportId: Int!
+      SupportCodeSupport: Int!
     ): Fichier!
 
     createFilieres_metiers(
@@ -287,8 +283,8 @@ const typeDefs = gql`
     createFormateur_Formation(
       validation_f: Boolean!
       date_validation: Date!
-      FormationId: Int!
-      FormateurId: Int!
+      FormationCIFormation: Int!
+      FormateurCodeFormateur: String!
     ): Formateur_Formation!
 
     createFormateur(
@@ -352,8 +348,8 @@ const typeDefs = gql`
       rapport_eval: String
       note_QCM: Float
       date_eval: Date
-      ParticipantId: Int!
-      SessionId: Int!
+      ParticipantCodeParticipant: Int
+      SessionCISession: Int
     ): Participer!
 
     createSession(
@@ -362,9 +358,9 @@ const typeDefs = gql`
       mode_session: String
       date_deb_sess: Date
       duree_sess: Int
-      hr_debut_j: String
+      hr_deb_j: String
       hr_fin_j: String
-      hr_j: String
+      hr_j_session: String
       lieu_sess: String
       prix_session: Float
       honoraire_sess: Float
@@ -373,10 +369,10 @@ const typeDefs = gql`
       perdiem: Float
       autres_frais: Float
       note_eval_formateur: Int
-      ClientId: Int
-      FormationId: Int
-      FormateurId: Int
-      SupportId: Int
+      ClientCodeClient: String
+      FormationCIFormation: Int
+      FormateurCodeFormateur: String
+      SupportCodeSupport: Int
     ): Session!
 
     createSupport(titre_support: String, date_support: Date): Support!
@@ -389,7 +385,7 @@ const typeDefs = gql`
       decision_R: Boolean!
       decision_F: Boolean!
       remarque: String!
-      FormateurId: Int
+      FormateurCodeFormateur: Int
       IngenieurPedagogiqueId: Int
       SupportId: Int
     ): Validation!

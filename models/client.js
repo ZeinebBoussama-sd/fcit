@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Client.associate = function (models) {
-    Client.belongsTo(models.Societe);
-    Client.belongsTo(models.Personne);
+    Client.hasOne(models.Societe);
+    Client.hasOne(models.Personne);
     Client.hasMany(models.Session);
     Client.hasMany(models.DemandeFormation);
   };

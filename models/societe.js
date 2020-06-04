@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Societe = sequelize.define("Societe", {
     mat_fisc_sc: {
       type: DataTypes.STRING(15),
-      primaryKey: true,
+      allowNull: false,
     },
     responsable: {
       type: DataTypes.STRING(15),
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
   Societe.associate = function (models) {
-    Societe.hasOne(models.Client);
+    Societe.belongsTo(models.Client);
   };
   return Societe;
 };

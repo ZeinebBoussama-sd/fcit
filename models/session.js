@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       hr_deb_j: { type: DataTypes.STRING(5), allowNull: false },
       hr_fin_j: { type: DataTypes.STRING(5), allowNull: false },
-      hr_j_sessin: { type: DataTypes.INTEGER(2), allowNull: false },
+      hr_j_session: { type: DataTypes.INTEGER(2), allowNull: false },
       lieu_sess: { type: DataTypes.STRING(30), allowNull: false },
       prix_session: { type: DataTypes.FLOAT(7, 3), allowNull: false },
       honoraire_sess: { type: DataTypes.FLOAT(7, 3) },

@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       through: "Formateur_Formation",
     });
     Formation.belongsToMany(models.MotCle, { through: "FormationMotCle" });
-    Formation.belongsToMany(models.Filieres_metiers, { through: "D" });
+    Formation.belongsToMany(models.Metiers, { through: "donne_lieu" });
   };
   return Formation;
 };

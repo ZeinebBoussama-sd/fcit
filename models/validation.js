@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       date_val: { type: DataTypes.DATE, allowNull: false },
       remarque: { type: DataTypes.STRING, allowNull: false },
-      decision_R: { type: DataTypes.BOOLEAN, allowNull: false },
-      decision_F: { type: DataTypes.BOOLEAN, allowNull: false },
+      decision_r: { type: DataTypes.BOOLEAN, allowNull: false },
+      decision_f: { type: DataTypes.BOOLEAN, allowNull: false },
     },
     {}
   );

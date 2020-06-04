@@ -18,16 +18,19 @@ module.exports = (sequelize, DataTypes) => {
       },
       etat_demande: { type: DataTypes.STRING(10), allowNull: false },
       prix_prevu: { type: DataTypes.FLOAT(7, 3), allowNull: false },
-      lieu_prevu: DataTypes.STRING,
-      duree_prevu: DataTypes.INTEGER,
-      horaire_prevu: DataTypes.STRING,
-      mode_demande: DataTypes.STRING,
+      lieu_prevu: { type: DataTypes.STRING(20), allowNull: false },
+      duree_prevu: { type: DataTypes.INTEGER, allowNull: false },
+      mode_demande: { type: DataTypes.STRING(10), allowNull: false },
+      hr_deb_j_prev: { type: DataTypes.STRING(5), allowNull: false },
+      hr_fin_j_prev: { type: DataTypes.STRING(5), allowNull: false },
+      hr_j_prev: { type: DataTypes.INTEGER(2), allowNull: false },
     },
     {}
   );
   DemandeFormation.associate = function (models) {
     DemandeFormation.belongsTo(models.Formation);
     DemandeFormation.belongsTo(models.Client);
+    DemandeFormation.belongsTo(models.Demandeur);
   };
   return DemandeFormation;
 };

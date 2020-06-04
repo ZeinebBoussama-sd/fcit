@@ -37,9 +37,17 @@ const typeDefs = gql`
     hr_deb_j_prev: String
     hr_fin_j_prev: String
     hr_j_prev: Int
-    createdAt: Date
     client: Client!
     formation: Formation!
+    demandeur: Demandeur!
+  }
+  type Demandeur {
+    code_demandeur: ID!
+    nom_demandeur: String!
+    prenom_demandeur: String!
+    email_demandeur: String!
+    tel_demandeur: String!
+    demandeformation: [DemandeFormation]
   }
   type Fichier {
     code_fichier: ID!
@@ -50,9 +58,9 @@ const typeDefs = gql`
     nature_support: String!
     support: Support!
   }
-  type Filieres_metiers {
-    code_intitule_filiere: String!
-    intitule_filiere: String!
+  type Metier {
+    code_metier: String!
+    intitule_metier: String!
     formation: [Formation]
   }
   type Formateur_Formation {
@@ -102,7 +110,7 @@ const typeDefs = gql`
     ThemeCodeTheme: String
     demandeformation: [DemandeFormation]
     theme: Theme
-    filieres_metiers: [Filieres_metiers]
+    metiers: [Metier]
     motcle: [MotCle]
     formateur: [Formateur]
     session: [Session]
@@ -188,6 +196,8 @@ const typeDefs = gql`
   type Query {
     client(code_client: ID, nom_client: String): Client
     allClients: [Client!]!
+    demandeur(code_demandeur: ID, nom_demandeur: String): Demandeur
+    allDemandeurs: [Demandeur!]!
     personne(cin_p: Int): Personne
     societe(mat_fisc_sc: String): Societe
     demandeformation(code_demande: ID): DemandeFormation
@@ -208,10 +218,7 @@ const typeDefs = gql`
     allIngenieurPedagogiques: [IngenieurPedagogique!]!
     participant(code_participant: ID, carte_identite: Int): Participant
     validation(code_val: ID): Validation
-    filieres_metiers(
-      code_intitule_filiere: String
-      intitule_filiere: String
-    ): Filieres_metiers
+    metier(code_metier: String, intitule_metier: String): Metier
     formateur_formation(id: ID): Formateur_Formation
     participer(id: ID): Participer
   }
@@ -248,9 +255,13 @@ const typeDefs = gql`
       adr_client: String
     ): Client!
 
-    createPersonne(cin_p: Int!): Personne!
+    createPersonne(cin_p: Int!, ClientCodeClient: String!): Personne!
 
-    createSociete(mat_fisc_sc: String!, responsable: String): Societe!
+    createSociete(
+      mat_fisc_sc: String!
+      responsable: String!
+      ClientCodeClient: String!
+    ): Societe!
 
     createDemandeFormation(
       date_demande: Date
@@ -265,6 +276,12 @@ const typeDefs = gql`
       ClientCodeClient: String!
       FormationCIFormation: Int!
     ): DemandeFormation!
+    createDemandeur(
+      nom_demandeur: String!
+      prenom_demandeur: String!
+      email_demandeur: String!
+      tel_demandeur: String!
+    ): Demandeur
 
     createFichier(
       nom_fichier: String
@@ -275,10 +292,7 @@ const typeDefs = gql`
       SupportCodeSupport: Int!
     ): Fichier!
 
-    createFilieres_metiers(
-      code_intitule_filiere: String!
-      intitule_filiere: String!
-    ): Filieres_metiers!
+    createMetier(code_metier: String!, intitule_metier: String!): Metier!
 
     createFormateur_Formation(
       validation_f: Boolean!
@@ -321,7 +335,7 @@ const typeDefs = gql`
       prix_formation: Float
       participant: String!
       prerequis: String!
-      ThemeId: Int
+      ThemeCodeTheme: String!
     ): Formation!
 
     createIngenieurPedagogique(
@@ -375,7 +389,7 @@ const typeDefs = gql`
       SupportCodeSupport: Int
     ): Session!
 
-    createSupport(titre_support: String, date_support: Date): Support!
+    createSupport(titre_support: String!, date_support: Date!): Support!
 
     createTheme(code_theme: String!, nom_theme: String!): Theme!
 

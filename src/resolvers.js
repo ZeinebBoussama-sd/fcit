@@ -45,8 +45,8 @@ const resolvers = {
     async fichier(root, { code_fichier }, { models }) {
       return models.Fichier.findByPk(code_fichier);
     },
-    async filieres_metiers(root, { id }, { models }) {
-      return models.Filieres_metiers.findByPk(id);
+    async metier(root, { code_metier }, { models }) {
+      return models.Metier.findByPk(code_metier);
     },
     async formateur_formation(root, { id }, { models }) {
       return models.Formateur_Formation.findByPk(id);
@@ -54,8 +54,15 @@ const resolvers = {
     async formateur(root, { code_formateur }, { models }) {
       return models.Formateur.findByPk(code_formateur);
     },
+
     async allFormateurs(root, args, { models }) {
       return models.Formateur.findAll();
+    },
+    async demandeur(root, { code_demandeur }, { models }) {
+      return models.Demandeur.findByPk(code_demandeur);
+    },
+    async allDemandeurs(root, args, { models }) {
+      return models.Demandeur.findAll();
     },
     async formation(root, { CI_formation }, { models }) {
       return models.Formation.findByPk(CI_formation);
@@ -84,8 +91,8 @@ const resolvers = {
     async allSessions(root, args, { models }) {
       return models.Support.findAll();
     },
-    async support(root, { id }, { models }) {
-      return models.Support.findByPk(id);
+    async support(root, { code_support }, { models }) {
+      return models.Support.findByPk(code_support);
     },
     async allSupports(root, args, { models }) {
       return models.Support.findAll();
@@ -96,8 +103,8 @@ const resolvers = {
     async allThemes(root, args, { models }) {
       return models.Theme.findAll();
     },
-    async validation(root, { id }, { models }) {
-      return models.Validation.findByPk(id);
+    async validation(root, { code_val }, { models }) {
+      return models.Validation.findByPk(code_val);
     },
   },
 
@@ -247,14 +254,22 @@ const resolvers = {
         SupportCodeSupport,
       });
     },
-    async createFilieres_metiers(
+    async createDemandeur(
       root,
-      { code_intitule_filiere, intitule_filiere },
+      { nom_demandeur, prenom_demandeur, email_demandeur, tel_demandeur },
       { models }
     ) {
-      return models.Filieres_metiers.create({
-        code_intitule_filiere,
-        intitule_filiere,
+      return models.Metier.create({
+        nom_demandeur,
+        prenom_demandeur,
+        email_demandeur,
+        tel_demandeur,
+      });
+    },
+    async createMetier(root, { code_metier, intitule_metier }, { models }) {
+      return models.Metier.create({
+        code_metier,
+        intitule_metier,
       });
     },
     async createFormateur_Formation(
@@ -467,11 +482,10 @@ const resolvers = {
     async createValidation(
       root,
       {
-        code_val,
         date_val,
         remarque,
-        decision_R,
-        decision_F,
+        decision_r,
+        decision_f,
         FormateurCodeFormateur,
         IngenieurPedagogiqueId,
         SupportId,
@@ -479,11 +493,10 @@ const resolvers = {
       { models }
     ) {
       return models.Validation.create({
-        code_val,
         date_val,
         remarque,
-        decision_R,
-        decision_F,
+        decision_r,
+        decision_f,
         FormateurCodeFormateur,
         IngenieurPedagogiqueId,
         SupportId,
@@ -521,15 +534,18 @@ const resolvers = {
     async formation(demandeformation) {
       return demandeformation.getFormation();
     },
+    async demandeur(formation) {
+      return formation.getdDemandeur();
+    },
   },
   Fichier: {
     async support(fichier) {
       return fichier.getSupport();
     },
   },
-  Filieres_metiers: {
-    async formation(filieres_metiers) {
-      return filieres_metiers.getFormation();
+  Metier: {
+    async formation(metiers) {
+      return metiers.getFormation();
     },
   },
   Formateur_Formation: {
@@ -558,8 +574,8 @@ const resolvers = {
     async theme(formation) {
       return formation.getTheme();
     },
-    async filieres_metiers(formation) {
-      return formation.getFilieres_metiers();
+    async metiers(formation) {
+      return formation.getMetier();
     },
     async motcle(formation) {
       return formation.getMotCle();
@@ -631,6 +647,11 @@ const resolvers = {
     },
     async support(validation) {
       return validation.getSupport();
+    },
+  },
+  Demandeur: {
+    async demandeformation(validation) {
+      return validation.getDemandeFormation();
     },
   },
 };

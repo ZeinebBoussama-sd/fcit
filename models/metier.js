@@ -1,13 +1,13 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const Filieres_metiers = sequelize.define(
-    "Filieres_metiers",
+  const Metiers = sequelize.define(
+    "Metiers",
     {
-      code_intitule_filiere: {
+      code_metier: {
         type: DataTypes.STRING(5),
         primaryKey: true,
       },
-      intitule_filiere: {
+      intitule_metier: {
         type: DataTypes.STRING(30),
         allowNull: false,
       },
@@ -15,5 +15,5 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
 
-  return Filieres_metiers;
+  return Metiers;
 };

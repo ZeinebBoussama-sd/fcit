@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   scalar Date
@@ -162,7 +162,7 @@ const typeDefs = gql`
     hr_deb_j: String!
     hr_fin_j: String!
     hr_j_session: String!
-    lieu_sess: String
+    lieu_sess: String!
     prix_session: Float
     honoraire_sess: Float
     frais_sejour: Float
@@ -170,6 +170,10 @@ const typeDefs = gql`
     perdiem: Float
     autres_frais: Float
     note_eval_formateur: Int
+    ClientCodeClient: String
+    FormationCIFormation: Int
+    FormateurCodeFormateur: String
+    SupportCodeSupport: Int
     formation: Formation!
     support: Support!
     client: Client!
@@ -288,6 +292,7 @@ const typeDefs = gql`
       FormationCIFormation: Int
       DemandeurCodeDemandeur: Int
     ): DemandeFormation!
+
     createDemandeur(
       nom_demandeur: String!
       prenom_demandeur: String!
@@ -389,7 +394,7 @@ const typeDefs = gql`
       hr_fin_j: String!
       hr_j_session: String!
       lieu_sess: String!
-      prix_session: Float!
+      prix_session: Float
       honoraire_sess: Float
       frais_sejour: Float
       frais_transport: Float

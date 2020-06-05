@@ -67,7 +67,7 @@ function AddFormation() {
                   prix_formation: undefined,
                   prerequis: undefined,
                   participant: undefined,
-                  ThemeCodeTheme: undefined,
+                  ThemeCodeTheme: '',
                 }}
                 onSubmit={async (values) => {
                   try {
@@ -83,9 +83,7 @@ function AddFormation() {
                         prix_formation: values.prix_formation,
                         prerequis: values.prerequis,
                         participant: values.participant,
-                        ThemeCodeTheme: values.ThemeCodeTheme
-                          ? parseInt(values.ThemeCodeTheme)
-                          : null,
+                        ThemeCodeTheme: values.ThemeCodeTheme,
                       },
                     });
                     alert(JSON.stringify(values, null, 2));

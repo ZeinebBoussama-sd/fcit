@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Session = sequelize.define(
-    "Session",
+    'Session',
     {
       CI_session: {
         type: DataTypes.INTEGER,

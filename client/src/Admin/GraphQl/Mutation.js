@@ -85,15 +85,40 @@ export const ADD_THEME = gql`
 `;
 export const ADD_SESSION = gql`
   mutation create_session(
-    $type_sess: String
-    $date_deb_sess: Date
-    $lieu_sess: String
+    $code_session: String!
+    $type_sess: String!
+    $mode_session: String!
+    $date_deb_sess: Date!
+    $duree_sess: Int!
+    $hr_deb_j: String!
+    $hr_fin_j: String!
+    $hr_j_session: String!
+    $lieu_sess: String!
     $prix_session: Float
-    $ClientCodeClient: Int
+    $honoraire_sess: Float
+    $frais_sejour: Float
+    $frais_transport: Float
+    $perdiem: Float
+    $autres_frais: Float
+    $note_eval_formateur: Int
+    $ClientCodeClient: String
     $FormationCIFormation: Int
-    $FormateurCodeFormateur: Int
+    $FormateurCodeFormateur: String
+    $SupportCodeSupport: Int
   ) {
     createSession(
+      code_session: $code_session
+      mode_session: $mode_session
+      duree_sess: $duree_sess
+      hr_deb_j: $hr_deb_j
+      hr_fin_j: $hr_fin_j
+      hr_j_session: $hr_j_session
+      honoraire_sess: $honoraire_sess
+      frais_sejour: $frais_sejour
+      frais_transport: $frais_transport
+      perdiem: $perdiem
+      autres_frais: $autres_frais
+      note_eval_formateur: $note_eval_formateur
       type_sess: $type_sess
       date_deb_sess: $date_deb_sess
       lieu_sess: $lieu_sess
@@ -101,7 +126,20 @@ export const ADD_SESSION = gql`
       ClientCodeClient: $ClientCodeClient
       FormationCIFormation: $FormationCIFormation
       FormateurCodeFormateur: $FormateurCodeFormateur
+      SupportCodeSupport: $SupportCodeSupport
     ) {
+      code_session
+      mode_session
+      duree_sess
+      hr_deb_j
+      hr_fin_j
+      hr_j_session
+      honoraire_sess
+      frais_sejour
+      frais_transport
+      perdiem
+      autres_frais
+      note_eval_formateur
       type_sess
       date_deb_sess
       lieu_sess
@@ -109,6 +147,7 @@ export const ADD_SESSION = gql`
       ClientCodeClient
       FormateurCodeFormateur
       FormationCIFormation
+      SupportCodeSupport
     }
   }
 `;
@@ -179,6 +218,41 @@ export const ADD_FORMATEUR = gql`
       tarif_f
       RIB_f
       copie_RIB
+    }
+  }
+`;
+export const ADD_INGENIEURPEDAGOGIQUE = gql`
+  mutation create_ingenieurpedagogique(
+    $nom_ing: String!
+    $prenom_ing: String!
+    $cv_ing: String!
+    $email_ing: String!
+    $tel_ing: Int!
+    $NSS_ing: Int!
+    $salaire_ing: Float!
+    $specialite_ing: String!
+    $adr_ing: String!
+  ) {
+    createIngenieurPedagogique(
+      nom_ing: $nom_ing
+      prenom_ing: $prenom_ing
+      cv_ing: $cv_ing
+      email_ing: $email_ing
+      tel_ing: $tel_ing
+      NSS_ing: $NSS_ing
+      salaire_ing: $salaire_ing
+      specialite_ing: $specialite_ing
+      adr_ing: $adr_ing
+    ) {
+      nom_ing
+      prenom_ing
+      cv_ing
+      email_ing
+      tel_ing
+      NSS_ing
+      salaire_ing
+      specialite_ing
+      adr_ing
     }
   }
 `;

@@ -50,32 +50,61 @@ function AddSession() {
             <div className='modal-body'>
               <Formik
                 initialValues={{
+                  code_session: '',
+                  mode_session: undefined,
+                  duree_sess: undefined,
+                  hr_deb_j: undefined,
+                  hr_fin_j: undefined,
+                  hr_j_session: undefined,
+                  honoraire_sess: undefined,
+                  frais_sejour: undefined,
+                  frais_transport: undefined,
+                  perdiem: undefined,
+                  autres_frais: undefined,
+                  note_eval_formateur: undefined,
                   type_sess: undefined,
                   date_deb_sess: undefined,
                   lieu_sess: undefined,
                   prix_session: undefined,
-                  ClientCodeClient: undefined,
-                  FormationCIFormation: undefined,
-                  FormateurCodeFormateur: undefined,
+                  ClientCodeClient: '1',
+                  FormationCIFormation: 1,
+                  FormateurCodeFormateur: '1',
+                  SupportCodeSupport: 11,
                 }}
                 onSubmit={async (values) => {
                   try {
+                    debugger;
                     // new Promise((resolve) => setTimeout(resolve, 500));
                     await AddSession({
                       variables: {
+                        code_session: values.code_session,
+                        mode_session: values.mode_session,
+                        duree_sess: values.duree_sess,
+                        hr_deb_j: values.hr_deb_j,
+                        hr_fin_j: values.hr_fin_j,
+                        hr_j_session: values.hr_j_session,
+                        honoraire_sess: values.honoraire_sess,
+                        frais_sejour: values.frais_sejour,
+                        frais_transport: values.frais_transport,
+                        perdiem: values.perdiem,
+                        autres_frais: values.autres_frais,
+                        note_eval_formateur: values.note_eval_formateur,
                         type_sess: values.type_sess,
                         date_deb_sess: values.date_deb_sess,
                         lieu_sess: values.lieu_sess,
                         prix_session: values.prix_session,
                         ClientCodeClient: values.ClientCodeClient
-                          ? parseInt(values.ClientCodeClient)
-                          : null,
+                          ? values.ClientCodeClient
+                          : '',
                         FormationCIFormation: values.FormationCIFormation
                           ? parseInt(values.FormationCIFormation)
                           : null,
                         FormateurCodeFormateur: values.FormateurCodeFormateur
-                          ? parseInt(values.FormateurCodeFormateur)
-                          : null,
+                          ? values.FormateurCodeFormateur
+                          : '',
+                        SupportCodeSupport: values.SupportCodeSupport
+                          ? values.SupportCodeSupport
+                          : '',
                       },
                     });
                   } catch (e) {
@@ -98,6 +127,18 @@ function AddSession() {
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className='form-group'>
+                        <label htmlFor='Code' className='col-form-label'>
+                          Code:
+                        </label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='code_session'
+                          onChange={handleChange}
+                          value={values.code_session}
+                        />
+                      </div>
+                      <div className='form-group'>
                         <label htmlFor='Type' className='col-form-label'>
                           Type:
                         </label>
@@ -107,6 +148,18 @@ function AddSession() {
                           id='type_sess'
                           onChange={handleChange}
                           value={values.type_sess}
+                        />
+                      </div>
+                      <div className='form-group'>
+                        <label htmlFor='Mode' className='col-form-label'>
+                          Mode:
+                        </label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='mode_session'
+                          onChange={handleChange}
+                          value={values.mode_session}
                         />
                       </div>
                       <div className='form-group'>
@@ -121,6 +174,61 @@ function AddSession() {
                           value={values.date_deb_sess}
                         />
                       </div>
+                      <div className='form-group'>
+                        <label htmlFor='Duree' className='col-form-label'>
+                          Duree:
+                        </label>
+                        <input
+                          type='number'
+                          className='form-control'
+                          id='duree_sess'
+                          onChange={handleChange}
+                          value={values.duree_sess}
+                        />
+                      </div>
+
+                      <div className='form-group'>
+                        <label htmlFor='hr_deb_j' className='col-form-label'>
+                          hr_deb_j:
+                        </label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='hr_deb_j'
+                          onChange={handleChange}
+                          value={values.hr_deb_j}
+                        />
+                      </div>
+
+                      <div className='form-group'>
+                        <label htmlFor='hr_fin_j' className='col-form-label'>
+                          hr_fin_j:
+                        </label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='hr_fin_j'
+                          onChange={handleChange}
+                          value={values.hr_fin_j}
+                        />{' '}
+                      </div>
+
+                      <div className='form-group'>
+                        <label
+                          htmlFor='hr_j_session'
+                          className='col-form-label'
+                        >
+                          hr_j_session:
+                        </label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='hr_j_session'
+                          onChange={handleChange}
+                          value={values.hr_j_session}
+                        />{' '}
+                      </div>
+
                       <div className='form-group'>
                         <label htmlFor='Lieux' className='col-form-label'>
                           Lieux:
@@ -143,6 +251,93 @@ function AddSession() {
                           id='prix_session'
                           onChange={handleChange}
                           value={values.prix_session}
+                        />
+                      </div>
+                      <div className='form-group'>
+                        <label
+                          htmlFor='honoraire_sess'
+                          className='col-form-label'
+                        >
+                          honoraire_sess:
+                        </label>
+                        <input
+                          type='number'
+                          className='form-control'
+                          id='honoraire_sess'
+                          onChange={handleChange}
+                          value={values.honoraire_sess}
+                        />
+                      </div>
+                      <div className='form-group'>
+                        <label
+                          htmlFor='frais_sejour'
+                          className='col-form-label'
+                        >
+                          frais_sejour:
+                        </label>
+                        <input
+                          type='number'
+                          className='form-control'
+                          id='frais_sejour'
+                          onChange={handleChange}
+                          value={values.frais_sejour}
+                        />
+                      </div>
+                      <div className='form-group'>
+                        <label
+                          htmlFor='frais_transport'
+                          className='col-form-label'
+                        >
+                          frais_transport:
+                        </label>
+                        <input
+                          type='number'
+                          className='form-control'
+                          id='frais_transport'
+                          onChange={handleChange}
+                          value={values.frais_transport}
+                        />
+                      </div>
+                      <div className='form-group'>
+                        <label htmlFor='perdiem' className='col-form-label'>
+                          perdiem:
+                        </label>
+                        <input
+                          type='number'
+                          className='form-control'
+                          id='perdiem'
+                          onChange={handleChange}
+                          value={values.perdiem}
+                        />
+                      </div>
+                      <div className='form-group'>
+                        <label
+                          htmlFor='autres_frais'
+                          className='col-form-label'
+                        >
+                          autres_frais:
+                        </label>
+                        <input
+                          type='number'
+                          className='form-control'
+                          id='autres_frais'
+                          onChange={handleChange}
+                          value={values.autres_frais}
+                        />
+                      </div>
+                      <div className='form-group'>
+                        <label
+                          htmlFor='note_eval_formateur'
+                          className='col-form-label'
+                        >
+                          note_eval_formateur:
+                        </label>
+                        <input
+                          type='number'
+                          className='form-control'
+                          id='note_eval_formateur'
+                          onChange={handleChange}
+                          value={values.note_eval_formateur}
                         />
                       </div>
                       <div className='form-group'>

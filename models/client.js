@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       code_client: {
         type: DataTypes.STRING(5),
         primaryKey: true,
+        allowNull: false,
       },
       pays_client: {
         type: DataTypes.STRING(5),
@@ -26,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     Client.hasOne(models.Personne);
     Client.hasMany(models.Session);
     Client.hasMany(models.DemandeFormation);
+    Client.hasMany(models.Participant);
   };
   return Client;
 };

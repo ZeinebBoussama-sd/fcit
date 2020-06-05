@@ -1,11 +1,11 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
-const { ApolloError } = require('apollo-server-core');
+const { GraphQLScalarType } = require("graphql");
+const { Kind } = require("graphql/language");
+const { ApolloError } = require("apollo-server-core");
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: 'Date',
-    description: 'Date custom scalar type',
+    name: "Date",
+    description: "Date custom scalar type",
     parseValue(value) {
       return new Date(value); // value from the client
     },
@@ -35,6 +35,12 @@ const resolvers = {
       return models.Societe.findOne({
         where: { mat_fisc_sc: res.mat_fisc_sc },
       });
+    },
+    async dateprevue(root, { date_prev }, { models }) {
+      return models.DatePrevue.findByPk(date_prev);
+    },
+    async allDatePrevues(root, args, { models }) {
+      return models.DatePrevue.findAll();
     },
     async demandeformation(root, { code_demande }, { models }) {
       return models.DemandeFormation.findByPk(code_demande);
@@ -120,7 +126,7 @@ const resolvers = {
         (await models.Personne.findOne({
           where: { cin_p: args.personne },
         }));
-      if (findperson) throw new ApolloError('this cin_p is already created');
+      if (findperson) throw new ApolloError("this cin_p is already created");
 
       //looking after societe
       const findsociete =
@@ -129,7 +135,7 @@ const resolvers = {
           where: { mat_fisc_sc: args.societe },
         }));
       if (findsociete)
-        throw new ApolloError('this mat_fisc_sc is already created');
+        throw new ApolloError("this mat_fisc_sc is already created");
 
       // if you have cin_p you create it.
       const addperson =
@@ -188,13 +194,17 @@ const resolvers = {
         { where: { code_client: code_client } }
       );
     },
-    async createPersonne(root, { cin_p }, { models }) {
+    async createPersonne(root, { cin_p, ClientCodeClient }, { models }) {
       return models.Personne.create({
         cin_p,
         ClientCodeClient,
       });
     },
-    async createSociete(root, { mat_fisc_sc, responsable }, { models }) {
+    async createSociete(
+      root,
+      { mat_fisc_sc, responsable, ClientCodeClient },
+      { models }
+    ) {
       return models.Societe.create({
         mat_fisc_sc,
         responsable,
@@ -232,6 +242,11 @@ const resolvers = {
         hr_j_prev,
         ClientCodeClient,
         FormationCIFormation,
+      });
+    },
+    async createDatePrevue(root, { date_prev }, { models }) {
+      return models.DatePrevue.create({
+        date_prev,
       });
     },
     async createFichier(
@@ -480,7 +495,7 @@ const resolvers = {
           where: { code_theme: args.code_theme },
         }));
       if (findThemaByID)
-        throw new ApolloError('this Code Thema is already created');
+        throw new ApolloError("this Code Theme is already created");
 
       const findThemaByName =
         args.nom_theme &&
@@ -488,7 +503,7 @@ const resolvers = {
           where: { nom_theme: args.nom_theme },
         }));
       if (findThemaByName)
-        throw new ApolloError('this nom Thema is already created');
+        throw new ApolloError("this nom Theme is already created");
 
       const addThema = await models.Theme.create({
         code_theme: args.code_theme,
@@ -533,6 +548,9 @@ const resolvers = {
     async session(client) {
       return client.getSession();
     },
+    async participant(client) {
+      return client.getParticipant();
+    },
   },
   Personne: {
     async client(personne) {
@@ -551,10 +569,19 @@ const resolvers = {
     async formation(demandeformation) {
       return demandeformation.getFormation();
     },
-    async demandeur(formation) {
-      return formation.getdDemandeur();
+    async demandeur(demandeformation) {
+      return demandeformation.getDemandeur();
+    },
+    async dateprevue(demandeformation) {
+      return demandeformation.getDatePrevue();
     },
   },
+  DatePrevue: {
+    async demandeformation(dateprevue) {
+      return dateprevue.getDemandeFormation();
+    },
+  },
+
   Fichier: {
     async support(fichier) {
       return fichier.getSupport();
@@ -612,6 +639,9 @@ const resolvers = {
   Participant: {
     async session(participant) {
       return participant.getSession();
+    },
+    async client(participant) {
+      return participant.getClient();
     },
   },
   Participer: {

@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   scalar Date
@@ -14,6 +14,7 @@ const typeDefs = gql`
     demandeformation: [DemandeFormation]
     personne: Personne
     societe: Societe
+    participant: Participant
   }
   type Personne {
     cin_p: Int!
@@ -24,22 +25,26 @@ const typeDefs = gql`
     responsable: String!
     client: Client!
   }
+  type DatePrevue {
+    date_prev: Date!
+    demandeformation: [DemandeFormation]
+  }
   type DemandeFormation {
     code_demande: ID!
-    date_demande: Date
-    date_deb_prevue: Date
-    type_demande: String
-    etat_demande: String
-    prix_prevu: Float
-    lieu_prevu: String
-    duree_prevu: Int
-    mode_demande: String
-    hr_deb_j_prev: String
-    hr_fin_j_prev: String
-    hr_j_prev: Int
+    date_demande: Date!
+    type_demande: String!
+    etat_demande: String!
+    prix_prevu: Float!
+    lieu_prevu: String!
+    duree_prevu: Int!
+    mode_demande: String!
+    hr_deb_j_prev: String!
+    hr_fin_j_prev: String!
+    hr_j_prev: Int!
     client: Client!
     formation: Formation!
     demandeur: Demandeur!
+    dateprevue: [DatePrevue]
   }
   type Demandeur {
     code_demandeur: ID!
@@ -137,6 +142,7 @@ const typeDefs = gql`
     nom_partcipant: String
     prenom_partcipant: String
     carte_identite: Int!
+    client: Client
     session: [Session]!
   }
   type Participer {
@@ -199,6 +205,9 @@ const typeDefs = gql`
     demandeur(code_demandeur: ID, nom_demandeur: String): Demandeur
     allDemandeurs: [Demandeur!]!
     personne(cin_p: Int): Personne
+    dateprevue(date_prev: Date): DatePrevue
+    allDatePrevues: [DatePrevue!]!
+
     societe(mat_fisc_sc: String): Societe
     demandeformation(code_demande: ID): DemandeFormation
     allDemandeFormations: [DemandeFormation!]!
@@ -212,6 +221,7 @@ const typeDefs = gql`
     allFormateurs: [Formateur!]!
     support(code_support: ID, titre_support: String): Support
     allSupports: [Support!]!
+
     fichier(code_fichier: ID, nom_fichier: String): Fichier
     motcle(motcle: String): MotCle
     ingenieurpedagogique(code_IP: ID, nom_ing: String): IngenieurPedagogique
@@ -255,26 +265,28 @@ const typeDefs = gql`
       adr_client: String
     ): Client!
 
-    createPersonne(cin_p: Int!, ClientCodeClient: String!): Personne!
+    createPersonne(cin_p: Int!, ClientCodeClient: String): Personne!
 
     createSociete(
       mat_fisc_sc: String!
       responsable: String!
-      ClientCodeClient: String!
+      ClientCodeClient: String
     ): Societe!
-
+    createDatePrevue(date_prev: Date!): DatePrevue!
     createDemandeFormation(
-      date_demande: Date
-      date_deb_prevue: Date
-      type_demande: String
-      etat_demande: String
-      prix_prevu: Float
-      lieu_prevu: String
-      duree_prevu: Int
-      horaire_prevu: String
-      mode_demande: String
-      ClientCodeClient: String!
-      FormationCIFormation: Int!
+      date_demande: Date!
+      type_demande: String!
+      etat_demande: String!
+      prix_prevu: Float!
+      lieu_prevu: String!
+      duree_prevu: Int!
+      mode_demande: String!
+      hr_deb_j_prev: String!
+      hr_fin_j_prev: String!
+      hr_j_prev: Int!
+      ClientCodeClient: String
+      FormationCIFormation: Int
+      DemandeurCodeDemandeur: Int
     ): DemandeFormation!
     createDemandeur(
       nom_demandeur: String!
@@ -284,12 +296,12 @@ const typeDefs = gql`
     ): Demandeur
 
     createFichier(
-      nom_fichier: String
-      type_fichier: String
-      taille_max: Int
+      nom_fichier: String!
+      type_fichier: String!
+      taille_max: Int!
       url_fichier: String!
-      nature_support: String
-      SupportCodeSupport: Int!
+      nature_support: String!
+      SupportCodeSupport: Int
     ): Fichier!
 
     createMetier(code_metier: String!, intitule_metier: String!): Metier!
@@ -297,8 +309,8 @@ const typeDefs = gql`
     createFormateur_Formation(
       validation_f: Boolean!
       date_validation: Date!
-      FormationCIFormation: Int!
-      FormateurCodeFormateur: String!
+      FormationCIFormation: Int
+      FormateurCodeFormateur: String
     ): Formateur_Formation!
 
     createFormateur(
@@ -335,48 +347,49 @@ const typeDefs = gql`
       prix_formation: Float
       participant: String!
       prerequis: String!
-      ThemeCodeTheme: String!
+      ThemeCodeTheme: String
     ): Formation!
 
     createIngenieurPedagogique(
       nom_ing: String!
       prenom_ing: String!
-      cv_ing: String
-      email_ing: String
-      tel_ing: Int
-      NSS_ing: Int
-      salaire_ing: Float
-      specialite_ing: String
-      adr_ing: String
+      cv_ing: String!
+      email_ing: String!
+      tel_ing: Int!
+      NSS_ing: Int!
+      salaire_ing: Float!
+      specialite_ing: String!
+      adr_ing: String!
     ): IngenieurPedagogique
 
     createMotCle(motcle: String!): MotCle!
 
     createParticipant(
-      nom_partcipant: String
-      prenom_partcipant: String
+      nom_partcipant: String!
+      prenom_partcipant: String!
       carte_identite: Int!
+      ClientCodeClient: String
     ): Participant!
 
     createParticiper(
-      rapport_eval: String
-      note_QCM: Float
-      date_eval: Date
+      rapport_eval: String!
+      note_QCM: Float!
+      date_eval: Date!
       ParticipantCodeParticipant: Int
       SessionCISession: Int
     ): Participer!
 
     createSession(
-      code_session: String
-      type_sess: String
-      mode_session: String
-      date_deb_sess: Date
-      duree_sess: Int
-      hr_deb_j: String
-      hr_fin_j: String
-      hr_j_session: String
-      lieu_sess: String
-      prix_session: Float
+      code_session: String!
+      type_sess: String!
+      mode_session: String!
+      date_deb_sess: Date!
+      duree_sess: Int!
+      hr_deb_j: String!
+      hr_fin_j: String!
+      hr_j_session: String!
+      lieu_sess: String!
+      prix_session: Float!
       honoraire_sess: Float
       frais_sejour: Float
       frais_transport: Float
@@ -399,7 +412,7 @@ const typeDefs = gql`
       decision_R: Boolean!
       decision_F: Boolean!
       remarque: String!
-      FormateurCodeFormateur: Int
+      FormateurCodeFormateur: String
       IngenieurPedagogiqueId: Int
       SupportId: Int
     ): Validation!

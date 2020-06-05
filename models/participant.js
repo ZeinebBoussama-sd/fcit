@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false,
       },
       nom_partcipant: { type: DataTypes.STRING(30), allowNull: false },
       prenom_partcipant: { type: DataTypes.STRING(30), allowNull: false },
@@ -16,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   Participant.associate = function (models) {
     Participant.belongsToMany(models.Session, { through: "Participer" });
+    Participant.belongsTo(models.Client);
   };
   return Participant;
 };

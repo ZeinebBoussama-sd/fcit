@@ -6,6 +6,8 @@ module.exports = (sequelize, DataTypes) => {
       code_demandeur: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
       },
       nom_demandeur: {
         type: DataTypes.STRING(30),

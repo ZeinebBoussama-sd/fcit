@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       code_formateur: {
         type: DataTypes.STRING(5),
         primaryKey: true,
+        allowNull: false,
       },
       nom_f: { allowNull: false, type: DataTypes.STRING(30) },
       prenom_f: { allowNull: false, type: DataTypes.STRING(30) },
@@ -17,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       tel_f: { allowNull: false, type: DataTypes.STRING(20) },
-      NSS: { allowNull: false, type: DataTypes.INTEGER(10) },
+      NSS: { type: DataTypes.INTEGER(10) },
       salaire_f: DataTypes.FLOAT(7, 3),
       adr_f: { allowNull: false, type: DataTypes.STRING },
       date_dajout: DataTypes.DATE,

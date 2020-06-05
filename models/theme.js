@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       code_theme: {
         type: DataTypes.STRING(5),
         primaryKey: true,
+        allowNull: false,
       },
 
       nom_theme: { type: DataTypes.STRING(30), allowNull: false },

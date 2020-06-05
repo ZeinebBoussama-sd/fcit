@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false,
       },
       date_val: { type: DataTypes.DATE, allowNull: false },
       remarque: { type: DataTypes.STRING, allowNull: false },

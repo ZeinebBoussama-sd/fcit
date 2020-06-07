@@ -1,13 +1,13 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import AddFormation from './AddFormation';
-import { GET_FORMATION } from '../GraphQl/Query';
+import { GET_FORMATIONS } from '../GraphQl/Query';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 function Formation() {
-  const { loading, error, data, refetch } = useQuery(GET_FORMATION);
+  const { loading, error, data, refetch } = useQuery(GET_FORMATIONS);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
   return (

@@ -4,15 +4,15 @@ import { Formik } from 'formik';
 import {
   GetFormateur,
   GET_SUPPORT_MINI,
-  GET_CLIENT,
-  GET_FORMATION,
+  GET_CLIENTS,
+  GET_FORMATIONS,
 } from '../GraphQl/Query';
 import { ADD_SESSION } from '../GraphQl/Mutation';
 
 function AddSession(props) {
   const [AddSession] = useMutation(ADD_SESSION);
-  const GetClients = useQuery(GET_CLIENT);
-  const GetFormations = useQuery(GET_FORMATION);
+  const GetClients = useQuery(GET_CLIENTS);
+  const GetFormations = useQuery(GET_FORMATIONS);
   const GetFormateurs = useQuery(GetFormateur);
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
 

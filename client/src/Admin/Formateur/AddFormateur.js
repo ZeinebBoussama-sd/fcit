@@ -3,10 +3,10 @@ import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { Formik } from 'formik';
 import { ADD_FORMATEUR } from '../GraphQl/Mutation';
-import { GET_FORMATION } from '../GraphQl/Query';
+import { GET_FORMATIONS } from '../GraphQl/Query';
 
 function AddFormateur(props) {
-  const GetFormations = useQuery(GET_FORMATION);
+  const GetFormations = useQuery(GET_FORMATIONS);
   const [AddFormateur, res] = useMutation(ADD_FORMATEUR);
   return (
     <div>

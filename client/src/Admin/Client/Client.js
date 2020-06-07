@@ -3,11 +3,12 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import AddClient from './AddClient';
-import { GET_CLIENT } from '../GraphQl/Query';
+import { GET_CLIENTS } from '../GraphQl/Query';
 import { DELETE_CLIENT } from '../GraphQl/Mutation';
+import { Link } from 'react-router-dom';
 
 function Client() {
-  const { loading, error, data, refetch } = useQuery(GET_CLIENT);
+  const { loading, error, data, refetch } = useQuery(GET_CLIENTS);
   const [deleteCLient, res] = useMutation(DELETE_CLIENT);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
@@ -62,7 +63,9 @@ function Client() {
                   <th scope='row' className='col-1'>
                     {client.code_client}
                   </th>
-                  <td className='col-2'>{client.nom_client}</td>
+                  <Link to={`/client/${client.code_client}`}>
+                    <td className='col-2'>{client.nom_client}</td>
+                  </Link>
                   <td className='col-3'>{client.email_client}</td>
                   <td className='col-2'>{client.tel_client}</td>
                   <td className='col-1'>
@@ -75,14 +78,12 @@ function Client() {
                   </td>
                   <td className='col-1 '>
                     <center>
-                      <a>
-                        <FontAwesomeIcon
-                          icon={faTrashAlt}
-                          className='mr-1 pointer'
-                          color='cornflowerblue'
-                          onClick={() => dlt(client.code_client)}
-                        />
-                      </a>
+                      <FontAwesomeIcon
+                        icon={faTrashAlt}
+                        className='mr-1 pointer'
+                        color='cornflowerblue'
+                        onClick={() => dlt(client.code_client)}
+                      />
                     </center>
                   </td>
                 </tr>

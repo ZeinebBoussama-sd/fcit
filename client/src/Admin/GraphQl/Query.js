@@ -1,6 +1,6 @@
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 
-export const GET_FORMATION = gql`
+export const GET_FORMATIONS = gql`
   {
     allFormations {
       CI_formation
@@ -20,7 +20,7 @@ export const GET_FORMATION = gql`
   }
 `;
 
-export const GET_CLIENT = gql`
+export const GET_CLIENTS = gql`
   {
     allClients {
       code_client
@@ -38,6 +38,19 @@ export const GET_CLIENT = gql`
     }
   }
 `;
+
+export const GET_CLIENT = gql`
+  query findclient($code_client: ID) {
+    client(code_client: $code_client) {
+      code_client
+      nom_client
+      tel_client
+      adr_client
+      email_client
+    }
+  }
+`;
+
 export const GetTheme = gql`
   {
     allThemes {
@@ -142,7 +155,7 @@ export const getSession = gql`
     }
   }
 `;
-export const GetDemandeFormation = gql`
+export const GET_DEMANDE_FORMATIONS = gql`
   {
     allDemandeFormations {
       code_demande
@@ -168,13 +181,29 @@ export const GetDemandeFormation = gql`
     }
   }
 `;
-
+export const GET_DEMANDE_FORMATION = gql`
+  query getdemandeurFormation($code_demande: ID) {
+    demandeformation(code_demande: $code_demande) {
+      code_demande
+      date_demande
+      type_demande
+      etat_demande
+      prix_prevu
+      lieu_prevu
+      duree_prevu
+      mode_demande
+      hr_deb_j_prev
+      hr_fin_j_prev
+      hr_j_prev
+    }
+  }
+`;
 export const GetPerson = gql`
   query findperson($cin_p: Int) {
     personne(cin_p: $cin_p) {
       cin_p
       client {
-        id
+        code_client
         nom_client
         tel_client
         adr_client
@@ -188,7 +217,7 @@ export const GetSociete = gql`
     societe(mat_fisc_sc: $mat_fisc_sc) {
       mat_fisc_sc
       client {
-        id
+        code_client
         nom_client
         tel_client
         adr_client

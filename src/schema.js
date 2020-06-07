@@ -41,9 +41,9 @@ const typeDefs = gql`
     hr_deb_j_prev: String!
     hr_fin_j_prev: String!
     hr_j_prev: Int!
-    client: Client!
-    formation: Formation!
-    demandeur: Demandeur!
+    client: Client
+    formation: Formation
+    demandeur: Demandeur
     dateprevue: [DatePrevue]
     ClientCodeClient: String
     DemandeurCodeDemandeur: Int!

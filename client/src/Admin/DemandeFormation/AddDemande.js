@@ -2,11 +2,11 @@ import React from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { Formik } from 'formik';
 import { ADD_DEMANDE } from '../GraphQl/Mutation';
-import { GET_FORMATION, GET_CLIENT, GET_DEMANDEURS } from '../GraphQl/Query';
+import { GET_FORMATIONS, GET_CLIENTS, GET_DEMANDEURS } from '../GraphQl/Query';
 function AddDemande(props) {
   const [addDemande, res] = useMutation(ADD_DEMANDE);
-  const GetFormation = useQuery(GET_FORMATION);
-  const GetClient = useQuery(GET_CLIENT);
+  const GetFormation = useQuery(GET_FORMATIONS);
+  const GetClient = useQuery(GET_CLIENTS);
   const GetDemandeur = useQuery(GET_DEMANDEURS);
 
   return (

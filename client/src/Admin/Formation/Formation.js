@@ -19,7 +19,9 @@ function Formation() {
           CI_formation: values,
         },
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
     refetch();
   };
   return (

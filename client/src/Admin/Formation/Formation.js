@@ -1,15 +1,29 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import AddFormation from './AddFormation';
 import { GET_FORMATIONS } from '../GraphQl/Query';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { DELETE_FORMATION } from '../GraphQl/Mutation';
 
 function Formation() {
   const { loading, error, data, refetch } = useQuery(GET_FORMATIONS);
+  const [deleteFormation, res] = useMutation(DELETE_FORMATION);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
+  const dlt = async (values) => {
+    try {
+      await deleteFormation({
+        variables: {
+          CI_formation: values,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    refetch();
+  };
   return (
     <div className='mt-11'>
       <AddFormation refetch={refetch} />
@@ -60,8 +74,9 @@ function Formation() {
                     <center>
                       <FontAwesomeIcon
                         icon={faTrashAlt}
-                        className='mr-1 pointer'
+                        className='mr-1'
                         color='cornflowerblue'
+                        onClick={() => dlt(parseInt(formation.CI_formation))}
                       />
                     </center>
                   </td>

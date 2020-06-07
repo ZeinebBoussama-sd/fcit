@@ -1,9 +1,9 @@
-import React from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import { Formik } from "formik";
-import { ADD_DEMANDE } from "../GraphQl/Mutation";
-import { GET_FORMATION, GET_CLIENT, GET_DEMANDEURS } from "../GraphQl/Query";
-function AddDemande() {
+import React from 'react';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import { Formik } from 'formik';
+import { ADD_DEMANDE } from '../GraphQl/Mutation';
+import { GET_FORMATION, GET_CLIENT, GET_DEMANDEURS } from '../GraphQl/Query';
+function AddDemande(props) {
   const [addDemande, res] = useMutation(ADD_DEMANDE);
   const GetFormation = useQuery(GET_FORMATION);
   const GetClient = useQuery(GET_CLIENT);
@@ -12,39 +12,39 @@ function AddDemande() {
   return (
     <div>
       <button
-        type="button"
-        className="btn btn-primary"
-        data-toggle="modal"
-        data-target="#exampleModal"
-        data-whatever="@getbootstrap"
+        type='button'
+        className='btn btn-primary'
+        data-toggle='modal'
+        data-target='#exampleModal'
+        data-whatever='@getbootstrap'
       >
         Add Demande
       </button>
 
       <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
+        className='modal fade'
+        id='exampleModal'
+        tabIndex='-1'
+        role='dialog'
+        aria-labelledby='exampleModalLabel'
+        aria-hidden='true'
       >
-        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+        <div className='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
+          <div className='modal-content'>
+            <div className='modal-header'>
+              <h5 className='modal-title' id='exampleModalLabel'>
                 Add Demande
               </h5>
               <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
+                type='button'
+                className='close'
+                data-dismiss='modal'
+                aria-label='Close'
               >
-                <span aria-hidden="true">&times;</span>
+                <span aria-hidden='true'>&times;</span>
               </button>
             </div>
-            <div className="modal-body">
+            <div className='modal-body'>
               <Formik
                 initialValues={{
                   date_demande: undefined,
@@ -57,7 +57,7 @@ function AddDemande() {
                   hr_deb_j_prev: undefined,
                   hr_fin_j_prev: undefined,
                   hr_j_prev: undefined,
-                  ClientCodeClient: "",
+                  ClientCodeClient: '',
                   FormationCIFormation: undefined,
                   DemandeurCodeDemandeur: undefined,
                 }}
@@ -78,7 +78,7 @@ function AddDemande() {
                         hr_j_prev: values.hr_j_prev,
                         ClientCodeClient: values.ClientCodeClient
                           ? values.ClientCodeClient
-                          : "",
+                          : '',
                         FormationCIFormation: values.FormationCIFormation
                           ? parseInt(values.FormationCIFormation)
                           : null,
@@ -90,6 +90,7 @@ function AddDemande() {
                   } catch (e) {
                     console.error(e.message);
                   }
+                  props.refetch();
                 }}
               >
                 {(props) => {
@@ -106,148 +107,148 @@ function AddDemande() {
                   } = props;
                   return (
                     <form onSubmit={handleSubmit}>
-                      <div className="form-group">
-                        <label htmlFor="Date D" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Date D' className='col-form-label'>
                           Date D:
                         </label>
                         <input
                           required
-                          type="date"
-                          className="form-control"
-                          id="date_demande"
+                          type='date'
+                          className='form-control'
+                          id='date_demande'
                           onChange={handleChange}
                           value={values.date_demande}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="type" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='type' className='col-form-label'>
                           Type:
                         </label>
                         <input
                           required
-                          type="text"
-                          className="form-control"
-                          id="type_demande"
+                          type='text'
+                          className='form-control'
+                          id='type_demande'
                           onChange={handleChange}
                           value={values.type_demande}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Etat" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Etat' className='col-form-label'>
                           Etat:
                         </label>
                         <input
                           required
-                          type="text"
-                          className="form-control"
-                          id="etat_demande"
+                          type='text'
+                          className='form-control'
+                          id='etat_demande'
                           onChange={handleChange}
                           value={values.etat_demande}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Prix" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Prix' className='col-form-label'>
                           Prix:
                         </label>
                         <input
                           required
-                          type="number"
-                          className="form-control"
-                          id="prix_prevu"
+                          type='number'
+                          className='form-control'
+                          id='prix_prevu'
                           onChange={handleChange}
                           value={values.prix_prevu}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Lieu" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Lieu' className='col-form-label'>
                           Lieu:
                         </label>
                         <input
                           required
-                          type="text"
-                          className="form-control"
-                          id="lieu_prevu"
+                          type='text'
+                          className='form-control'
+                          id='lieu_prevu'
                           onChange={handleChange}
                           value={values.lieu_prevu}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Duree" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Duree' className='col-form-label'>
                           Duree:
                         </label>
                         <input
                           required
-                          type="number"
-                          className="form-control"
-                          id="duree_prevu"
+                          type='number'
+                          className='form-control'
+                          id='duree_prevu'
                           onChange={handleChange}
                           value={values.duree_prevu}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Mode" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Mode' className='col-form-label'>
                           Mode:
                         </label>
                         <input
                           required
-                          type="text"
-                          className="form-control"
-                          id="mode_demande"
+                          type='text'
+                          className='form-control'
+                          id='mode_demande'
                           onChange={handleChange}
                           value={values.mode_demande}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Heure Debut" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Heure Debut' className='col-form-label'>
                           Heure Debut:
                         </label>
                         <input
                           required
-                          type="text"
-                          className="form-control"
-                          id="hr_deb_j_prev"
+                          type='text'
+                          className='form-control'
+                          id='hr_deb_j_prev'
                           onChange={handleChange}
                           value={values.hr_deb_j_prev}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Heure Fin" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Heure Fin' className='col-form-label'>
                           Heure Fin:
                         </label>
                         <input
                           required
-                          type="text"
-                          className="form-control"
-                          id="hr_fin_j_prev"
+                          type='text'
+                          className='form-control'
+                          id='hr_fin_j_prev'
                           onChange={handleChange}
                           value={values.hr_fin_j_prev}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className='form-group'>
                         <label
-                          htmlFor="Nb Heures par jour"
-                          className="col-form-label"
+                          htmlFor='Nb Heures par jour'
+                          className='col-form-label'
                         >
                           Nb Heures par jour:
                         </label>
                         <input
                           required
-                          type="number"
-                          className="form-control"
-                          id="hr_j_prev"
+                          type='number'
+                          className='form-control'
+                          id='hr_j_prev'
                           onChange={handleChange}
                           value={values.hr_j_prev}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Formation">Client:</label>
+                      <div className='form-group'>
+                        <label htmlFor='Formation'>Client:</label>
                         <select
-                          className="form-control"
+                          className='form-control'
                           onChange={handleChange}
                           value={values.ClientCodeClient}
-                          id="ClientCodeClient"
+                          id='ClientCodeClient'
                         >
-                          <option value="">---Choose Client--</option>
+                          <option value=''>---Choose Client--</option>
                           {GetClient.data &&
                             GetClient.data.allClients.map((client) => {
                               return (
@@ -261,15 +262,15 @@ function AddDemande() {
                             })}
                         </select>
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Formation">Formation:</label>
+                      <div className='form-group'>
+                        <label htmlFor='Formation'>Formation:</label>
                         <select
-                          className="form-control"
+                          className='form-control'
                           onChange={handleChange}
                           value={values.FormationCIFormation}
-                          id="FormationCIFormation"
+                          id='FormationCIFormation'
                         >
-                          <option value="">---Choose Formation----</option>
+                          <option value=''>---Choose Formation----</option>
                           {GetFormation.data &&
                             GetFormation.data.allFormations.map((formation) => {
                               return (
@@ -283,15 +284,15 @@ function AddDemande() {
                             })}
                         </select>
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Formation">Demandeur:</label>
+                      <div className='form-group'>
+                        <label htmlFor='Formation'>Demandeur:</label>
                         <select
-                          className="form-control"
+                          className='form-control'
                           onChange={handleChange}
                           value={values.DemandeurCodeDemandeur}
-                          id="DemandeurCodeDemandeur"
+                          id='DemandeurCodeDemandeur'
                         >
-                          <option value="">---Choose Demandeur----</option>
+                          <option value=''>---Choose Demandeur----</option>
                           {GetDemandeur.data &&
                             GetDemandeur.data.allDemandeurs.map((demandeur) => {
                               return (
@@ -305,18 +306,18 @@ function AddDemande() {
                             })}
                         </select>
                       </div>
-                      <div className="modal-footer">
+                      <div className='modal-footer'>
                         <button
-                          type="button"
-                          className="btn btn-secondary"
-                          data-dismiss="modal"
+                          type='button'
+                          className='btn btn-secondary'
+                          data-dismiss='modal'
                         >
                           Close
                         </button>
                         <button
-                          type="submit"
+                          type='submit'
                           disabled={isSubmitting}
-                          className="btn btn-primary"
+                          className='btn btn-primary'
                         >
                           Add Demandeur
                         </button>

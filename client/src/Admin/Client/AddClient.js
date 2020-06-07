@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { ADD_CLIENT } from '../GraphQl/Mutation';
 import { counterList } from '../../Utils/Enums';
 
-function AddClient() {
+function AddClient(props) {
   const [addClient, res] = useMutation(ADD_CLIENT);
 
   return (
@@ -78,6 +78,7 @@ function AddClient() {
                   } catch (e) {
                     console.error(e.message);
                   }
+                  props.refetch();
                 }}
               >
                 {(props) => {

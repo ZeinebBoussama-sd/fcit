@@ -1,11 +1,11 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require("graphql");
-const { Kind } = require("graphql/language");
-const { ApolloError } = require("apollo-server-core");
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
+const { ApolloError } = require('apollo-server-core');
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: "Date",
-    description: "Date custom scalar type",
+    name: 'Date',
+    description: 'Date custom scalar type',
     parseValue(value) {
       return new Date(value); // value from the client
     },
@@ -126,7 +126,7 @@ const resolvers = {
         (await models.Personne.findOne({
           where: { cin_p: args.personne },
         }));
-      if (findperson) throw new ApolloError("this cin_p is already created");
+      if (findperson) throw new ApolloError('this cin_p is already created');
 
       //looking after societe
       const findsociete =
@@ -135,8 +135,12 @@ const resolvers = {
           where: { mat_fisc_sc: args.societe },
         }));
       if (findsociete)
-        throw new ApolloError("this mat_fisc_sc is already created");
-
+        throw new ApolloError('this mat_fisc_sc is already created');
+      //Looking after code client
+      const findCodeClient = await models.Client.findOne({
+        where: { code_client: args.code_client },
+      });
+      if (findCodeClient) throw new ApolloError('Code Client already used!!');
       // create client
       const addClient = await models.Client.create({
         code_client: args.code_client,
@@ -181,7 +185,7 @@ const resolvers = {
           where: { ClientCodeClient: args.code_client },
         }));
       if (findsociete && findperson)
-        throw new ApolloError("cant find person or societe!");
+        throw new ApolloError('cant find person or societe!');
       //Delete Person
       findperson &&
         (await models.Personne.destroy({
@@ -503,7 +507,7 @@ const resolvers = {
           where: { code_theme: args.code_theme },
         }));
       if (findThemaByID)
-        throw new ApolloError("this Code Theme is already created");
+        throw new ApolloError('this Code Theme is already created');
 
       const findThemaByName =
         args.nom_theme &&
@@ -511,7 +515,7 @@ const resolvers = {
           where: { nom_theme: args.nom_theme },
         }));
       if (findThemaByName)
-        throw new ApolloError("this nom Theme is already created");
+        throw new ApolloError('this nom Theme is already created');
 
       const addThema = await models.Theme.create({
         code_theme: args.code_theme,

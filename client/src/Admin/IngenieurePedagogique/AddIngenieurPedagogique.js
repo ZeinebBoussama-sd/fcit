@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Formik } from 'formik';
 import { ADD_INGENIEURPEDAGOGIQUE } from '../GraphQl/Mutation';
 
-function AddIngenieurPedagogique() {
+function AddIngenieurPedagogique(props) {
   const [AddIngenieurPedagogique, res] = useMutation(ADD_INGENIEURPEDAGOGIQUE);
   return (
     <div>
@@ -73,6 +73,7 @@ function AddIngenieurPedagogique() {
                   } catch (e) {
                     console.error(e.message);
                   }
+                  props.refetch();
                 }}
               >
                 {(props) => {

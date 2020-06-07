@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 
 export const ADD_CLIENT = gql`
   mutation create_client(
@@ -42,8 +42,9 @@ export const ADD_CLIENT = gql`
 export const DELETE_CLIENT = gql`
   mutation deleteClient($code_client: String!) {
     deleteClient(code_client: $code_client) {
-      code
-      success
+      client {
+        code_client
+      }
     }
   }
 `;

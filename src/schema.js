@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   scalar Date
@@ -46,8 +46,8 @@ const typeDefs = gql`
     demandeur: Demandeur!
     dateprevue: [DatePrevue]
     ClientCodeClient: String
-    DemandeurCodeDemandeur: Int
-    FormationCIFormation: Int
+    DemandeurCodeDemandeur: Int!
+    FormationCIFormation: Int!
   }
   type Demandeur {
     code_demandeur: ID!
@@ -246,6 +246,7 @@ const typeDefs = gql`
     code: String!
     success: Boolean!
     message: String!
+    client: Client
   }
   type Mutation {
     createClient(

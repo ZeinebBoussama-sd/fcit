@@ -248,6 +248,21 @@ const typeDefs = gql`
     message: String!
     client: Client
   }
+  type DeleteFormateurMutationResponse implements MutationResponse {
+    code: String!
+    success: Boolean!
+    message: String!
+  }
+  type DeleteFormationMutationResponse implements MutationResponse {
+    code: String!
+    success: Boolean!
+    message: String!
+  }
+  type DeleteIngenieurPedagogiqueMutationResponse implements MutationResponse {
+    code: String!
+    success: Boolean!
+    message: String!
+  }
   type Mutation {
     createClient(
       code_client: String!
@@ -344,6 +359,7 @@ const typeDefs = gql`
       RIB_f: Int
       copie_RIB: String
     ): Formateur!
+    deleteFormateur(code_formateur: String!): DeleteFormateurMutationResponse
 
     createFormation(
       code_formation: String!
@@ -357,6 +373,7 @@ const typeDefs = gql`
       prerequis: String!
       ThemeCodeTheme: String
     ): Formation!
+    deleteFormation(CI_formation: Int!): DeleteFormationMutationResponse
 
     createIngenieurPedagogique(
       nom_ing: String!
@@ -370,6 +387,9 @@ const typeDefs = gql`
       adr_ing: String!
     ): IngenieurPedagogique!
 
+    deleteIngenieurPedagogique(
+      code_IP: Int!
+    ): DeleteIngenieurPedagogiqueMutationResponse
     createMotCle(motcle: String!): MotCle!
 
     createParticipant(

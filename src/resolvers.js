@@ -390,6 +390,12 @@ const resolvers = {
         copie_RIB,
       });
     },
+    async deleteFormateur(root, args, { models }) {
+      const deleteFormateur = await models.Formateur.destroy({
+        where: { code_formateur: args.code_formateur },
+      });
+      return deleteFormateur;
+    },
     async createFormation(root, args, { models }) {
       const addFormation = await models.Formation.create({
         code_formation: args.code_formation,
@@ -405,7 +411,12 @@ const resolvers = {
       });
       return addFormation;
     },
-
+    async deleteFormation(root, args, { models }) {
+      const deleteFormation = await models.Formation.destroy({
+        where: { CI_formation: args.CI_formation },
+      });
+      return deleteFormation;
+    },
     async createIngenieurPedagogique(
       root,
       {
@@ -432,6 +443,14 @@ const resolvers = {
         specialite_ing,
         adr_ing,
       });
+    },
+    async deleteIngenieurPedagogique(root, args, { models }) {
+      const deleteIngenieurPedagogique = await models.IngenieurPedagogique.destroy(
+        {
+          where: { code_IP: args.code_IP },
+        }
+      );
+      return deleteInegnieurPedagogique;
     },
     async createParticipant(
       root,

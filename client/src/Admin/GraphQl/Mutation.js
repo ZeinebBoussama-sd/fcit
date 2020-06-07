@@ -86,6 +86,14 @@ export const ADD_FORMATION = gql`
     }
   }
 `;
+export const DELETE_FORMATION = gql`
+  mutation deleteFormation($CI_formation: Int!) {
+    deleteFormation(CI_formation: $CI_formation) {
+      code
+      success
+    }
+  }
+`;
 export const ADD_THEME = gql`
   mutation create_theme($code_theme: String!, $nom_theme: String!) {
     createTheme(code_theme: $code_theme, nom_theme: $nom_theme) {
@@ -232,6 +240,14 @@ export const ADD_FORMATEUR = gql`
     }
   }
 `;
+export const DELETE_FORMATEUR = gql`
+  mutation deleteFormateur($code_formateur: String!) {
+    deleteFormateur(code_formateur: $code_formateur) {
+      code
+      success
+    }
+  }
+`;
 export const ADD_INGENIEURPEDAGOGIQUE = gql`
   mutation create_ingenieurpedagogique(
     $nom_ing: String!
@@ -264,6 +280,14 @@ export const ADD_INGENIEURPEDAGOGIQUE = gql`
       salaire_ing
       specialite_ing
       adr_ing
+    }
+  }
+`;
+export const DELETE_INGENIEURPEDAGOGIQUE = gql`
+  mutation deleteIngenieurPedagogique($code_IP: Int!) {
+    deleteIngenieurPedagogique(code_IP: $code_IP) {
+      code
+      success
     }
   }
 `;

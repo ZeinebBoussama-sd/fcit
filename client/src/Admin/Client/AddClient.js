@@ -54,7 +54,8 @@ function AddClient() {
                   adr_client: undefined,
                   pays_client: undefined,
                   cin_p: undefined,
-                  mat_fisc_sc: undefined,
+                  mat_fisc_sc: '',
+                  responsable: '',
                   PersonneId: undefined,
                   SocieteId: undefined,
                 }}
@@ -70,7 +71,8 @@ function AddClient() {
                         adr_client: values.adr_client,
                         pays_client: values.pays_client,
                         personne: values.cin_p ? values.cin_p : null,
-                        societe: values.mat_fisc_sc ? values.mat_fisc_sc : null,
+                        societe: values.mat_fisc_sc,
+                        responsable: values.responsable,
                       },
                     });
                   } catch (e) {
@@ -137,11 +139,23 @@ function AddClient() {
                           Matricule Fiscale:
                         </label>
                         <input
-                          type='number'
+                          type='text'
                           className='form-control'
                           id='mat_fisc_sc'
                           onChange={handleChange}
                           value={values.mat_fisc_sc}
+                        />
+                      </div>
+                      <div className='form-group'>
+                        <label htmlFor='responsable' className='col-form-label'>
+                          Responsable:
+                        </label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='responsable'
+                          onChange={handleChange}
+                          value={values.responsable}
                         />
                       </div>
 

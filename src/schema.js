@@ -211,7 +211,6 @@ const typeDefs = gql`
     personne(cin_p: Int): Personne
     dateprevue(date_prev: Date): DatePrevue
     allDatePrevues: [DatePrevue!]!
-
     societe(mat_fisc_sc: String): Societe
     demandeformation(code_demande: ID): DemandeFormation
     allDemandeFormations: [DemandeFormation!]!
@@ -225,7 +224,6 @@ const typeDefs = gql`
     allFormateurs: [Formateur!]!
     support(code_support: ID, titre_support: String): Support
     allSupports: [Support!]!
-
     fichier(code_fichier: ID, nom_fichier: String): Fichier
     motcle(motcle: String): MotCle
     ingenieurpedagogique(code_IP: ID, nom_ing: String): IngenieurPedagogique
@@ -255,7 +253,8 @@ const typeDefs = gql`
       tel_client: String!
       adr_client: String!
       personne: Int
-      societe: Int
+      societe: String
+      responsable: String
     ): Client!
 
     deleteClient(code_client: String!): DeleteClientMutationResponse

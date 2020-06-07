@@ -9,7 +9,8 @@ export const ADD_CLIENT = gql`
     $tel_client: String!
     $adr_client: String!
     $personne: Int
-    $societe: Int
+    $societe: String
+    $responsable: String
   ) {
     createClient(
       code_client: $code_client
@@ -20,6 +21,7 @@ export const ADD_CLIENT = gql`
       adr_client: $adr_client
       personne: $personne
       societe: $societe
+      responsable: $responsable
     ) {
       code_client
       nom_client
@@ -32,6 +34,7 @@ export const ADD_CLIENT = gql`
       }
       societe {
         mat_fisc_sc
+        responsable
       }
     }
   }

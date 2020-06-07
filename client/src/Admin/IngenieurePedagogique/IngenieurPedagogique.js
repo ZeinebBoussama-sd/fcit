@@ -6,7 +6,6 @@ function IngenieurPedagogique() {
   const { loading, error, data } = useQuery(GetIngenieurPedagogique);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
-  console.log(data);
 
   return (
     <div className='mt-11'>

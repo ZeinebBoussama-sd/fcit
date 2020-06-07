@@ -1,11 +1,11 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require("graphql");
-const { Kind } = require("graphql/language");
-const { ApolloError } = require("apollo-server-core");
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
+const { ApolloError } = require('apollo-server-core');
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: "Date",
-    description: "Date custom scalar type",
+    name: 'Date',
+    description: 'Date custom scalar type',
     parseValue(value) {
       return new Date(value); // value from the client
     },
@@ -126,7 +126,7 @@ const resolvers = {
         (await models.Personne.findOne({
           where: { cin_p: args.personne },
         }));
-      if (findperson) throw new ApolloError("this cin_p is already created");
+      if (findperson) throw new ApolloError('this cin_p is already created');
 
       //looking after societe
       const findsociete =
@@ -135,20 +135,7 @@ const resolvers = {
           where: { mat_fisc_sc: args.societe },
         }));
       if (findsociete)
-        throw new ApolloError("this mat_fisc_sc is already created");
-
-      // if you have cin_p you create it.
-      const addperson =
-        args.personne &&
-        (await models.Personne.create({ cin_p: args.personne }));
-
-      // if you have mat_fisc_sc you create it.
-      const addsociete =
-        args.societe &&
-        (await models.Societe.create({
-          mat_fisc_sc: args.mat_fisc_sc,
-          responsable: args.responsable,
-        }));
+        throw new ApolloError('this mat_fisc_sc is already created');
 
       // create client
       const addClient = await models.Client.create({
@@ -158,9 +145,24 @@ const resolvers = {
         email_client: args.email_client,
         tel_client: args.tel_client,
         adr_client: args.adr_client,
-        PersonneCinP: addperson && addperson.cin_p,
-        SocieteMatFiscSc: addsociete && addsociete.mat_fisc_sc,
       });
+      // create person .
+      const addperson =
+        args.personne &&
+        (await models.Personne.create({
+          cin_p: args.personne,
+          ClientCodeClient: addClient.code_client,
+        }));
+
+      // create Societe.
+      const addsociete =
+        args.societe &&
+        (await models.Societe.create({
+          mat_fisc_sc: args.societe,
+          responsable: args.responsable,
+          ClientCodeClient: addClient.code_client,
+        }));
+
       return addClient;
     },
     async deleteClient(root, { code_client }, { models }) {
@@ -472,7 +474,7 @@ const resolvers = {
           where: { code_theme: args.code_theme },
         }));
       if (findThemaByID)
-        throw new ApolloError("this Code Theme is already created");
+        throw new ApolloError('this Code Theme is already created');
 
       const findThemaByName =
         args.nom_theme &&
@@ -480,7 +482,7 @@ const resolvers = {
           where: { nom_theme: args.nom_theme },
         }));
       if (findThemaByName)
-        throw new ApolloError("this nom Theme is already created");
+        throw new ApolloError('this nom Theme is already created');
 
       const addThema = await models.Theme.create({
         code_theme: args.code_theme,

@@ -1,6 +1,6 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
-export const GetFormation = gql`
+export const GET_FORMATION = gql`
   {
     allFormations {
       CI_formation
@@ -20,7 +20,7 @@ export const GetFormation = gql`
   }
 `;
 
-export const GetClient = gql`
+export const GET_CLIENT = gql`
   {
     allClients {
       code_client
@@ -92,10 +92,12 @@ export const GetFormateur = gql`
 export const GetSupport = gql`
   {
     allSupports {
+      code_support
       titre_support
       date_support
       validation {
-        decision
+        decision_f
+        decision_r
         ingenieurpedagogique {
           nom_ing
         }
@@ -103,12 +105,24 @@ export const GetSupport = gql`
           nom_f
         }
       }
+      fichier {
+        nom_fichier
+      }
+    }
+  }
+`;
+export const GET_SUPPORT_MINI = gql`
+  {
+    allSupports {
+      code_support
+      titre_support
     }
   }
 `;
 export const getSession = gql`
   {
     allSessions {
+      code_session
       type_sess
       date_deb_sess
       lieu_sess
@@ -138,15 +152,19 @@ export const GetDemandeFormation = gql`
       prix_prevu
       lieu_prevu
       duree_prevu
-      horaire_prevu
       mode_demande
+      hr_deb_j_prev
+      hr_fin_j_prev
+      hr_j_prev
       client {
         nom_client
       }
       formation {
         intitule
       }
-      createdAt
+      demandeur {
+        prenom_demandeur
+      }
     }
   }
 `;
@@ -176,6 +194,17 @@ export const GetSociete = gql`
         adr_client
         email_client
       }
+    }
+  }
+`;
+export const GET_DEMANDEURS = gql`
+  {
+    allDemandeurs {
+      code_demandeur
+      nom_demandeur
+      prenom_demandeur
+      email_demandeur
+      tel_demandeur
     }
   }
 `;

@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { GetDemandeFormation } from "../GraphQl/Query";
+import AddDemande from "./AddDemande";
 function DemandeFormation() {
   const { loading, error, data } = useQuery(GetDemandeFormation);
   if (loading) return <p>Loading...</p>;
@@ -8,6 +9,7 @@ function DemandeFormation() {
 
   return (
     <div className="mt-11 ">
+      <AddDemande />
       <div className="table-responsive">
         <table className=" table table-hover table-fixed">
           <thead>
@@ -44,9 +46,13 @@ function DemandeFormation() {
                 <th scope="row" className="col-1">
                   {idx + 1}
                 </th>
-                <td className="col-2">{demandeformation.createdAt}</td>
+                <td className="col-2">{demandeformation.date_demande}</td>
                 <td className="col-1">{demandeformation.etat_demande}</td>
-                <td className="col-2">{demandeformation.client.nom_client}</td>
+                <td className="col-2">
+                  {demandeformation.client
+                    ? demandeformation.client.nom_client
+                    : "--"}
+                </td>
                 <td className="col-2">{demandeformation.formation.intitule}</td>
                 <td className="col-1">{demandeformation.type_demande}</td>
                 <td className="col-2">{demandeformation.mode_demande}</td>

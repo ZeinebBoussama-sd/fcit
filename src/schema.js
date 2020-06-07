@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   scalar Date
@@ -45,6 +45,9 @@ const typeDefs = gql`
     formation: Formation!
     demandeur: Demandeur!
     dateprevue: [DatePrevue]
+    ClientCodeClient: String
+    DemandeurCodeDemandeur: Int
+    FormationCIFormation: Int
   }
   type Demandeur {
     code_demandeur: ID!
@@ -196,8 +199,8 @@ const typeDefs = gql`
   type Validation {
     code_val: Int!
     date_val: Date!
-    decision_R: Boolean!
-    decision_F: Boolean!
+    decision_r: Boolean!
+    decision_f: Boolean!
     remarque: String!
     formateur: Formateur!
     ingenieurpedagogique: IngenieurPedagogique!
@@ -297,7 +300,7 @@ const typeDefs = gql`
       prenom_demandeur: String!
       email_demandeur: String!
       tel_demandeur: String!
-    ): Demandeur
+    ): Demandeur!
 
     createFichier(
       nom_fichier: String!
@@ -364,7 +367,7 @@ const typeDefs = gql`
       salaire_ing: Float!
       specialite_ing: String!
       adr_ing: String!
-    ): IngenieurPedagogique
+    ): IngenieurPedagogique!
 
     createMotCle(motcle: String!): MotCle!
 

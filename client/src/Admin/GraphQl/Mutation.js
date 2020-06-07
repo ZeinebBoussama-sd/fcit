@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 export const ADD_CLIENT = gql`
   mutation create_client(
@@ -39,7 +39,14 @@ export const ADD_CLIENT = gql`
     }
   }
 `;
-
+export const DELETE_CLIENT = gql`
+  mutation deleteClient($code_client: String!) {
+    deleteClient(code_client: $code_client) {
+      code
+      success
+    }
+  }
+`;
 export const ADD_FORMATION = gql`
   mutation create_formation(
     $code_formation: String!
@@ -256,6 +263,82 @@ export const ADD_INGENIEURPEDAGOGIQUE = gql`
       salaire_ing
       specialite_ing
       adr_ing
+    }
+  }
+`;
+export const ADD_SUPPORT = gql`
+  mutation create_support($titre_support: String!, $date_support: Date!) {
+    createSupport(titre_support: $titre_support, date_support: $date_support) {
+      titre_support
+      date_support
+    }
+  }
+`;
+export const ADD_DEMANDEUR = gql`
+  mutation create_demandeur(
+    $nom_demandeur: String!
+    $prenom_demandeur: String!
+    $email_demandeur: String!
+    $tel_demandeur: String!
+  ) {
+    createDemandeur(
+      nom_demandeur: $nom_demandeur
+      prenom_demandeur: $prenom_demandeur
+      email_demandeur: $email_demandeur
+      tel_demandeur: $tel_demandeur
+    ) {
+      nom_demandeur
+      code_demandeur
+      prenom_demandeur
+      email_demandeur
+      tel_demandeur
+    }
+  }
+`;
+export const ADD_DEMANDE = gql`
+  mutation create_demande(
+    $date_demande: Date!
+    $type_demande: String!
+    $etat_demande: String!
+    $prix_prevu: Float!
+    $lieu_prevu: String!
+    $duree_prevu: Int!
+    $mode_demande: String!
+    $hr_deb_j_prev: String!
+    $hr_fin_j_prev: String!
+    $hr_j_prev: Int!
+    $ClientCodeClient: String
+    $FormationCIFormation: Int
+    $DemandeurCodeDemandeur: Int
+  ) {
+    createDemandeFormation(
+      date_demande: $date_demande
+      type_demande: $type_demande
+      etat_demande: $etat_demande
+      prix_prevu: $prix_prevu
+      lieu_prevu: $lieu_prevu
+      duree_prevu: $duree_prevu
+      mode_demande: $mode_demande
+      hr_deb_j_prev: $hr_deb_j_prev
+      hr_fin_j_prev: $hr_fin_j_prev
+      hr_j_prev: $hr_j_prev
+      ClientCodeClient: $ClientCodeClient
+      FormationCIFormation: $FormationCIFormation
+      DemandeurCodeDemandeur: $DemandeurCodeDemandeur
+    ) {
+      date_demande
+      type_demande
+      etat_demande
+      prix_prevu
+      lieu_prevu
+      duree_prevu
+      mode_demande
+      hr_deb_j_prev
+      hr_fin_j_prev
+      hr_j_prev
+      ClientCodeClient
+      FormationCIFormation
+      DemandeurCodeDemandeur
     }
   }
 `;

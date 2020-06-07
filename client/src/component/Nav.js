@@ -1,121 +1,121 @@
-import React from 'react';
-import logofcit from '../foundation/logo/logofcit3.png';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import logofcit from "../foundation/logo/logofcit3.png";
+import { NavLink } from "react-router-dom";
 
 function Nav() {
   return (
-    <nav className='navbar navbar-expand-lg fixed-top navbar-dark bg-dark '>
-      <a className='navbar-brand' href='/'>
-        <img src={logofcit} height='60' alt='' />
+    <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark ">
+      <a className="navbar-brand" href="/">
+        <img src={logofcit} height="60" alt="" />
       </a>
       <button
-        className='navbar-toggler'
-        type='button'
-        data-toggle='collapse'
-        data-target='#navbarToggler'
-        aria-controls='navbarToggler'
-        aria-expanded='false'
-        aria-label='Toggle navigation'
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarToggler"
+        aria-controls="navbarToggler"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
       >
-        <span className='navbar-toggler-icon'></span>
+        <span className="navbar-toggler-icon"></span>
       </button>
 
-      <div className='collapse navbar-collapse' id='navbarToggler'>
-        <ul className='navbar-nav mr-auto mt-2 mt-lg-0'>
-          <li className='nav-item'>
+      <div className="collapse navbar-collapse" id="navbarToggler">
+        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li className="nav-item">
             <NavLink
-              className='nav-link'
+              className="nav-link"
               exact
-              to='/'
+              to="/"
               // activeStyle={{
               //   color: 'red',
               //   borderBottom: 'solid 4px red',
               //   background: 'blue',
               // }}
             >
-              Accueil<span className='sr-only'>(current)</span>
+              Accueil<span className="sr-only">(current)</span>
             </NavLink>
           </li>
           <li className={`nav-item `}>
-            <NavLink className='nav-link' to='/apropos' exact name='propos'>
+            <NavLink className="nav-link" to="/apropos" exact name="propos">
               A propos
             </NavLink>
           </li>
-          <li className='nav-item dropdown'>
+          <li className="nav-item dropdown">
             <NavLink
-              className='nav-link dropdown-toggle'
+              className="nav-link dropdown-toggle"
               exact
-              to='/solution'
+              to="/solution"
               // id='navbarDropdownMenuLink'
-              data-toggle='dropdown'
-              aria-haspopup='true'
-              aria-expanded='false'
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
             >
               Nos solutions
             </NavLink>
             <ul
-              className='dropdown-menu navdropdown bg-dark'
+              className="dropdown-menu navdropdown bg-dark"
               // aria-labelledby='navbarDropdownMenuLink'
-              style={{ top: '38px' }}
+              style={{ top: "38px" }}
             >
               <li>
-                <NavLink className='dropdown-item' exact to='/seminaire'>
+                <NavLink className="dropdown-item" exact to="/seminaire">
                   Séminaire
                 </NavLink>
               </li>
               <li>
-                <div className='dropdown-divider'></div>
-                <NavLink className='dropdown-item' exact to='/consulting'>
+                <div className="dropdown-divider"></div>
+                <NavLink className="dropdown-item" exact to="/consulting">
                   Consulting
                 </NavLink>
               </li>
-              <div className='dropdown-divider'></div>
-              <li className='dropdown-submenu dropright'>
+              <div className="dropdown-divider"></div>
+              <li className="dropdown-submenu dropright">
                 <NavLink
-                  className='dropdown-item dropdown-toggle'
+                  className="dropdown-item dropdown-toggle"
                   exact
-                  to='/formation'
+                  to="/formation"
                 >
                   Formations
                 </NavLink>
-                <ul className='dropdown-menu bg-dark'>
+                <ul className="dropdown-menu bg-dark">
                   <li>
                     <NavLink
-                      className='dropdown-item'
+                      className="dropdown-item"
                       exact
-                      to='/nos_formations'
+                      to="/nos_formations"
                     >
                       Nos Formations
                     </NavLink>
                   </li>
                   <li>
-                    <div className='dropdown-divider'></div>
+                    <div className="dropdown-divider"></div>
                     <NavLink
-                      className='dropdown-item'
+                      className="dropdown-item"
                       exact
-                      to='/cursus_metiers'
+                      to="/cursus_metiers"
                     >
                       Cursus Métiers
                     </NavLink>
                   </li>
                   <li>
-                    <div className='dropdown-divider'></div>
-                    <NavLink className='dropdown-item' exact to='/reconversion'>
+                    <div className="dropdown-divider"></div>
+                    <NavLink className="dropdown-item" exact to="/reconversion">
                       Reconversion
                     </NavLink>
                   </li>
                   <li>
-                    <div className='dropdown-divider'></div>
-                    <NavLink className='dropdown-item' exact to='/sur_mesure'>
+                    <div className="dropdown-divider"></div>
+                    <NavLink className="dropdown-item" exact to="/sur_mesure">
                       Sur Mesure
                     </NavLink>
                   </li>
                   <li>
-                    <div className='dropdown-divider'></div>
+                    <div className="dropdown-divider"></div>
                     <NavLink
-                      className='dropdown-item'
+                      className="dropdown-item"
                       exact
-                      to='/top_formations'
+                      to="/top_formations"
                     >
                       Top Formations
                     </NavLink>
@@ -125,20 +125,20 @@ function Nav() {
             </ul>
           </li>
 
-          <li className='nav-item'>
-            <NavLink className='nav-link' exact to='/nos_centres'>
+          <li className="nav-item">
+            <NavLink className="nav-link" exact to="/nos_centres">
               Nos Centres
             </NavLink>
           </li>
-          <li className='nav-item'>
-            <NavLink className='nav-link' exact to='/contact'>
+          <li className="nav-item">
+            <NavLink className="nav-link" exact to="/contact">
               Contact
             </NavLink>
           </li>
         </ul>
-        <ul className='nav justify-content-end'>
-          <NavLink className='nav-link' exact to='/admin'>
-            <button className='btn btn-outline-success'>S'authentifier</button>
+        <ul className="nav justify-content-end">
+          <NavLink className="nav-link" exact to="/admin">
+            <button className="btn btn-outline-primary">S'authentifier</button>
           </NavLink>
         </ul>
       </div>

@@ -1,11 +1,11 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
-const { ApolloError } = require('apollo-server-core');
+const { GraphQLScalarType } = require("graphql");
+const { Kind } = require("graphql/language");
+const { ApolloError } = require("apollo-server-core");
 const resolvers = {
   Date: new GraphQLScalarType({
-    name: 'Date',
-    description: 'Date custom scalar type',
+    name: "Date",
+    description: "Date custom scalar type",
     parseValue(value) {
       return new Date(value); // value from the client
     },
@@ -95,7 +95,7 @@ const resolvers = {
       return models.Session.findByPk(CI_session);
     },
     async allSessions(root, args, { models }) {
-      return models.Support.findAll();
+      return models.Session.findAll();
     },
     async support(root, { code_support }, { models }) {
       return models.Support.findByPk(code_support);
@@ -126,7 +126,7 @@ const resolvers = {
         (await models.Personne.findOne({
           where: { cin_p: args.personne },
         }));
-      if (findperson) throw new ApolloError('this cin_p is already created');
+      if (findperson) throw new ApolloError("this cin_p is already created");
 
       //looking after societe
       const findsociete =
@@ -135,7 +135,7 @@ const resolvers = {
           where: { mat_fisc_sc: args.societe },
         }));
       if (findsociete)
-        throw new ApolloError('this mat_fisc_sc is already created');
+        throw new ApolloError("this mat_fisc_sc is already created");
 
       // create client
       const addClient = await models.Client.create({
@@ -165,8 +165,38 @@ const resolvers = {
 
       return addClient;
     },
-    async deleteClient(root, { code_client }, { models }) {
-      return models.Client.destroy({ where: { code_client: code_client } });
+    async deleteClient(root, args, { models }) {
+      //search person /societe
+      //looking after person
+      const findperson =
+        args.code_client &&
+        (await models.Personne.findOne({
+          where: { ClientCodeClient: args.code_client },
+        }));
+
+      //looking after societe
+      const findsociete =
+        args.code_client &&
+        (await models.Societe.findOne({
+          where: { ClientCodeClient: args.code_client },
+        }));
+      if (findsociete && findperson)
+        throw new ApolloError("cant find person or societe!");
+      //Delete Person
+      findperson &&
+        (await models.Personne.destroy({
+          where: { ClientCodeClient: args.code_client },
+        }));
+      //Delete Societe
+      findsociete &&
+        (await models.Societe.destroy({
+          where: { ClientCodeClient: args.code_client },
+        }));
+      //Delete Client
+      const deleteClient = await models.Client.destroy({
+        where: { code_client: args.code_client },
+      });
+      return deleteClient;
     },
     async updateClient(
       root,
@@ -228,6 +258,7 @@ const resolvers = {
         hr_j_prev,
         ClientCodeClient,
         FormationCIFormation,
+        DemandeurCodeDemandeur,
       },
       { models }
     ) {
@@ -244,6 +275,7 @@ const resolvers = {
         hr_j_prev,
         ClientCodeClient,
         FormationCIFormation,
+        DemandeurCodeDemandeur,
       });
     },
     async createDatePrevue(root, { date_prev }, { models }) {
@@ -271,17 +303,14 @@ const resolvers = {
         SupportCodeSupport,
       });
     },
-    async createDemandeur(
-      root,
-      { nom_demandeur, prenom_demandeur, email_demandeur, tel_demandeur },
-      { models }
-    ) {
-      return models.Metier.create({
-        nom_demandeur,
-        prenom_demandeur,
-        email_demandeur,
-        tel_demandeur,
+    async createDemandeur(root, args, { models }) {
+      const addDemandeur = await models.Demandeur.create({
+        nom_demandeur: args.nom_demandeur,
+        prenom_demandeur: args.prenom_demandeur,
+        email_demandeur: args.email_demandeur,
+        tel_demandeur: args.tel_demandeur,
       });
+      return addDemandeur;
     },
     async createMetier(root, { code_metier, intitule_metier }, { models }) {
       return models.Metier.create({
@@ -474,7 +503,7 @@ const resolvers = {
           where: { code_theme: args.code_theme },
         }));
       if (findThemaByID)
-        throw new ApolloError('this Code Theme is already created');
+        throw new ApolloError("this Code Theme is already created");
 
       const findThemaByName =
         args.nom_theme &&
@@ -482,7 +511,7 @@ const resolvers = {
           where: { nom_theme: args.nom_theme },
         }));
       if (findThemaByName)
-        throw new ApolloError('this nom Theme is already created');
+        throw new ApolloError("this nom Theme is already created");
 
       const addThema = await models.Theme.create({
         code_theme: args.code_theme,
@@ -592,22 +621,22 @@ const resolvers = {
   },
   Formation: {
     async demandeformation(formation) {
-      return formation.getDemandeFormation();
+      return formation.getDemandeFormations();
     },
     async theme(formation) {
       return formation.getTheme();
     },
     async metiers(formation) {
-      return formation.getMetier();
+      return formation.getMetiers();
     },
     async motcle(formation) {
-      return formation.getMotCle();
+      return formation.getMotCles();
     },
     async session(formation) {
-      return formation.getSession();
+      return formation.getSessions();
     },
     async formateur(formation) {
-      return formation.getformateur();
+      return formation.getFormateurs();
     },
   },
   IngenieurPedagogique: {
@@ -633,7 +662,7 @@ const resolvers = {
   },
   Session: {
     async formateur(session) {
-      return session.getformateur();
+      return session.getFormateur();
     },
     async participant(session) {
       return session.getParticipant();
@@ -650,13 +679,13 @@ const resolvers = {
   },
   Support: {
     async session(support) {
-      return support.getSession();
+      return support.getSessions();
     },
     async validation(support) {
-      return support.getValidation();
+      return support.getValidations();
     },
     async fichier(support) {
-      return support.getFichier();
+      return support.getFichiers();
     },
   },
   Theme: {

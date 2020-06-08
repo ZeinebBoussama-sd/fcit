@@ -6,13 +6,13 @@ import AddClient from './AddClient';
 import { GET_CLIENTS } from '../GraphQl/Query';
 import { DELETE_CLIENT } from '../GraphQl/Mutation';
 import { Link } from 'react-router-dom';
+import WarningModal from '../component/WarningModal';
 
 function Client() {
   const { loading, error, data, refetch } = useQuery(GET_CLIENTS);
   const [deleteCLient, res] = useMutation(DELETE_CLIENT);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
-
   const dlt = async (values) => {
     try {
       await deleteCLient({
@@ -78,12 +78,7 @@ function Client() {
                   </td>
                   <td className='col-1 '>
                     <center>
-                      <FontAwesomeIcon
-                        icon={faTrashAlt}
-                        className='mr-1 pointer'
-                        color='cornflowerblue'
-                        onClick={() => dlt(client.code_client)}
-                      />
+                      <WarningModal dlt={dlt} code={client.code_client} />
                     </center>
                   </td>
                 </tr>

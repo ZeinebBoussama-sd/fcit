@@ -300,9 +300,11 @@ const typeDefs = gql`
       pays_client: String
       nom_client: String
       email_client: String
-      tel_client: Int
+      tel_client: String
       adr_client: String
-    ): Client!
+      personne: Int
+      societe: String
+    ): DeleteClientMutationResponse!
 
     createPersonne(cin_p: Int!, ClientCodeClient: String): Personne!
 

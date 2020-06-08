@@ -39,6 +39,45 @@ export const ADD_CLIENT = gql`
     }
   }
 `;
+export const UPDATE_CLIENT = gql`
+  mutation updateClient(
+    $code_client: String!
+    $nom_client: String!
+    $email_client: String!
+    $pays_client: String!
+    $tel_client: String!
+    $adr_client: String!
+    $personne: Int
+    $societe: String
+  ) {
+    updateClient(
+      code_client: $code_client
+      nom_client: $nom_client
+      email_client: $email_client
+      tel_client: $tel_client
+      pays_client: $pays_client
+      adr_client: $adr_client
+      personne: $personne
+      societe: $societe
+    ) {
+      client {
+        code_client
+        nom_client
+        email_client
+        tel_client
+        pays_client
+        adr_client
+        personne {
+          cin_p
+        }
+        societe {
+          mat_fisc_sc
+          responsable
+        }
+      }
+    }
+  }
+`;
 export const DELETE_CLIENT = gql`
   mutation deleteClient($code_client: String!) {
     deleteClient(code_client: $code_client) {

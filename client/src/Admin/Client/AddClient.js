@@ -127,6 +127,7 @@ function AddClient(props) {
                           CIN:
                         </label>
                         <input
+                          disabled={values.mat_fisc_sc}
                           type='number'
                           className='form-control'
                           id='cin_p'
@@ -140,6 +141,7 @@ function AddClient(props) {
                           Matricule Fiscale:
                         </label>
                         <input
+                          disabled={values.cin_p}
                           type='text'
                           className='form-control'
                           id='mat_fisc_sc'
@@ -152,6 +154,7 @@ function AddClient(props) {
                           Responsable:
                         </label>
                         <input
+                          disabled={values.cin_p}
                           type='text'
                           className='form-control'
                           id='responsable'

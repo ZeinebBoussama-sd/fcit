@@ -205,40 +205,50 @@ const resolvers = {
       });
       return deleteClient;
     },
-    async updateClient(
-      root,
-      {
-        code_client,
-        pays_client,
-        nom_client,
-        email_client,
-        tel_client,
-        Adr_client,
-        PersonneCinP,
-        SocieteMatFiscSc,
-      },
-      { models }
-    ) {
-      return models.Client.update(
+
+    async updateClient(root, args, { models }) {
+      //looking after person
+      const findperson =
+        args.code_client &&
+        (await models.Personne.findOne({
+          where: { ClientCodeClient: args.code_client },
+        }));
+      //looking after societe
+      const findsociete =
+        args.code_client &&
+        (await models.Societe.findOne({
+          where: { ClientCodeClient: args.code_client },
+        }));
+      //if cin or mart-fisc-sc is changed, then it will be updated
+      findperson &&
+        findperson.cin_p !== args.personne &&
+        (await findperson.update({ cin_p: args.cin_p }));
+      findsociete &&
+        findsociete.mat_fisc_sc !== args.societe &&
+        (await findsociete.update({ mat_fisc_sc: args.societe }));
+
+      //update Client
+
+      const updateClient = await models.Client.update(
         {
-          code_client,
-          pays_client,
-          nom_client,
-          email_client,
-          tel_client,
-          Adr_client,
-          PersonneCinP,
-          SocieteMatFiscSc,
+          pays_client: args.pays_client,
+          nom_client: args.nom_client,
+          email_client: args.email_client,
+          tel_client: args.tel_client,
+          adr_client: args.adr_client,
         },
-        { where: { code_client: code_client } }
+        { where: { code_client: args.code_client } }
       );
+      return updateClient;
     },
+
     async createPersonne(root, { cin_p, ClientCodeClient }, { models }) {
       return models.Personne.create({
         cin_p,
         ClientCodeClient,
       });
     },
+
     async createSociete(
       root,
       { mat_fisc_sc, responsable, ClientCodeClient },

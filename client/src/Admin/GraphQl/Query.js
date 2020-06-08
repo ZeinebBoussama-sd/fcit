@@ -57,10 +57,18 @@ export const GET_CLIENT = gql`
   query findclient($code_client: ID) {
     client(code_client: $code_client) {
       code_client
+      pays_client
       nom_client
+      email_client
       tel_client
       adr_client
-      email_client
+      personne {
+        cin_p
+      }
+      societe {
+        mat_fisc_sc
+        responsable
+      }
     }
   }
 `;

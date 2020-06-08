@@ -160,7 +160,7 @@ export const GET_FORMATEUR = gql`
   }
 `;
 
-export const GetSupport = gql`
+export const GET_SUPPORTS = gql`
   {
     allSupports {
       code_support
@@ -190,7 +190,24 @@ export const GET_SUPPORT_MINI = gql`
     }
   }
 `;
-export const getSession = gql`
+export const GET_SUPPORT = gql`
+  query getsupport($code_support: ID) {
+    support(code_support: $code_support) {
+      code_support
+      titre_support
+      date_support
+      validation {
+        decision_r
+        date_val
+        remarque
+      }
+      fichier {
+        nom_fichier
+      }
+    }
+  }
+`;
+export const GET_SESSIONS = gql`
   {
     allSessions {
       code_session
@@ -209,6 +226,39 @@ export const getSession = gql`
       }
       support {
         titre_support
+      }
+    }
+  }
+`;
+export const GET_SESSION = gql`
+  query getsession($CI_session: ID) {
+    session(CI_session: $CI_session) {
+      code_session
+      type_sess
+      mode_session
+      date_deb_sess
+      duree_sess
+      hr_deb_j
+      hr_fin_j
+      hr_j_session
+      lieu_sess
+      prix_session
+      honoraire_sess
+      frais_sejour
+      frais_transport
+      perdiem
+      autres_frais
+      formation {
+        intitule
+      }
+      formateur {
+        nom_f
+      }
+      support {
+        titre_support
+      }
+      participant {
+        nom_partcipant
       }
     }
   }
@@ -303,6 +353,18 @@ export const GET_DEMANDEUR = gql`
       prenom_demandeur
       tel_demandeur
       email_demandeur
+    }
+  }
+`;
+export const GET_FICHIERS = gql`
+  {
+    allFichiers {
+      code_fichier
+      nom_fichier
+      type_fichier
+      taille_max
+      url_fichier
+      nature_support
     }
   }
 `;

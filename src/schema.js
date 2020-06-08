@@ -228,6 +228,7 @@ const typeDefs = gql`
     support(code_support: ID, titre_support: String): Support
     allSupports: [Support!]!
     fichier(code_fichier: ID, nom_fichier: String): Fichier
+    allFichiers: [Fichier!]!
     motcle(motcle: String): MotCle
     ingenieurpedagogique(code_IP: ID, nom_ing: String): IngenieurPedagogique
     allIngenieurPedagogiques: [IngenieurPedagogique!]!

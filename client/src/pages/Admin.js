@@ -16,6 +16,8 @@ import DemandeurItem from "../Admin/Demandeur/DemandeurItem";
 import FormateurItem from "../Admin/Formateur/FormateurItem";
 import FormationItem from "../Admin/Formation/FormationItem";
 import IngenieurPedagogiueItem from "../Admin/IngenieurePedagogique/IngenieurPedagogiqueItem";
+import SupportItem from "../Admin/Support/SupportItem";
+import SessionItem from "../Admin/Session/SessionItem";
 function Admin() {
   const routes = [
     {
@@ -80,6 +82,13 @@ function Admin() {
       component: () => <Session />,
     },
     {
+      path: "/session/:id",
+      exact: true,
+      strict: true,
+      component: () => <SessionItem />,
+    },
+
+    {
       path: "/formateur",
       exact: true,
       strict: true,
@@ -106,6 +115,12 @@ function Admin() {
       exact: true,
       strict: true,
       component: () => <Support />,
+    },
+    {
+      path: "/support/:id",
+      exact: true,
+      strict: true,
+      component: () => <SupportItem />,
     },
   ];
   return (

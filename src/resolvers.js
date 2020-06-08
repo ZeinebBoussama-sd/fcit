@@ -51,6 +51,9 @@ const resolvers = {
     async fichier(root, { code_fichier }, { models }) {
       return models.Fichier.findByPk(code_fichier);
     },
+    async allFichiers(root, args, { models }) {
+      return models.Fichier.findAll();
+    },
     async metier(root, { code_metier }, { models }) {
       return models.Metier.findByPk(code_metier);
     },

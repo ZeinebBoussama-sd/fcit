@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   scalar Date
@@ -64,7 +64,7 @@ const typeDefs = gql`
     taille_max: Int!
     url_fichier: String!
     nature_support: String!
-    support: Support!
+    support: Support
   }
   type Metier {
     code_metier: String!
@@ -74,8 +74,8 @@ const typeDefs = gql`
   type Formateur_Formation {
     validation_f: Boolean!
     date_validation: Date!
-    formation: Formation!
-    formateur: Formateur!
+    formation: Formation
+    formateur: Formateur
   }
 
   type Formateur {
@@ -134,7 +134,7 @@ const typeDefs = gql`
     salaire_ing: Float!
     specialite_ing: String!
     adr_ing: String!
-    validation: [Validation]!
+    validation: [Validation]
   }
   type MotCle {
     motcle: String!
@@ -146,14 +146,14 @@ const typeDefs = gql`
     prenom_partcipant: String
     carte_identite: Int!
     client: Client
-    session: [Session]!
+    session: [Session]
   }
   type Participer {
     rapport_eval: String!
     note_QCM: Float!
     date_eval: Date!
-    session: Session!
-    participant: Participant!
+    session: Session
+    participant: Participant
   }
   type Session {
     CI_sessi: ID!
@@ -177,9 +177,9 @@ const typeDefs = gql`
     FormationCIFormation: Int
     FormateurCodeFormateur: String
     SupportCodeSupport: Int
-    formation: Formation!
-    support: Support!
-    client: Client!
+    formation: Formation
+    support: Support
+    client: Client
     participant: [Participant]!
     formateur: Formateur
   }
@@ -188,8 +188,8 @@ const typeDefs = gql`
     titre_support: String!
     date_support: Date!
     session: [Session]
-    validation: [Validation]!
-    fichier: [Fichier]!
+    validation: [Validation]
+    fichier: [Fichier]
   }
   type Theme {
     code_theme: String!
@@ -202,9 +202,9 @@ const typeDefs = gql`
     decision_r: Boolean!
     decision_f: Boolean!
     remarque: String!
-    formateur: Formateur!
-    ingenieurpedagogique: IngenieurPedagogique!
-    support: Support!
+    formateur: Formateur
+    ingenieurpedagogique: IngenieurPedagogique
+    support: Support
   }
   type Query {
     client(code_client: ID, nom_client: String): Client
@@ -238,30 +238,46 @@ const typeDefs = gql`
     participer(id: ID): Participer
   }
   interface MutationResponse {
-    code: String!
-    success: Boolean!
-    message: String!
+    code: String
+    success: Boolean
+    message: String
   }
   type DeleteClientMutationResponse implements MutationResponse {
-    code: String!
-    success: Boolean!
-    message: String!
+    code: String
+    success: Boolean
+    message: String
     client: Client
   }
   type DeleteFormateurMutationResponse implements MutationResponse {
-    code: String!
-    success: Boolean!
-    message: String!
+    code: String
+    success: Boolean
+    message: String
+    formateur: Formateur
   }
   type DeleteFormationMutationResponse implements MutationResponse {
-    code: String!
-    success: Boolean!
-    message: String!
+    code: String
+    success: Boolean
+    message: String
+    formation: Formation
   }
   type DeleteIngenieurPedagogiqueMutationResponse implements MutationResponse {
-    code: String!
-    success: Boolean!
-    message: String!
+    code: String
+    success: Boolean
+    message: String
+    ingenieurpedagogique: IngenieurPedagogique
+  }
+  type DeleteThemeMutationResponse implements MutationResponse {
+    code: String
+    success: Boolean
+    message: String
+    theme: Theme
+  }
+
+  type DeleteSupportMutationResponse implements MutationResponse {
+    code: String
+    success: Boolean
+    message: String
+    support: Support
   }
   type Mutation {
     createClient(
@@ -431,8 +447,10 @@ const typeDefs = gql`
     ): Session!
 
     createSupport(titre_support: String!, date_support: Date!): Support!
+    deleteSupport(code_support: Int!): DeleteSupportMutationResponse
 
     createTheme(code_theme: String!, nom_theme: String!): Theme!
+    deleteTheme(code_theme: String!): DeleteThemeMutationResponse
 
     createValidation(
       code_val: Int!

@@ -4,6 +4,8 @@ import AddDemandeur from "./AddDemandeur";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { GET_DEMANDEURS } from "../GraphQl/Query";
+import { Link } from "react-router-dom";
+
 function Demandeur() {
   const { loading, error, data, refetch } = useQuery(GET_DEMANDEURS);
   if (loading) return <p>Loading...</p>;
@@ -33,9 +35,11 @@ function Demandeur() {
           <tbody>
             {data.allDemandeurs.map((demandeur, idx) => (
               <tr key={idx}>
-                <td scope="row" className="col-3">
-                  {demandeur.nom_demandeur}
-                </td>
+                <Link to={`/demandeur/${demandeur.code_demandeur}`}>
+                  <td scope="row" className="col-3">
+                    {demandeur.nom_demandeur}
+                  </td>
+                </Link>
                 <td scope="row" className="col-3">
                   {demandeur.prenom_demandeur}
                 </td>

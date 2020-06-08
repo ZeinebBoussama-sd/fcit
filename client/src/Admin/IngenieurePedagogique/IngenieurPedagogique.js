@@ -2,11 +2,15 @@ import React from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { GetIngenieurPedagogique } from "../GraphQl/Query";
+import { GET_INGENIEUR_PEDAGOGIQUES } from "../GraphQl/Query";
 import AddIngenieurPedagogique from "./AddIngenieurPedagogique";
 import { DELETE_INGENIEURPEDAGOGIQUE } from "../GraphQl/Mutation";
+import { Link } from "react-router-dom";
+
 function IngenieurPedagogique() {
-  const { loading, error, data, refetch } = useQuery(GetIngenieurPedagogique);
+  const { loading, error, data, refetch } = useQuery(
+    GET_INGENIEUR_PEDAGOGIQUES
+  );
   const [DeleteIngenieurPedagogique, rest] = useMutation(
     DELETE_INGENIEURPEDAGOGIQUE
   );
@@ -61,7 +65,11 @@ function IngenieurPedagogique() {
           <tbody>
             {data.allIngenieurPedagogiques.map((ingenieur_pedagogique, idx) => (
               <tr key={idx}>
-                <td className="col-2">{ingenieur_pedagogique.nom_ing}</td>
+                <Link
+                  to={`/ingenieur_pedagogique/${ingenieur_pedagogique.code_IP}`}
+                >
+                  <td className="col-2">{ingenieur_pedagogique.nom_ing}</td>
+                </Link>
                 <td className="col-1">{ingenieur_pedagogique.prenom_ing}</td>
                 <td className="col-3">{ingenieur_pedagogique.email_ing}</td>
                 <td className="col-2">{ingenieur_pedagogique.tel_ing}</td>

@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 export const GET_FORMATIONS = gql`
   {
@@ -19,7 +19,21 @@ export const GET_FORMATIONS = gql`
     }
   }
 `;
-
+export const GET_FORMATION = gql`
+  query findformation($CI_formation: ID) {
+    formation(CI_formation: $CI_formation) {
+      code_formation
+      intitule
+      duree_formation
+      nbre_min_part
+      description_formation
+      catagorie_formation
+      prix_formation
+      participant
+      prerequis
+    }
+  }
+`;
 export const GET_CLIENTS = gql`
   {
     allClients {
@@ -59,7 +73,7 @@ export const GetTheme = gql`
     }
   }
 `;
-export const GetIngenieurPedagogique = gql`
+export const GET_INGENIEUR_PEDAGOGIQUES = gql`
   {
     allIngenieurPedagogiques {
       code_IP
@@ -75,7 +89,22 @@ export const GetIngenieurPedagogique = gql`
     }
   }
 `;
-export const GetFormateur = gql`
+export const GET_INGENIEUR_PEDAGOGIQUE = gql`
+  query findingenieurpedagogique($code_IP: ID) {
+    ingenieurpedagogique(code_IP: $code_IP) {
+      nom_ing
+      prenom_ing
+      cv_ing
+      email_ing
+      tel_ing
+      NSS_ing
+      salaire_ing
+      specialite_ing
+      adr_ing
+    }
+  }
+`;
+export const GET_FORMATEURS = gql`
   {
     allFormateurs {
       code_formateur
@@ -102,6 +131,35 @@ export const GetFormateur = gql`
     }
   }
 `;
+export const GET_FORMATEUR = gql`
+  query findformateur($code_formateur: String) {
+    formateur(code_formateur: $code_formateur) {
+      code_formateur
+      nom_f
+      prenom_f
+      classe_f
+      fonction_f
+      cv_f
+      email_f
+      tel_f
+      NSS
+      salaire_f
+      adr_f
+      date_dajout
+      cin_f
+      copie_cin
+      copie_cin
+      passeport_f
+      copie_passeport
+      visa_f
+      val_visa
+      tarif_f
+      RIB_f
+      copie_RIB
+    }
+  }
+`;
+
 export const GetSupport = gql`
   {
     allSupports {
@@ -234,6 +292,17 @@ export const GET_DEMANDEURS = gql`
       prenom_demandeur
       email_demandeur
       tel_demandeur
+    }
+  }
+`;
+export const GET_DEMANDEUR = gql`
+  query finddemandeur($code_demandeur: ID) {
+    demandeur(code_demandeur: $code_demandeur) {
+      code_demandeur
+      nom_demandeur
+      prenom_demandeur
+      tel_demandeur
+      email_demandeur
     }
   }
 `;

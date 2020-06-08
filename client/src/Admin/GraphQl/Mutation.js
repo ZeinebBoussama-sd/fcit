@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 export const ADD_CLIENT = gql`
   mutation create_client(
@@ -99,6 +99,14 @@ export const ADD_THEME = gql`
     createTheme(code_theme: $code_theme, nom_theme: $nom_theme) {
       code_theme
       nom_theme
+    }
+  }
+`;
+export const DELETE_THEME = gql`
+  mutation deleteTheme($code_theme: String!) {
+    deleteTheme(code_theme: $code_theme) {
+      code
+      success
     }
   }
 `;
@@ -296,6 +304,14 @@ export const ADD_SUPPORT = gql`
     createSupport(titre_support: $titre_support, date_support: $date_support) {
       titre_support
       date_support
+    }
+  }
+`;
+export const DELETE_SUPPORT = gql`
+  mutation deleteSupport($code_support: Int!) {
+    deleteSupport(code_support: $code_support) {
+      code
+      success
     }
   }
 `;

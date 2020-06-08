@@ -1,12 +1,13 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { GetFormateur } from "../GraphQl/Query";
+import { GET_FORMATEURS } from "../GraphQl/Query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import AddFormateur from "./AddFormateur";
 import { DELETE_FORMATEUR } from "../GraphQl/Mutation";
+import { Link } from "react-router-dom";
 function Formateur() {
-  const { loading, error, data, refetch } = useQuery(GetFormateur);
+  const { loading, error, data, refetch } = useQuery(GET_FORMATEURS);
   const [deleteFormateur, res] = useMutation(DELETE_FORMATEUR);
 
   if (loading) return <p>Loading...</p>;
@@ -62,7 +63,10 @@ function Formateur() {
                 <th scope="row" className="col-1">
                   {formateur.code_formateur}
                 </th>
-                <td className="col-2">{formateur.nom_f}</td>
+
+                <Link to={`/formateur/${formateur.code_formateur}`}>
+                  <td className="col-2">{formateur.nom_f}</td>
+                </Link>
                 <td className="col-2">{formateur.prenom_f}</td>
                 <td className="col-1">{formateur.classe_f}</td>
                 <td className="col-3">{formateur.email_f}</td>

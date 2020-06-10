@@ -1,54 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_FORMATION } from "../GraphQl/Query";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import Item from "./Item";
+import EditFormation from "./EditFormation";
 function FormationItem() {
   let { id } = useParams();
 
-  const { loading, error, data } = useQuery(GET_FORMATION, {
+  const { loading, error, data, refetch } = useQuery(GET_FORMATION, {
     variables: { CI_formation: id },
   });
-  console.log(data);
+  const [edit, setEdit] = useState(false);
+  const formation = data ? data.formation : null;
+  const action = () => {
+    edit ? setEdit(false) : setEdit(true);
+  };
+  console.log(formation);
 
   return (
-    <div className="container mt-11 ">
-      <div className="card container">
-        <div className="row">
-          <b className="col-2">Code:</b>
-          <p className="col">{data && data.formation.code_formation}</p>
+    <div className=" mt-11 ">
+      <div className="card bg-light border-light">
+        <div className="card-headert row">
+          <h5 className="ml-2 col-11">
+            About: {formation && formation.intitule}
+          </h5>
+          <span className="col-0 text-right">
+            <FontAwesomeIcon
+              icon={faCog}
+              className="ml-5 mt-2 pointer"
+              onClick={() => action()}
+              data-toggle="collapse"
+              data-target="#settingContent"
+            />
+          </span>
         </div>
-        <div className="row">
-          <b className="col-2">Intitule:</b>
-          <p className="col">{data && data.formation.intitule_formation}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Durée:</b>
-          <p className="col">{data && data.formation.duree_formation}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Nbre min de Personne:</b>
-          <p className="col">{data && data.formation.nbre_mi_part}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Description:</b>
-          <p className="col">{data && data.formation.description_formation}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Categorie:</b>
-          <p className="col">{data && data.formation.categorie_formation}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Prix:</b>
-          <p className="col">{data && data.formation.prix_formation}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Participant:</b>
-          <p className="col">{data && data.formation.participant}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Prérequis:</b>
-          <p className="col">{data && data.formation.prerequis}</p>
-        </div>
+        {!edit ? (
+          <Item formation={formation} />
+        ) : (
+          <EditFormation
+            className=""
+            id="navbarSupportedContent"
+            formation={formation}
+            refetch={refetch}
+            setEdit={setEdit}
+            id={id}
+          />
+        )}
       </div>
     </div>
   );

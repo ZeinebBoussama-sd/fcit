@@ -125,6 +125,37 @@ export const ADD_FORMATION = gql`
     }
   }
 `;
+export const UPDATE_FORMATION = gql`
+  mutation update_formation(
+    $CI_formation: ID!
+    $code_formation: String!
+    $intitule: String!
+    $duree_formation: Int!
+    $nbre_min_part: Int!
+    $description_formation: String!
+    $catagorie_formation: String!
+    $prix_formation: Float!
+    $participant: String!
+    $prerequis: String!
+    $ThemeCodeTheme: String!
+  ) {
+    updateFormation(
+      CI_formation: $CI_formation
+      code_formation: $code_formation
+      intitule: $intitule
+      duree_formation: $duree_formation
+      nbre_min_part: $nbre_min_part
+      description_formation: $description_formation
+      catagorie_formation: $catagorie_formation
+      prix_formation: $prix_formation
+      participant: $participant
+      prerequis: $prerequis
+      ThemeCodeTheme: $ThemeCodeTheme
+    ) {
+      code
+    }
+  }
+`;
 export const DELETE_FORMATION = gql`
   mutation deleteFormation($CI_formation: Int!) {
     deleteFormation(CI_formation: $CI_formation) {
@@ -242,6 +273,76 @@ export const ADD_FORMATEUR = gql`
     $copie_RIB: String
   ) {
     createFormateur(
+      code_formateur: $code_formateur
+      nom_f: $nom_f
+      prenom_f: $prenom_f
+      classe_f: $classe_f
+      fonction_f: $fonction_f
+      cv_f: $cv_f
+      email_f: $email_f
+      tel_f: $tel_f
+      NSS: $NSS
+      salaire_f: $salaire_f
+      adr_f: $adr_f
+      date_dajout: $date_dajout
+      cin_f: $cin_f
+      copie_cin: $copie_cin
+      passeport_f: $passeport_f
+      copie_passeport: $copie_passeport
+      visa_f: $visa_f
+      val_visa: $val_visa
+      tarif_f: $tarif_f
+      RIB_f: $RIB_f
+      copie_RIB: $copie_RIB
+    ) {
+      nom_f
+      prenom_f
+      classe_f
+      fonction_f
+      cv_f
+      email_f
+      tel_f
+      NSS
+      salaire_f
+      adr_f
+      date_dajout
+      cin_f
+      copie_cin
+      passeport_f
+      copie_passeport
+      visa_f
+      val_visa
+      tarif_f
+      RIB_f
+      copie_RIB
+    }
+  }
+`;
+export const UPDATE_FORMATEUR = gql`
+  mutation updateformateur(
+    $code_formateur: String!
+    $nom_f: String!
+    $prenom_f: String!
+    $classe_f: String!
+    $fonction_f: String!
+    $cv_f: String!
+    $email_f: String!
+    $tel_f: String!
+    $NSS: Int
+    $salaire_f: Float
+    $adr_f: String!
+    $date_dajout: Date
+    $cin_f: Int
+    $copie_cin: String
+    $passeport_f: Int
+    $copie_passeport: String
+    $visa_f: String
+    $val_visa: Date
+    $tarif_f: Float
+    $RIB_f: Int
+    $copie_RIB: String
+  ) {
+    updateFormateur(
       code_formateur: $code_formateur
       nom_f: $nom_f
       prenom_f: $prenom_f

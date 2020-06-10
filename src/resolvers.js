@@ -403,6 +403,36 @@ const resolvers = {
         copie_RIB,
       });
     },
+    async updateFormateur(root, args, { models }) {
+      const updateFormateur = await models.Formateur.update(
+        {
+          code_formateur: args.code_formateur,
+          nom_f: args.nom_f,
+          prenom_f: args.prenom_f,
+          classe_f: args.classe_f,
+          fonction_f: args.fonction_f,
+          cv_f: args.cv_f,
+          email_f: args.email_f,
+          tel_f: args.tel_f,
+          NSS: args.NSS,
+          salaire_f: args.salaire_f,
+          adr_f: args.adr_f,
+          date_dajout: args.date_dajout,
+          cin_f: args.cin_f,
+          copie_cin: args.copie_cin,
+          passeport_f: args.passeport_f,
+          copie_passeport: args.copie_passeport,
+          visa_f: args.visa_f,
+          val_visa: args.val_visa,
+          tarif_f: args.tarif_f,
+          RIB_f: args.RIB_f,
+          copie_RIB: args.copie_RIB,
+        },
+        { where: { code_formateur: args.code_formateur } }
+      );
+      return updateFormateur;
+    },
+
     async deleteFormateur(root, args, { models }) {
       const deleteFormateur = await models.Formateur.destroy({
         where: { code_formateur: args.code_formateur },
@@ -423,6 +453,24 @@ const resolvers = {
         ThemeCodeTheme: args.ThemeCodeTheme,
       });
       return addFormation;
+    },
+    async updateFormation(root, args, { models }) {
+      const updateFormation = await models.Formation.update(
+        {
+          code_formation: args.code_formation,
+          intitule: args.intitule,
+          duree_formation: args.duree_formation,
+          nbre_min_part: args.nbre_min_part,
+          description_formation: args.description_formation,
+          catagorie_formation: args.catagorie_formation,
+          prix_formation: args.prix_formation,
+          participant: args.participant,
+          prerequis: args.prerequis,
+          ThemeCodeTheme: args.ThemeCodeTheme,
+        },
+        { where: { CI_formation: args.CI_formation } }
+      );
+      return updateFormation;
     },
     async deleteFormation(root, args, { models }) {
       const deleteFormation = await models.Formation.destroy({

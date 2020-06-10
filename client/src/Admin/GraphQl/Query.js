@@ -31,6 +31,10 @@ export const GET_FORMATION = gql`
       prix_formation
       participant
       prerequis
+      theme {
+        code_theme
+        nom_theme
+      }
     }
   }
 `;

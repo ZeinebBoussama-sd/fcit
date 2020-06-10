@@ -280,6 +280,12 @@ const typeDefs = gql`
     message: String
     support: Support
   }
+  type DeleteDemandeMutationResponse implements MutationResponse {
+    code: String
+    success: Boolean
+    message: String
+    support: Support
+  }
   type Mutation {
     createClient(
       code_client: String!
@@ -315,6 +321,7 @@ const typeDefs = gql`
     ): Societe!
     createDatePrevue(date_prev: Date!): DatePrevue!
     createDemandeFormation(
+      code_demande: String
       date_demande: Date!
       type_demande: String!
       etat_demande: String!
@@ -329,7 +336,24 @@ const typeDefs = gql`
       FormationCIFormation: Int
       DemandeurCodeDemandeur: Int
     ): DemandeFormation!
+    deleteDemandeFormation(code_demande: String!): DeleteDemandeMutationResponse
 
+    updateDemande(
+      code_demande: String
+      date_demande: Date!
+      type_demande: String!
+      etat_demande: String!
+      prix_prevu: Float!
+      lieu_prevu: String!
+      duree_prevu: Int!
+      mode_demande: String!
+      hr_deb_j_prev: String!
+      hr_fin_j_prev: String!
+      hr_j_prev: Int!
+      ClientCodeClient: String
+      FormationCIFormation: Int
+      DemandeurCodeDemandeur: Int
+    ): DeleteDemandeMutationResponse!
     createDemandeur(
       nom_demandeur: String!
       prenom_demandeur: String!
@@ -379,7 +403,29 @@ const typeDefs = gql`
       copie_RIB: String
     ): Formateur!
     deleteFormateur(code_formateur: String!): DeleteFormateurMutationResponse
-
+    updateFormateur(
+      code_formateur: String!
+      nom_f: String!
+      prenom_f: String!
+      classe_f: String!
+      fonction_f: String!
+      cv_f: String!
+      email_f: String!
+      tel_f: String!
+      NSS: Int
+      salaire_f: Float
+      adr_f: String!
+      date_dajout: Date
+      cin_f: Int
+      copie_cin: String
+      passeport_f: Int
+      copie_passeport: String
+      visa_f: String
+      val_visa: Date
+      tarif_f: Float
+      RIB_f: Int
+      copie_RIB: String
+    ): DeleteFormateurMutationResponse!
     createFormation(
       code_formation: String!
       intitule: String!
@@ -392,6 +438,20 @@ const typeDefs = gql`
       prerequis: String!
       ThemeCodeTheme: String
     ): Formation!
+    updateFormation(
+      CI_formation: ID
+      code_formation: String!
+      intitule: String!
+      duree_formation: Int!
+      nbre_min_part: Int!
+      description_formation: String!
+      catagorie_formation: String!
+      prix_formation: Float
+      participant: String!
+      prerequis: String!
+      ThemeCodeTheme: String
+    ): DeleteFormationMutationResponse!
+
     deleteFormation(CI_formation: Int!): DeleteFormationMutationResponse
 
     createIngenieurPedagogique(

@@ -145,7 +145,9 @@ function AddClient(props) {
                           type='text'
                         />
                         {errors.code_client && touched.code_client ? (
-                          <div>{errors.code_client}</div>
+                          <div className='text-danger'>
+                            {errors.code_client}
+                          </div>
                         ) : null}
                       </div>
                       <div className='form-group'>
@@ -164,7 +166,7 @@ function AddClient(props) {
                           name='nom_client'
                         />
                         {errors.nom_client && touched.nom_client ? (
-                          <div>{errors.nom_client}</div>
+                          <div className='text-danger'>{errors.nom_client}</div>
                         ) : null}
                       </div>
 
@@ -185,7 +187,7 @@ function AddClient(props) {
                           name='cin_p'
                         />
                         {errors.cin_p && touched.cin_p ? (
-                          <div>{errors.cin_p}</div>
+                          <div className='text-danger'>{errors.cin_p}</div>
                         ) : null}
                       </div>
 
@@ -206,7 +208,9 @@ function AddClient(props) {
                           name='mat_fisc_sc'
                         />
                         {errors.mat_fisc_sc && touched.mat_fisc_sc ? (
-                          <div>{errors.mat_fisc_sc}</div>
+                          <div className='text-danger'>
+                            {errors.mat_fisc_sc}
+                          </div>
                         ) : null}
                       </div>
                       <div className='form-group'>
@@ -237,7 +241,9 @@ function AddClient(props) {
                           type='email'
                         />
                         {errors.email_client && touched.email_client ? (
-                          <div>{errors.email_client}</div>
+                          <div className='text-danger'>
+                            {errors.email_client}
+                          </div>
                         ) : null}
                       </div>
                       <div className='form-group'>
@@ -256,7 +262,7 @@ function AddClient(props) {
                           name='tel_client'
                         />
                         {errors.tel_client && touched.tel_client ? (
-                          <div>{errors.tel_client}</div>
+                          <div className='text-danger'>{errors.tel_client}</div>
                         ) : null}
                       </div>
                       <div className='form-group'>
@@ -275,7 +281,7 @@ function AddClient(props) {
                           name='adr_client'
                         />
                         {errors.adr_client && touched.adr_client ? (
-                          <div>{errors.adr_client}</div>
+                          <div className='text-danger'>{errors.adr_client}</div>
                         ) : null}
                       </div>
                       <div className='form-group'>
@@ -303,7 +309,9 @@ function AddClient(props) {
                           })}
                         </Field>
                         {errors.pays_client && touched.pays_client ? (
-                          <div>{errors.pays_client}</div>
+                          <div className='text-danger'>
+                            {errors.pays_client}
+                          </div>
                         ) : null}
                       </div>
 

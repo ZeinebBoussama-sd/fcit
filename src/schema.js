@@ -402,7 +402,9 @@ const typeDefs = gql`
       RIB_f: Int
       copie_RIB: String
     ): Formateur!
+
     deleteFormateur(code_formateur: String!): DeleteFormateurMutationResponse
+
     updateFormateur(
       code_formateur: String!
       nom_f: String!
@@ -426,6 +428,7 @@ const typeDefs = gql`
       RIB_f: Int
       copie_RIB: String
     ): DeleteFormateurMutationResponse!
+
     createFormation(
       code_formation: String!
       intitule: String!

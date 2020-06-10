@@ -3,18 +3,40 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { Formik } from 'formik';
 import { GetTheme } from '../GraphQl/Query';
 import { ADD_FORMATION } from '../GraphQl/Mutation';
+import * as Yup from 'yup';
+import deepEqual from 'lodash.isequal';
 
 function AddFormation(props) {
-  useEffect(() => {
-    console.log('submit');
-  }, []);
-
   const [active, setactive] = useState(false);
 
   const [addFormation] = useMutation(ADD_FORMATION);
   const { loading, error, data } = useQuery(GetTheme);
-  console.log('getTheme', data);
-  console.log('active', active);
+
+  const ValidationSchema = Yup.object().shape({
+    code_client: Yup.string()
+      .max(5, 'Too Long Max 5char!')
+      .required('Code is Required'),
+    nom_client: Yup.string()
+      .min(3, 'Too Short!')
+      .max(30, 'Too Long!')
+      .required('Required'),
+    email_client: Yup.string()
+      .email('Invalid email')
+      .required('Email is required!'),
+    tel_client: Yup.string()
+      .min(8, 'Too Short!')
+      .max(20, 'Too Long!')
+      .required('Required'),
+    adr_client: Yup.string()
+      .min(10, 'Too Short!')
+      .max(30, 'Too Long!')
+      .required('Required'),
+    pays_client: Yup.string().required('Required'),
+    cin_p: Yup.string().min(8, 'Too Short!').max(8, 'Too Long!'),
+    //   .required('Required'),
+    mat_fisc_sc: Yup.string().min(15, 'Too Short!').max(15, 'Too Long!'),
+    //   .required('Required'),
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
@@ -69,6 +91,7 @@ function AddFormation(props) {
                   participant: undefined,
                   ThemeCodeTheme: '',
                 }}
+                validationSchema={ValidationSchema}
                 onSubmit={async (values) => {
                   try {
                     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -185,6 +208,7 @@ function AddFormation(props) {
                           onChange={handleChange}
                           value={values.catagorie_formation || ''}
                         >
+                          <option value=''>---choose Catagorie----</option>
                           <option>Best</option>
                           <option>Classique</option>
                         </select>
@@ -240,7 +264,7 @@ function AddFormation(props) {
                                 key={theme.code_theme}
                                 value={theme.code_theme}
                               >
-                                {theme.code_theme}
+                                {theme.nom_theme}
                               </option>
                             );
                           })}

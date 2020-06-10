@@ -365,26 +365,7 @@ export const UPDATE_FORMATEUR = gql`
       RIB_f: $RIB_f
       copie_RIB: $copie_RIB
     ) {
-      nom_f
-      prenom_f
-      classe_f
-      fonction_f
-      cv_f
-      email_f
-      tel_f
-      NSS
-      salaire_f
-      adr_f
-      date_dajout
-      cin_f
-      copie_cin
-      passeport_f
-      copie_passeport
-      visa_f
-      val_visa
-      tarif_f
-      RIB_f
-      copie_RIB
+      code
     }
   }
 `;

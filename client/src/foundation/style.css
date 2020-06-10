@@ -71,6 +71,13 @@ table ::-webkit-scrollbar-thumb:hover {
   background-image: linear-gradient(to right, #62aeff, #007aff, #62aeff);
 }
 /* ------------------------------------------------------------ */
+.animated {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+.shake {
+  animation-name: shake;
+}
 .pointer {
   cursor: pointer;
 }

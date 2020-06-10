@@ -1,13 +1,13 @@
-import React from "react";
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import { Formik } from "formik";
+import React from 'react';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import { Formik } from 'formik';
 import {
   GET_FORMATEURS,
   GET_SUPPORT_MINI,
   GET_CLIENTS,
   GET_FORMATIONS,
-} from "../GraphQl/Query";
-import { ADD_SESSION } from "../GraphQl/Mutation";
+} from '../GraphQl/Query';
+import { ADD_SESSION } from '../GraphQl/Mutation';
 
 function AddSession(props) {
   const [AddSession] = useMutation(ADD_SESSION);
@@ -19,44 +19,44 @@ function AddSession(props) {
   return (
     <div>
       <button
-        type="button"
-        className="btn btn-primary mb-2"
-        data-toggle="modal"
-        data-target="#exampleModal"
-        data-whatever="@getbootstrap"
+        type='button'
+        className='btn btn-primary mb-2'
+        data-toggle='modal'
+        data-target='#exampleModal'
+        data-whatever='@getbootstrap'
       >
         Add Session
       </button>
 
       <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
+        className='modal fade'
+        id='exampleModal'
+        tabIndex='-1'
+        role='dialog'
+        aria-labelledby='exampleModalLabel'
+        aria-hidden='true'
       >
-        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div className="modal-content">
-            <div className="modal-header">
+        <div className='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
+          <div className='modal-content'>
+            <div className='modal-header'>
               <div>
-                <h5 className="modal-title" id="exampleModalLabel">
+                <h5 className='modal-title' id='exampleModalLabel'>
                   Add Session
                 </h5>
               </div>
               <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
+                type='button'
+                className='close'
+                data-dismiss='modal'
+                aria-label='Close'
               >
-                <span aria-hidden="true">&times;</span>
+                <span aria-hidden='true'>&times;</span>
               </button>
             </div>
-            <div className="modal-body">
+            <div className='modal-body'>
               <Formik
                 initialValues={{
-                  code_session: "",
+                  code_session: '',
                   mode_session: undefined,
                   duree_sess: undefined,
                   hr_deb_j: undefined,
@@ -72,9 +72,9 @@ function AddSession(props) {
                   date_deb_sess: undefined,
                   lieu_sess: undefined,
                   prix_session: undefined,
-                  ClientCodeClient: "",
+                  ClientCodeClient: '',
                   FormationCIFormation: undefined,
-                  FormateurCodeFormateur: "",
+                  FormateurCodeFormateur: '',
                   SupportCodeSupport: undefined,
                 }}
                 onSubmit={async (values) => {
@@ -99,13 +99,13 @@ function AddSession(props) {
                         prix_session: values.prix_session,
                         ClientCodeClient: values.ClientCodeClient
                           ? values.ClientCodeClient
-                          : "",
+                          : '',
                         FormationCIFormation: values.FormationCIFormation
                           ? parseInt(values.FormationCIFormation)
                           : null,
                         FormateurCodeFormateur: values.FormateurCodeFormateur
                           ? values.FormateurCodeFormateur
-                          : "",
+                          : '',
                         SupportCodeSupport: values.SupportCodeSupport
                           ? parseInt(values.SupportCodeSupport)
                           : null,
@@ -131,229 +131,229 @@ function AddSession(props) {
                   } = props;
                   return (
                     <form onSubmit={handleSubmit}>
-                      <div className="form-group">
-                        <label htmlFor="Code" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Code' className='col-form-label'>
                           Code:
                         </label>
                         <input
-                          type="text"
-                          className="form-control"
-                          id="code_session"
+                          type='text'
+                          className='form-control'
+                          id='code_session'
                           onChange={handleChange}
                           value={values.code_session}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Type" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Type' className='col-form-label'>
                           Type:
                         </label>
                         <input
-                          type="text"
-                          className="form-control"
-                          id="type_sess"
+                          type='text'
+                          className='form-control'
+                          id='type_sess'
                           onChange={handleChange}
                           value={values.type_sess}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Mode" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Mode' className='col-form-label'>
                           Mode:
                         </label>
                         <input
-                          type="text"
-                          className="form-control"
-                          id="mode_session"
+                          type='text'
+                          className='form-control'
+                          id='mode_session'
                           onChange={handleChange}
                           value={values.mode_session}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Date Debut" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Date Debut' className='col-form-label'>
                           Date Debut:
                         </label>
                         <input
-                          type="date"
-                          className="form-control"
-                          id="date_deb_sess"
+                          type='date'
+                          className='form-control'
+                          id='date_deb_sess'
                           onChange={handleChange}
                           value={values.date_deb_sess}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Duree" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Duree' className='col-form-label'>
                           Duree:
                         </label>
                         <input
-                          type="number"
-                          className="form-control"
-                          id="duree_sess"
+                          type='number'
+                          className='form-control'
+                          id='duree_sess'
                           onChange={handleChange}
                           value={values.duree_sess}
                         />
                       </div>
 
-                      <div className="form-group">
-                        <label htmlFor="hr_deb_j" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='hr_deb_j' className='col-form-label'>
                           hr_deb_j:
                         </label>
                         <input
-                          type="text"
-                          className="form-control"
-                          id="hr_deb_j"
+                          type='text'
+                          className='form-control'
+                          id='hr_deb_j'
                           onChange={handleChange}
                           value={values.hr_deb_j}
                         />
                       </div>
 
-                      <div className="form-group">
-                        <label htmlFor="hr_fin_j" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='hr_fin_j' className='col-form-label'>
                           hr_fin_j:
                         </label>
                         <input
-                          type="text"
-                          className="form-control"
-                          id="hr_fin_j"
+                          type='text'
+                          className='form-control'
+                          id='hr_fin_j'
                           onChange={handleChange}
                           value={values.hr_fin_j}
-                        />{" "}
+                        />{' '}
                       </div>
 
-                      <div className="form-group">
+                      <div className='form-group'>
                         <label
-                          htmlFor="hr_j_session"
-                          className="col-form-label"
+                          htmlFor='hr_j_session'
+                          className='col-form-label'
                         >
                           hr_j_session:
                         </label>
                         <input
-                          type="text"
-                          className="form-control"
-                          id="hr_j_session"
+                          type='text'
+                          className='form-control'
+                          id='hr_j_session'
                           onChange={handleChange}
                           value={values.hr_j_session}
-                        />{" "}
+                        />{' '}
                       </div>
 
-                      <div className="form-group">
-                        <label htmlFor="Lieux" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Lieux' className='col-form-label'>
                           Lieux:
                         </label>
                         <input
-                          type="texte"
-                          className="form-control"
-                          id="lieu_sess"
+                          type='texte'
+                          className='form-control'
+                          id='lieu_sess'
                           onChange={handleChange}
                           value={values.lieu_sess}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Prix" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='Prix' className='col-form-label'>
                           Prix:
                         </label>
                         <input
-                          type="number"
-                          className="form-control"
-                          id="prix_session"
+                          type='number'
+                          className='form-control'
+                          id='prix_session'
                           onChange={handleChange}
                           value={values.prix_session}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className='form-group'>
                         <label
-                          htmlFor="honoraire_sess"
-                          className="col-form-label"
+                          htmlFor='honoraire_sess'
+                          className='col-form-label'
                         >
                           honoraire_sess:
                         </label>
                         <input
-                          type="number"
-                          className="form-control"
-                          id="honoraire_sess"
+                          type='number'
+                          className='form-control'
+                          id='honoraire_sess'
                           onChange={handleChange}
                           value={values.honoraire_sess}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className='form-group'>
                         <label
-                          htmlFor="frais_sejour"
-                          className="col-form-label"
+                          htmlFor='frais_sejour'
+                          className='col-form-label'
                         >
                           frais_sejour:
                         </label>
                         <input
-                          type="number"
-                          className="form-control"
-                          id="frais_sejour"
+                          type='number'
+                          className='form-control'
+                          id='frais_sejour'
                           onChange={handleChange}
                           value={values.frais_sejour}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className='form-group'>
                         <label
-                          htmlFor="frais_transport"
-                          className="col-form-label"
+                          htmlFor='frais_transport'
+                          className='col-form-label'
                         >
                           frais_transport:
                         </label>
                         <input
-                          type="number"
-                          className="form-control"
-                          id="frais_transport"
+                          type='number'
+                          className='form-control'
+                          id='frais_transport'
                           onChange={handleChange}
                           value={values.frais_transport}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="perdiem" className="col-form-label">
+                      <div className='form-group'>
+                        <label htmlFor='perdiem' className='col-form-label'>
                           perdiem:
                         </label>
                         <input
-                          type="number"
-                          className="form-control"
-                          id="perdiem"
+                          type='number'
+                          className='form-control'
+                          id='perdiem'
                           onChange={handleChange}
                           value={values.perdiem}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className='form-group'>
                         <label
-                          htmlFor="autres_frais"
-                          className="col-form-label"
+                          htmlFor='autres_frais'
+                          className='col-form-label'
                         >
                           autres_frais:
                         </label>
                         <input
-                          type="number"
-                          className="form-control"
-                          id="autres_frais"
+                          type='number'
+                          className='form-control'
+                          id='autres_frais'
                           onChange={handleChange}
                           value={values.autres_frais}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className='form-group'>
                         <label
-                          htmlFor="note_eval_formateur"
-                          className="col-form-label"
+                          htmlFor='note_eval_formateur'
+                          className='col-form-label'
                         >
                           note_eval_formateur:
                         </label>
                         <input
-                          type="number"
-                          className="form-control"
-                          id="note_eval_formateur"
+                          type='number'
+                          className='form-control'
+                          id='note_eval_formateur'
                           onChange={handleChange}
                           value={values.note_eval_formateur}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Client">Client:</label>
+                      <div className='form-group'>
+                        <label htmlFor='Client'>Client:</label>
                         <select
-                          className="form-control"
+                          className='form-control'
                           onChange={handleChange}
                           value={values.ClientId}
-                          id="ClientCodeClient"
+                          id='ClientCodeClient'
                         >
-                          <option value="">---choose Client----</option>
+                          <option value=''>---choose Client----</option>
                           {GetClients.data &&
                             GetClients.data.allClients.map((client) => {
                               return (
@@ -367,15 +367,15 @@ function AddSession(props) {
                             })}
                         </select>
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Formation">Formation:</label>
+                      <div className='form-group'>
+                        <label htmlFor='Formation'>Formation:</label>
                         <select
-                          className="form-control"
+                          className='form-control'
                           onChange={handleChange}
                           value={values.FormationCIFormation}
-                          id="FormationCIFormation"
+                          id='FormationCIFormation'
                         >
-                          <option value="">---Choose Formation----</option>
+                          <option value=''>---Choose Formation----</option>
                           {GetFormations.data &&
                             GetFormations.data.allFormations.map(
                               (formation) => {
@@ -391,15 +391,15 @@ function AddSession(props) {
                             )}
                         </select>
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Formateur">Formateur:</label>
+                      <div className='form-group'>
+                        <label htmlFor='Formateur'>Formateur:</label>
                         <select
-                          className="form-control"
+                          className='form-control'
                           onChange={handleChange}
                           value={values.FormateurCodeFormateur}
-                          id="FormateurCodeFormateur"
+                          id='FormateurCodeFormateur'
                         >
-                          <option value="">---Choose Formateur----</option>
+                          <option value=''>---Choose Formateur----</option>
                           {GetFormateurs.data &&
                             GetFormateurs.data.allFormateurs.map(
                               (formateur) => {
@@ -415,15 +415,15 @@ function AddSession(props) {
                             )}
                         </select>
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Formation">Support:</label>
+                      <div className='form-group'>
+                        <label htmlFor='Formation'>Support:</label>
                         <select
-                          className="form-control"
+                          className='form-control'
                           onChange={handleChange}
                           value={values.SupportCodeSupport}
-                          id="SupportCodeSupport"
+                          id='SupportCodeSupport'
                         >
-                          <option value="">---Choose Support--</option>
+                          <option value=''>---Choose Support--</option>
                           {GetSupportMini.data &&
                             GetSupportMini.data.allSupports.map((support) => {
                               return (
@@ -437,18 +437,18 @@ function AddSession(props) {
                             })}
                         </select>
                       </div>
-                      <div className="modal-footer">
+                      <div className='modal-footer'>
                         <button
-                          type="button"
-                          className="btn btn-secondary"
-                          data-dismiss="modal"
+                          type='button'
+                          className='btn btn-secondary'
+                          data-dismiss='modal'
                         >
                           Close
                         </button>
                         <button
-                          type="submit"
+                          type='submit'
                           disabled={isSubmitting}
-                          className="btn btn-primary"
+                          className='btn btn-primary'
                         >
                           Add Session
                         </button>

@@ -3,9 +3,41 @@ import { useMutation } from '@apollo/react-hooks';
 import { Formik } from 'formik';
 import { ADD_CLIENT } from '../GraphQl/Mutation';
 import { counterList } from '../../Utils/Enums';
+import * as Yup from 'yup';
+import deepEqual from 'lodash.isequal';
 
 function AddClient(props) {
   const [addClient, res] = useMutation(ADD_CLIENT);
+
+  const ClientSchema = Yup.object().shape({
+    code_client: Yup.string().max(5, 'Too Long!').required('Required'),
+    nom_client: Yup.string()
+      .min(3, 'Too Short!')
+      .max(30, 'Too Long!')
+      .required('Required'),
+    email_client: Yup.string()
+      .email('Invalid email')
+      .required('Email is required!'),
+    tel_client: Yup.string()
+      .min(8, 'Too Short!')
+      .max(20, 'Too Long!')
+      .required('Required'),
+    adr_client: Yup.string()
+      .min(10, 'Too Short!')
+      .max(30, 'Too Long!')
+      .required('Required'),
+    pays_client: Yup.string().required('Required'),
+    cin_p: Yup.number()
+      .min(8, 'Too Short!')
+      .max(8, 'Too Long!')
+      .required('Required'),
+    mat_fisc_sc: Yup.string()
+      .min(15, 'Too Short!')
+      .max(15, 'Too Long!')
+      .required('Required'),
+  });
+  const InputFeedback = ({ error }) =>
+    error ? <div className='input-feedback'>{error}</div> : null;
 
   return (
     <div>
@@ -59,6 +91,7 @@ function AddClient(props) {
                   PersonneId: undefined,
                   SocieteId: undefined,
                 }}
+                validationSchema={ClientSchema}
                 onSubmit={async (values) => {
                   try {
                     // new Promise((resolve) => setTimeout(resolve, 500));
@@ -88,11 +121,14 @@ function AddClient(props) {
                     errors,
                     dirty,
                     isSubmitting,
+                    initialValues,
                     handleChange,
                     handleBlur,
                     handleSubmit,
                     handleReset,
                   } = props;
+                  const hasChanged = !deepEqual(values, initialValues);
+                  debugger;
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className='form-group'>
@@ -102,11 +138,21 @@ function AddClient(props) {
                         <input
                           required
                           type='text'
-                          className='form-control'
+                          className={
+                            hasChanged
+                              ? errors.code_client
+                                ? 'form-control is-invalid'
+                                : 'form-control is-valid'
+                              : 'form-control text-input'
+                          }
                           id='code_client'
                           onChange={handleChange}
                           value={values.code_client}
                         />
+                        {errors.code_client && touched.code_client ? (
+                          <div>{errors.code_client}</div>
+                        ) : null}
+                        {touched.name && errors.name}
                       </div>
                       <div className='form-group'>
                         <label htmlFor='nom' className='col-form-label'>
@@ -115,11 +161,20 @@ function AddClient(props) {
                         <input
                           required
                           type='text'
-                          className='form-control'
+                          className={
+                            hasChanged
+                              ? errors.nom_client
+                                ? 'form-control is-invalid'
+                                : 'form-control is-valid'
+                              : 'form-control text-input'
+                          }
                           id='nom_client'
                           onChange={handleChange}
                           value={values.nom_client}
                         />
+                        {errors.nom_client && touched.nom_client ? (
+                          <div>{errors.nom_client}</div>
+                        ) : null}
                       </div>
 
                       <div className='form-group'>
@@ -129,11 +184,20 @@ function AddClient(props) {
                         <input
                           disabled={values.mat_fisc_sc}
                           type='number'
-                          className='form-control'
+                          className={
+                            hasChanged
+                              ? errors.cin_p
+                                ? 'form-control is-invalid'
+                                : 'form-control is-valid'
+                              : 'form-control text-input'
+                          }
                           id='cin_p'
                           onChange={handleChange}
                           value={values.cin_p}
                         />
+                        {/* {errors.cin_p && touched.cin_p ? (
+                          <div>{errors.cin_p}</div>
+                        ) : null} */}
                       </div>
 
                       <div className='form-group'>
@@ -143,7 +207,13 @@ function AddClient(props) {
                         <input
                           disabled={values.cin_p}
                           type='text'
-                          className='form-control'
+                          className={
+                            hasChanged
+                              ? errors.mat_fisc_sc
+                                ? 'form-control is-invalid'
+                                : 'form-control is-valid'
+                              : 'form-control text-input'
+                          }
                           id='mat_fisc_sc'
                           onChange={handleChange}
                           value={values.mat_fisc_sc}
@@ -156,7 +226,7 @@ function AddClient(props) {
                         <input
                           disabled={values.cin_p}
                           type='text'
-                          className='form-control'
+                          className={'form-control'}
                           id='responsable'
                           onChange={handleChange}
                           value={values.responsable}
@@ -170,11 +240,20 @@ function AddClient(props) {
                         <input
                           required
                           type='email'
-                          className='form-control'
+                          className={
+                            hasChanged
+                              ? errors.email_client
+                                ? 'form-control is-invalid'
+                                : 'form-control is-valid'
+                              : 'form-control text-input'
+                          }
                           id='email_client'
                           onChange={handleChange}
                           value={values.email_client}
                         />
+                        {errors.email_client && touched.email_client ? (
+                          <div>{errors.email_client}</div>
+                        ) : null}
                       </div>
                       <div className='form-group'>
                         <label htmlFor='Tel' className='col-form-label'>
@@ -183,7 +262,13 @@ function AddClient(props) {
                         <input
                           required
                           type='tel'
-                          className='form-control'
+                          className={
+                            hasChanged
+                              ? errors.tel_client
+                                ? 'form-control is-invalid'
+                                : 'form-control is-valid'
+                              : 'form-control text-input'
+                          }
                           id='tel_client'
                           onChange={handleChange}
                           value={values.tel_client}
@@ -195,7 +280,13 @@ function AddClient(props) {
                         </label>
                         <input
                           type='text'
-                          className='form-control'
+                          className={
+                            hasChanged
+                              ? errors.adr_client
+                                ? 'form-control is-invalid'
+                                : 'form-control is-valid'
+                              : 'form-control text-input'
+                          }
                           id='adr_client'
                           onChange={handleChange}
                           value={values.adr_client}
@@ -204,7 +295,13 @@ function AddClient(props) {
                       <div className='form-group'>
                         <label htmlFor='pays_client'>Paye</label>
                         <select
-                          className='form-control'
+                          className={
+                            hasChanged
+                              ? errors.pays_client
+                                ? 'form-control is-invalid'
+                                : 'form-control is-valid'
+                              : 'form-control text-input'
+                          }
                           onChange={handleChange}
                           value={values.pays_client}
                           id='pays_client'

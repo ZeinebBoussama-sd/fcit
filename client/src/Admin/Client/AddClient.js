@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { Formik, Field } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import { ADD_CLIENT } from '../GraphQl/Mutation';
 import { counterList } from '../../Utils/Enums';
 import * as Yup from 'yup';
@@ -76,6 +76,7 @@ function AddClient(props) {
             </div>
             <div className='modal-body'>
               <Formik
+                enableReinitialize
                 initialValues={{
                   code_client: '',
                   nom_client: '',
@@ -127,28 +128,11 @@ function AddClient(props) {
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
                   return (
-                    <form onSubmit={handleSubmit}>
+                    <Form>
                       <div className='form-group'>
                         <label htmlFor='code' className='col-form-label'>
                           Code Client:
                         </label>
-                        {/* <input
-                          required
-                          type="text"
-                          className={
-                            values.code_client && hasChanged
-                              ? errors.code_client
-                                ? "form-control is-invalid"
-                                : "form-control is-valid"
-                              : "form-control text-input"
-                          }
-                          id="code_client"
-                          onChange={handleChange}
-                          value={values.code_client}
-                        />
-                        {errors.code_client && touched.code_client ? (
-                          <div>{errors.code_client}</div>
-                        ) : null} */}
                         <Field
                           className={
                             hasChanged
@@ -168,8 +152,7 @@ function AddClient(props) {
                         <label htmlFor='nom' className='col-form-label'>
                           Nom Client:
                         </label>
-                        <input
-                          required
+                        <Field
                           type='text'
                           className={
                             hasChanged
@@ -178,9 +161,7 @@ function AddClient(props) {
                                 : 'form-control is-valid'
                               : 'form-control text-input'
                           }
-                          id='nom_client'
-                          onChange={handleChange}
-                          value={values.nom_client}
+                          name='nom_client'
                         />
                         {errors.nom_client && touched.nom_client ? (
                           <div>{errors.nom_client}</div>
@@ -191,7 +172,7 @@ function AddClient(props) {
                         <label htmlFor='CIN' className='col-form-label'>
                           CIN:
                         </label>
-                        <input
+                        <Field
                           disabled={values.mat_fisc_sc}
                           type='number'
                           className={
@@ -201,20 +182,18 @@ function AddClient(props) {
                                 : 'form-control is-valid'
                               : 'form-control text-input'
                           }
-                          id='cin_p'
-                          onChange={handleChange}
-                          value={values.cin_p}
+                          name='cin_p'
                         />
-                        {/* {errors.cin_p && touched.cin_p ? (
+                        {errors.cin_p && touched.cin_p ? (
                           <div>{errors.cin_p}</div>
-                        ) : null} */}
+                        ) : null}
                       </div>
 
                       <div className='form-group'>
                         <label htmlFor='mat_fisc_sc' className='col-form-label'>
                           Matricule Fiscale:
                         </label>
-                        <input
+                        <Field
                           disabled={values.cin_p}
                           type='text'
                           className={
@@ -224,22 +203,21 @@ function AddClient(props) {
                                 : 'form-control is-valid'
                               : 'form-control text-input'
                           }
-                          id='mat_fisc_sc'
-                          onChange={handleChange}
-                          value={values.mat_fisc_sc}
+                          name='mat_fisc_sc'
                         />
+                        {errors.mat_fisc_sc && touched.mat_fisc_sc ? (
+                          <div>{errors.mat_fisc_sc}</div>
+                        ) : null}
                       </div>
                       <div className='form-group'>
                         <label htmlFor='responsable' className='col-form-label'>
                           Responsable:
                         </label>
-                        <input
+                        <Field
                           disabled={values.cin_p}
                           type='text'
                           className={'form-control'}
-                          id='responsable'
-                          onChange={handleChange}
-                          value={values.responsable}
+                          name='responsable'
                         />
                       </div>
 
@@ -256,22 +234,8 @@ function AddClient(props) {
                               : 'form-control text-input'
                           }
                           name='email_client'
-                          type='text'
+                          type='email'
                         />
-                        {/* <input
-                          required
-                          type="email"
-                          className={
-                            hasChanged
-                              ? errors.email_client
-                                ? "form-control is-invalid"
-                                : "form-control is-valid"
-                              : "form-control text-input"
-                          }
-                          id="email_client"
-                          onChange={handleChange}
-                          value={values.email_client}
-                        /> */}
                         {errors.email_client && touched.email_client ? (
                           <div>{errors.email_client}</div>
                         ) : null}
@@ -280,8 +244,7 @@ function AddClient(props) {
                         <label htmlFor='Tel' className='col-form-label'>
                           Telephone:
                         </label>
-                        <input
-                          required
+                        <Field
                           type='tel'
                           className={
                             hasChanged
@@ -290,16 +253,17 @@ function AddClient(props) {
                                 : 'form-control is-valid'
                               : 'form-control text-input'
                           }
-                          id='tel_client'
-                          onChange={handleChange}
-                          value={values.tel_client}
+                          name='tel_client'
                         />
+                        {errors.tel_client && touched.tel_client ? (
+                          <div>{errors.tel_client}</div>
+                        ) : null}
                       </div>
                       <div className='form-group'>
                         <label htmlFor='Adresse' className='col-form-label'>
                           Adresse:
                         </label>
-                        <input
+                        <Field
                           type='text'
                           className={
                             hasChanged
@@ -308,14 +272,16 @@ function AddClient(props) {
                                 : 'form-control is-valid'
                               : 'form-control text-input'
                           }
-                          id='adr_client'
-                          onChange={handleChange}
-                          value={values.adr_client}
+                          name='adr_client'
                         />
+                        {errors.adr_client && touched.adr_client ? (
+                          <div>{errors.adr_client}</div>
+                        ) : null}
                       </div>
                       <div className='form-group'>
                         <label htmlFor='pays_client'>Paye</label>
-                        <select
+                        <Field
+                          component='select'
                           className={
                             hasChanged
                               ? errors.pays_client
@@ -323,9 +289,9 @@ function AddClient(props) {
                                 : 'form-control is-valid'
                               : 'form-control text-input'
                           }
-                          onChange={handleChange}
-                          value={values.pays_client}
                           id='pays_client'
+                          name='pays_client'
+                          multiple={false}
                         >
                           <option value=''>---choose country----</option>
                           {counterList.map((country, idx) => {
@@ -335,7 +301,10 @@ function AddClient(props) {
                               </option>
                             );
                           })}
-                        </select>
+                        </Field>
+                        {errors.pays_client && touched.pays_client ? (
+                          <div>{errors.pays_client}</div>
+                        ) : null}
                       </div>
 
                       <div className='modal-footer'>
@@ -354,7 +323,7 @@ function AddClient(props) {
                           AddClient
                         </button>
                       </div>
-                    </form>
+                    </Form>
                   );
                 }}
               </Formik>

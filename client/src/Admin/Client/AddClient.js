@@ -29,13 +29,14 @@ function AddClient(props) {
       .max(30, 'Too Long!')
       .required('Required'),
     pays_client: Yup.string().required('Required'),
-    cin_p: Yup.string().min(8, 'Too Short!').max(8, 'Too Long!'),
+    cin_p: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+      (value + '').match(/^\d{3}\.{1}\d{3}/)
+    ),
+    //Yup.string().min(8, 'Too Short!').max(8, 'Too Long!'),
     //   .required('Required'),
     mat_fisc_sc: Yup.string().min(15, 'Too Short!').max(15, 'Too Long!'),
     //   .required('Required'),
   });
-  const InputFeedback = ({ error }) =>
-    error ? <div className='input-feedback'>{error}</div> : null;
 
   return (
     <div>

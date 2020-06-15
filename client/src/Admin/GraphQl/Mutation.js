@@ -255,7 +255,7 @@ export const ADD_FORMATEUR = gql`
     $prenom_f: String!
     $classe_f: String!
     $fonction_f: String!
-    $cv_f: String!
+    $cv_f: Upload
     $email_f: String!
     $tel_f: String!
     $NSS: Int

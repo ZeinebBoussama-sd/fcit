@@ -56,7 +56,6 @@ export const GET_CLIENTS = gql`
     }
   }
 `;
-
 export const GET_CLIENT = gql`
   query findclient($code_client: ID) {
     client(code_client: $code_client) {
@@ -76,7 +75,6 @@ export const GET_CLIENT = gql`
     }
   }
 `;
-
 export const GetTheme = gql`
   {
     allThemes {

@@ -3,6 +3,11 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
   scalar Date
 
+  type File {
+    filename: String
+    mimetype: String
+    encoding: String
+  }
   type Client {
     code_client: ID!
     pays_client: String!
@@ -385,7 +390,7 @@ const typeDefs = gql`
       prenom_f: String!
       classe_f: String!
       fonction_f: String!
-      cv_f: String!
+      cv_f: Upload
       email_f: String!
       tel_f: String!
       NSS: Int

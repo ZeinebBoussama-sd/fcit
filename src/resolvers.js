@@ -2,6 +2,8 @@
 const { GraphQLScalarType } = require('graphql');
 const { Kind } = require('graphql/language');
 const { ApolloError } = require('apollo-server-core');
+const { createWriteStream } = require('fs');
+
 const resolvers = {
   Date: new GraphQLScalarType({
     name: 'Date',
@@ -19,6 +21,7 @@ const resolvers = {
       return null;
     },
   }),
+
   Query: {
     async client(root, { code_client }, { models }) {
       return models.Client.findByPk(code_client);
@@ -352,56 +355,38 @@ const resolvers = {
         FormateurCodeFormateur,
       });
     },
-    async createFormateur(
-      root,
-      {
-        code_formateur,
-        nom_f,
-        prenom_f,
-        classe_f,
-        fonction_f,
-        cv_f,
-        email_f,
-        tel_f,
-        NSS,
-        salaire_f,
-        adr_f,
-        date_dajout,
-        cin_f,
-        copie_cin,
-        passeport_f,
-        copie_passeport,
-        visa_f,
-        val_visa,
-        tarif_f,
-        RIB_f,
-        copie_RIB,
-      },
-      { models }
-    ) {
-      return models.Formateur.create({
-        code_formateur,
-        nom_f,
-        prenom_f,
-        classe_f,
-        fonction_f,
-        cv_f,
-        email_f,
-        tel_f,
-        NSS,
-        salaire_f,
-        adr_f,
-        date_dajout,
-        cin_f,
-        copie_cin,
-        passeport_f,
-        copie_passeport,
-        visa_f,
-        val_visa,
-        tarif_f,
-        RIB_f,
-        copie_RIB,
+    async createFormateur(root, args, { models }) {
+      const cv_f = await args.cv_f;
+      const { createReadStream, filename } = cv_f;
+      await new Promise((res) =>
+        createReadStream()
+          .pipe(createWriteStream(path.join(__dirname, '../uploads', filename)))
+          .on('close', res)
+      );
+      const addFormateur = models.Formateur.create({
+        code_formateur: args.code_formateur,
+        nom_f: args.nom_f,
+        prenom_f: args.prenom_f,
+        classe_f: args.classe_f,
+        fonction_f: args.fonction_f,
+        cv_f: args.cv_f,
+        email_f: args.email_f,
+        tel_f: args.tel_f,
+        NSS: args.NSS,
+        salaire_f: args.salaire_f,
+        adr_f: args.adr_f,
+        date_dajout: args.date_dajout,
+        cin_f: args.cin_f,
+        copie_cin: args.copie_cin,
+        passeport_f: args.passeport_f,
+        copie_passeport: args.copie_passeport,
+        visa_f: args.visa_f,
+        val_visa: args.val_visa,
+        tarif_f: args.tarif_f,
+        RIB_f: args.RIB_f,
+        copie_RIB: args.copie_RIB,
       });
+      return addFormateur;
     },
     async updateFormateur(root, args, { models }) {
       const updateFormateur = await models.Formateur.update(

@@ -1,11 +1,14 @@
 import React from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 import { ADD_FORMATEUR } from '../GraphQl/Mutation';
 import { GET_FORMATIONS } from '../GraphQl/Query';
 import deepEqual from 'lodash.isequal';
 
 import { FormateurSchema } from '../../Utils/Validation';
+import { fileToBase64String } from '../../Utils/fileToBase64String';
+import { logDOM } from '@testing-library/react';
+import { DropzoneField } from '../component/DropzoneField.tsx';
 
 function AddFormateur(props) {
   const GetFormations = useQuery(GET_FORMATIONS);
@@ -54,7 +57,7 @@ function AddFormateur(props) {
                   prenom_f: '',
                   classe_f: undefined,
                   fonction_f: undefined,
-                  cv_f: undefined,
+                  cv_f: null,
                   email_f: '',
                   tel_f: undefined,
                   NSS: undefined,
@@ -115,6 +118,7 @@ function AddFormateur(props) {
                     dirty,
                     isSubmitting,
                     initialValues,
+                    setFieldValue,
                     handleChange,
                     handleBlur,
                     handleSubmit,
@@ -211,13 +215,46 @@ function AddFormateur(props) {
                         <label htmlFor='CV' className='col-form-label'>
                           CV
                         </label>
-                        <input
-                          type='file'
-                          className='form-control-file'
-                          id='cv_f'
-                          onChange={handleChange}
-                          value={values.cv_f}
-                        />
+                        <div className='input-group mb-3'>
+                          {/* <div className='input-group-prepend'>
+                            <span
+                              className='input-group-text'
+                              id='cv_f_attachment'
+                            >
+                              Upload
+                            </span>
+                          </div> */}
+                          {/* <div className='custom-file'> */}
+                          <Field
+                            type='file'
+                            //className='custom-file-input'
+                            name='cv_f'
+                            component={DropzoneField}
+                            // aria-describedby='cv_f_attachment'
+                            // onChange={(e) => {
+                            //   var file = e.target.files[0];
+                            //   // const base64String = fileToBase64String(file);
+                            //   // console.log('base64String', base64String);
+                            //   var reader = new FileReader();
+
+                            //   setFieldValue('cv_f_attachment', file.name);
+                            //   reader.onload = (item) => {
+                            //     //   debugger;
+                            //     setFieldValue(
+                            //       'cv_f_attachment',
+                            //       item.target.result
+                            //     );
+                            //   };
+
+                            //   reader.readAsDataURL(file);
+                            // }}
+                          />
+                          {values.cv_f && <img src={values.cv_f.preview} />}
+                          {/* <label className='custom-file-label' htmlFor='cv_f'>
+                              Choose file
+                            </label>
+                          </div> */}
+                        </div>
                       </div>
                       <div className='form-group'>
                         <label htmlFor='Email' className='col-form-label'>

@@ -1,8 +1,11 @@
-import React from 'react';
-import { useMutation, useQuery } from '@apollo/react-hooks';
-import { Formik } from 'formik';
-import { ADD_DEMANDE } from '../GraphQl/Mutation';
-import { GET_FORMATIONS, GET_CLIENTS, GET_DEMANDEURS } from '../GraphQl/Query';
+import React from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { Formik, Field } from "formik";
+import { ADD_DEMANDE } from "../GraphQl/Mutation";
+import { GET_FORMATIONS, GET_CLIENTS, GET_DEMANDEURS } from "../GraphQl/Query";
+
+import deepEqual from "lodash.isequal";
+import { DemandeSchema } from "../../Utils/Validation";
 function AddDemande(props) {
   const [addDemande, res] = useMutation(ADD_DEMANDE);
   const GetFormation = useQuery(GET_FORMATIONS);
@@ -12,39 +15,39 @@ function AddDemande(props) {
   return (
     <div>
       <button
-        type='button'
-        className='btn btn-primary'
-        data-toggle='modal'
-        data-target='#exampleModal'
-        data-whatever='@getbootstrap'
+        type="button"
+        className="btn btn-primary"
+        data-toggle="modal"
+        data-target="#exampleModal"
+        data-whatever="@getbootstrap"
       >
         Add Demande
       </button>
 
       <div
-        className='modal fade'
-        id='exampleModal'
-        tabIndex='-1'
-        role='dialog'
-        aria-labelledby='exampleModalLabel'
-        aria-hidden='true'
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
       >
-        <div className='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
-          <div className='modal-content'>
-            <div className='modal-header'>
-              <h5 className='modal-title' id='exampleModalLabel'>
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
                 Add Demande
               </h5>
               <button
-                type='button'
-                className='close'
-                data-dismiss='modal'
-                aria-label='Close'
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
               >
-                <span aria-hidden='true'>&times;</span>
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className='modal-body'>
+            <div className="modal-body">
               <Formik
                 initialValues={{
                   date_demande: undefined,
@@ -57,13 +60,13 @@ function AddDemande(props) {
                   hr_deb_j_prev: undefined,
                   hr_fin_j_prev: undefined,
                   hr_j_prev: undefined,
-                  ClientCodeClient: '',
+                  ClientCodeClient: "",
                   FormationCIFormation: undefined,
                   DemandeurCodeDemandeur: undefined,
                 }}
+                validationSchema={DemandeSchema}
                 onSubmit={async (values) => {
                   try {
-                    debugger;
                     await addDemande({
                       variables: {
                         date_demande: values.date_demande,
@@ -78,7 +81,7 @@ function AddDemande(props) {
                         hr_j_prev: values.hr_j_prev,
                         ClientCodeClient: values.ClientCodeClient
                           ? values.ClientCodeClient
-                          : '',
+                          : "",
                         FormationCIFormation: values.FormationCIFormation
                           ? parseInt(values.FormationCIFormation)
                           : null,
@@ -100,155 +103,223 @@ function AddDemande(props) {
                     errors,
                     dirty,
                     isSubmitting,
+                    initialValues,
                     handleChange,
                     handleBlur,
                     handleSubmit,
                     handleReset,
                   } = props;
+                  const hasChanged = !deepEqual(values, initialValues);
+
                   return (
                     <form onSubmit={handleSubmit}>
-                      <div className='form-group'>
-                        <label htmlFor='Date D' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Date D" className="col-form-label">
                           Date D:
                         </label>
-                        <input
-                          required
-                          type='date'
-                          className='form-control'
-                          id='date_demande'
-                          onChange={handleChange}
-                          value={values.date_demande}
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.date_demande
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          className="form-control"
+                          name="date_demande"
+                          type="date"
                         />
+                        {errors.date_demande && touched.date_demande ? (
+                          <div>{errors.date_demande}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='type' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="type" className="col-form-label">
                           Type:
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='type_demande'
+
+                        <Field
+                          component="select"
+                          className="form-control"
+                          name="type_demande"
                           onChange={handleChange}
                           value={values.type_demande}
-                        />
+                        >
+                          <option value="">----Choose Type----</option>
+                          <option>Inter</option>
+                          <option>Intra</option>
+                          <option>Séminaire</option>
+                        </Field>
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Etat' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Etat" className="col-form-label">
                           Etat:
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='etat_demande'
+
+                        <Field
+                          component="select"
+                          className="form-control"
+                          name="etat_demande"
                           onChange={handleChange}
                           value={values.etat_demande}
-                        />
+                        >
+                          <option value="">----choose Etat----</option>
+                          <option>Refusée</option>
+                          <option>En cours</option>
+                          <option>Validée</option>
+                        </Field>
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Prix' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Prix" className="col-form-label">
                           Prix:
                         </label>
-                        <input
-                          required
-                          type='number'
-                          className='form-control'
-                          id='prix_prevu'
-                          onChange={handleChange}
-                          value={values.prix_prevu}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.prix_prevu
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="prix_prevu"
+                          type="number"
                         />
+                        {errors.prix_prevu && touched.prix_prevu ? (
+                          <div>{errors.prix_prevu}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Lieu' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Lieu" className="col-form-label">
                           Lieu:
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='lieu_prevu'
-                          onChange={handleChange}
-                          value={values.lieu_prevu}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.lieu_prevu
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="lieu_prevu"
+                          type="text"
                         />
+                        {errors.lieu_prevu && touched.lieu_prevu ? (
+                          <div>{errors.lieu_prevu}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Duree' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Duree" className="col-form-label">
                           Duree:
                         </label>
-                        <input
-                          required
-                          type='number'
-                          className='form-control'
-                          id='duree_prevu'
-                          onChange={handleChange}
-                          value={values.duree_prevu}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.duree_prevu
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="duree_prevu"
+                          type="number"
                         />
+                        {errors.duree_prevu && touched.duree_prevu ? (
+                          <div>{errors.duree_prevu}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Mode' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Mode" className="col-form-label">
                           Mode:
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='mode_demande'
+
+                        <Field
+                          component="select"
+                          className="form-control"
+                          name="mode_demande"
                           onChange={handleChange}
                           value={values.mode_demande}
-                        />
+                        >
+                          <option value="">----choose Mode----</option>
+                          <option>Présentielle</option>
+                          <option>En Ligne</option>
+                        </Field>
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Heure Debut' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Heure Debut" className="col-form-label">
                           Heure Debut:
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='hr_deb_j_prev'
-                          onChange={handleChange}
-                          value={values.hr_deb_j_prev}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.hr_deb_j_prev
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="hr_deb_j_prev"
+                          type="text"
                         />
+                        {errors.hr_deb_j_prev && touched.hr_deb_j_prev ? (
+                          <div>{errors.hr_deb_j_prev}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Heure Fin' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Heure Fin" className="col-form-label">
                           Heure Fin:
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='hr_fin_j_prev'
-                          onChange={handleChange}
-                          value={values.hr_fin_j_prev}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.hr_fin_j_prev
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="hr_fin_j_prev"
+                          type="text"
                         />
+                        {errors.hr_fin_j_prev && touched.hr_fin_j_prev ? (
+                          <div>{errors.hr_fin_j_prev}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
+                      <div className="form-group">
                         <label
-                          htmlFor='Nb Heures par jour'
-                          className='col-form-label'
+                          htmlFor="Nb Heures par jour"
+                          className="col-form-label"
                         >
                           Nb Heures par jour:
                         </label>
-                        <input
-                          required
-                          type='number'
-                          className='form-control'
-                          id='hr_j_prev'
-                          onChange={handleChange}
-                          value={values.hr_j_prev}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.hr_j_prev
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="hr_j_prev"
+                          type="text"
                         />
+                        {errors.hr_j_prev && touched.hr_j_prev ? (
+                          <div>{errors.hr_j_prev}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Formation'>Client:</label>
-                        <select
-                          className='form-control'
+                      <div className="form-group">
+                        <label htmlFor="Formation">Client:</label>
+
+                        <Field
+                          component="select"
+                          className="form-control"
+                          name="ClientCodeClient"
                           onChange={handleChange}
                           value={values.ClientCodeClient}
-                          id='ClientCodeClient'
                         >
-                          <option value=''>---Choose Client--</option>
+                          <option value="">---Choose Client--</option>
                           {GetClient.data &&
                             GetClient.data.allClients.map((client) => {
                               return (
@@ -260,17 +331,19 @@ function AddDemande(props) {
                                 </option>
                               );
                             })}
-                        </select>
+                        </Field>
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Formation'>Formation:</label>
-                        <select
-                          className='form-control'
+                      <div className="form-group">
+                        <label htmlFor="Formation">Formation:</label>
+
+                        <Field
+                          component="select"
+                          className="form-control"
+                          name="FormationCIFormation"
                           onChange={handleChange}
                           value={values.FormationCIFormation}
-                          id='FormationCIFormation'
                         >
-                          <option value=''>---Choose Formation----</option>
+                          <option value="">---Choose Formation----</option>
                           {GetFormation.data &&
                             GetFormation.data.allFormations.map((formation) => {
                               return (
@@ -282,17 +355,19 @@ function AddDemande(props) {
                                 </option>
                               );
                             })}
-                        </select>
+                        </Field>
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Formation'>Demandeur:</label>
-                        <select
-                          className='form-control'
+                      <div className="form-group">
+                        <label htmlFor="Formation">Demandeur:</label>
+
+                        <Field
+                          component="select"
+                          className="form-control"
+                          name="DemandeurCodeDemandeur"
                           onChange={handleChange}
                           value={values.DemandeurCodeDemandeur}
-                          id='DemandeurCodeDemandeur'
                         >
-                          <option value=''>---Choose Demandeur----</option>
+                          <option value="">---Choose Demandeur----</option>
                           {GetDemandeur.data &&
                             GetDemandeur.data.allDemandeurs.map((demandeur) => {
                               return (
@@ -304,20 +379,20 @@ function AddDemande(props) {
                                 </option>
                               );
                             })}
-                        </select>
+                        </Field>
                       </div>
-                      <div className='modal-footer'>
+                      <div className="modal-footer">
                         <button
-                          type='button'
-                          className='btn btn-secondary'
-                          data-dismiss='modal'
+                          type="button"
+                          className="btn btn-secondary"
+                          data-dismiss="modal"
                         >
                           Close
                         </button>
                         <button
-                          type='submit'
+                          type="submit"
                           disabled={isSubmitting}
-                          className='btn btn-primary'
+                          className="btn btn-primary"
                         >
                           Add Demandeur
                         </button>

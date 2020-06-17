@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 export const GET_FORMATIONS = gql`
   {
@@ -77,7 +77,7 @@ export const GET_CLIENT = gql`
   }
 `;
 
-export const GetTheme = gql`
+export const GET_THEME = gql`
   {
     allThemes {
       code_theme
@@ -377,6 +377,88 @@ export const GET_FICHIERS = gql`
       taille_max
       url_fichier
       nature_support
+    }
+  }
+`;
+export const GET_FICHIER = gql`
+  query findfichier($code_fichier: ID) {
+    fichier(code_fichier: $code_fichier) {
+      code_fichier
+      nom_fichier
+      type_fichier
+      taille_max
+      url_fichier
+      nature_support
+    }
+  }
+`;
+export const GET_PARTICIPANT = gql`
+  query findparticpant($code_participant: ID) {
+    participant(code_participant: $code_participant) {
+      code_participant
+      nom_participant
+      prenom_participant
+      carte_identite
+      email_demandeur
+      client {
+        nom_client
+      }
+    }
+  }
+`;
+export const GET_PARTICIPANTS = gql`
+  {
+    allParticipants {
+      code_participant
+      nom_participant
+      prenom_participant
+      carte_identite
+      email_demandeur
+      client {
+        nom_client
+      }
+    }
+  }
+`;
+export const GET_VALIDATIONS = gql`
+  {
+    allvalidations {
+      code_val
+      date_val
+      remarque
+      decision_r
+      decision_f
+      formateur {
+        nom_f
+      }
+      ingenieurpedagogique {
+        nom_ing
+      }
+      support {
+        titre_support
+      }
+    }
+  }
+`;
+export const GET_VALIDATION = gql`
+  query findvalidations($code_val: ID) {
+    valiadtion(code_val: $code_val) {
+      allvalidations {
+        code_val
+        date_val
+        remarque
+        decision_r
+        decision_f
+        formateur {
+          nom_f
+        }
+        ingenieurpedagogique {
+          nom_ing
+        }
+        support {
+          titre_support
+        }
+      }
     }
   }
 `;

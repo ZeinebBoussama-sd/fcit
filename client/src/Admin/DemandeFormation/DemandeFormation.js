@@ -1,14 +1,29 @@
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_DEMANDE_FORMATIONS } from "../GraphQl/Query";
 import AddDemande from "./AddDemande";
 import { Link } from "react-router-dom";
+import WarningModal from "../component/WarningModal";
+import { DELETE_DEMANDE } from "../GraphQl/Mutation";
 
 function DemandeFormation() {
   const { loading, error, data, refetch } = useQuery(GET_DEMANDE_FORMATIONS);
+  const [deletedemande, res] = useMutation(DELETE_DEMANDE);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
-
+  const dlt = async (values) => {
+    try {
+      await deletedemande({
+        variables: {
+          code_demande: values,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    refetch();
+  };
   return (
     <div className="mt-11 ">
       <AddDemande refetch={refetch} />
@@ -31,7 +46,7 @@ function DemandeFormation() {
               <th scope="col" className="col-1">
                 Type
               </th>
-              <th scope="col" className="col-2">
+              <th scope="col" className="col-1">
                 Mode
               </th>
               <th scope="col" className="col-1">
@@ -58,6 +73,14 @@ function DemandeFormation() {
                   {demandeformation.prix_prevu
                     ? demandeformation.prix_prevu
                     : "--"}
+                </td>
+                <td className="col-1">
+                  <center>
+                    <WarningModal
+                      dlt={dlt}
+                      code={demandeformation.code_demande}
+                    />
+                  </center>
                 </td>
               </tr>
             ))}

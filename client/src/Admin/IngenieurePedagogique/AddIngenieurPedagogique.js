@@ -1,51 +1,51 @@
-import React from 'react';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/react-hooks';
-import { Formik } from 'formik';
-import { ADD_INGENIEURPEDAGOGIQUE } from '../GraphQl/Mutation';
-
+import React from "react";
+import { useMutation } from "@apollo/react-hooks";
+import { Formik, Field } from "formik";
+import { ADD_INGENIEURPEDAGOGIQUE } from "../GraphQl/Mutation";
+import deepEqual from "lodash.isequal";
+import { IngenieurPedagogiqueSchema } from "../../Utils/Validation";
 function AddIngenieurPedagogique(props) {
   const [AddIngenieurPedagogique, res] = useMutation(ADD_INGENIEURPEDAGOGIQUE);
   return (
     <div>
       <button
-        type='button'
-        className='btn btn-primary'
-        data-toggle='modal'
-        data-target='#exampleModal'
-        data-whatever='@getbootstrap'
+        type="button"
+        className="btn btn-primary"
+        data-toggle="modal"
+        data-target="#exampleModal"
+        data-whatever="@getbootstrap"
       >
         Add Ingenieur
       </button>
 
       <div
-        className='modal fade'
-        id='exampleModal'
-        tabIndex='-1'
-        role='dialog'
-        aria-labelledby='exampleModalLabel'
-        aria-hidden='true'
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
       >
-        <div className='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
-          <div className='modal-content'>
-            <div className='modal-header'>
-              <h5 className='modal-title' id='exampleModalLabel'>
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
                 Add Ingenieur
               </h5>
               <button
-                type='button'
-                className='close'
-                data-dismiss='modal'
-                aria-label='Close'
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
               >
-                <span aria-hidden='true'>&times;</span>
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className='modal-body'>
+            <div className="modal-body">
               <Formik
                 initialValues={{
-                  nom_ing: '',
-                  prenom_ing: '',
+                  nom_ing: "",
+                  prenom_ing: "",
                   cv_ing: undefined,
                   email_ing: undefined,
                   tel_ing: undefined,
@@ -54,6 +54,7 @@ function AddIngenieurPedagogique(props) {
                   specialite_ing: undefined,
                   adr_ing: undefined,
                 }}
+                validationSchema={IngenieurPedagogiqueSchema}
                 onSubmit={async (values) => {
                   try {
                     await AddIngenieurPedagogique({
@@ -83,142 +84,213 @@ function AddIngenieurPedagogique(props) {
                     errors,
                     dirty,
                     isSubmitting,
+                    initialValues,
                     handleChange,
                     handleBlur,
                     handleSubmit,
                     handleReset,
                   } = props;
+                  const hasChanged = !deepEqual(values, initialValues);
+
                   return (
                     <form onSubmit={handleSubmit}>
-                      <div className='form-group'>
-                        <label htmlFor='Nom Ing' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Nom Ing" className="col-form-label">
                           Nom Ing:
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='nom_ing'
-                          onChange={handleChange}
-                          value={values.nom_ing}
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.nom_ing
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="nom_ing"
+                          type="text"
                         />
+                        {errors.nom_ing && touched.nom_ing ? (
+                          <div>{errors.nom_ing}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Prenom Ing' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Prenom Ing" className="col-form-label">
                           Prenom Ing
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='prenom_ing'
-                          onChange={handleChange}
-                          value={values.prenom_ing}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.prenom_ing
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="prenom_ing"
+                          type="text"
                         />
+                        {errors.prenom_ing && touched.prenom_ing ? (
+                          <div>{errors.prenom_ing}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Cv Ing' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Cv Ing" className="col-form-label">
                           Cv Ing
                         </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='cv_ing'
-                          onChange={handleChange}
-                          value={values.cv_ing}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.cv_ing
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="cv_ing"
+                          type="text"
                         />
+                        {errors.cv_ing && touched.cv_ing ? (
+                          <div>{errors.cv_ing}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Email Ing' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Email Ing" className="col-form-label">
                           Email Ing
                         </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='email_ing'
-                          onChange={handleChange}
-                          value={values.email_ing}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.email_ing
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="email_ing"
+                          type="text"
                         />
+                        {errors.email_ing && touched.email_ing ? (
+                          <div>{errors.email_ing}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
+                      <div className="form-group">
                         <label
-                          htmlFor='Telephone Ing'
-                          className='col-form-label'
+                          htmlFor="Telephone Ing"
+                          className="col-form-label"
                         >
                           Telephone Ing
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='tel_ing'
-                          onChange={handleChange}
-                          value={values.tel_ing}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.tel_ing
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="tel_ing"
+                          type="number"
                         />
+                        {errors.tel_ing && touched.tel_ing ? (
+                          <div>{errors.tel_ing}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='NSS Ing' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="NSS Ing" className="col-form-label">
                           NSS Ing
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='NSS_ing'
-                          onChange={handleChange}
-                          value={values.NSS_ing}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.NSS_ing
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="NSS_ing"
+                          type="number"
                         />
+                        {errors.NSS_ing && touched.NSS_ing ? (
+                          <div>{errors.NSS_ing}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Salaire Ing' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Salaire Ing" className="col-form-label">
                           Salaire Ing
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='salaire_ing'
-                          onChange={handleChange}
-                          value={values.salaire_ing}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.salaire_ing
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="salaire_ing"
+                          type="number"
                         />
+                        {errors.salaire_ing && touched.salaire_ing ? (
+                          <div>{errors.salaire_ing}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
+                      <div className="form-group">
                         <label
-                          htmlFor='Specialité Ing'
-                          className='col-form-label'
+                          htmlFor="Specialité Ing"
+                          className="col-form-label"
                         >
                           Specialité Ing
                         </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='specialite_ing'
-                          onChange={handleChange}
-                          value={values.specialite_ing}
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.specialite_ing
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="specialite_ing"
+                          type="text"
                         />
+                        {errors.specialite_ing && touched.specialite_ing ? (
+                          <div>{errors.specialite_ing}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Adresse Ing' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Adresse Ing" className="col-form-label">
                           Adresse Ing
                         </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='adr_ing'
-                          onChange={handleChange}
-                          value={values.adr_ing}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.adr_ing
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="adr_ing"
+                          type="text"
                         />
+                        {errors.adr_ing && touched.adr_ing ? (
+                          <div>{errors.adr_ing}</div>
+                        ) : null}
                       </div>
 
-                      <div className='modal-footer'>
+                      <div className="modal-footer">
                         <button
-                          type='button'
-                          className='btn btn-secondary'
-                          data-dismiss='modal'
+                          type="button"
+                          className="btn btn-secondary"
+                          data-dismiss="modal"
                         >
                           Close
                         </button>
                         <button
-                          type='submit'
+                          type="submit"
                           disabled={isSubmitting}
-                          className='btn btn-primary'
+                          className="btn btn-primary"
                         >
                           Add Ingenieur
                         </button>

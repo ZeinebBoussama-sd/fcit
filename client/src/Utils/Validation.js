@@ -1,87 +1,222 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 export const FormateurSchema = Yup.object().shape({
-  code_formateur: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
+  code_formateur: Yup.string().max(5, "Too Long!").required("Required"),
   nom_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
+    .min(3, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
   prenom_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  classe_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  fonction_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  cv_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  email_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
+    .min(3, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  classe_f: Yup.string().required("Required"),
+  fonction_f: Yup.string().required("Required"),
+  cv_f: Yup.string().required("Required"),
+  email_f: Yup.string().email("Invalid email").required("Required"),
   tel_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
+    .min(8, "Too Short!")
+    .max(20, "Too Long!")
+    .required("Required"),
   NSS: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
+    .min(10, "Too Short!")
+    .max(10, "Too Long!")
+    .required("Required"),
   salaire_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  adr_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  date_dajout: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
+    .min(3, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  adr_f: Yup.string().required("Required"),
+  date_dajout: Yup.string().required("Required"),
   cin_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  copie_cin: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
+    .min(8, "Too Short!")
+    .max(8, "Too Long!")
+    .required("Required"),
+  copie_cin: Yup.string().required("Required"),
   passeport_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  copie_passeport: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
+    .min(10, "Too Short!")
+    .max(10, "Too Long!")
+    .required("Required"),
+  copie_passeport: Yup.string().required("Required"),
   visa_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  val_visa: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  tarif_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
+    .min(10, "Too Short!")
+    .max(10, "Too Long!")
+    .required("Required"),
+  val_visa: Yup.date().required("Required"),
+  tarif_f: Yup.number().required("Required"),
   RIB_f: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
-  copie_RIB: Yup.string()
-    .min(3, 'Too Short!')
-    .max(30, 'Too Long!')
-    .required('Required'),
+    .min(20, "Too Short!")
+    .max(20, "Too Long!")
+    .required("Required"),
+  copie_RIB: Yup.string().required("Required"),
+});
+export const FormationSchema = Yup.object().shape({
+  code_formation: Yup.string().max(5, "Too Long!").required("Required"),
+  intitule: Yup.string()
+    .min(3, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  duree_formation: Yup.number().required("Required"),
+  nbre_min_part: Yup.number().required("Required"),
+  description_formation: Yup.string().required("Required"),
+  catagorie_formation: Yup.string().required("Required"),
+  prix_formation: Yup.string().required("Required"),
+  participant: Yup.string().required("Required"),
+  prerequis: Yup.string().required("Required"),
+  ThemeCodeTheme: Yup.string().required("Required"),
+});
+export const DemandeurSchema = Yup.object().shape({
+  nom_demandeur: Yup.string().max(30, "Too Long!").required("Required"),
+  prenom_demandeur: Yup.string().max(30, "Too Long!").required("Required"),
+  email_demandeur: Yup.string().email("Invalid email").required("Required"),
+  tel_demandeur: Yup.string()
+    .min(8, "Too Short!")
+    .max(20, "Too Long!")
+    .required("Required"),
+});
+export const IngenieurPedagogiqueSchema = Yup.object().shape({
+  nom_ing: Yup.string().max(30, "Too Long!").required("Required"),
+  prenom_ing: Yup.string().max(30, "Too Long!").required("Required"),
+  cv_ing: Yup.string().required("Required"),
+  email_ing: Yup.string().email("Invalid email").required("Required"),
+  tel_ing: Yup.string()
+    .min(8, "Too Short!")
+    .max(20, "Too Long!")
+    .required("Required"),
+  NSS_ing: Yup.string()
+    .min(10, "Too Short!")
+    .max(10, "Too Long!")
+    .required("Required"),
+  salaire_ing: Yup.number()
+    .min(3, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  specialite_ing: Yup.string().required("Required"),
+  adr_ing: Yup.string().required("Required"),
+});
+export const SupportSchema = Yup.object().shape({
+  titre_support: Yup.string().required("Required"),
+});
+export const ThemeSchema = Yup.object().shape({
+  code_theme: Yup.string()
+    .min(2, "Too Short!")
+    .max(5, "Too Long!")
+    .required("Required"),
+  nom_theme: Yup.string()
+    .min(4, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+});
+export const DemandeSchema = Yup.object().shape({
+  date_demande: Yup.date().required("Required"),
+  type_demande: Yup.string()
+    .min(2, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  type_demande: Yup.string()
+    .min(2, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  prix_prevu: Yup.string()
+    .min(2, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  lieu_prevu: Yup.string()
+    .min(2, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  duree_prevu: Yup.number()
+    .min(2, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  mode_demande: Yup.string()
+    .min(2, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  hr_deb_j_prev: Yup.string()
+    .min(2, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  hr_fin_j_prev: Yup.string()
+    .min(2, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  hr_j_prev: Yup.string()
+    .min(2, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  ClientCodeClient: Yup.string()
+    .min(1, "Too Short!")
+    .max(5, "Too Long!")
+    .required("Required"),
+  FormationCIFormation: Yup.number()
+    .min(1, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  DemandeurCodeDemandeur: Yup.number()
+    .min(1, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+});
+export const SessionSchema = Yup.object().shape({
+  code_session: Yup.string()
+    .min(1, "Too Short!")
+    .max(5, "Too Long!")
+    .required("Required"),
+  mode_session: Yup.string()
+    .min(1, "Too Short!")
+    .max(10, "Too Long!")
+    .required("Required"),
+  duree_sess: Yup.number()
+    .min(1, "Too Short!")
+    .max(10, "Too Long!")
+    .required("Required"),
+  hr_deb_j: Yup.string()
+    .min(1, "Too Short!")
+    .max(5, "Too Long!")
+    .required("Required"),
+  hr_fin_j: Yup.string()
+    .min(1, "Too Short!")
+    .max(5, "Too Long!")
+    .required("Required"),
+  hr_j_session: Yup.string()
+    .min(1, "Too Short!")
+    .max(2, "Too Long!")
+    .required("Required"),
+  honoraire_sess: Yup.number(),
+
+  frais_sejour: Yup.number(),
+  frais_transport: Yup.number(),
+  perdiem: Yup.number(),
+  autres_frais: Yup.number(),
+  note_eval_formateur: Yup.number(),
+  type_sess: Yup.number(),
+  date_deb_sess: Yup.number(),
+  lieu_sess: Yup.string()
+    .min(1, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  prix_session: Yup.number().required("Required"),
+
+  ClientCodeClient: Yup.string().required("Required"),
+  FormationCIFormation: Yup.number().required("Required"),
+  FormateurCodeFormateur: Yup.string().required("Required"),
+  SupportCodeSupport: Yup.number().required("Required"),
+});
+export const FichierSchema = Yup.object().shape({
+  nom_fichier: Yup.string()
+    .min(5, "Too Short!")
+    .max(20, "Too Long!")
+    .required("Required"),
+
+  type_fichier: Yup.string()
+    .min(5, "Too Short!")
+    .max(20, "Too Long!")
+    .required("Required"),
+  taille_max: Yup.number().required("Required"),
+  url_fichier: Yup.string().required("Required"),
+  nature_support: Yup.string()
+    .min(4, "Too Short!")
+    .max(10, "Too Long!")
+    .required("Required"),
+  SupportCodeSupport: Yup.number().required("Required"),
 });

@@ -1,56 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_INGENIEUR_PEDAGOGIQUE } from "../GraphQl/Query";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import Item from "./Item";
+import EditIngenieurPedadogique from "./EditIngenieurPedagogique";
 function IngenieurPedagogiueItem() {
   let { id } = useParams();
 
-  const { loading, error, data } = useQuery(GET_INGENIEUR_PEDAGOGIQUE, {
-    variables: { code_IP: id },
-  });
-  console.log(data);
+  const { loading, error, data, refetch } = useQuery(
+    GET_INGENIEUR_PEDAGOGIQUE,
+    {
+      variables: { code_IP: id },
+    }
+  );
+  const [edit, setEdit] = useState(false);
+  const ingenieurpedagogique = data ? data.ingenieurpedagogique : null;
+  const action = () => {
+    edit ? setEdit(false) : setEdit(true);
+  };
+  console.log(ingenieurpedagogique);
 
   return (
-    <div className="container mt-11 ">
-      <div className="card container">
-        <div className="row">
-          <b className="col-2">Nom:</b>
-          <p className="col">{data && data.ingenieurpedagogique.nom_ing}</p>
+    <div className=" mt-11 ">
+      <div className="card bg-light border-light">
+        <div className="card-headert row">
+          <h5 className="ml-2 col-11">
+            About: {ingenieurpedagogique && ingenieurpedagogique.prenom_ing}
+          </h5>
+          <span className="col-0 text-right">
+            <FontAwesomeIcon
+              icon={faCog}
+              className="ml-5 mt-2 pointer"
+              onClick={() => action()}
+              data-toggle="collapse"
+              data-target="#settingContent"
+            />
+          </span>
         </div>
-        <div className="row">
-          <b className="col-2">Prenom:</b>
-          <p className="col">{data && data.ingenieurpedagogique.prenom_ing}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">CV:</b>
-          <p className="col">{data && data.ingenieurpedagogique.cv_ing}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Email:</b>
-          <p className="col">{data && data.ingenieurpedagogique.email_ing}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Tel:</b>
-          <p className="col">{data && data.ingenieurpedagogique.tel_ing}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">NSS:</b>
-          <p className="col">{data && data.ingenieurpedagogique.NSS_ing}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Specialite:</b>
-          <p className="col">
-            {data && data.ingenieurpedagogique.specialite_ing}
-          </p>
-        </div>
-        <div className="row">
-          <b className="col-2">Salaire:</b>
-          <p className="col">{data && data.ingenieurpedagogique.salaire_ing}</p>
-        </div>
-        <div className="row">
-          <b className="col-2">Adresse:</b>
-          <p className="col">{data && data.ingenieurpedagogique.adr_ing}</p>
-        </div>
+        {!edit ? (
+          <Item ingenieurpedagogique={ingenieurpedagogique} />
+        ) : (
+          <EditIngenieurPedadogique
+            className=""
+            id="navbarSupportedContent"
+            ingenieurpedagogique={ingenieurpedagogique}
+            refetch={refetch}
+            setEdit={setEdit}
+          />
+        )}
       </div>
     </div>
   );

@@ -1,12 +1,16 @@
 import React from "react";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
-import { ADD_DEMANDEUR } from "../GraphQl/Mutation";
+import { ADD_PARTICIPANT } from "../GraphQl/Mutation";
+import { GET_CLIENTS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
-import { DemandeurSchema } from "../../Utils/Validation";
 
-function AddDemandeur(props) {
-  const [addDemandeur, res] = useMutation(ADD_DEMANDEUR);
+import { ParticipantSchema } from "../../Utils/Validation";
+
+function AddParticipant(props) {
+  const GetClients = useQuery(GET_CLIENTS);
+  const [AddParticipant, res] = useMutation(ADD_PARTICIPANT);
+
   return (
     <div>
       <button
@@ -16,7 +20,7 @@ function AddDemandeur(props) {
         data-target="#exampleModal"
         data-whatever="@getbootstrap"
       >
-        Add Demandeur
+        Ajouter Participant
       </button>
 
       <div
@@ -31,7 +35,7 @@ function AddDemandeur(props) {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Add Demandeur
+                Ajouter Participant
               </h5>
               <button
                 type="button"
@@ -44,21 +48,22 @@ function AddDemandeur(props) {
             </div>
             <div className="modal-body">
               <Formik
+                enableReinitialize
                 initialValues={{
-                  nom_demandeur: "",
-                  prenom_demandeur: "",
-                  email_demandeur: undefined,
-                  tel_demandeur: undefined,
+                  code_participant: undefined,
+                  nom_participant: undefined,
+                  prenom_participant: undefined,
+                  ClientCodeClient: undefined,
                 }}
-                validationSchema={DemandeurSchema}
+                validationSchema={ParticipantSchema}
                 onSubmit={async (values) => {
                   try {
-                    await addDemandeur({
+                    await AddParticipant({
                       variables: {
-                        nom_demandeur: values.nom_demandeur,
-                        prenom_demandeur: values.prenom_demandeur,
-                        email_demandeur: values.email_demandeur,
-                        tel_demandeur: values.tel_demandeur,
+                        code_participant: values.code_participant,
+                        nom_participant: values.nom_participant,
+                        prenom_participant: values.prenom_participant,
+                        ClientCodeClient: values.ClientCodeClient,
                       },
                     });
                   } catch (e) {
@@ -85,81 +90,101 @@ function AddDemandeur(props) {
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
-                        <label htmlFor="nom" className="col-form-label">
-                          Nom:
+                        <label htmlFor="Nom" className="col-form-label">
+                          Nom
                         </label>
 
                         <Field
                           className={
                             hasChanged
-                              ? errors.nom_demandeur
+                              ? errors.nom_participant
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          name="nom_demandeur"
+                          name="nom_participant"
                           type="text"
                         />
-                        {errors.nom_demandeur && touched.nom_demandeur ? (
-                          <div>{errors.nom_demandeur}</div>
+                        {errors.nom_participant && touched.nom_participant ? (
+                          <div>{errors.nom_participant}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Prenom" className="col-form-label">
-                          Prenom:
+                          Prenom
                         </label>
                         <Field
                           className={
                             hasChanged
-                              ? errors.prenom_demandeur
+                              ? errors.prenom_participant
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          name="prenom_demandeur"
+                          name="prenom_participant"
                           type="text"
                         />
-                        {errors.prenom_demandeur && touched.prenom_demandeur ? (
-                          <div>{errors.prenom_demandeur}</div>
+                        {errors.prenom_participant &&
+                        touched.prenom_participant ? (
+                          <div>{errors.prenom_participant}</div>
                         ) : null}
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Email" className="col-form-label">
-                          Email:
-                        </label>
-                        <Field
-                          className={
-                            hasChanged
-                              ? errors.email_demandeur
-                                ? "form-control is-invalid"
-                                : "form-control is-valid"
-                              : "form-control text-input"
-                          }
-                          name="email_demandeur"
-                          type="email"
-                        />
-                        {errors.email_demandeur && touched.email_demandeur ? (
-                          <div>{errors.email_demandeur}</div>
-                        ) : null}
-                      </div>
+
                       <div className="form-group">
                         <label htmlFor="Tel" className="col-form-label">
-                          Tel:
+                          CIN
                         </label>
 
                         <Field
                           className={
                             hasChanged
-                              ? errors.tel_demandeur
+                              ? errors.carte_identite
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          name="tel_demandeur"
+                          name="carte_identite"
                           type="text"
                         />
-                        {errors.tel_demandeur && touched.tel_demandeur ? (
-                          <div>{errors.tel_demandeur}</div>
+                        {errors.carte_identite && touched.carte_identite ? (
+                          <div>{errors.carte_identite}</div>
+                        ) : null}
+                      </div>
+
+                      <div className="form-group">
+                        <label htmlFor="Formation">Client:</label>
+
+                        <Field
+                          component="select"
+                          className={
+                            hasChanged
+                              ? errors.ClientCodeClient
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          className="form-control"
+                          name="ClientCodeClient"
+                          multiple={false}
+                        >
+                          <option value="">---Choose Client----</option>
+                          {GetClients.data &&
+                            GetClients.data.allClients.map((client) => {
+                              return (
+                                <option
+                                  key={client.code_client}
+                                  value={client.code_client}
+                                >
+                                  {client.nom_client}
+                                </option>
+                              );
+                            })}
+                        </Field>
+                        {errors.FormationCIFormation &&
+                        touched.FormationCIFormation ? (
+                          <div className="text-danger">
+                            {errors.FormationCIFormation}
+                          </div>
                         ) : null}
                       </div>
 
@@ -169,14 +194,14 @@ function AddDemandeur(props) {
                           className="btn btn-secondary"
                           data-dismiss="modal"
                         >
-                          Close
+                          Fermer
                         </button>
                         <button
                           type="submit"
                           disabled={isSubmitting}
                           className="btn btn-primary"
                         >
-                          Add Demandeur
+                          Ajouter Participant
                         </button>
                       </div>
                     </form>
@@ -190,4 +215,4 @@ function AddDemandeur(props) {
     </div>
   );
 }
-export default AddDemandeur;
+export default AddParticipant;

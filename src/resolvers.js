@@ -4,6 +4,14 @@ const { Kind } = require('graphql/language');
 const { ApolloError } = require('apollo-server-core');
 const { createWriteStream } = require('fs');
 
+const storeUpload = ({ createReadStream, filename }) =>
+  new Promise((resolver, reject) =>
+    createReadStream
+      .pipe(createWriteStream(`./client/upload/${filename}`))
+      .on('finish', () => resolver())
+      .on('error', reject)
+  );
+
 const resolvers = {
   Date: new GraphQLScalarType({
     name: 'Date',
@@ -23,6 +31,7 @@ const resolvers = {
   }),
 
   Query: {
+    uploads: (parent, args) => {},
     async client(root, { code_client }, { models }) {
       return models.Client.findByPk(code_client);
     },
@@ -66,7 +75,6 @@ const resolvers = {
     async formateur(root, { code_formateur }, { models }) {
       return models.Formateur.findByPk(code_formateur);
     },
-
     async allFormateurs(root, args, { models }) {
       return models.Formateur.findAll();
     },
@@ -121,6 +129,11 @@ const resolvers = {
   },
 
   Mutation: {
+    singleUpload: async (parent, args) => {
+      const { createReadStream, filename } = await args.file;
+      await storeUpload({ createReadStream, filename });
+      return true;
+    },
     async createClient(root, args, { models }) {
       //looking if you add both cin-p and mat_fisc_sc
       if (args.personne & args.societe)
@@ -208,7 +221,6 @@ const resolvers = {
       });
       return deleteClient;
     },
-
     async updateClient(root, args, { models }) {
       //looking after person
       const findperson =
@@ -244,14 +256,12 @@ const resolvers = {
       );
       return updateClient;
     },
-
     async createPersonne(root, { cin_p, ClientCodeClient }, { models }) {
       return models.Personne.create({
         cin_p,
         ClientCodeClient,
       });
     },
-
     async createSociete(
       root,
       { mat_fisc_sc, responsable, ClientCodeClient },
@@ -417,7 +427,6 @@ const resolvers = {
       );
       return updateFormateur;
     },
-
     async deleteFormateur(root, args, { models }) {
       const deleteFormateur = await models.Formateur.destroy({
         where: { code_formateur: args.code_formateur },
@@ -558,7 +567,6 @@ const resolvers = {
       });
       return addSession;
     },
-
     async createSupport(root, { titre_support, date_support }, { models }) {
       return models.Support.create({
         titre_support,
@@ -571,7 +579,6 @@ const resolvers = {
       });
       return deleteSupport;
     },
-
     async createTheme(root, args, { models }) {
       const findThemaByID =
         args.code_theme &&
@@ -671,7 +678,6 @@ const resolvers = {
       return dateprevue.getDemandeFormation();
     },
   },
-
   Fichier: {
     async support(fichier) {
       return fichier.getSupport();

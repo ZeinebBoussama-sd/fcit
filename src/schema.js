@@ -212,6 +212,7 @@ const typeDefs = gql`
     support: Support
   }
   type Query {
+    uploads: [File]
     client(code_client: ID, nom_client: String): Client
     allClients: [Client!]!
     demandeur(code_demandeur: ID, nom_demandeur: String): Demandeur
@@ -292,6 +293,8 @@ const typeDefs = gql`
     support: Support
   }
   type Mutation {
+    singleUpload(file: Upload!): File!
+
     createClient(
       code_client: String!
       pays_client: String!

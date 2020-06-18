@@ -7,6 +7,8 @@ import AddFormateur from './AddFormateur';
 import { DELETE_FORMATEUR } from '../GraphQl/Mutation';
 import { Link } from 'react-router-dom';
 import WarningModal from '../component/WarningModal';
+import Tes from './Tes';
+
 function Formateur() {
   const { loading, error, data, refetch } = useQuery(GET_FORMATEURS);
   const [deleteFormateur, res] = useMutation(DELETE_FORMATEUR);
@@ -27,6 +29,7 @@ function Formateur() {
   };
   return (
     <div className='mt-11'>
+      <Tes />
       <AddFormateur refetch={refetch} />
       <div className='table-responsive'>
         <table className='mt-2 table table-hover table-fixed'>

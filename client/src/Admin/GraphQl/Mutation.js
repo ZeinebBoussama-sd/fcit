@@ -1,5 +1,12 @@
 import { gql } from 'apollo-boost';
 
+export const UPLOAD_FILE = gql`
+  mutation uploadFiles($file: Upload!) {
+    singleUpload(file: $file) {
+      filename
+    }
+  }
+`;
 export const ADD_CLIENT = gql`
   mutation create_client(
     $code_client: String!

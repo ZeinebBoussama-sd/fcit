@@ -17,44 +17,45 @@ function AddFormateur(props) {
   return (
     <div>
       <button
-        type='button'
-        className='btn btn-primary'
-        data-toggle='modal'
-        data-target='#exampleModal'
-        data-whatever='@getbootstrap'
+        type="button"
+        className="btn btn-primary"
+        data-toggle="modal"
+        data-target="#exampleModal"
+        data-whatever="@getbootstrap"
       >
         Ajouter Formateur
       </button>
 
       <div
-        className='modal fade'
-        id='exampleModal'
-        tabIndex='-1'
-        role='dialog'
-        aria-labelledby='exampleModalLabel'
-        aria-hidden='true'
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
       >
-        <div className='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
-          <div className='modal-content'>
-            <div className='modal-header'>
-              <h5 className='modal-title' id='exampleModalLabel'>
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
                 Ajouter Formateur
               </h5>
               <button
-                type='button'
-                className='close'
-                data-dismiss='modal'
-                aria-label='Close'
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
               >
-                <span aria-hidden='true'>&times;</span>
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className='modal-body'>
+            <div className="modal-body">
               <Formik
+                enableReinitialize
                 initialValues={{
-                  code_formateur: '',
-                  nom_f: '',
-                  prenom_f: '',
+                  code_formateur: "",
+                  nom_f: "",
+                  prenom_f: "",
                   classe_f: undefined,
                   fonction_f: undefined,
                   cv_f: null,
@@ -78,7 +79,6 @@ function AddFormateur(props) {
                 onSubmit={async (values) => {
                   try {
                     debugger;
-                    //  new Promise((resolve) => setTimeout(resolve, 500));
                     await AddFormateur({
                       variables: {
                         code_formateur: values.code_formateur,
@@ -100,7 +100,7 @@ function AddFormateur(props) {
                         visa_f: values.visa_f,
                         val_visa: values.val_visa,
                         tarif_f: values.tarif_f,
-                        RIB_f: values.RIB_f,
+                        RIB_f: values.RIB_fs,
                         copie_RIB: values.copie_RIB,
                       },
                     });
@@ -128,91 +128,104 @@ function AddFormateur(props) {
 
                   return (
                     <form onSubmit={handleSubmit}>
-                      <div className='form-group'>
-                        <label htmlFor='Code' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Code" className="col-form-label">
                           Code Formateur
                         </label>
-                        <input
-                          required
-                          type='text'
+
+                        <Field
                           className={
                             hasChanged
-                              ? errors.code_client
-                                ? 'form-control is-invalid'
-                                : 'form-control is-valid'
-                              : 'form-control text-input'
+                              ? errors.code_formateur
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
                           }
-                          id='code_formateur'
-                          onChange={handleChange}
-                          value={values.code_formateur}
+                          name="code_formateur"
+                          type="text"
                         />
-                        {errors.code_client && touched.code_client ? (
-                          <div>{errors.code_client}</div>
+                        {errors.code_formateur && touched.code_formateur ? (
+                          <div>{errors.code_formateur}</div>
                         ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Nom' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Nom" className="col-form-label">
                           Nom
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='nom_f'
-                          onChange={handleChange}
-                          value={values.nom_f}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.nom_f
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="nom_f"
+                          type="text"
                         />
+                        {errors.nom_f && touched.nom_f ? (
+                          <div>{errors.nom_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Prenom' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Prenom" className="col-form-label">
                           Prenom
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='prenom_f'
-                          onChange={handleChange}
-                          value={values.prenom_f}
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.prenom_f
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="prenom_f"
+                          type="text"
                         />
+                        {errors.prenom_f && touched.prenom_f ? (
+                          <div>{errors.prenom_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Classe' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Classe" className="col-form-label">
                           Classe
                         </label>
-                        <select
-                          className='form-control'
-                          id='classe_f'
+                        <Field
+                          component="select"
+                          className="form-control"
+                          name="classe_f"
                           onChange={handleChange}
                           value={values.classe_f}
                         >
-                          <option value=''>----choose Classe----</option>
+                          <option value="">----choose Classe----</option>
                           <option>A</option>
                           <option>B</option>
                           <option>C</option>
                           <option>D</option>
-                        </select>
+                        </Field>
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Fonction ' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Fonction " className="col-form-label">
                           Fonction
                         </label>
-                        <select
-                          className='form-control'
-                          id='fonction_f'
+                        <Field
+                          component="select"
+                          className="form-control"
+                          name="fonction_f"
                           onChange={handleChange}
                           value={values.fonction_f}
                         >
-                          <option value=''>----choose Fonction----</option>
+                          <option value="">----choose Fonction----</option>
                           <option>Enseignant</option>
                           <option>Enseignant Universitaire</option>
                           <option>Ingénieur</option>
                           <option>Technicien</option>
                           <option>Autres</option>
-                        </select>
+                        </Field>
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='CV' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="CV" className="col-form-label">
                           CV
                         </label>
                         <div className='input-group mb-3'>
@@ -255,202 +268,342 @@ function AddFormateur(props) {
                             </label>
                           </div> */}
                         </div>
+                        <Field
+                          type="file"
+                          className={
+                            hasChanged
+                              ? errors.cv_f
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="cv_f"
+                        />
+                        {errors.cv_f && touched.cv_f ? (
+                          <div className="text-danger">{errors.cv_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Email' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Email" className="col-form-label">
                           Email
                         </label>
-                        <input
-                          required
-                          type='text'
-                          className='form-control'
-                          id='email_f'
-                          onChange={handleChange}
-                          value={values.email_f}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.email_f
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="email_f"
+                          type="email"
                         />
+                        {errors.email_f && touched.email_f ? (
+                          <div>{errors.email_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Tel' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Tel" className="col-form-label">
                           Tel
                         </label>
-                        <input
-                          type='tel'
-                          className='form-control'
-                          id='tel_f'
-                          onChange={handleChange}
-                          value={values.tel_f}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.tel_f
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="tel_f"
+                          type="text"
                         />
+                        {errors.tel_f && touched.tel_f ? (
+                          <div>{errors.tel_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='NSS' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="NSS" className="col-form-label">
                           NSS
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='NSS'
-                          onChange={handleChange}
-                          value={values.NSS}
+                        <Field
+                          className="form-control"
+                          name="NSS"
+                          type="number"
                         />
+                        {errors.NSS && touched.NSS ? (
+                          <div>{errors.NSS}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Salaire' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Salaire" className="col-form-label">
                           Salaire
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='salaire_f'
-                          onChange={handleChange}
-                          value={values.salaire_f}
+
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.salaire_f
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="salaire_f"
+                          type="number"
                         />
+                        {errors.salaire_f && touched.salaire_f ? (
+                          <div>{errors.salaire_f}</div>
+                        ) : null}
                       </div>
 
-                      <div className='form-group'>
-                        <label htmlFor='Adresse' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Adresse" className="col-form-label">
                           Adresse
                         </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='adr_f'
-                          onChange={handleChange}
-                          value={values.adr_f}
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.adr_f
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="adr_f"
+                          type="text"
                         />
+                        {errors.adr_f && touched.adr_f ? (
+                          <div>{errors.adr_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='date_dajout' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="date_dajout" className="col-form-label">
                           Date dajout
                         </label>
-                        <input
-                          type='date'
-                          className='form-control'
-                          id='date_dajout'
-                          onChange={handleChange}
-                          value={values.date_dajout}
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.date_dajout
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="date_dajout"
+                          type="date"
                         />
+                        {errors.date_dajout && touched.date_dajout ? (
+                          <div>{errors.date_dajout}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='cin-f' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="cin-f" className="col-form-label">
                           Cin f
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='cin_f'
-                          onChange={handleChange}
-                          value={values.cin_f}
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.cin_f
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="cin_f"
+                          type="number"
                         />
+                        {errors.cin_f && touched.cin_f ? (
+                          <div>{errors.cin_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='copie_cin' className='col-form-label'>
-                          copie_cin
+                      <div className="form-group">
+                        <label htmlFor="copie_cin" className="col-form-label">
+                          copie cin
                         </label>
-                        <input
-                          type='file'
-                          className='form-control-file'
-                          id='copie_cin'
-                          onChange={handleChange}
-                          value={values.copie_cin}
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.copie_cin
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="copie_cin"
+                          type="file"
                         />
+                        {errors.copie_cin && touched.copie_cin ? (
+                          <div>{errors.copie_cin}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='passeport_f' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="passeport_f" className="col-form-label">
                           passeport_f
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='passeport_f'
-                          onChange={handleChange}
-                          value={values.passeport_f}
+
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.passeport_f
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="passeport_f"
+                          type="text"
                         />
+                        {errors.passeport_f && touched.passeport_f ? (
+                          <div>{errors.passeport_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
+                      <div className="form-group">
                         <label
-                          htmlFor='copie_passeport'
-                          className='col-form-label'
+                          htmlFor="copie_passeport"
+                          className="col-form-label"
                         >
                           copie_passeport
                         </label>
-                        <input
-                          type='file'
-                          className='form-control-file'
-                          id='copie_passeport'
-                          onChange={handleChange}
-                          value={values.copie_passeport}
+
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.copie_passeport
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="copie_passeport"
+                          type="file"
                         />
+                        {errors.copie_passeport && touched.copie_passeport ? (
+                          <div>{errors.copie_passeport}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='visa_f' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="visa_f" className="col-form-label">
                           visa_f
                         </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='visa_f'
-                          onChange={handleChange}
-                          value={values.visa_f}
+
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.visa_f
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="visa_f"
+                          type="text"
                         />
+                        {errors.visa_f && touched.visa_f ? (
+                          <div>{errors.visa_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='val_visa' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="val_visa" className="col-form-label">
                           val_visa
                         </label>
-                        <input
-                          type='date'
-                          className='form-control'
-                          id='val_visa'
-                          onChange={handleChange}
-                          value={values.val_visa}
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.val_visa
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="val_visa"
+                          type="date"
                         />
+                        {errors.val_visa && touched.val_visa ? (
+                          <div>{errors.val_visa}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='tarif_f' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="tarif_f" className="col-form-label">
                           tarif_f
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='tarif_f'
-                          onChange={handleChange}
-                          value={values.tarif_f}
+
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.tarif_f
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="tarif_f"
+                          type="number"
                         />
+                        {errors.tarif_f && touched.tarif_f ? (
+                          <div>{errors.tarif_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='RIB_f' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="RIB_f" className="col-form-label">
                           RIB_f
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='RIB_f'
-                          onChange={handleChange}
-                          value={values.RIB_f}
+
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.RIB_f
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="RIB_f"
+                          type="text"
                         />
+                        {errors.RIB_f && touched.RIB_f ? (
+                          <div>{errors.RIB_f}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='copie_RIB' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="copie_RIB" className="col-form-label">
                           copie_RIB
                         </label>
-                        <input
-                          type='file'
-                          className='form-control-file'
-                          id='copie_RIB'
-                          onChange={handleChange}
-                          value={values.copie_RIB}
+
+                        <Field
+                          // className={
+                          //   hasChanged
+                          //     ? errors.copie_RIB
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="copie_RIB"
+                          type="file"
                         />
+                        {errors.copie_RIB && touched.copie_RIB ? (
+                          <div>{errors.copie_RIB}</div>
+                        ) : null}
                       </div>
 
-                      <div className='form-group'>
-                        <label htmlFor='Formation'>Formation:</label>
-                        <select
-                          className='form-control'
-                          onChange={handleChange}
-                          value={values.FormationCIFormation}
-                          id='FormationCIFormation'
+                      <div className="form-group">
+                        <label htmlFor="Formation">Formation:</label>
+
+                        <Field
+                          component="select"
+                          // className={
+                          //   hasChanged
+                          //     ? errors.FormationCIFormation
+                          //       ? "form-control is-invalid"
+                          //       : "form-control is-valid"
+                          //     : "form-control text-input"
+                          // }
+                          className="form-control"
+                          name="FormationCIFormation"
+                          multiple={false}
                         >
-                          <option value=''>---Choose Formation----</option>
+                          <option value="">---Choose Formation----</option>
                           {GetFormations.data &&
                             GetFormations.data.allFormations.map(
                               (formation) => {
@@ -464,21 +617,27 @@ function AddFormateur(props) {
                                 );
                               }
                             )}
-                        </select>
+                        </Field>
+                        {errors.FormationCIFormation &&
+                        touched.FormationCIFormation ? (
+                          <div className="text-danger">
+                            {errors.FormationCIFormation}
+                          </div>
+                        ) : null}
                       </div>
 
-                      <div className='modal-footer'>
+                      <div className="modal-footer">
                         <button
-                          type='button'
-                          className='btn btn-secondary'
-                          data-dismiss='modal'
+                          type="button"
+                          className="btn btn-secondary"
+                          data-dismiss="modal"
                         >
                           Fermer
                         </button>
                         <button
-                          type='submit'
+                          type="submit"
                           disabled={isSubmitting}
-                          className='btn btn-primary'
+                          className="btn btn-primary"
                         >
                           Ajouter Formateur
                         </button>

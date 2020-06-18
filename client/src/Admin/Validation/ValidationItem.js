@@ -1,30 +1,28 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-import { GET_DEMANDE_FORMATION } from "../GraphQl/Query";
+import { GET_VALIDATION } from "../GraphQl/Query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import Item from "./Item";
-import EditDemandeFormation from "./EditDemandeFormation";
-function DemandeFormationItem() {
+import EditValidation from "./EditValidation";
+function ValidationItem() {
   let { id } = useParams();
 
-  const { loading, error, data, refetch } = useQuery(GET_DEMANDE_FORMATION, {
-    variables: { code_demande: id },
+  const { loading, error, data, refetch } = useQuery(GET_VALIDATION, {
+    variables: { code_val: id },
   });
   const [edit, setEdit] = useState(false);
-  const demandeformation = data ? data.demandeformation : null;
+  const validation = data ? data.validation : null;
   const action = () => {
     edit ? setEdit(false) : setEdit(true);
   };
-  console.log(demandeformation);
+  console.log(validation);
+
   return (
     <div className=" mt-11 ">
       <div className="card bg-light border-light">
         <div className="card-headert row">
-          <h5 className="ml-2 col-11">
-            About: {demandeformation && demandeformation.code_demande}
-          </h5>
           <span className="col-0 text-right">
             <FontAwesomeIcon
               icon={faCog}
@@ -36,18 +34,19 @@ function DemandeFormationItem() {
           </span>
         </div>
         {!edit ? (
-          <Item demandeformation={demandeformation} />
+          <Item validation={validation} />
         ) : (
-          <EditDemandeFormation
+          <EditValidation
             className=""
             id="navbarSupportedContent"
-            demandeformation={demandeformation}
+            validation={validation}
             refetch={refetch}
             setEdit={setEdit}
+            id={id}
           />
         )}
       </div>
     </div>
   );
 }
-export default DemandeFormationItem;
+export default ValidationItem;

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik } from "formik";
-import { GetTheme } from "../GraphQl/Query";
+import { GET_THEME } from "../GraphQl/Query";
 import { UPDATE_FORMATION } from "../GraphQl/Mutation";
 
 function EditFormation(props) {
   const [updateFormation] = useMutation(UPDATE_FORMATION);
-  const { loading, error, data } = useQuery(GetTheme);
+  const { loading, error, data } = useQuery(GET_THEME);
   const formation = props.formation ? props.formation : null;
   const id = props.id ? props.id : null;
   console.log(data);

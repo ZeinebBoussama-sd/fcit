@@ -1,87 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { useMutation, useQuery } from '@apollo/react-hooks';
-import { Formik } from 'formik';
-import { GetTheme } from '../GraphQl/Query';
-import { ADD_FORMATION } from '../GraphQl/Mutation';
-import * as Yup from 'yup';
-import deepEqual from 'lodash.isequal';
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { Formik, Field } from "formik";
+import { GET_THEME } from "../GraphQl/Query";
+import { ADD_FORMATION } from "../GraphQl/Mutation";
+import { FormationSchema } from "../../Utils/Validation";
+import deepEqual from "lodash.isequal";
 
 function AddFormation(props) {
   const [active, setactive] = useState(false);
 
   const [addFormation] = useMutation(ADD_FORMATION);
-  const { loading, error, data } = useQuery(GetTheme);
-
-  const ValidationSchema = Yup.object().shape({
-    code_client: Yup.string()
-      .max(5, 'Too Long Max 5char!')
-      .required('Code is Required'),
-    nom_client: Yup.string()
-      .min(3, 'Too Short!')
-      .max(30, 'Too Long!')
-      .required('Required'),
-    email_client: Yup.string()
-      .email('Invalid email')
-      .required('Email is required!'),
-    tel_client: Yup.string()
-      .min(8, 'Too Short!')
-      .max(20, 'Too Long!')
-      .required('Required'),
-    adr_client: Yup.string()
-      .min(10, 'Too Short!')
-      .max(30, 'Too Long!')
-      .required('Required'),
-    pays_client: Yup.string().required('Required'),
-    cin_p: Yup.string().min(8, 'Too Short!').max(8, 'Too Long!'),
-    //   .required('Required'),
-    mat_fisc_sc: Yup.string().min(15, 'Too Short!').max(15, 'Too Long!'),
-    //   .required('Required'),
-  });
+  const { loading, error, data } = useQuery(GET_THEME);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
   return (
     <div>
       <button
-        type='button'
-        className='btn btn-primary'
-        data-toggle='modal'
-        data-target='#exampleModal'
-        data-whatever='@getbootstrap'
+        type="button"
+        className="btn btn-primary"
+        data-toggle="modal"
+        data-target="#exampleModal"
+        data-whatever="@getbootstrap"
         onClick={() => setactive(true)}
       >
         Add Formation
       </button>
 
       <div
-        className={`modal fade ${active ? 'show' : ''}`}
-        id='exampleModal'
-        tabIndex='-1'
-        role='dialog'
-        aria-modal={`${active ? 'true' : 'false'}`}
+        className={`modal fade ${active ? "show" : ""}`}
+        id="exampleModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-modal={`${active ? "true" : "false"}`}
         //aria-labelledby='exampleModalLabel'
-        aria-hidden={`${active ? 'false' : 'true'}`}
+        aria-hidden={`${active ? "false" : "true"}`}
       >
-        <div className='modal-dialog modal-dialog-centered modal-dialog-scrollable'>
-          <div className='modal-content'>
-            <div className='modal-header'>
-              <h5 className='modal-title' id='exampleModalLabel'>
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
                 Add Formation
               </h5>
               <button
-                type='button'
-                className='close'
-                data-dismiss='modal'
-                aria-label='Close'
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
               >
-                <span aria-hidden='true'>&times;</span>
+                <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className='modal-body'>
+            <div className="modal-body">
               <Formik
+                enableReinitialize
                 initialValues={{
-                  code_formation: '',
-                  intitule: '',
+                  code_formation: "",
+                  intitule: "",
                   duree_formation: undefined,
                   nbre_min_part: undefined,
                   description_formation: undefined,
@@ -89,9 +64,9 @@ function AddFormation(props) {
                   prix_formation: undefined,
                   prerequis: undefined,
                   participant: undefined,
-                  ThemeCodeTheme: '',
+                  ThemeCodeTheme: "",
                 }}
-                validationSchema={ValidationSchema}
+                validationSchema={FormationSchema}
                 onSubmit={async (values) => {
                   try {
                     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -112,7 +87,7 @@ function AddFormation(props) {
                     alert(JSON.stringify(values, null, 2));
                     setactive(false);
                   } catch (e) {
-                    console.log('e', e);
+                    console.log("e", e);
                   }
                   props.refetch();
                 }}
@@ -129,135 +104,212 @@ function AddFormation(props) {
                     isSubmitting,
                     handleChange,
                     handleBlur,
+                    initialValues,
                     handleSubmit,
                     handleReset,
                   } = props;
+                  const hasChanged = !deepEqual(values, initialValues);
+
                   return (
                     <form onSubmit={handleSubmit}>
-                      <div className='form-group'>
+                      <div className="form-group">
                         <label
-                          htmlFor='code_formation'
-                          className='col-form-label'
+                          htmlFor="code_formation"
+                          className="col-form-label"
                         >
                           Code formation:
                         </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='code_formation'
-                          onChange={handleChange}
-                          value={values.code_formation}
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.code_formation
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="code_formation"
+                          type="text"
                         />
+                        {errors.code_formation && touched.code_formation ? (
+                          <div>{errors.code_formation}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='intitulee' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="intitule" className="col-form-label">
                           Intitule:
                         </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='intitule'
-                          onChange={handleChange}
-                          value={values.intitule}
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.intitule
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="intitule"
+                          type="text"
                         />
+                        {errors.intitule && touched.intitule ? (
+                          <div>{errors.intitule}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Durée' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Durée" className="col-form-label">
                           Durée:
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='duree_formation'
-                          onChange={handleChange}
-                          value={values.duree_formation || ''}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.duree_formation
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="duree_formation"
+                          type="number"
                         />
+                        {errors.duree_formation && touched.duree_formation ? (
+                          <div>{errors.duree_formation}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='N.Min.Part' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="N_Min_Part" className="col-form-label">
                           N.Min.Part:
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='nbre_min_part'
-                          onChange={handleChange}
-                          value={values.nbre_min_part || ''}
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.nbre_min_part
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="nbre_min_part"
+                          type="number"
                         />
+                        {errors.nbre_min_part && touched.nbre_min_part ? (
+                          <div>{errors.nbre_min_part}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Description' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Description" className="col-form-label">
                           Description:
                         </label>
-                        <textarea
-                          rows='4'
-                          type='text'
-                          className='form-control'
-                          id='description_formation'
-                          onChange={handleChange}
-                          value={values.description_formation || ''}
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.description_formation
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="description_formation"
+                          component={"textarea"}
+                          type="text"
                         />
+                        {errors.description_formation &&
+                        touched.description_formation ? (
+                          <div>{errors.description_formation}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Catagorie' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Catagorie" className="col-form-label">
                           Catagorie:
                         </label>
-                        <select
-                          className='form-control'
-                          id='catagorie_formation'
+
+                        <Field
+                          component="select"
+                          className={
+                            hasChanged
+                              ? errors.catagorie_formation
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="catagorie_formation"
                           onChange={handleChange}
-                          value={values.catagorie_formation || ''}
+                          value={values.catagorie_formation}
                         >
-                          <option value=''>---choose Catagorie----</option>
+                          <option value="">---Choose Catégorie----</option>
                           <option>Best</option>
                           <option>Classique</option>
-                        </select>
+                        </Field>
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Prix' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Prix" className="col-form-label">
                           Prix:
                         </label>
-                        <input
-                          type='number'
-                          className='form-control'
-                          id='prix_formation'
-                          onChange={handleChange}
-                          value={values.prix_formation || ''}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.prix_formation
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="prix_formation"
+                          type="number"
                         />
+                        {errors.prix_formation && touched.prix_formation ? (
+                          <div>{errors.prix_formation}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Prerequis' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Prerequis" className="col-form-label">
                           Prerequis:
                         </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='prerequis'
-                          onChange={handleChange}
-                          value={values.prerequis || ''}
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.prerequis
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="prerequis"
+                          type="text"
                         />
+                        {errors.prerequis && touched.prerequis ? (
+                          <div>{errors.prerequis}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Participant' className='col-form-label'>
+                      <div className="form-group">
+                        <label htmlFor="Participant" className="col-form-label">
                           Participant:
                         </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          id='participant'
-                          onChange={handleChange}
-                          value={values.participant || ''}
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.participant
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="participant"
+                          type="text"
                         />
+                        {errors.participant && touched.participant ? (
+                          <div>{errors.participant}</div>
+                        ) : null}
                       </div>
-                      <div className='form-group'>
-                        <label htmlFor='Theme'>Theme</label>
-                        <select
-                          className='form-control'
-                          onChange={handleChange}
-                          value={values.ThemeCodeTheme}
-                          id='ThemeCodeTheme'
+                      <div className="form-group">
+                        <label htmlFor="Theme">Theme</label>
+                        <Field
+                          component="select"
+                          className={
+                            hasChanged
+                              ? errors.ThemeCodeTheme
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="ThemeCodeTheme"
+                          multiple={false}
                         >
-                          <option value=''>---choose theme----</option>
+                          <option value="">---choose theme----</option>
                           {data.allThemes.map((theme) => {
                             return (
                               <option
@@ -268,20 +320,20 @@ function AddFormation(props) {
                               </option>
                             );
                           })}
-                        </select>
+                        </Field>
                       </div>
-                      <div className='modal-footer'>
+                      <div className="modal-footer">
                         <button
-                          type='button'
-                          className='btn btn-secondary'
-                          data-dismiss='modal'
+                          type="button"
+                          className="btn btn-secondary"
+                          data-dismiss="modal"
                         >
                           Close
                         </button>
                         <button
-                          type='submit'
+                          type="submit"
                           disabled={isSubmitting}
-                          className='btn btn-primary'
+                          className="btn btn-primary"
                         >
                           Add formation
                         </button>

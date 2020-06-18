@@ -31,54 +31,54 @@ function Formateur() {
     <div className='mt-11'>
       <Tes />
       <AddFormateur refetch={refetch} />
-      <div className='table-responsive'>
-        <table className='mt-2 table table-hover table-fixed'>
+      <div className="table-responsive">
+        <table className="mt-2 table table-hover table-fixed">
           <thead>
             <tr>
-              <th scope='col' className='col-1'>
+              <th scope="col" className="col-1">
                 code
               </th>
-              <th scope='col' className='col-2'>
+              <th scope="col" className="col-2">
                 Nom
               </th>
-              <th scope='col' className='col-2'>
+              <th scope="col" className="col-2">
                 Prenom
               </th>
-              <th scope='col' className='col-1'>
+              <th scope="col" className="col-1">
                 Classe
               </th>
-              <th scope='col' className='col-3'>
+              <th scope="col" className="col-3">
                 Email
               </th>
-              <th scope='col' className='col-1'>
+              <th scope="col" className="col-1">
                 Tel
               </th>
-              <th scope='col' className='col-1'>
+              <th scope="col" className="col-1">
                 Salaire
               </th>
-              <th scope='col' className='col-1'>
+              <th scope="col" className="col-1">
                 Delete
               </th>
             </tr>
           </thead>
-          <tbody className='overflow-auto height-9'>
+          <tbody className="overflow-auto height-9">
             {data.allFormateurs.map((formateur, idx) => (
               <tr key={idx}>
-                <th scope='row' className='col-1'>
+                <th scope="row" className="col-1">
                   {formateur.code_formateur}
                 </th>
 
                 <Link to={`/formateur/${formateur.code_formateur}`}>
-                  <td className='col-2'>{formateur.nom_f}</td>
+                  <td className="col-2">{formateur.nom_f}</td>
                 </Link>
-                <td className='col-2'>{formateur.prenom_f}</td>
-                <td className='col-1'>{formateur.classe_f}</td>
-                <td className='col-3'>{formateur.email_f}</td>
-                <td className='col-1'>{formateur.tel_f}</td>
-                <td className='col-1'>
-                  {formateur.salaire_f ? formateur.salaire_f : '--'}
+                <td className="col-2">{formateur.prenom_f}</td>
+                <td className="col-1">{formateur.classe_f}</td>
+                <td className="col-3">{formateur.email_f}</td>
+                <td className="col-1">{formateur.tel_f}</td>
+                <td className="col-1">
+                  {formateur.salaire_f ? formateur.salaire_f : "--"}
                 </td>
-                <td className='col-1'>
+                <td className="col-1">
                   <center>
                     <WarningModal dlt={dlt} code={formateur.code_formateur} />
                   </center>

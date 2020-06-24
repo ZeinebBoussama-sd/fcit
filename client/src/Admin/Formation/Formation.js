@@ -18,7 +18,7 @@ function Formation() {
     try {
       await deleteFormation({
         variables: {
-          CI_formation: values,
+          CI_formation: parseInt(values),
         },
       });
     } catch (error) {
@@ -26,18 +26,7 @@ function Formation() {
     }
     refetch();
   };
-  const view = async (values) => {
-    try {
-      await Item({
-        variable: {
-          CI_formation: values,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    refetch();
-  };
+
   return (
     <div className="mt-11">
       <AddFormation refetch={refetch} />
@@ -64,6 +53,12 @@ function Formation() {
               <th scope="col" className="col-2">
                 Theme
               </th>
+              <th scope="col" className="col-1">
+                #
+              </th>
+              <th scope="col" className="col-1 center">
+                #
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -85,12 +80,13 @@ function Formation() {
 
                   <td className="col-1">
                     <center>
-                      <FontAwesomeIcon
-                        icon={faInfoCircle}
-                        className="mr-1 pointer"
-                        color="yellow"
-                        onClick={Item}
-                      />
+                      <Link to={`/formation/${formation.CI_formation}`}>
+                        <FontAwesomeIcon
+                          icon={faInfoCircle}
+                          className="mr-1 pointer"
+                          color="yellow"
+                        />
+                      </Link>
                     </center>
                   </td>
                   <td className="col-1">

@@ -41,7 +41,7 @@ function DemandeurItem() {
         ) : (
           <EditDemandeur
             className=""
-            id="navbarSupportedContent"
+            id={id}
             demandeur={demandeur}
             refetch={refetch}
             setEdit={setEdit}

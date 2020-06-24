@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import WarningModal from "../component/WarningModal";
 import { DELETE_DEMANDE } from "../GraphQl/Mutation";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
 function DemandeFormation() {
   const { loading, error, data, refetch } = useQuery(GET_DEMANDE_FORMATIONS);
   const [deletedemande, res] = useMutation(DELETE_DEMANDE);
@@ -16,7 +19,7 @@ function DemandeFormation() {
     try {
       await deletedemande({
         variables: {
-          code_demande: values,
+          code_demande: parseInt(values),
         },
       });
     } catch (error) {
@@ -68,11 +71,24 @@ function DemandeFormation() {
                 </td>
                 <td className="col-2">{demandeformation.formation.intitule}</td>
                 <td className="col-1">{demandeformation.type_demande}</td>
-                <td className="col-2">{demandeformation.mode_demande}</td>
+                <td className="col-1">{demandeformation.mode_demande}</td>
                 <td className="col-1">
                   {demandeformation.prix_prevu
                     ? demandeformation.prix_prevu
                     : "--"}
+                </td>
+                <td className="col-1">
+                  <center>
+                    <Link
+                      to={`/demandeformation/${demandeformation.code_demande}`}
+                    >
+                      <FontAwesomeIcon
+                        icon={faInfoCircle}
+                        className="mr-1 pointer"
+                        color="yellow"
+                      />
+                    </Link>
+                  </center>
                 </td>
                 <td className="col-1">
                   <center>

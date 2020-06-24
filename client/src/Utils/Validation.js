@@ -88,7 +88,7 @@ export const IngenieurPedagogiqueSchema = Yup.object().shape({
     .required("Required"),
   salaire_ing: Yup.number()
     .min(3, "Too Short!")
-    .max(30, "Too Long!")
+    .max(10000, "Too Long!")
     .required("Required"),
   specialite_ing: Yup.string().required("Required"),
   adr_ing: Yup.string().required("Required"),
@@ -140,9 +140,9 @@ export const DemandeSchema = Yup.object().shape({
     .min(2, "Too Short!")
     .max(30, "Too Long!")
     .required("Required"),
-  hr_j_prev: Yup.string()
-    .min(2, "Too Short!")
-    .max(30, "Too Long!")
+  hr_j_prev: Yup.number()
+    .min(1, "Too Short!")
+    .max(24, "Too Long!")
     .required("Required"),
   ClientCodeClient: Yup.string()
     .min(1, "Too Short!")
@@ -219,4 +219,45 @@ export const FichierSchema = Yup.object().shape({
     .max(10, "Too Long!")
     .required("Required"),
   SupportCodeSupport: Yup.number().required("Required"),
+});
+export const ValidationSchema = Yup.object().shape({
+  date_val: Yup.date().required("Required"),
+  decision_r: Yup.boolean().required("Required"),
+  decision_f: Yup.boolean().required("Required"),
+  remarque: Yup.string(),
+  IngenieurPedagogiqueCodeIP: Yup.number().required("Required"),
+  FormateurCodeFormateur: Yup.string().required("Required"),
+  SupportCodeSupport: Yup.number().required("Required"),
+});
+export const ParticipantSchema = Yup.object().shape({
+  nom_participant: Yup.string().required("Required"),
+  prenom_participant: Yup.string().required("Required"),
+  carte_identite: Yup.string()
+    .min(8, "Too Short!")
+    .max(8, "Too Long!")
+    .required("Required"),
+  ClientCodeClient: Yup.string().required("Required"),
+});
+export const MotCleSchema = Yup.object().shape({
+  motcle: Yup.string()
+    .min(1, "Too Short!")
+    .max(10, "Too Long!")
+    .required("Required"),
+
+  FormationCIFormation: Yup.string().required("Required"),
+});
+export const MetierSchema = Yup.object().shape({
+  code_metier: Yup.string()
+    .min(1, "Too Short!")
+    .max(5, "Too Long!")
+    .required("Required"),
+  intitule_metier: Yup.string()
+    .min(1, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  FormationCIFormation: Yup.string().required("Required"),
+});
+export const DatePrevueSchema = Yup.object().shape({
+  date_prev: Yup.date().required("Required"),
+  DemandeFormationCodeDemande: Yup.number().required("Required"),
 });

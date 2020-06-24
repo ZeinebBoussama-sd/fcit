@@ -5,38 +5,43 @@ import { UPDATE_PARTICIPANT } from "../GraphQl/Mutation";
 import { GET_CLIENTS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
 
-import { PartcipantSchema } from "../../Utils/Validation";
+import { ParticipantSchema } from "../../Utils/Validation";
 
 function EditParticipant(props) {
   const GetClients = useQuery(GET_CLIENTS);
   const [updateParticipant, res] = useMutation(UPDATE_PARTICIPANT);
   const participant = props.participant ? props.participant : null;
+
+  const close = () => {
+    props.setEdit(false);
+  };
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
         enableReinitialize
         initialValues={{
-          code_participant: participant && participant.code_participant,
           nom_participant: participant && participant.nom_participant,
           prenom_participant: participant && participant.prenom_participant,
-          ClientCodeClient: participant && participant.ClientCodeClient,
+          carte_identite: participant && participant.carte_identite,
+          ClientCodeClient: participant && participant.client.code_client,
         }}
-        validationSchema={PartcipantSchema}
+        validationSchema={ParticipantSchema}
         onSubmit={async (values) => {
           try {
             await updateParticipant({
               variables: {
-                code_participant: values.code_participant,
+                code_participant: parseInt(props.id),
                 nom_participant: values.nom_participant,
                 prenom_participant: values.prenom_participant,
+                carte_identite: parseInt(values.carte_identite),
                 ClientCodeClient: values.ClientCodeClient,
               },
             });
           } catch (e) {
             console.error(e.message);
-            props.setEdit(false);
           }
           props.refetch();
+          props.setEdit(false);
         }}
       >
         {(props) => {
@@ -53,7 +58,7 @@ function EditParticipant(props) {
             handleReset,
           } = props;
           const hasChanged = !deepEqual(values, initialValues);
-
+          console.log(props);
           return (
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -145,10 +150,8 @@ function EditParticipant(props) {
                       );
                     })}
                 </Field>
-                {errors.FormationCIFormation && touched.FormationCIFormation ? (
-                  <div className="text-danger">
-                    {errors.FormationCIFormation}
-                  </div>
+                {errors.ClientCodeClient && touched.ClientCodeClient ? (
+                  <div className="text-danger">{errors.ClientCodeClient}</div>
                 ) : null}
               </div>
 
@@ -157,6 +160,9 @@ function EditParticipant(props) {
                   type="button"
                   className="btn btn-secondary"
                   data-dismiss="modal"
+                  onClick={() => {
+                    close();
+                  }}
                 >
                   Fermer
                 </button>
@@ -165,7 +171,7 @@ function EditParticipant(props) {
                   disabled={isSubmitting}
                   className="btn btn-primary"
                 >
-                  Ajouter Partcipant
+                  Update
                 </button>
               </div>
             </form>

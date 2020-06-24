@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     mat_fisc_sc: {
       type: DataTypes.STRING(15),
       allowNull: false,
+      unique: true,
     },
     responsable: {
       type: DataTypes.STRING(15),

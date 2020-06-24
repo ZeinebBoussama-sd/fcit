@@ -50,8 +50,7 @@ function AddFichier(props) {
               <Formik
                 enableReinitialize
                 initialValues={{
-                  code_fichier: undefined,
-                  nom_fichier: undefined,
+                  nom_fichier: "",
                   type_fichier: undefined,
                   taille_max: undefined,
                   url_fichier: undefined,
@@ -63,13 +62,12 @@ function AddFichier(props) {
                   try {
                     await AddFichier({
                       variables: {
-                        code_fichier: values.code_fichierr,
                         nom_fichier: values.nom_fichier,
                         type_fichier: values.type_fichier,
                         taille_max: values.taille_max,
                         url_fichier: values.url_fichier,
                         nature_support: values.nature_support,
-                        SupportCodeSupport: values.SupportCodeSupport,
+                        SupportCodeSupport: parseInt(values.SupportCodeSupport),
                       },
                     });
                   } catch (e) {
@@ -103,16 +101,16 @@ function AddFichier(props) {
                         <Field
                           className={
                             hasChanged
-                              ? errors.titre_fichier
+                              ? errors.nom_fichier
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          name="titre_fichier"
+                          name="nom_fichier"
                           type="text"
                         />
-                        {errors.titre_fichier && touched.titre_fichier ? (
-                          <div>{errors.titre_fichier}</div>
+                        {errors.nom_fichier && touched.nom_fichier ? (
+                          <div>{errors.nom_fichier}</div>
                         ) : null}
                       </div>
                       <div className="form-group">

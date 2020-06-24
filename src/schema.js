@@ -67,7 +67,7 @@ const typeDefs = gql`
     support: Support
   }
   type Metier {
-    code_metier: String!
+    code_metier: Int!
     intitule_metier: String!
     formation: [Formation]
   }
@@ -142,8 +142,8 @@ const typeDefs = gql`
   }
   type Participant {
     code_participant: ID!
-    nom_partcipant: String
-    prenom_partcipant: String
+    nom_participant: String
+    prenom_participant: String
     carte_identite: Int!
     client: Client
     session: [Session]
@@ -156,7 +156,7 @@ const typeDefs = gql`
     participant: Participant
   }
   type Session {
-    CI_sessi: ID!
+    CI_session: ID!
     code_session: String!
     type_sess: String!
     mode_session: String!
@@ -230,13 +230,19 @@ const typeDefs = gql`
     fichier(code_fichier: ID, nom_fichier: String): Fichier
     allFichiers: [Fichier!]!
     motcle(motcle: String): MotCle
+    allMotCles: [MotCle!]!
     ingenieurpedagogique(code_IP: ID, nom_ing: String): IngenieurPedagogique
     allIngenieurPedagogiques: [IngenieurPedagogique!]!
     participant(code_participant: ID, carte_identite: Int): Participant
+    allParticipants: [Participant!]!
     validation(code_val: ID): Validation
-    metier(code_metier: String, intitule_metier: String): Metier
+    allValidations: [Validation!]!
+    metier(code_metier: Int, intitule_metier: String): Metier
+    allMetiers: [Metier!]!
     formateur_formation(id: ID): Formateur_Formation
+    allFormateurs_Formations: [Formateur_Formation!]!
     participer(id: ID): Participer
+    allParticipers: [Participer!]!
   }
   interface MutationResponse {
     code: String
@@ -322,7 +328,29 @@ const typeDefs = gql`
     message: String
     metier: Metier
   }
-
+  type DeleteDatePrevueMutationResponse implements MutationResponse {
+    code: String
+    success: Boolean
+    message: String
+  }
+  type DeletePartciperMutationResponse implements MutationResponse {
+    code: String
+    success: Boolean
+    message: String
+    participer: Participer
+  }
+  type DeleteMotCleMutationResponse implements MutationResponse {
+    code: String
+    success: Boolean
+    message: String
+    motcle: MotCle
+  }
+  type DeleteFormateur_FormationMutationResponse implements MutationResponse {
+    code: String
+    success: Boolean
+    message: String
+    formateur_formation: Formateur_Formation
+  }
   type Mutation {
     createClient(
       code_client: String!
@@ -347,6 +375,7 @@ const typeDefs = gql`
       adr_client: String
       personne: Int
       societe: String
+      responsable: String
     ): DeleteClientMutationResponse!
 
     createPersonne(cin_p: Int!, ClientCodeClient: String): Personne!
@@ -357,8 +386,10 @@ const typeDefs = gql`
       ClientCodeClient: String
     ): Societe!
     createDatePrevue(date_prev: Date!): DatePrevue!
+    deleteDatePrevue(date_prev: Date!): DeleteDatePrevueMutationResponse
+
     createDemandeFormation(
-      code_demande: String
+      code_demande: ID
       date_demande: Date!
       type_demande: String!
       etat_demande: String!
@@ -373,10 +404,10 @@ const typeDefs = gql`
       FormationCIFormation: Int
       DemandeurCodeDemandeur: Int
     ): DemandeFormation!
-    deleteDemandeFormation(code_demande: String!): DeleteDemandeMutationResponse
+    deleteDemande(code_demande: String!): DeleteDemandeMutationResponse
 
-    updateDemande(
-      code_demande: String
+    updateDemandeFormation(
+      code_demande: ID
       date_demande: Date!
       type_demande: String!
       etat_demande: String!
@@ -391,6 +422,7 @@ const typeDefs = gql`
       FormationCIFormation: Int
       DemandeurCodeDemandeur: Int
     ): DeleteDemandeMutationResponse!
+
     createDemandeur(
       code_demandeur: Int
       nom_demandeur: String!
@@ -398,6 +430,7 @@ const typeDefs = gql`
       email_demandeur: String!
       tel_demandeur: String!
     ): Demandeur!
+
     updateDemandeur(
       code_demandeur: Int
       nom_demandeur: String!
@@ -417,6 +450,7 @@ const typeDefs = gql`
       SupportCodeSupport: Int
     ): Fichier!
     updateFichier(
+      code_fichier: Int
       nom_fichier: String!
       type_fichier: String!
       taille_max: Int!
@@ -425,19 +459,28 @@ const typeDefs = gql`
       SupportCodeSupport: Int
     ): DeleteFichierMutationResponse
     deleteFichier(code_fichier: Int!): DeleteFichierMutationResponse
-    createMetier(code_metier: String!, intitule_metier: String!): Metier!
+    createMetier(code_metier: Int!, intitule_metier: String!): Metier!
     updateMetier(
-      code_metier: String
+      code_metier: Int
       intitule_metier: String
     ): DeleteMetierMutationResponse
-    deleteMetier(code: String!): DeleteMetierMutationResponse
+    deleteMetier(code_metier: Int!): DeleteMetierMutationResponse
     createFormateur_Formation(
       validation_f: Boolean!
       date_validation: Date!
       FormationCIFormation: Int
       FormateurCodeFormateur: String
     ): Formateur_Formation!
-
+    updateFormateur_Formation(
+      validation_f: Boolean!
+      date_validation: Date!
+      FormationCIFormation: Int
+      FormateurCodeFormateur: String
+    ): DeleteFormateur_FormationMutationResponse
+    deleteFormateur_Formation(
+      FormationCIFormation: Int
+      FormateurCodeFormateur: String
+    ): DeleteFormateur_FormationMutationResponse
     createFormateur(
       code_formateur: String!
       nom_f: String!
@@ -523,7 +566,7 @@ const typeDefs = gql`
       prenom_ing: String!
       cv_ing: String!
       email_ing: String!
-      tel_ing: Int!
+      tel_ing: String!
       NSS_ing: Int!
       salaire_ing: Float!
       specialite_ing: String!
@@ -536,7 +579,7 @@ const typeDefs = gql`
       prenom_ing: String!
       cv_ing: String!
       email_ing: String!
-      tel_ing: Int!
+      tel_ing: String!
       NSS_ing: Int!
       salaire_ing: Float!
       specialite_ing: String!
@@ -547,16 +590,17 @@ const typeDefs = gql`
       code_IP: Int!
     ): DeleteIngenieurPedagogiqueMutationResponse
     createMotCle(motcle: String!): MotCle!
-
+    deleteMotCle(motcle: String): DeleteMotCleMutationResponse
     createParticipant(
-      nom_partcipant: String!
-      prenom_partcipant: String!
+      nom_participant: String!
+      prenom_participant: String!
       carte_identite: Int!
       ClientCodeClient: String
     ): Participant!
     updateParticipant(
-      nom_partcipant: String!
-      prenom_partcipant: String!
+      code_participant: Int
+      nom_participant: String!
+      prenom_participant: String!
       carte_identite: Int!
       ClientCodeClient: String
     ): DeletePartcipantMutationResponse
@@ -568,7 +612,17 @@ const typeDefs = gql`
       ParticipantCodeParticipant: Int
       SessionCISession: Int
     ): Participer!
-
+    updateParticiper(
+      rapport_eval: String!
+      note_QCM: Float!
+      date_eval: Date!
+      ParticipantCodeParticipant: Int
+      SessionCISession: Int
+    ): DeletePartciperMutationResponse
+    deleteParticiper(
+      ParticipantCodeParticipant: Int
+      SessionCISession: Int
+    ): DeletePartciperMutationResponse
     createSession(
       code_session: String!
       type_sess: String!
@@ -577,7 +631,7 @@ const typeDefs = gql`
       duree_sess: Int!
       hr_deb_j: String!
       hr_fin_j: String!
-      hr_j_session: String!
+      hr_j_session: Int!
       lieu_sess: String!
       prix_session: Float
       honoraire_sess: Float
@@ -598,7 +652,7 @@ const typeDefs = gql`
       duree_sess: Int!
       hr_deb_j: String!
       hr_fin_j: String!
-      hr_j_session: String!
+      hr_j_session: Int!
       lieu_sess: String!
       prix_session: Float
       honoraire_sess: Float
@@ -616,6 +670,7 @@ const typeDefs = gql`
     createSupport(titre_support: String!, date_support: Date!): Support!
     deleteSupport(code_support: Int!): DeleteSupportMutationResponse
     updateSupport(
+      code_support: Int
       titre_support: String!
       date_support: Date!
     ): DeleteSupportMutationResponse
@@ -627,25 +682,25 @@ const typeDefs = gql`
     deleteTheme(code_theme: String!): DeleteThemeMutationResponse
 
     createValidation(
-      code_val: Int!
+      code_val: Int
       date_val: Date!
-      decision_R: Boolean!
-      decision_F: Boolean!
+      decision_r: Boolean!
+      decision_f: Boolean!
       remarque: String!
       FormateurCodeFormateur: String
       IngenieurPedagogiqueCodeIP: Int
-      SupportId: Int
+      SupportCodeSupport: Int
     ): Validation!
 
     updateValidation(
-      code_val: Int!
+      code_val: Int
       date_val: Date!
       decision_R: Boolean!
       decision_F: Boolean!
       remarque: String!
       FormateurCodeFormateur: String
       IngenieurPedagogiqueCodeIP: Int
-      SupportId: Int
+      SupportCodeSupport: Int
     ): DeleteValidationMutationResponse
 
     deleteValidation(code_val: String!): DeleteValidationMutationResponse

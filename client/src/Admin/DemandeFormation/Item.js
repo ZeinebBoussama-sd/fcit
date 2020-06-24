@@ -4,15 +4,11 @@ function Item(props) {
   const data = props.demandeformation ? props.demandeformation : null;
 
   return (
-    <div className="container mt-11 ">
+    <div className="container  ">
       <div className="card container">
-        <div className="row">
+        <div className="row mt-3">
           <b className="col-2">code:</b>
-          <p className="col">
-            {data &&
-              data.demandeformation &&
-              data.demandeformation.code_demande}
-          </p>
+          <p className="col">{data && data.code_demande}</p>
         </div>
         <div className="row">
           <b className="col-2">date_demande:</b>
@@ -40,15 +36,17 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-2">Client:</b>
-          <p className="col">{data && data.ClientCodeClient}</p>
+          <p className="col">{data && data.client.nom_client}</p>
         </div>
         <div className="row">
           <b className="col-2">Formation:</b>
-          <p className="col">{data && data.FormationCIFormation}</p>
+          <p className="col">{data && data.formation.intitule}</p>
         </div>
         <div className="row">
           <b className="col-2">Demandeur:</b>
-          <p className="col">{data && data.DemandeurCodeDemandeur}</p>
+          <p className="col">
+            {data && data.demandeur ? data.demandeur.prenom_demandeur : "--"}
+          </p>
         </div>
       </div>
     </div>

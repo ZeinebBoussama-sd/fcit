@@ -1,11 +1,16 @@
 import React from "react";
 import { useMutation } from "@apollo/react-hooks";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 import { UPDATE_DEMANDEUR } from "../GraphQl/Mutation";
+import deepEqual from "lodash.isequal";
+import { DemandeurSchema } from "../../Utils/Validation";
 
 function EditDemandeur(props) {
   const [updateDemandeur, res] = useMutation(UPDATE_DEMANDEUR);
   const demandeur = props.demandeur ? props.demandeur : null;
+  const close = () => {
+    props.setEdit(false);
+  };
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -15,10 +20,12 @@ function EditDemandeur(props) {
           email_demandeur: demandeur && demandeur.email_demandeur,
           tel_demandeur: demandeur && demandeur.tel_demandeur,
         }}
+        validationSchema={DemandeurSchema}
         onSubmit={async (values) => {
           try {
             await updateDemandeur({
               variables: {
+                code_demandeur: parseInt(props.id),
                 nom_demandeur: values.nom_demandeur,
                 prenom_demandeur: values.prenom_demandeur,
                 email_demandeur: values.email_demandeur,
@@ -39,64 +46,93 @@ function EditDemandeur(props) {
             errors,
             dirty,
             isSubmitting,
+            initialValues,
             handleChange,
             handleBlur,
             handleSubmit,
             handleReset,
           } = props;
+          const hasChanged = !deepEqual(values, initialValues);
+
           return (
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="nom" className="col-form-label">
                   Nom:
                 </label>
-                <input
-                  required
+
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.nom_demandeur
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="nom_demandeur"
                   type="text"
-                  className="form-control"
-                  id="nom_demandeur"
-                  onChange={handleChange}
-                  value={values.nom_demandeur}
                 />
+                {errors.nom_demandeur && touched.nom_demandeur ? (
+                  <div>{errors.nom_demandeur}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Prenom" className="col-form-label">
                   Prenom:
                 </label>
-                <input
-                  required
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.prenom_demandeur
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="prenom_demandeur"
                   type="text"
-                  className="form-control"
-                  id="prenom_demandeur"
-                  onChange={handleChange}
-                  value={values.prenom_demandeur}
                 />
+                {errors.prenom_demandeur && touched.prenom_demandeur ? (
+                  <div>{errors.prenom_demandeur}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Email" className="col-form-label">
                   Email:
                 </label>
-                <input
-                  required
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.email_demandeur
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="email_demandeur"
                   type="email"
-                  className="form-control"
-                  id="email_demandeur"
-                  onChange={handleChange}
-                  value={values.email_demandeur}
                 />
+                {errors.email_demandeur && touched.email_demandeur ? (
+                  <div>{errors.email_demandeur}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Tel" className="col-form-label">
                   Tel:
                 </label>
-                <input
-                  required
+
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.tel_demandeur
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="tel_demandeur"
                   type="text"
-                  className="form-control"
-                  id="tel_demandeur"
-                  onChange={handleChange}
-                  value={values.tel_demandeur}
                 />
+                {errors.tel_demandeur && touched.tel_demandeur ? (
+                  <div>{errors.tel_demandeur}</div>
+                ) : null}
               </div>
 
               <div className="modal-footer">
@@ -104,6 +140,9 @@ function EditDemandeur(props) {
                   type="button"
                   className="btn btn-secondary"
                   data-dismiss="modal"
+                  onClick={() => {
+                    close();
+                  }}
                 >
                   Close
                 </button>
@@ -112,7 +151,7 @@ function EditDemandeur(props) {
                   disabled={isSubmitting}
                   className="btn btn-primary"
                 >
-                  Add Demandeur
+                  Update
                 </button>
               </div>
             </form>

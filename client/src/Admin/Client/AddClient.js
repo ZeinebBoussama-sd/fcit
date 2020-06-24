@@ -132,23 +132,7 @@ function AddClient(props) {
                         <label htmlFor="code" className="col-form-label">
                           Code Client:
                         </label>
-                        {/* <input
-                          required
-                          type="text"
-                          className={
-                            values.code_client && hasChanged
-                              ? errors.code_client
-                                ? "form-control is-invalid"
-                                : "form-control is-valid"
-                              : "form-control text-input"
-                          }
-                          id="code_client"
-                          onChange={handleChange}
-                          value={values.code_client}
-                        />
-                        {errors.code_client && touched.code_client ? (
-                          <div>{errors.code_client}</div>
-                        ) : null} */}
+
                         <Field
                           className={
                             hasChanged
@@ -205,9 +189,6 @@ function AddClient(props) {
                           onChange={handleChange}
                           value={values.cin_p}
                         />
-                        {/* {errors.cin_p && touched.cin_p ? (
-                          <div>{errors.cin_p}</div>
-                        ) : null} */}
                       </div>
 
                       <div className="form-group">
@@ -258,20 +239,7 @@ function AddClient(props) {
                           name="email_client"
                           type="text"
                         />
-                        {/* <input
-                          required
-                          type="email"
-                          className={
-                            hasChanged
-                              ? errors.email_client
-                                ? "form-control is-invalid"
-                                : "form-control is-valid"
-                              : "form-control text-input"
-                          }
-                          id="email_client"
-                          onChange={handleChange}
-                          value={values.email_client}
-                        /> */}
+
                         {errors.email_client && touched.email_client ? (
                           <div>{errors.email_client}</div>
                         ) : null}

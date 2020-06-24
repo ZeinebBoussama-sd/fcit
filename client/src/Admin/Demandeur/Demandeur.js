@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import WarningModal from "../component/WarningModal";
 import { DELETE_DEMANDEUR } from "../GraphQl/Mutation";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+
 function Demandeur() {
   const { loading, error, data, refetch } = useQuery(GET_DEMANDEURS);
   const [deleteDemandeur, res] = useMutation(DELETE_DEMANDEUR);
@@ -16,7 +19,7 @@ function Demandeur() {
     try {
       await deleteDemandeur({
         variables: {
-          code_demandeur: values,
+          code_demandeur: parseInt(values),
         },
       });
     } catch (error) {
@@ -31,7 +34,7 @@ function Demandeur() {
         <table className="table table-hover table-fixed">
           <thead>
             <tr>
-              <th scope="col" className="col-3">
+              <th scope="col" className="col-2">
                 Nom
               </th>
               <th scope="col" className="col-3">
@@ -43,13 +46,19 @@ function Demandeur() {
               <th scope="col" className="col-2">
                 tel
               </th>
+              <th scope="col" className="col-1">
+                --
+              </th>
+              <th scope="col" className="col-1">
+                --
+              </th>
             </tr>
           </thead>
           <tbody>
             {data.allDemandeurs.map((demandeur, idx) => (
               <tr key={idx}>
                 <Link to={`/demandeur/${demandeur.code_demandeur}`}>
-                  <td scope="row" className="col-3">
+                  <td scope="row" className="col-2">
                     {demandeur.nom_demandeur}
                   </td>
                 </Link>
@@ -61,6 +70,17 @@ function Demandeur() {
                 </td>
                 <td className="col-2">
                   {demandeur.tel_demandeur ? demandeur.tel_demandeur : "--"}
+                </td>
+                <td className="col-1">
+                  <center>
+                    <Link to={`/demandeur/${demandeur.code_demandeur}`}>
+                      <FontAwesomeIcon
+                        icon={faInfoCircle}
+                        className="mr-1 pointer"
+                        color="yellow"
+                      />
+                    </Link>
+                  </center>
                 </td>
                 <td className="col-1">
                   <center>

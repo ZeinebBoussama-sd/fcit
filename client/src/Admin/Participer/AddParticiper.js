@@ -1,15 +1,15 @@
 import React from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
-import { ADD_PARTICIPANT } from "../GraphQl/Mutation";
-import { GET_CLIENTS } from "../GraphQl/Query";
+import { ADD_PARTICIPER } from "../GraphQl/Mutation";
+import { GET_PARTICIPANTS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
 
-import { ParticipantSchema } from "../../Utils/Validation";
+import { ParticiperSchema } from "../../Utils/Validation";
 
-function AddParticipant(props) {
-  const GetClients = useQuery(GET_CLIENTS);
-  const [AddParticipant, res] = useMutation(ADD_PARTICIPANT);
+function AddParticiper(props) {
+  const GetClients = useQuery(GET_PARTICIPANTS);
+  const [AddParticipant, res] = useMutation(ADD_PARTICIPER);
 
   return (
     <div>
@@ -20,7 +20,7 @@ function AddParticipant(props) {
         data-target="#exampleModal"
         data-whatever="@getbootstrap"
       >
-        Ajouter Participant
+        Ajouter Participer
       </button>
 
       <div
@@ -35,7 +35,7 @@ function AddParticipant(props) {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Ajouter Participant
+                Ajouter Participer
               </h5>
               <button
                 type="button"
@@ -50,20 +50,24 @@ function AddParticipant(props) {
               <Formik
                 enableReinitialize
                 initialValues={{
-                  code_participant: undefined,
-                  nom_participant: undefined,
-                  prenom_participant: undefined,
-                  ClientCodeClient: undefined,
+                  rapport_eval: undefined,
+                  note_QCM: undefined,
+                  date_eval: undefined,
+                  ParticipantCodeParticipant: undefined,
+                  SessionCISession: undefined,
                 }}
-                validationSchema={ParticipantSchema}
+                validationSchema={ParticiperSchema}
                 onSubmit={async (values) => {
                   try {
                     await AddParticipant({
                       variables: {
-                        code_participant: values.code_participant,
-                        nom_participant: values.nom_participant,
-                        prenom_participant: values.prenom_participant,
-                        ClientCodeClient: values.ClientCodeClient,
+                        rapport_eval: values.rapport_eval,
+                        note_QCM: values.note_QCM,
+                        date_eval: values.date_eval,
+                        ParticipantCodeParticipant: parseInt(
+                          values.ParticipantCodeParticipant
+                        ),
+                        SessionCISession: parseInt(values.SessionCISession),
                       },
                     });
                   } catch (e) {
@@ -90,23 +94,23 @@ function AddParticipant(props) {
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
-                        <label htmlFor="Nom" className="col-form-label">
-                          Nom
+                        <label htmlFor="Note QCM" className="col-form-label">
+                          Note QCM
                         </label>
 
                         <Field
                           className={
                             hasChanged
-                              ? errors.nom_participant
+                              ? errors.note_QCM
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          name="nom_participant"
-                          type="text"
+                          name="note_QCM"
+                          type="number"
                         />
-                        {errors.nom_participant && touched.nom_participant ? (
-                          <div>{errors.nom_participant}</div>
+                        {errors.note_QCM && touched.note_QCM ? (
+                          <div>{errors.note_QCM}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -152,7 +156,7 @@ function AddParticipant(props) {
                       </div>
 
                       <div className="form-group">
-                        <label htmlFor="Formation">Client:</label>
+                        <label htmlFor="Client">Client:</label>
 
                         <Field
                           component="select"
@@ -215,4 +219,4 @@ function AddParticipant(props) {
     </div>
   );
 }
-export default AddParticipant;
+export default AddParticiper;

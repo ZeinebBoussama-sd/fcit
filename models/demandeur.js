@@ -20,10 +20,12 @@ module.exports = (sequelize, DataTypes) => {
       email_demandeur: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       tel_demandeur: {
         type: DataTypes.STRING(20),
         allowNull: false,
+        unique: true,
       },
     },
     {}

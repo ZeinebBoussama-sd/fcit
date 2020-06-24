@@ -1,15 +1,17 @@
-import React from 'react';
-import { Formik } from 'formik';
-import { useMutation } from '@apollo/react-hooks';
-import { counterList } from '../../Utils/Enums';
-import { UPDATE_CLIENT } from '../GraphQl/Mutation';
+import React from "react";
+import { Formik } from "formik";
+import { useMutation } from "@apollo/react-hooks";
+import { counterList } from "../../Utils/Enums";
+import { UPDATE_CLIENT } from "../GraphQl/Mutation";
 
 function EditClient(props) {
   const client = props.client ? props.client : null;
   const [updateClient] = useMutation(UPDATE_CLIENT);
-  debugger;
+  const close = () => {
+    props.setEdit(false);
+  };
   return (
-    <div className='card-body' id='navbarSupportedContent'>
+    <div className="card-body" id="navbarSupportedContent">
       <Formik
         initialValues={{
           code_client: client && client.code_client,
@@ -18,9 +20,13 @@ function EditClient(props) {
           tel_client: client && client.tel_client,
           adr_client: client && client.adr_client,
           pays_client: client && client.pays_client,
-          personne: client && client.person && parseInt(client.person.cin_p),
+          personne:
+            client && client.personne && parseInt(client.personne.cin_p),
           societe: client && client.societe && client.societe.mat_fisc_sc,
-          ClientCodeClient: client.societe ? client.societe : client.person,
+          responsable: client && client.societe && client.societe.responsable,
+          ClientCodeClient: client.societe
+            ? client.societe
+            : client.personne.cin_p,
         }}
         onSubmit={async (values) => {
           try {
@@ -35,6 +41,7 @@ function EditClient(props) {
                 pays_client: values.pays_client,
                 personne: values.personne ? parseInt(values.personne) : null,
                 societe: values.societe ? values.societe : null,
+                responsable: values.responsable,
               },
             });
           } catch (e) {
@@ -58,42 +65,42 @@ function EditClient(props) {
           } = props;
           return (
             <form onSubmit={handleSubmit}>
-              <div className='form-group'>
-                <label htmlFor='code' className='col-form-label'>
+              <div className="form-group">
+                <label htmlFor="code" className="col-form-label">
                   Code Client:
                 </label>
                 <input
                   disabled
-                  type='text'
-                  className='form-control'
-                  id='code_client'
+                  type="text"
+                  className="form-control"
+                  id="code_client"
                   onChange={handleChange}
                   value={values.code_client}
                 />
               </div>
-              <div className='form-group'>
-                <label htmlFor='nom' className='col-form-label'>
+              <div className="form-group">
+                <label htmlFor="nom" className="col-form-label">
                   Nom Client:
                 </label>
                 <input
                   required
-                  type='text'
-                  className='form-control'
-                  id='nom_client'
+                  type="text"
+                  className="form-control"
+                  id="nom_client"
                   onChange={handleChange}
                   value={values.nom_client}
                 />
               </div>
 
-              {client && client.person && (
-                <div className='form-group'>
-                  <label htmlFor='personne' className='col-form-label'>
+              {client && client.personne && (
+                <div className="form-group">
+                  <label htmlFor="personne" className="col-form-label">
                     CIN:
                   </label>
                   <input
-                    type='number'
-                    className='form-control'
-                    id='personne'
+                    type="number"
+                    className="form-control"
+                    id="personne"
                     onChange={handleChange}
                     value={values.personne}
                   />
@@ -101,66 +108,80 @@ function EditClient(props) {
               )}
 
               {client && client.societe && (
-                <div className='form-group'>
-                  <label htmlFor='societe' className='col-form-label'>
-                    Matricule Fiscale:
-                  </label>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='societe'
-                    onChange={handleChange}
-                    value={values.societe}
-                  />
-                </div>
+                <>
+                  <div className="form-group">
+                    <label htmlFor="societe" className="col-form-label">
+                      Matricule Fiscale:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="societe"
+                      onChange={handleChange}
+                      value={values.societe}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="responsable" className="col-form-label">
+                      Responsable:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="responsable"
+                      onChange={handleChange}
+                      value={values.responsable}
+                    />
+                  </div>
+                </>
               )}
-              <div className='form-group'>
-                <label htmlFor='Email' className='col-form-label'>
+              <div className="form-group">
+                <label htmlFor="Email" className="col-form-label">
                   Email
                 </label>
                 <input
                   required
-                  type='email'
-                  className='form-control'
-                  id='email_client'
+                  type="email"
+                  className="form-control"
+                  id="email_client"
                   onChange={handleChange}
                   value={values.email_client}
                 />
               </div>
-              <div className='form-group'>
-                <label htmlFor='Tel' className='col-form-label'>
+              <div className="form-group">
+                <label htmlFor="Tel" className="col-form-label">
                   Telephone:
                 </label>
                 <input
                   required
-                  type='tel'
-                  className='form-control'
-                  id='tel_client'
+                  type="tel"
+                  className="form-control"
+                  id="tel_client"
                   onChange={handleChange}
                   value={values.tel_client}
                 />
               </div>
-              <div className='form-group'>
-                <label htmlFor='Adresse' className='col-form-label'>
+              <div className="form-group">
+                <label htmlFor="Adresse" className="col-form-label">
                   Adresse:
                 </label>
                 <input
-                  type='text'
-                  className='form-control'
-                  id='adr_client'
+                  type="text"
+                  className="form-control"
+                  id="adr_client"
                   onChange={handleChange}
                   value={values.adr_client}
                 />
               </div>
-              <div className='form-group'>
-                <label htmlFor='pays_client'>Paye</label>
+              <div className="form-group">
+                <label htmlFor="pays_client">Paye</label>
                 <select
-                  className='form-control'
+                  className="form-control"
                   onChange={handleChange}
                   value={values.pays_client}
-                  id='pays_client'
+                  id="pays_client"
                 >
-                  <option value=''>---choose country----</option>
+                  <option value="">---choose country----</option>
                   {counterList.map((country, idx) => {
                     return (
                       <option key={idx} value={country}>
@@ -171,11 +192,21 @@ function EditClient(props) {
                 </select>
               </div>
 
-              <div className='modal-footer'>
+              <div className="modal-footer">
                 <button
-                  type='submit'
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                  onClick={() => {
+                    close();
+                  }}
+                >
+                  Close
+                </button>
+                <button
+                  type="submit"
                   disabled={isSubmitting}
-                  className='btn btn-primary'
+                  className="btn btn-primary"
                 >
                   Update
                 </button>

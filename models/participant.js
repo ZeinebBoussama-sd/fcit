@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      nom_partcipant: { type: DataTypes.STRING(30), allowNull: false },
-      prenom_partcipant: { type: DataTypes.STRING(30), allowNull: false },
+      nom_participant: { type: DataTypes.STRING(30), allowNull: false },
+      prenom_participant: { type: DataTypes.STRING(30), allowNull: false },
       carte_identite: { allowNull: false, type: DataTypes.INTEGER(10) },
     },
     {}

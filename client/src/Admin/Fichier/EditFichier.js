@@ -11,39 +11,42 @@ function AddFichier(props) {
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
   const [updateFichier, res] = useMutation(UPDATE_FICHIER);
   const fichier = props.fichier ? props.fichier : null;
-  const id = props.id ? props.id : null;
-  console.log(data);
+  const id = props.id;
+  const close = () => {
+    props.setEdit(false);
+  };
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
         enableReinitialize
         initialValues={{
-          code_fichier: fichier && fichier.code_fichier,
           nom_fichier: fichier && fichier.nom_fichier,
           type_fichier: fichier && fichier.type_fichier,
           taille_max: fichier && fichier.taille_max,
           url_fichier: fichier && fichier.url_fichier,
           nature_support: fichier && fichier.nature_support,
-          SupportCodeSupport: fichier && fichier.SupportCodeSupport,
+          SupportCodeSupport:
+            fichier && fichier.support && fichier.support.code_support,
         }}
         validationSchema={FichierSchema}
         onSubmit={async (values) => {
           try {
             await updateFichier({
               variables: {
-                code_fichier: values.code_fichierr,
+                code_fichier: parseInt(props.id),
                 nom_fichier: values.nom_fichier,
                 type_fichier: values.type_fichier,
                 taille_max: values.taille_max,
                 url_fichier: values.url_fichier,
                 nature_support: values.nature_support,
-                SupportCodeSupport: values.SupportCodeSupport,
+                SupportCodeSupport: parseInt(values.SupportCodeSupport),
               },
             });
           } catch (e) {
             console.error(e.message);
           }
           props.refetch();
+          props.setEdit(false);
         }}
       >
         {(props) => {
@@ -71,16 +74,16 @@ function AddFichier(props) {
                 <Field
                   className={
                     hasChanged
-                      ? errors.titre_fichier
+                      ? errors.nom_fichier
                         ? "form-control is-invalid"
                         : "form-control is-valid"
                       : "form-control text-input"
                   }
-                  name="titre_fichier"
+                  name="nom_fichier"
                   type="text"
                 />
-                {errors.titre_fichier && touched.titre_fichier ? (
-                  <div>{errors.titre_fichier}</div>
+                {errors.nom_fichier && touched.nom_fichier ? (
+                  <div>{errors.nom_fichier}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -191,6 +194,9 @@ function AddFichier(props) {
                   type="button"
                   className="btn btn-secondary"
                   data-dismiss="modal"
+                  onClick={() => {
+                    close();
+                  }}
                 >
                   Fermer
                 </button>
@@ -199,7 +205,7 @@ function AddFichier(props) {
                   disabled={isSubmitting}
                   className="btn btn-primary"
                 >
-                  Update Fichier
+                  Update
                 </button>
               </div>
             </form>

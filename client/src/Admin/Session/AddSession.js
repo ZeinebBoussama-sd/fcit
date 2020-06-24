@@ -79,9 +79,10 @@ function AddSession(props) {
                   FormateurCodeFormateur: "",
                   SupportCodeSupport: undefined,
                 }}
-                validationSchema={SessionSchema}
+                //validationSchema={SessionSchema}
                 onSubmit={async (values) => {
                   try {
+                    debugger;
                     await AddSession({
                       variables: {
                         code_session: values.code_session,

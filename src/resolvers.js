@@ -57,6 +57,9 @@ const resolvers = {
     async metier(root, { code_metier }, { models }) {
       return models.Metier.findByPk(code_metier);
     },
+    async allMetiers(root, args, { models }) {
+      return models.Metier.findAll();
+    },
     async formateur_formation(root, { id }, { models }) {
       return models.Formateur_Formation.findByPk(id);
     },
@@ -88,8 +91,14 @@ const resolvers = {
     async motcle(root, { motcle }, { models }) {
       return models.MotCle.findByPk(motcle);
     },
+    async allMotCles(root, args, { models }) {
+      return models.MotCle.findAll();
+    },
     async participant(root, { code_participant }, { models }) {
       return models.Participant.findByPk(code_participant);
+    },
+    async allParticipants(root, args, { models }) {
+      return models.Participant.findAll();
     },
     async participer(root, { id }, { models }) {
       return models.Participer.findByPk(id);
@@ -114,6 +123,9 @@ const resolvers = {
     },
     async validation(root, { code_val }, { models }) {
       return models.Validation.findByPk(code_val);
+    },
+    async allValidations(root, args, { models }) {
+      return models.Validation.findAll();
     },
   },
 
@@ -209,23 +221,32 @@ const resolvers = {
     async updateClient(root, args, { models }) {
       //looking after person
       const findperson =
-        args.code_client &&
+        args.personne &&
         (await models.Personne.findOne({
           where: { ClientCodeClient: args.code_client },
         }));
       //looking after societe
       const findsociete =
-        args.code_client &&
+        args.societe &&
         (await models.Societe.findOne({
           where: { ClientCodeClient: args.code_client },
         }));
       //if cin or mart-fisc-sc is changed, then it will be updated
-      findperson &&
+      const a =
+        findperson &&
         findperson.cin_p !== args.personne &&
-        (await findperson.update({ cin_p: args.cin_p }));
+        (await findperson.update(
+          { cin_p: args.personne },
+          { where: { ClientCodeClient: args.code_client } }
+        ));
+
       findsociete &&
-        findsociete.mat_fisc_sc !== args.societe &&
-        (await findsociete.update({ mat_fisc_sc: args.societe }));
+        (findsociete.mat_fisc_sc !== args.societe ||
+          findsociete.responsable !== args.responsable) &&
+        (await findsociete.update(
+          { mat_fisc_sc: args.societe, responsable: args.responsable },
+          { where: { ClientCodeClient: args.code_client } }
+        ));
 
       //update Client
 
@@ -295,11 +316,44 @@ const resolvers = {
         DemandeurCodeDemandeur,
       });
     },
+    async updateDemandeFormation(root, args, { models }) {
+      const updateDemandeFormation = await models.DemandeFormation.update(
+        {
+          date_demande: args.date_demande,
+          type_demande: args.type_demande,
+          etat_demande: args.etat_demande,
+          prix_prevu: args.prix_prevu,
+          lieu_prevu: args.lieu_prevu,
+          duree_prevu: args.duree_prevu,
+          mode_demande: args.mode_demande,
+          hr_deb_j_prev: args.hr_deb_j_prev,
+          hr_fin_j_prev: args.hr_fin_j_prev,
+          hr_j_prev: args.hr_j_prev,
+          ClientCodeClient: args.ClientCodeClient,
+          FormationCIFormation: args.FormationCIFormation,
+          DemandeurCodeDemandeur: args.DemandeurCodeDemandeur,
+        },
+        { where: { code_demande: args.code_demande } }
+      );
+      return updateDemandeFormation;
+    },
+
+    async deleteDemande(root, args, { models }) {
+      const deleteDemande = await models.Demande.destroy({
+        where: { code_demande: args.code_demande },
+      });
+    },
     async createDatePrevue(root, { date_prev }, { models }) {
       return models.DatePrevue.create({
         date_prev,
       });
     },
+    async deleteDatePrevue(root, args, { models }) {
+      const deleteDatePrevue = await models.DatePrevue.destroy({
+        where: { date_prev: args.date_prev },
+      });
+    },
+
     async createFichier(
       root,
       {
@@ -353,7 +407,6 @@ const resolvers = {
     async updateDemandeur(root, args, { models }) {
       const updateDemandeur = await models.Demandeur.update(
         {
-          code_demandeur: args.code_demandeur,
           nom_demandeur: args.nom_demandeur,
           prenom_demandeur: args.prenom_demandeur,
           email_demandeur: args.email_demandeur,
@@ -406,6 +459,33 @@ const resolvers = {
         FormationCIFormation,
         FormateurCodeFormateur,
       });
+    },
+    async updateFormateur_Formation(root, args, { models }) {
+      const updateFormateur_Formation = await models.Formateur_Formation.update(
+        {
+          validation_f: args.validation_f,
+          date_validation: args.date_validation,
+          FormationCIFormation: args.FormationCIFormation,
+          FormateurCodeFormateur: args.FormateurCodeFormateur,
+        },
+        {
+          where: {
+            FormationCIFormation: args.FormationCIFormation,
+            FormateurCodeFormateur: args.FormateurCodeFormateur,
+          },
+        }
+      );
+      return updateFormateur_Formation;
+    },
+    async deleteFormateur_Formation(root, args, { models }) {
+      const deleteFormateur_Formation = await models.Formateur_Formation.destroy(
+        {
+          where: {
+            FormationCIFormation: args.FormationCIFormation,
+            FormateurCodeFormateur: args.FormateurCodeFormateur,
+          },
+        }
+      );
     },
     async createFormateur(
       root,
@@ -565,7 +645,7 @@ const resolvers = {
     async updateIngenieurPedagogique(root, args, { models }) {
       const updateIngenieurPedagogique = await models.IngenieurPedagogique.update(
         {
-          nom_ing: arg.nom_ing,
+          nom_ing: args.nom_ing,
           prenom_ing: args.prenom_ing,
           cv_ing: args.cv_ing,
           email_ing: args.email_ing,
@@ -589,20 +669,21 @@ const resolvers = {
     },
     async createParticipant(
       root,
-      { nom_partcipant, prenom_partcipant, carte_identite },
+      { nom_participant, prenom_participant, carte_identite, ClientCodeClient },
       { models }
     ) {
       return models.Participant.create({
-        nom_partcipant,
-        prenom_partcipant,
+        nom_participant,
+        prenom_participant,
         carte_identite,
+        ClientCodeClient,
       });
     },
     async updateParticipant(root, args, { models }) {
-      const updatePartcipant = await models.Participant.update(
+      const updateParticipant = await models.Participant.update(
         {
-          nom_partcipant: args.nom_partcipant,
-          prenom_partcipant: args.prenom_partcipant,
+          nom_participant: args.nom_participant,
+          prenom_participant: args.prenom_participant,
           carte_identite: args.carte_identite,
         },
         { where: { code_participant: args.code_participant } }
@@ -611,7 +692,7 @@ const resolvers = {
     },
     async deleteParticipant(root, args, { models }) {
       const deleteParticipant = await models.Participant.destroy({
-        where: { code_partcipant: args.code_participant },
+        where: { code_participant: args.code_participant },
       });
       return this.deleteParticipant;
     },
@@ -619,6 +700,13 @@ const resolvers = {
       return models.MotCle.create({
         motcle,
       });
+    },
+
+    async deleteMotCle(root, args, { models }) {
+      const deleteMotCle = await models.MotCle.destroy({
+        where: { motcle: args.motcle },
+      });
+      return this.deleteMotCle;
     },
     async createParticiper(
       root,
@@ -638,6 +726,35 @@ const resolvers = {
         ParticipantCodeParticipant,
         SessionCISession,
       });
+    },
+    async updateParticiper(root, args, { models }) {
+      const updateParticiper = await models.Participer.update(
+        {
+          rapport_eval: args.rapport_eval,
+          note_QCM: args.note_QCM,
+          date_eval: args.date_eval,
+          ParticipantCodeParticipant: args.ParticipantCodeParticipant,
+          SessionCISession: args.SessionCISession,
+        },
+        {
+          where: {
+            ParticipantCodeParticipant: args.ParticipantCodeParticipant,
+            SessionCISession: args.SessionCISession,
+          },
+        }
+      );
+      return updateParticiper;
+    },
+    async deleteParticiper(root, args, { models }) {
+      const deleteParticiper = await models.Participer.destroy({
+        where: {
+          where: {
+            ParticipantCodeParticipant: args.ParticipantCodeParticipant,
+            SessionCISession: args.SessionCISession,
+          },
+        },
+      });
+      return deleteParticiper;
     },
     async createSession(root, args, { models }) {
       const addSession = await models.Session.create({
@@ -745,7 +862,7 @@ const resolvers = {
       return addThema;
     },
     async updateTheme(root, args, { models }) {
-      const updatecTheme = await models.Theme.update(
+      const updateTheme = await models.Theme.update(
         {
           code_theme: args.code_theme,
           nom_theme: args.nom_theme,
@@ -908,7 +1025,7 @@ const resolvers = {
   },
   Participant: {
     async session(participant) {
-      return participant.getSession();
+      return participant.getSessions();
     },
     async client(participant) {
       return participant.getClient();
@@ -927,7 +1044,7 @@ const resolvers = {
       return session.getFormateur();
     },
     async participant(session) {
-      return session.getParticipant();
+      return session.getParticipants();
     },
     async client(session) {
       return session.getClient();

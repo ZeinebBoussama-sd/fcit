@@ -19,7 +19,7 @@ function EditValidation(props) {
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
   const validation = props.validation ? props.validation : null;
   const id = props.id ? props.id : null;
-  console.log(data);
+
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik

@@ -551,8 +551,14 @@ export const GET_DATE_PREVUES = gql`
   }
 `;
 export const GET_PARTICIPER = gql`
-  query findparticiper($ParticipantCodeParticipant:Int,SessionCISession:Int) {
-    paticiper(ParticipantCodeParticipant: $ParticipantCodeParticipant,SessionCISession:$SessionCISession ) {
+  query findparticiper(
+    $ParticipantCodeParticipant: Int
+    $SessionCISession: Int
+  ) {
+    paticiper(
+      ParticipantCodeParticipant: $ParticipantCodeParticipant
+      SessionCISession: $SessionCISession
+    ) {
       rapport_eval
       note_QCM
       date_eval

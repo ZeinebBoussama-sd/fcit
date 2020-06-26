@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_PARTICIPANTS, GET_PARTICIPERS } from "../GraphQl/Query";
-import AddParticipant from "./AddParticipant";
+// import AddParticipant from "./AddParticipant";
 import { DELETE_PARTICIPER } from "../GraphQl/Mutation";
 import { Link } from "react-router-dom";
 import WarningModal from "../component/WarningModal";
@@ -29,7 +29,7 @@ function Participer() {
   console.log(data);
   return (
     <div className="mt-11">
-      <AddParticipant refetch={refetch} />
+      {/* <AddParticipant refetch={refetch} /> */}
       <div className="table-responsive">
         <table className="mt-2 table table-hover table-fixed">
           <thead>

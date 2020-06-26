@@ -23,7 +23,7 @@ function Session() {
     }
     refetch();
   };
-
+  console.log(data);
   return (
     <div className="mt-11 ">
       <AddSession refetch={refetch} />

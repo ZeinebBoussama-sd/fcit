@@ -355,14 +355,15 @@ export const ADD_FORMATEUR = gql`
     $adr_f: String!
     $date_dajout: Date
     $cin_f: Int
-    $copie_cin: String
+    $copie_cin: Upload
     $passeport_f: String
-    $copie_passeport: String
+    $copie_passeport: Upload
     $visa_f: String
     $val_visa: Date
     $tarif_f: Float
     $RIB_f: String
-    $copie_RIB: String
+    $copie_RIB: Upload
+    $formationCIFormation: Int
   ) {
     createFormateur(
       code_formateur: $code_formateur
@@ -386,6 +387,7 @@ export const ADD_FORMATEUR = gql`
       tarif_f: $tarif_f
       RIB_f: $RIB_f
       copie_RIB: $copie_RIB
+      formationCIFormation: $formationCIFormation
     ) {
       nom_f
       prenom_f
@@ -900,6 +902,13 @@ export const DELETE_VALIDATION = gql`
       validation {
         code_val
       }
+    }
+  }
+`;
+export const DOWNLOAD_FILE = gql`
+  mutation getFile($file: String!) {
+    singleDownload(file: $file) {
+      filename
     }
   }
 `;

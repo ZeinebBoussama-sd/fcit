@@ -1,17 +1,17 @@
-import React from 'react';
-import { useMutation, useQuery } from '@apollo/react-hooks';
-import { Formik, Field } from 'formik';
-import { ADD_FORMATEUR } from '../GraphQl/Mutation';
-import { GET_FORMATIONS } from '../GraphQl/Query';
-import deepEqual from 'lodash.isequal';
+import React from "react";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { Formik, Field } from "formik";
+import { ADD_FORMATEUR } from "../GraphQl/Mutation";
+import { GET_FORMATIONSOPTIONS } from "../GraphQl/Query";
+import deepEqual from "lodash.isequal";
 
-import { FormateurSchema } from '../../Utils/Validation';
-import { fileToBase64String } from '../../Utils/fileToBase64String';
-import { logDOM } from '@testing-library/react';
-import { DropzoneField } from '../component/DropzoneField.tsx';
+import { FormateurSchema } from "../../Utils/Validation";
+import { fileToBase64String } from "../../Utils/fileToBase64String";
+import { logDOM } from "@testing-library/react";
+import { DropzoneField } from "../component/DropzoneField.tsx";
 
 function AddFormateur(props) {
-  const GetFormations = useQuery(GET_FORMATIONS);
+  const GetFormations = useQuery(GET_FORMATIONSOPTIONS);
   const [AddFormateur, res] = useMutation(ADD_FORMATEUR);
 
   return (
@@ -53,29 +53,52 @@ function AddFormateur(props) {
               <Formik
                 enableReinitialize
                 initialValues={{
-                  code_formateur: "",
-                  nom_f: "",
-                  prenom_f: "",
-                  classe_f: undefined,
-                  fonction_f: undefined,
-                  cv_f: null,
-                  email_f: '',
-                  tel_f: undefined,
-                  NSS: undefined,
-                  salaire_f: undefined,
-                  adr_f: undefined,
-                  date_dajout: undefined,
-                  cin_f: undefined,
-                  copie_cin: undefined,
-                  passeport_f: undefined,
-                  copie_passeport: undefined,
-                  visa_f: undefined,
-                  val_visa: undefined,
-                  tarif_f: undefined,
-                  RIB_f: undefined,
-                  copie_RIB: undefined,
+                  FormationCIFormation: "1",
+                  NSS: 3,
+                  RIB_f: "8888",
+                  adr_f: "Rågången71",
+                  cin_f: 1,
+                  classe_f: "B",
+                  code_formateur: "112",
+                  copie_RIB: [],
+                  copie_cin: [],
+                  copie_passeport: [],
+                  cv_f: [],
+                  date_dajout: "2020-01-01",
+                  email_f: "sadok.zaibi@gmail.com",
+                  fonction_f: "Ingénieur",
+                  nom_f: "Zaibi",
+                  passeport_f: "123123",
+                  prenom_f: "Sadok",
+                  salaire_f: 1,
+                  tarif_f: 3,
+                  tel_f: "123",
+                  val_visa: "2020-06-24",
+                  visa_f: "1234",
+
+                  // code_formateur: "",
+                  // nom_f: "",
+                  // prenom_f: "",
+                  // classe_f: undefined,
+                  // fonction_f: undefined,
+                  // cv_f: [],
+                  // email_f: '',
+                  // tel_f: undefined,
+                  // NSS: undefined,
+                  // salaire_f: undefined,
+                  // adr_f: undefined,
+                  // date_dajout: undefined,
+                  // cin_f: undefined,
+                  // copie_cin: [],
+                  // passeport_f: undefined,
+                  // copie_passeport: [],
+                  // visa_f: undefined,
+                  // val_visa: undefined,
+                  // tarif_f: undefined,
+                  // RIB_f: undefined,
+                  // copie_RIB: [],
                 }}
-                validationSchema={FormateurSchema}
+                // validationSchema={FormateurSchema}
                 onSubmit={async (values) => {
                   try {
                     debugger;
@@ -94,14 +117,17 @@ function AddFormateur(props) {
                         adr_f: values.adr_f,
                         date_dajout: values.date_dajout,
                         cin_f: values.cin_f,
-                        copie_cin: values.copie_cin,
+                        copie_cin: values.cv_f,
                         passeport_f: values.passeport_f,
-                        copie_passeport: values.copie_passeport,
+                        copie_passeport: values.cv_f,
                         visa_f: values.visa_f,
                         val_visa: values.val_visa,
                         tarif_f: values.tarif_f,
-                        RIB_f: values.RIB_fs,
-                        copie_RIB: values.copie_RIB,
+                        RIB_f: values.RIB_f,
+                        copie_RIB: values.cv_f,
+                        formationCIFormation: parseInt(
+                          values.FormationCIFormation
+                        ),
                       },
                     });
                   } catch (e) {
@@ -228,7 +254,7 @@ function AddFormateur(props) {
                         <label htmlFor="CV" className="col-form-label">
                           CV
                         </label>
-                        <div className='input-group mb-3'>
+                        <div className="input-group mb-3">
                           {/* <div className='input-group-prepend'>
                             <span
                               className='input-group-text'
@@ -239,9 +265,9 @@ function AddFormateur(props) {
                           </div> */}
                           {/* <div className='custom-file'> */}
                           <Field
-                            type='file'
+                            type="file"
                             //className='custom-file-input'
-                            name='cv_f'
+                            name="cv_f"
                             component={DropzoneField}
                             // aria-describedby='cv_f_attachment'
                             // onChange={(e) => {
@@ -262,13 +288,13 @@ function AddFormateur(props) {
                             //   reader.readAsDataURL(file);
                             // }}
                           />
-                          {values.cv_f && <img src={values.cv_f.preview} />}
+                          {/* {values.cv_f && <img src={values.cv_f.preview} />} */}
                           {/* <label className='custom-file-label' htmlFor='cv_f'>
                               Choose file
                             </label>
                           </div> */}
                         </div>
-                        <Field
+                        {/* <Field
                           type="file"
                           className={
                             hasChanged
@@ -281,7 +307,7 @@ function AddFormateur(props) {
                         />
                         {errors.cv_f && touched.cv_f ? (
                           <div className="text-danger">{errors.cv_f}</div>
-                        ) : null}
+                        ) : null} */}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Email" className="col-form-label">
@@ -432,6 +458,7 @@ function AddFormateur(props) {
                           className="form-control"
                           name="copie_cin"
                           type="file"
+                          component={DropzoneField}
                         />
                         {errors.copie_cin && touched.copie_cin ? (
                           <div>{errors.copie_cin}</div>
@@ -477,6 +504,7 @@ function AddFormateur(props) {
                           className="form-control"
                           name="copie_passeport"
                           type="file"
+                          component={DropzoneField}
                         />
                         {errors.copie_passeport && touched.copie_passeport ? (
                           <div>{errors.copie_passeport}</div>
@@ -581,6 +609,7 @@ function AddFormateur(props) {
                           className="form-control"
                           name="copie_RIB"
                           type="file"
+                          component={DropzoneField}
                         />
                         {errors.copie_RIB && touched.copie_RIB ? (
                           <div>{errors.copie_RIB}</div>

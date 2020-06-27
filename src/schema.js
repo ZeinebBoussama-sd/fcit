@@ -330,6 +330,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    singleDownload(file: String!): File!
     singleUpload(file: Upload!): File!
 
     createClient(
@@ -460,14 +461,15 @@ const typeDefs = gql`
       adr_f: String!
       date_dajout: Date
       cin_f: Int
-      copie_cin: String
+      copie_cin: Upload
       passeport_f: String
-      copie_passeport: String
+      copie_passeport: Upload
       visa_f: String
       val_visa: Date
       tarif_f: Float
       RIB_f: String
-      copie_RIB: String
+      copie_RIB: Upload
+      formationCIFormation: Int
     ): Formateur!
 
     deleteFormateur(code_formateur: String!): DeleteFormateurMutationResponse

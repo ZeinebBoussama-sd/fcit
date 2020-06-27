@@ -37,6 +37,9 @@ module.exports = (sequelize, DataTypes) => {
   Formateur.associate = function (models) {
     Formateur.hasMany(models.Session);
     Formateur.hasMany(models.Validation);
+    Formateur.belongsToMany(models.Formation, {
+      through: "Formateur_Formation",
+    });
   };
   return Formateur;
 };

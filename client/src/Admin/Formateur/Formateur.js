@@ -29,7 +29,7 @@ function Formateur() {
   };
   return (
     <div className='mt-11'>
-      <Tes />
+      {/* <Tes /> */}
       <AddFormateur refetch={refetch} />
       <div className="table-responsive">
         <table className="mt-2 table table-hover table-fixed">

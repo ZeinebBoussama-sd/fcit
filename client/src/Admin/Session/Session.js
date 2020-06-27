@@ -72,8 +72,12 @@ function Session() {
                   <td className="col-2">
                     {session && session.client && session.client.nom_client}
                   </td>
-                  <td className="col-2">{session.formation.intitule}</td>
-                  <td className="col-2">{session.formateur.nom_f}</td>
+                  <td className="col-2">
+                    {session.formation && session.formation.intitule}
+                  </td>
+                  <td className="col-2">
+                    {session.formateur && session.formateur.nom_f}
+                  </td>
                   <td className="col-1">
                     {session.support.titre_support
                       ? session.support.titre_support

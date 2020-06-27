@@ -7,12 +7,15 @@ export const DropzoneField: React.SFC<FieldProps<any>> = ({
   form: { setFieldValue },
   ...props
 }) => {
+  const [files, setFiles] = React.useState([]);
   return (
     <Dropzone
       multiple={false}
       onDrop={([file]) => {
+        debugger
         setFieldValue(name, file);
         console.log(file);
+        console.log(URL.createObjectURL(file));
       }}
       {...props}
     >

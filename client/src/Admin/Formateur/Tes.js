@@ -49,7 +49,6 @@ function Tes(props) {
                 }}
                 onSubmit={async (values) => {
                   try {
-                    debugger;
                     //  new Promise((resolve) => setTimeout(resolve, 500));
                     await UploadFile({
                       variables: {

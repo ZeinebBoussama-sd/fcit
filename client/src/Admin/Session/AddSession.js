@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import {
@@ -6,6 +6,7 @@ import {
   GET_SUPPORT_MINI,
   GET_CLIENTS,
   GET_FORMATIONS,
+  GET_FORMATIONSOPTIONS,
 } from "../GraphQl/Query";
 import { ADD_SESSION } from "../GraphQl/Mutation";
 import { SessionSchema } from "../../Utils/Validation";
@@ -14,9 +15,15 @@ import deepEqual from "lodash.isequal";
 function AddSession(props) {
   const [AddSession] = useMutation(ADD_SESSION);
   const GetClients = useQuery(GET_CLIENTS);
-  const GetFormations = useQuery(GET_FORMATIONS);
+  const GetFormations = useQuery(GET_FORMATIONSOPTIONS);
   const GetFormateurs = useQuery(GET_FORMATEURS);
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
+  const [subOptions, setSubOption] = useState(undefined);
+  const [valide, setValide] = useState(false);
+  const sub = (e) => {
+    console.log("e", e.currentTarget.selectedIndex - 1);
+    setSubOption(e.currentTarget.selectedIndex - 1);
+  };
 
   return (
     <div>
@@ -224,7 +231,6 @@ function AddSession(props) {
                           <div>{errors.duree_sess}</div>
                         ) : null}
                       </div>
-
                       <div className="form-group">
                         <label htmlFor="hr_deb_j" className="col-form-label">
                           hr_deb_j:
@@ -245,7 +251,6 @@ function AddSession(props) {
                           <div>{errors.hr_deb_j}</div>
                         ) : null}
                       </div>
-
                       <div className="form-group">
                         <label htmlFor="hr_fin_j" className="col-form-label">
                           hr_fin_j:
@@ -265,7 +270,6 @@ function AddSession(props) {
                           <div>{errors.hr_fin_j}</div>
                         ) : null}
                       </div>
-
                       <div className="form-group">
                         <label
                           htmlFor="hr_j_session"
@@ -289,7 +293,6 @@ function AddSession(props) {
                           <div>{errors.hr_j_session}</div>
                         ) : null}
                       </div>
-
                       <div className="form-group">
                         <label htmlFor="Lieux" className="col-form-label">
                           Lieux:
@@ -386,6 +389,7 @@ function AddSession(props) {
                           value={values.perdiem}
                         />
                       </div>
+
                       <div className="form-group">
                         <label
                           htmlFor="autres_frais"
@@ -442,14 +446,17 @@ function AddSession(props) {
                         <label htmlFor="Formation">Formation:</label>
                         <select
                           className="form-control"
-                          onChange={handleChange}
+                          onChange={(e) => {
+                            handleChange(e);
+                            sub(e);
+                          }}
                           value={values.FormationCIFormation}
                           id="FormationCIFormation"
                         >
                           <option value="">---Choose Formation----</option>
                           {GetFormations.data &&
                             GetFormations.data.allFormations.map(
-                              (formation) => {
+                              (formation, idx) => {
                                 return (
                                   <option
                                     key={formation.CI_formation}
@@ -462,30 +469,64 @@ function AddSession(props) {
                             )}
                         </select>
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="Formateur">Formateur:</label>
-                        <select
-                          className="form-control"
-                          onChange={handleChange}
-                          value={values.FormateurCodeFormateur}
-                          id="FormateurCodeFormateur"
-                        >
-                          <option value="">---Choose Formateur----</option>
-                          {GetFormateurs.data &&
-                            GetFormateurs.data.allFormateurs.map(
-                              (formateur) => {
-                                return (
-                                  <option
-                                    key={formateur.code_formateur}
-                                    value={formateur.code_formateur}
-                                  >
-                                    {formateur.nom_f}
-                                  </option>
-                                );
-                              }
-                            )}
-                        </select>
-                      </div>
+                      {values.FormationCIFormation && (
+                        <>
+                          <div className="form-check">
+                            <Field
+                              onChange={setValide(1)}
+                              name="check"
+                              type="radio"
+                              className="form-check-input"
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="Formation"
+                            >
+                              V
+                            </label>
+                          </div>
+                          <div className="form-check">
+                            <Field
+                              onChange={setValide(0)}
+                              name="check"
+                              type="radio"
+                              className="form-check-input"
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="Formation"
+                            >
+                              NV
+                            </label>
+                          </div>
+                          <div className="form-group">
+                            <label htmlFor="Formateur">Formateur:</label>
+                            <select
+                              className="form-control"
+                              onChange={handleChange}
+                              value={values.FormateurCodeFormateur}
+                              id="FormateurCodeFormateur"
+                            >
+                              <option value="">---Choose Formateur----</option>
+                              {GetFormations.data &&
+                                GetFormations.data.allFormations[subOptions] &&
+                                GetFormations.data.allFormations[
+                                  subOptions
+                                ].formateur.map((formateur) => {
+                                  return (
+                                    <option
+                                      key={formateur.code_formateur}
+                                      value={formateur.code_formateur}
+                                    >
+                                      {formateur.nom_f}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                        </>
+                      )}
+
                       <div className="form-group">
                         <label htmlFor="Formation">Support:</label>
                         <select

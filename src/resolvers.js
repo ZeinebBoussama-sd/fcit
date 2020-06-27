@@ -1,16 +1,161 @@
 // const bcrypt = require("bcryptjs");
-const { GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
-const { ApolloError } = require('apollo-server-core');
-const { createWriteStream } = require('fs');
+const { GraphQLScalarType } = require("graphql");
+const { Kind } = require("graphql/language");
+const { ApolloError } = require("apollo-server-core");
+const fs = require("fs");
+const request = require("request");
+const formidable = require("formidable");
 
-const storeUpload = ({ createReadStream, filename }) =>
-  new Promise((resolver, reject) =>
-    createReadStream
-      .pipe(createWriteStream(`./client/upload/${filename}`))
-      .on('finish', () => resolver())
-      .on('error', reject)
-  );
+// const storeUpload = ( stream, filename, folder, ID, type) =>
+//   fs.access(`./client/src/upload`, error => {
+//     if (!error) {
+//       console.log("found folder upload :D");
+//       fs.access(`./client/src/upload/${ID}`, error => {
+//         if (!error) {
+//           console.log("found folder " + ID +" :D");
+//         fs.access(`./client/src/upload/${ID}/${type}`, error => {
+//           if (!error) {
+//             console.log("found folder " + type +" :D");
+//             fs.access(`./client/src/upload/${ID}/${type}/${folder}`, error => {
+//               if (!error) {
+//               console.log("found folder " + folder + " :D");
+//               try {
+//                 fs.access(`./client/src/upload/${ID}/${type}/${folder}/${filename}`, fs.F_OK, (err) => {
+//                   if (err) {
+//                     fs.createWriteStream(`./client/src/upload/${ID}/${type}/${folder}/${filename}`)
+//                     console.log(`${filename} is uploaded`);
+//                     const path = `./client/src/upload/${ID}/${type}/${folder}/${filename}`
+//                     return new Promise((resolve, reject) =>
+//                     stream
+//                       .on("finish", () => resolve({ ID, path, filename }))
+//                       .on("error", reject)
+//                   );
+//                   }else{
+//                     console.log("file already exict");
+//                     return "file exict"
+//                   }
+//                 })
+//               } catch (error) {
+//                 console.log(error);
+//               }
+//             } else{
+//               try {
+//                 fs.mkdirSync(`./client/src/upload/${ID}/${type}/${folder}`)
+//                 console.log("Folder "+ folder +" is created");
+//                 fs.createWriteStream(`./client/src/upload/${ID}/${type}/${folder}/${filename}`)
+//                 console.log(`${filename} is uploaded`);
+//               } catch (error) {
+//                 console.log(error);
+//               }
+//             }
+//             })
+//           }else{
+//             try {
+//               fs.mkdirSync(`./client/src/upload/${ID}/${type}`)
+//               console.log("Folder "+ type +" is created");
+//               fs.mkdirSync(`./client/src/upload/${ID}/${type}/${folder}`)
+//               console.log("Folder "+ folder +" is created");
+//               fs.createWriteStream(`./client/src/upload/${ID}/${type}/${folder}/${filename}`)
+//               console.log(`${filename} is uploaded`);
+//             } catch (error) {
+//               console.log(error);
+//             }
+//           }
+//           })
+//         }else{
+//           try {
+//             fs.mkdirSync(`./client/src/upload/${ID}`)
+//             console.log("Folder "+ ID +" is created");
+//             fs.mkdirSync(`./client/src/upload/${ID}/${type}`)
+//             console.log("Folder "+ type +" is created");
+//             fs.mkdirSync(`./client/src/upload/${ID}/${type}/${folder}`)
+//             console.log("Folder "+ folder +" is created");
+//             fs.createWriteStream(`./client/src/upload/${ID}/${type}/${folder}/${filename}`)
+//             console.log(`${filename} is uploaded`);
+//           } catch (error) {
+//             console.log(error);
+//           }
+//         }
+//         })
+//     } else {
+//         console.log(" :(" + error.message);
+//         try
+//         {
+//             fs.mkdirSync("./client/src/upload/");
+//             console.log("Folder upload is created :D");
+//             fs.mkdirSync(`./client/src/upload/${ID}`)
+//             console.log("Folder "+ ID +" is created");
+//             fs.mkdirSync(`./client/src/upload/${ID}/${type}`)
+//             console.log("Folder "+ type +" is created :D");
+//             fs.mkdirSync(`./client/src/upload/${ID}/${type}/${folder}`)
+//             console.log("Folder "+ folder +" is created :D");
+//             fs.createWriteStream(`./client/src/upload/${ID}/${type}/${folder}/${filename}`)
+//             console.log(`${filename} is uploaded`);
+//             return filename
+//         }
+//         catch(e)
+//         {
+//             mkdirpath(path.dirname(dirPath));
+//             mkdirpath("./client/upload");
+//         }
+//     }
+//   });
+const storeUpload = (stream, filename, folder, ID, type) =>
+  fs.access(`./src/upload/${ID}/${type}/${folder}`, (error) => {
+    if (!error) {
+      try {
+        fs.access(
+          `./src/upload/${ID}/${type}/${folder}/${filename}`,
+          fs.F_OK,
+          (err) => {
+            if (err) {
+              fs.createWriteStream(
+                `./src/upload/${ID}/${type}/${folder}/${filename}`
+              );
+              console.log(`${filename} is uploaded`);
+              const path = `./src/upload/${ID}/${type}/${folder}/${filename}`;
+              return new Promise((resolve, reject) =>
+                stream
+                  .on("finish", () => resolve({ ID, path, filename }))
+                  .on("error", reject)
+              );
+            } else {
+              console.log("file already exict");
+              return "file exict";
+            }
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        fs.mkdirSync(`./src/upload/${ID}/${type}/${folder}`, {
+          recursive: true,
+        });
+        const strm = fs.createWriteStream(
+          `./src/upload/${ID}/${type}/${folder}/ore.txt`
+        );
+        strm.write("foop\n");
+        strm.write("bop\n");
+        strm.end();
+        var form = new formidable.IncomingForm();
+        form.parse(req, function (err, fields, files) {
+          res.write("File uploaded");
+          res.end();
+        });
+        fs.createWriteStream(
+          `./src/upload/${ID}/${type}/${folder}/${filename}`
+        );
+        console.log(`${filename} is uploaded`);
+        return filename;
+      } catch (e) {
+        console.log(e);
+        // fs.mkdirpath(path.dirname(dirPath));
+        // fs.mkdirpath("./client/upload");
+      }
+    }
+  });
 
 const resolvers = {
   Date: new GraphQLScalarType({
@@ -129,8 +274,21 @@ const resolvers = {
   },
 
   Mutation: {
+    singleDownload: async (parent, args) => {
+      if (args.file !== "") {
+        const path = args.file;
+        fs.createWriteStream(path).on("close", callback);
+        //const files1 = fs.rmdir(args.file);
+        request.head(path, (err, res, body) => {
+          request(path).pipe(fs.createWriteStream(path)).on("close", callback);
+        });
+        return true;
+      }
+    },
+
     singleUpload: async (parent, args) => {
       const { createReadStream, filename } = await args.file;
+      const file = await args.file;
       await storeUpload({ createReadStream, filename });
       return true;
     },
@@ -422,19 +580,52 @@ const resolvers = {
     },
     async createFormateur(root, args, { models }) {
       const cv_f = await args.cv_f;
-      const { createReadStream, filename } = cv_f;
-      await new Promise((res) =>
-        createReadStream()
-          .pipe(createWriteStream(path.join(__dirname, '../uploads', filename)))
-          .on('close', res)
+      const copie_cin = await args.copie_cin;
+      const copie_passeport = await args.copie_passeport;
+      const copie_RIB = await args.copie_RIB;
+      const stream = cv_f.createReadStream();
+      const upload_cv_f = await storeUpload(
+        stream,
+        cv_f.filename,
+        "cv_f",
+        args.code_formateur,
+        "formateur"
       );
-      const addFormateur = models.Formateur.create({
+      const upload_cin = await storeUpload(
+        copie_cin.createReadStream(),
+        copie_cin.filename,
+        "cin",
+        args.code_formateur,
+        "formateur"
+      );
+      const upload_passeport = await storeUpload(
+        copie_passeport.createReadStream(),
+        copie_passeport.filename,
+        "passeport",
+        args.code_formateur,
+        "formateur"
+      );
+      const upload_RIB_f = await storeUpload(
+        copie_RIB.createReadStream(),
+        copie_RIB.filename,
+        "RIB_f",
+        args.code_formateur,
+        "formateur"
+      );
+      const findCodeFormateur =
+        args.code_formateur &&
+        (await models.Formateur.findOne({
+          where: { code_formateur: args.code_formateur },
+        }));
+      if (findCodeFormateur)
+        throw new ApolloError("this Code Formateur is already created");
+      const addFormateur = await models.Formateur.create({
         code_formateur: args.code_formateur,
         nom_f: args.nom_f,
         prenom_f: args.prenom_f,
         classe_f: args.classe_f,
         fonction_f: args.fonction_f,
-        cv_f: args.cv_f,
+        cv_f: `${__dirname}/upload/${args.code_formateur}/formateur/cv_f/${cv_f.filename}`,
         email_f: args.email_f,
         tel_f: args.tel_f,
         NSS: args.NSS,
@@ -442,14 +633,20 @@ const resolvers = {
         adr_f: args.adr_f,
         date_dajout: args.date_dajout,
         cin_f: args.cin_f,
-        copie_cin: args.copie_cin,
+        copie_cin: `${__dirname}/upload/${args.code_formateur}/formateur/cin/${copie_cin.filename}`,
         passeport_f: args.passeport_f,
-        copie_passeport: args.copie_passeport,
+        copie_passeport: `${__dirname}/upload/${args.code_formateur}/formateur/passeport/${copie_passeport.filename}`,
         visa_f: args.visa_f,
         val_visa: args.val_visa,
         tarif_f: args.tarif_f,
         RIB_f: args.RIB_f,
-        copie_RIB: args.copie_RIB,
+        copie_RIB: `${__dirname}/upload/${args.code_formateur}/formateur/RIB_f/${copie_RIB.filename}`,
+      });
+      const addFormateurFormation = await models.Formateur_Formation.create({
+        FormationCIFormation: args.formationCIFormation,
+        FormateurCodeFormateur: args.code_formateur,
+        date_validation: "2020-01-01 00:00:00.000 +00:00",
+        validation_f: 1,
       });
       return addFormateur;
     },
@@ -870,7 +1067,7 @@ const resolvers = {
       return formateur.getFormation();
     },
     async validation(formateur) {
-      return formateur.getValidation();
+      return formateur.getValidations();
     },
   },
   Formation: {

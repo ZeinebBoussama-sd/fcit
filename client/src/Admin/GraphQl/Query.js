@@ -1,5 +1,18 @@
 import { gql } from "apollo-boost";
 
+export const GET_FORMATIONSOPTIONS = gql`
+  {
+    allFormations {
+      CI_formation
+      intitule
+      formateur {
+        code_formateur
+        nom_f
+      }
+    }
+  }
+`;
+
 export const GET_FORMATIONS = gql`
   {
     allFormations {

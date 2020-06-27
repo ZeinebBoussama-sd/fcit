@@ -1,13 +1,13 @@
-import React from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_FORMATEURS } from '../GraphQl/Query';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import AddFormateur from './AddFormateur';
-import { DELETE_FORMATEUR } from '../GraphQl/Mutation';
-import { Link } from 'react-router-dom';
-import WarningModal from '../component/WarningModal';
-import Tes from './Tes';
+import React from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { GET_FORMATEURS } from "../GraphQl/Query";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import AddFormateur from "./AddFormateur";
+import { DELETE_FORMATEUR } from "../GraphQl/Mutation";
+import { Link } from "react-router-dom";
+import WarningModal from "../component/WarningModal";
+import Tes from "./Tes";
 
 function Formateur() {
   const { loading, error, data, refetch } = useQuery(GET_FORMATEURS);
@@ -28,7 +28,7 @@ function Formateur() {
     refetch();
   };
   return (
-    <div className='mt-11'>
+    <div className="mt-11">
       {/* <Tes /> */}
       <AddFormateur refetch={refetch} />
       <div className="table-responsive">
@@ -47,7 +47,7 @@ function Formateur() {
               <th scope="col" className="col-1">
                 Classe
               </th>
-              <th scope="col" className="col-3">
+              <th scope="col" className="col-2">
                 Email
               </th>
               <th scope="col" className="col-1">
@@ -57,7 +57,10 @@ function Formateur() {
                 Salaire
               </th>
               <th scope="col" className="col-1">
-                Delete
+                --
+              </th>
+              <th scope="col" className="col-1">
+                --
               </th>
             </tr>
           </thead>
@@ -73,10 +76,21 @@ function Formateur() {
                 </Link>
                 <td className="col-2">{formateur.prenom_f}</td>
                 <td className="col-1">{formateur.classe_f}</td>
-                <td className="col-3">{formateur.email_f}</td>
+                <td className="col-2">{formateur.email_f}</td>
                 <td className="col-1">{formateur.tel_f}</td>
                 <td className="col-1">
                   {formateur.salaire_f ? formateur.salaire_f : "--"}
+                </td>
+                <td className="col-1">
+                  <center>
+                    <Link to={`/formateur/${formateur.code_formateur}`}>
+                      <FontAwesomeIcon
+                        icon={faInfoCircle}
+                        className="mr-1 pointer"
+                        color="yellow"
+                      />
+                    </Link>
+                  </center>
                 </td>
                 <td className="col-1">
                   <center>

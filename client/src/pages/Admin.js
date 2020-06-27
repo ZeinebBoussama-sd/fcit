@@ -18,6 +18,21 @@ import FormationItem from "../Admin/Formation/FormationItem";
 import IngenieurPedagogiueItem from "../Admin/IngenieurePedagogique/IngenieurPedagogiqueItem";
 import SupportItem from "../Admin/Support/SupportItem";
 import SessionItem from "../Admin/Session/SessionItem";
+import ThemeItem from "../Admin/Theme/ThemeItem";
+import Fichier from "../Admin/Fichier/Fichier";
+import FichierItem from "../Admin/Fichier/FichierItem";
+import Participant from "../Admin/Participant/Participant";
+import ParticipantItem from "../Admin/Participant/ParticpantItem";
+import Validation from "../Admin/Validation/Validation";
+import ValidationItem from "../Admin/Validation/ValidationItem";
+import MotCle from "../Admin/MotCle/MotCle";
+import MotCleItem from "../Admin/MotCle/MotCleItem";
+import Metier from "../Admin/Metier/Metier";
+import MetierItem from "../Admin/Metier/MetierItem";
+import DatePrevue from "../Admin/DatePrevue/DatePrevue";
+import DatePrevueItem from "../Admin/DatePrevue/DatePrevueItem";
+import Participer from "../Admin/Participer/Participer";
+import ParticiperItem from "../Admin/Participer/ParticiperItem";
 function Admin() {
   const routes = [
     {
@@ -31,6 +46,42 @@ function Admin() {
       exact: true,
       strict: false,
       component: () => <DemandeFormationItem />,
+    },
+    {
+      path: "/dateprevue",
+      exact: true,
+      strict: false,
+      component: () => <DatePrevue />,
+    },
+    {
+      path: "/dateprevue/:id",
+      exact: true,
+      strict: false,
+      component: () => <DatePrevueItem />,
+    },
+    {
+      path: "/fichier",
+      exact: true,
+      strict: false,
+      component: () => <Fichier />,
+    },
+    {
+      path: "/fichier/:id",
+      exact: true,
+      strict: false,
+      component: () => <FichierItem />,
+    },
+    {
+      path: "/motcle",
+      exact: true,
+      strict: false,
+      component: () => <MotCle />,
+    },
+    {
+      path: "/motcle/:id",
+      exact: true,
+      strict: false,
+      component: () => <MotCleItem />,
     },
     {
       path: "/demandeur",
@@ -58,6 +109,18 @@ function Admin() {
       component: () => <FormationItem />,
     },
     {
+      path: "/metier",
+      exact: true,
+      strict: false,
+      component: () => <Metier />,
+    },
+    {
+      path: "/metier/:id",
+      exact: true,
+      strict: false,
+      component: () => <MetierItem />,
+    },
+    {
       path: "/client",
       exact: true,
       strict: true,
@@ -76,6 +139,12 @@ function Admin() {
       component: () => <Theme />,
     },
     {
+      path: "/theme/:id",
+      exact: true,
+      strict: true,
+      component: () => <ThemeItem />,
+    },
+    {
       path: "/session",
       exact: true,
       strict: true,
@@ -86,6 +155,30 @@ function Admin() {
       exact: true,
       strict: true,
       component: () => <SessionItem />,
+    },
+    {
+      path: "/participant",
+      exact: true,
+      strict: true,
+      component: () => <Participant />,
+    },
+    {
+      path: "/participant/:id",
+      exact: true,
+      strict: true,
+      component: () => <ParticipantItem />,
+    },
+    {
+      path: "/participer",
+      exact: true,
+      strict: true,
+      component: () => <Participer />,
+    },
+    {
+      path: "/participer/:id",
+      exact: true,
+      strict: true,
+      component: () => <ParticiperItem />,
     },
 
     {
@@ -121,6 +214,18 @@ function Admin() {
       exact: true,
       strict: true,
       component: () => <SupportItem />,
+    },
+    {
+      path: "/validation",
+      exact: true,
+      strict: true,
+      component: () => <Validation />,
+    },
+    {
+      path: "/validation/:id",
+      exact: true,
+      strict: true,
+      component: () => <ValidationItem />,
     },
   ];
   return (

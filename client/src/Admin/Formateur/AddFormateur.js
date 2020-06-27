@@ -408,13 +408,6 @@ function AddFormateur(props) {
                           Date dajout
                         </label>
                         <Field
-                          // className={
-                          //   hasChanged
-                          //     ? errors.date_dajout
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="date_dajout"
                           type="date"
@@ -428,13 +421,6 @@ function AddFormateur(props) {
                           Cin f
                         </label>
                         <Field
-                          // className={
-                          //   hasChanged
-                          //     ? errors.cin_f
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="cin_f"
                           type="number"
@@ -448,13 +434,6 @@ function AddFormateur(props) {
                           copie cin
                         </label>
                         <Field
-                          // className={
-                          //   hasChanged
-                          //     ? errors.copie_cin
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="copie_cin"
                           type="file"
@@ -470,13 +449,6 @@ function AddFormateur(props) {
                         </label>
 
                         <Field
-                          // className={
-                          //   hasChanged
-                          //     ? errors.passeport_f
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="passeport_f"
                           type="text"
@@ -494,13 +466,6 @@ function AddFormateur(props) {
                         </label>
 
                         <Field
-                          // className={
-                          //   hasChanged
-                          //     ? errors.copie_passeport
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="copie_passeport"
                           type="file"
@@ -516,13 +481,6 @@ function AddFormateur(props) {
                         </label>
 
                         <Field
-                          // className={
-                          //   hasChanged
-                          //     ? errors.visa_f
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="visa_f"
                           type="text"
@@ -536,13 +494,6 @@ function AddFormateur(props) {
                           val_visa
                         </label>
                         <Field
-                          // className={
-                          //   hasChanged
-                          //     ? errors.val_visa
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="val_visa"
                           type="date"
@@ -557,13 +508,6 @@ function AddFormateur(props) {
                         </label>
 
                         <Field
-                          // className={
-                          //   hasChanged
-                          //     ? errors.tarif_f
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="tarif_f"
                           type="number"
@@ -578,13 +522,6 @@ function AddFormateur(props) {
                         </label>
 
                         <Field
-                          // className={
-                          //   hasChanged
-                          //     ? errors.RIB_f
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="RIB_f"
                           type="text"
@@ -599,13 +536,6 @@ function AddFormateur(props) {
                         </label>
 
                         <Field
-                          // className={
-                          //   hasChanged
-                          //     ? errors.copie_RIB
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="copie_RIB"
                           type="file"
@@ -621,13 +551,6 @@ function AddFormateur(props) {
 
                         <Field
                           component="select"
-                          // className={
-                          //   hasChanged
-                          //     ? errors.FormationCIFormation
-                          //       ? "form-control is-invalid"
-                          //       : "form-control is-valid"
-                          //     : "form-control text-input"
-                          // }
                           className="form-control"
                           name="FormationCIFormation"
                           multiple={false}

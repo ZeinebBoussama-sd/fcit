@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
-import { GET_THEME } from "../GraphQl/Query";
+import { GET_THEMES } from "../GraphQl/Query";
 import { ADD_FORMATION } from "../GraphQl/Mutation";
 import { FormationSchema } from "../../Utils/Validation";
 import deepEqual from "lodash.isequal";
@@ -10,7 +10,7 @@ function AddFormation(props) {
   const [active, setactive] = useState(false);
 
   const [addFormation] = useMutation(ADD_FORMATION);
-  const { loading, error, data } = useQuery(GET_THEME);
+  const { loading, error, data } = useQuery(GET_THEMES);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
@@ -84,16 +84,11 @@ function AddFormation(props) {
                         ThemeCodeTheme: values.ThemeCodeTheme,
                       },
                     });
-                    alert(JSON.stringify(values, null, 2));
-                    setactive(false);
                   } catch (e) {
                     console.log("e", e);
                   }
                   props.refetch();
                 }}
-                // validationSchema={Yup.object().shape({
-                //   email: Yup.string().email().required('Required'),
-                // })}
               >
                 {(props) => {
                   const {
@@ -214,28 +209,27 @@ function AddFormation(props) {
                         ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="Catagorie" className="col-form-label">
-                          Catagorie:
+                        <label htmlFor="Categorie" className="col-form-label">
+                          Categorie:
                         </label>
 
                         <Field
                           component="select"
-                          className={
-                            hasChanged
-                              ? errors.catagorie_formation
-                                ? "form-control is-invalid"
-                                : "form-control is-valid"
-                              : "form-control text-input"
-                          }
+                          className="form-control"
                           name="catagorie_formation"
                           onChange={handleChange}
                           value={values.catagorie_formation}
                         >
-                          <option value="">---Choose Catégorie----</option>
+                          <option value="">----choose Categorie----</option>
                           <option>Best</option>
                           <option>Classique</option>
                         </Field>
+                        {errors.catagorie_formation &&
+                        touched.catagorie_formation ? (
+                          <div>{errors.catagorie_formation}</div>
+                        ) : null}
                       </div>
+
                       <div className="form-group">
                         <label htmlFor="Prix" className="col-form-label">
                           Prix:

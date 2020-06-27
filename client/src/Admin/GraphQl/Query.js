@@ -89,9 +89,17 @@ export const GET_CLIENT = gql`
   }
 `;
 
-export const GET_THEME = gql`
+export const GET_THEMES = gql`
   {
     allThemes {
+      code_theme
+      nom_theme
+    }
+  }
+`;
+export const GET_THEME = gql`
+  query findtheme($code_theme: String) {
+    theme(code_theme: $code_theme) {
       code_theme
       nom_theme
     }
@@ -234,6 +242,7 @@ export const GET_SUPPORT = gql`
 export const GET_SESSIONS = gql`
   {
     allSessions {
+      CI_session
       code_session
       type_sess
       date_deb_sess
@@ -282,7 +291,7 @@ export const GET_SESSION = gql`
         titre_support
       }
       participant {
-        nom_partcipant
+        nom_participant
       }
     }
   }
@@ -302,12 +311,15 @@ export const GET_DEMANDE_FORMATIONS = gql`
       hr_fin_j_prev
       hr_j_prev
       client {
+        code_client
         nom_client
       }
       formation {
+        CI_formation
         intitule
       }
       demandeur {
+        code_demandeur
         prenom_demandeur
       }
     }
@@ -327,6 +339,18 @@ export const GET_DEMANDE_FORMATION = gql`
       hr_deb_j_prev
       hr_fin_j_prev
       hr_j_prev
+      client {
+        code_client
+        nom_client
+      }
+      formation {
+        CI_formation
+        intitule
+      }
+      demandeur {
+        code_demandeur
+        prenom_demandeur
+      }
     }
   }
 `;
@@ -389,6 +413,10 @@ export const GET_FICHIERS = gql`
       taille_max
       url_fichier
       nature_support
+      support {
+        code_support
+        titre_support
+      }
     }
   }
 `;
@@ -401,6 +429,10 @@ export const GET_FICHIER = gql`
       taille_max
       url_fichier
       nature_support
+      support {
+        code_support
+        titre_support
+      }
     }
   }
 `;
@@ -411,8 +443,8 @@ export const GET_PARTICIPANT = gql`
       nom_participant
       prenom_participant
       carte_identite
-      email_demandeur
       client {
+        code_client
         nom_client
       }
     }
@@ -425,7 +457,7 @@ export const GET_PARTICIPANTS = gql`
       nom_participant
       prenom_participant
       carte_identite
-      email_demandeur
+
       client {
         nom_client
       }
@@ -434,42 +466,140 @@ export const GET_PARTICIPANTS = gql`
 `;
 export const GET_VALIDATIONS = gql`
   {
-    allvalidations {
+    allValidations {
       code_val
       date_val
       remarque
       decision_r
       decision_f
       formateur {
+        code_formateur
         nom_f
       }
       ingenieurpedagogique {
+        code_IP
         nom_ing
       }
       support {
+        code_support
         titre_support
       }
     }
   }
 `;
 export const GET_VALIDATION = gql`
-  query findvalidations($code_val: ID) {
-    valiadtion(code_val: $code_val) {
-      allvalidations {
-        code_val
-        date_val
-        remarque
-        decision_r
-        decision_f
-        formateur {
-          nom_f
-        }
-        ingenieurpedagogique {
-          nom_ing
-        }
-        support {
-          titre_support
-        }
+  query findvalidation($code_val: ID) {
+    validation(code_val: $code_val) {
+      code_val
+      date_val
+      remarque
+      decision_r
+      decision_f
+      formateur {
+        code_formateur
+        nom_f
+      }
+      ingenieurpedagogique {
+        code_IP
+        nom_ing
+      }
+      support {
+        code_support
+        titre_support
+      }
+    }
+  }
+`;
+export const GET_METIER = gql`
+  query findmetier($code_metier: Int) {
+    metier(code_metier: $code_metier) {
+      code_metier
+      intitule_metier
+    }
+  }
+`;
+export const GET_METIERS = gql`
+  {
+    allMetiers {
+      code_metier
+      intitule_metier
+    }
+  }
+`;
+export const GET_MOTCLE = gql`
+  query findmotcle($motcle: String) {
+    motcle(motcle: $motcle) {
+      motcle
+      formation {
+        CI_formation
+        intitule
+      }
+    }
+  }
+`;
+export const GET_MOTCLES = gql`
+  {
+    allMotCles {
+      motcle
+      formation {
+        CI_formation
+        intitule
+      }
+    }
+  }
+`;
+export const GET_DATE_PREVUE = gql`
+  query finddateprevue($date_prev: Date) {
+    dateprevue(date_prev: $date_prev) {
+      date_prev
+    }
+  }
+`;
+export const GET_DATE_PREVUES = gql`
+  {
+    allDatePrevues {
+      date_prev
+    }
+  }
+`;
+export const GET_PARTICIPER = gql`
+  query findparticiper(
+    $ParticipantCodeParticipant: Int
+    $SessionCISession: Int
+  ) {
+    paticiper(
+      ParticipantCodeParticipant: $ParticipantCodeParticipant
+      SessionCISession: $SessionCISession
+    ) {
+      rapport_eval
+      note_QCM
+      date_eval
+      session {
+        CI_session
+        code_session
+      }
+      participant {
+        code_participant
+        nom_participant
+        prenom_participant
+      }
+    }
+  }
+`;
+export const GET_PARTICIPERS = gql`
+  {
+    allParticipers {
+      rapport_eval
+      note_QCM
+      date_eval
+      session {
+        CI_session
+        code_session
+      }
+      participant {
+        code_participant
+        nom_participant
+        prenom_participant
       }
     }
   }

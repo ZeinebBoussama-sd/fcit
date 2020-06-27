@@ -190,7 +190,7 @@ function AddIngenieurPedagogique(props) {
                               : "form-control text-input"
                           }
                           name="tel_ing"
-                          type="number"
+                          type="text"
                         />
                         {errors.tel_ing && touched.tel_ing ? (
                           <div>{errors.tel_ing}</div>

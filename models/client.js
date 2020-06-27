@@ -17,8 +17,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       email_client: { type: DataTypes.STRING, allowNull: false },
-      tel_client: { type: DataTypes.STRING(20), allowNull: false },
-      adr_client: { type: DataTypes.STRING(30), allowNull: false },
+      tel_client: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        unique: true,
+      },
+      adr_client: {
+        type: DataTypes.STRING(30),
+        allowNull: false,
+        unique: true,
+      },
     },
     {}
   );

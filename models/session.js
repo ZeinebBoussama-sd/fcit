@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
   const Session = sequelize.define(
-    'Session',
+    "Session",
     {
       CI_session: {
         type: DataTypes.INTEGER,
@@ -49,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     Session.belongsTo(models.Formateur);
     Session.belongsTo(models.Support);
     Session.belongsTo(models.Client);
+    Session.belongsToMany(models.Participant, { through: "Participer" });
   };
   return Session;
 };

@@ -1,6 +1,7 @@
 import React from "react";
 function Item(props) {
   const data = props.participant ? props.participant : null;
+  console.log(data);
   return (
     <div className="container ">
       <div className="card container">
@@ -14,11 +15,11 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-2">CIN:</b>
-          <p className="col">{data && data.carte_identiter}</p>
+          <p className="col">{data && data.carte_identite}</p>
         </div>
         <div className="row">
-          <b className="col-2">Tel:</b>
-          <p className="col">{data && data.client.nom_client}</p>
+          <b className="col-2">Client:</b>
+          <p className="col">{data && data.client && data.client.nom_client}</p>
         </div>
       </div>
     </div>

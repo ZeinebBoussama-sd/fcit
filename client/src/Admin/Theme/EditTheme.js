@@ -6,6 +6,10 @@ import deepEqual from "lodash.isequal";
 import { ThemeSchema } from "../../Utils/Validation";
 function EditTheme(props) {
   const [updateTheme, res] = useMutation(UPDATE_THEME);
+  const theme = props.theme ? props.theme : null;
+  const close = () => {
+    props.setEdit(false);
+  };
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -61,6 +65,7 @@ function EditTheme(props) {
                   }
                   name="code_theme"
                   type="text"
+                  disabled
                 />
                 {errors.code_theme && touched.code_theme ? (
                   <div>{errors.code_theme}</div>
@@ -92,6 +97,9 @@ function EditTheme(props) {
                   type="button"
                   className="btn btn-secondary"
                   data-dismiss="modal"
+                  onClick={() => {
+                    close();
+                  }}
                 >
                   Close
                 </button>

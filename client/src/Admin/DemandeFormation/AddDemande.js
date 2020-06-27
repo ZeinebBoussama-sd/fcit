@@ -303,7 +303,7 @@ function AddDemande(props) {
                               : "form-control text-input"
                           }
                           name="hr_j_prev"
-                          type="text"
+                          type="number"
                         />
                         {errors.hr_j_prev && touched.hr_j_prev ? (
                           <div>{errors.hr_j_prev}</div>
@@ -394,7 +394,7 @@ function AddDemande(props) {
                           disabled={isSubmitting}
                           className="btn btn-primary"
                         >
-                          Add Demandeur
+                          Add Demande
                         </button>
                       </div>
                     </form>

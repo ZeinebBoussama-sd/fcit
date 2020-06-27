@@ -56,6 +56,7 @@ export const UPDATE_CLIENT = gql`
     $adr_client: String!
     $personne: Int
     $societe: String
+    $responsable: String
   ) {
     updateClient(
       code_client: $code_client
@@ -66,6 +67,7 @@ export const UPDATE_CLIENT = gql`
       adr_client: $adr_client
       personne: $personne
       societe: $societe
+      responsable: $responsable
     ) {
       client {
         code_client
@@ -182,8 +184,7 @@ export const ADD_THEME = gql`
 export const UPDATE_THEME = gql`
   mutation update_theme($code_theme: String!, $nom_theme: String!) {
     updateTheme(code_theme: $code_theme, nom_theme: $nom_theme) {
-      code_theme
-      nom_theme
+      code
     }
   }
 `;
@@ -204,7 +205,7 @@ export const ADD_SESSION = gql`
     $duree_sess: Int!
     $hr_deb_j: String!
     $hr_fin_j: String!
-    $hr_j_session: String!
+    $hr_j_session: Int!
     $lieu_sess: String!
     $prix_session: Float
     $honoraire_sess: Float
@@ -272,7 +273,7 @@ export const UPDATE_SESSION = gql`
     $duree_sess: Int!
     $hr_deb_j: String!
     $hr_fin_j: String!
-    $hr_j_session: String!
+    $hr_j_session: Int!
     $lieu_sess: String!
     $prix_session: Float
     $honoraire_sess: Float
@@ -477,7 +478,7 @@ export const ADD_INGENIEURPEDAGOGIQUE = gql`
     $prenom_ing: String!
     $cv_ing: String!
     $email_ing: String!
-    $tel_ing: Int!
+    $tel_ing: String!
     $NSS_ing: Int!
     $salaire_ing: Float!
     $specialite_ing: String!
@@ -508,17 +509,19 @@ export const ADD_INGENIEURPEDAGOGIQUE = gql`
 `;
 export const UPDATE_INGENIEURPEDAGOGIQUE = gql`
   mutation update_ingenieurpedagogique(
+    $code_IP: Int
     $nom_ing: String!
     $prenom_ing: String!
     $cv_ing: String!
     $email_ing: String!
-    $tel_ing: Int!
+    $tel_ing: String!
     $NSS_ing: Int!
     $salaire_ing: Float!
     $specialite_ing: String!
     $adr_ing: String!
   ) {
     updateIngenieurPedagogique(
+      code_IP: $code_IP
       nom_ing: $nom_ing
       prenom_ing: $prenom_ing
       cv_ing: $cv_ing
@@ -529,15 +532,7 @@ export const UPDATE_INGENIEURPEDAGOGIQUE = gql`
       specialite_ing: $specialite_ing
       adr_ing: $adr_ing
     ) {
-      nom_ing
-      prenom_ing
-      cv_ing
-      email_ing
-      tel_ing
-      NSS_ing
-      salaire_ing
-      specialite_ing
-      adr_ing
+      code
     }
   }
 `;
@@ -558,10 +553,17 @@ export const ADD_SUPPORT = gql`
   }
 `;
 export const UPDATE_SUPPORT = gql`
-  mutation update_support($titre_support: String!, $date_support: Date!) {
-    updateSupport(titre_support: $titre_support, date_support: $date_support) {
-      titre_support
-      date_support
+  mutation update_support(
+    $code_support: Int
+    $titre_support: String!
+    $date_support: Date!
+  ) {
+    updateSupport(
+      code_support: $code_support
+      titre_support: $titre_support
+      date_support: $date_support
+    ) {
+      code
     }
   }
 `;
@@ -596,22 +598,20 @@ export const ADD_DEMANDEUR = gql`
 `;
 export const UPDATE_DEMANDEUR = gql`
   mutation update_demandeur(
+    $code_demandeur: Int
     $nom_demandeur: String!
     $prenom_demandeur: String!
     $email_demandeur: String!
     $tel_demandeur: String!
   ) {
     updateDemandeur(
+      code_demandeur: $code_demandeur
       nom_demandeur: $nom_demandeur
       prenom_demandeur: $prenom_demandeur
       email_demandeur: $email_demandeur
       tel_demandeur: $tel_demandeur
     ) {
-      nom_demandeur
-      code_demandeur
-      prenom_demandeur
-      email_demandeur
-      tel_demandeur
+      code
     }
   }
 `;
@@ -671,8 +671,9 @@ export const ADD_DEMANDE = gql`
     }
   }
 `;
-export const UPDATE_DEMANDE = gql`
-  mutation update_demande(
+export const UPDATE_DEMANDEfORMATION = gql`
+  mutation update_demandeformation(
+    $code_demande: ID
     $date_demande: Date!
     $type_demande: String!
     $etat_demande: String!
@@ -688,6 +689,7 @@ export const UPDATE_DEMANDE = gql`
     $DemandeurCodeDemandeur: Int
   ) {
     updateDemandeFormation(
+      code_demande: $code_demande
       date_demande: $date_demande
       type_demande: $type_demande
       etat_demande: $etat_demande
@@ -702,24 +704,12 @@ export const UPDATE_DEMANDE = gql`
       FormationCIFormation: $FormationCIFormation
       DemandeurCodeDemandeur: $DemandeurCodeDemandeur
     ) {
-      date_demande
-      type_demande
-      etat_demande
-      prix_prevu
-      lieu_prevu
-      duree_prevu
-      mode_demande
-      hr_deb_j_prev
-      hr_fin_j_prev
-      hr_j_prev
-      ClientCodeClient
-      FormationCIFormation
-      DemandeurCodeDemandeur
+      code
     }
   }
 `;
 export const DELETE_DEMANDE = gql`
-  mutation deletDemande($code_demande: Int!) {
+  mutation deleteDemande($code_demande: Int!) {
     deleteDemande(code_demande: $code_demande) {
       demandeformation {
         code_demande
@@ -729,41 +719,39 @@ export const DELETE_DEMANDE = gql`
 `;
 export const ADD_PARTICIPANT = gql`
   mutation create_participant(
-    $nom_partcipant: String!
-    $prenom_partcipant: String!
+    $nom_participant: String!
+    $prenom_participant: String!
     $carte_identite: Int!
     $ClientCodeClient: String
   ) {
     createParticipant(
-      nom_partcipant: $nom_partcipant
-      prenom_partcipant: $prenom_partcipant
+      nom_participant: $nom_participant
+      prenom_participant: $prenom_participant
       carte_identite: $carte_identite
       ClientCodeClient: $ClientCodeClient
     ) {
-      nom_partcipant
-      prenom_partcipant
+      nom_participant
+      prenom_participant
       carte_identite
-      ClientCodeClient
     }
   }
 `;
 export const UPDATE_PARTICIPANT = gql`
   mutation update_participant(
-    $nom_partcipant: String!
-    $prenom_partcipant: String!
+    $code_participant: Int!
+    $nom_participant: String!
+    $prenom_participant: String!
     $carte_identite: Int!
     $ClientCodeClient: String
   ) {
     updateParticipant(
-      nom_partcipant: $nom_partcipant
-      prenom_partcipant: $prenom_partcipant
+      code_participant: $code_participant
+      nom_participant: $nom_participant
+      prenom_participant: $prenom_participant
       carte_identite: $carte_identite
       ClientCodeClient: $ClientCodeClient
     ) {
-      nom_partcipant
-      prenom_partcipant
-      carte_identite
-      ClientCodeClient
+      code
     }
   }
 `;
@@ -798,13 +786,13 @@ export const ADD_FICHIER = gql`
       taille_max
       url_fichier
       nature_support
-      SupportCodeSupport
     }
   }
 `;
 
 export const UPDATE_FICHIER = gql`
   mutation update_fichier(
+    $code_fichier: Int
     $nom_fichier: String!
     $type_fichier: String!
     $taille_max: Int!
@@ -813,6 +801,7 @@ export const UPDATE_FICHIER = gql`
     $SupportCodeSupport: Int
   ) {
     updateFichier(
+      code_fichier: $code_fichier
       nom_fichier: $nom_fichier
       type_fichier: $type_fichier
       taille_max: $taille_max
@@ -820,12 +809,7 @@ export const UPDATE_FICHIER = gql`
       nature_support: $nature_support
       SupportCodeSupport: $SupportCodeSupport
     ) {
-      nom_fichier
-      type_fichier
-      taille_max
-      url_fichier
-      nature_support
-      SupportCodeSupport
+      code
     }
   }
 `;
@@ -877,7 +861,7 @@ export const UPDATE_VALIDATION = gql`
     $IngenieurPedagogiqueCodeIP: Int
     $SupportCodeSupport: Int
   ) {
-    createValidation(
+    updateValidation(
       date_val: $date_val
       remarque: $remarque
       decision_r: $decision_r
@@ -886,13 +870,7 @@ export const UPDATE_VALIDATION = gql`
       IngenieurPedagogiqueCodeIP: $IngenieurPedagogiqueCodeIP
       SupportCodeSupport: $SupportCodeSupport
     ) {
-      date_val
-      remarque
-      decision_r
-      decision_f
-      FormateurCodeFormateur
-      IngenieurPedagogiqueCodeIP
-      SupportCodeSupport
+      code
     }
   }
 `;
@@ -901,6 +879,201 @@ export const DELETE_VALIDATION = gql`
     deleteValidation(code_val: $code_val) {
       validation {
         code_val
+      }
+    }
+  }
+`;
+
+export const ADD_DATEPREEVUE = gql`
+  mutation create_dateprevue($date_prev: Date!) {
+    createDatePrevue(date_prev: $date_prev) {
+      date_prev
+    }
+  }
+`;
+export const UPDATE_DATEPREVUE = gql`
+  mutation update_dateprevue(
+    $date_prev: Date!
+    $DemandeFormationCodeDemande: Int
+  ) {
+    updateDatePrevue(
+      date_prev: $date_prev
+      DemandeFormationCodeDemande: $DemandeFormationCodeDemande
+    ) {
+      code
+    }
+  }
+`;
+export const DELETE_DATEPREVUE = gql`
+  mutation deleteDatePrevue($date_prev: Int!) {
+    deleteDatePrevue(date_prev: $date_prev) {
+      dateprevue {
+        date_prev
+      }
+    }
+  }
+`;
+export const ADD_METIER = gql`
+  mutation create_metier($code_metier: Int!, $intitule_metier: String!) {
+    createMetier(code_metier: $code_metier, intitule_metier: $intitule_metier) {
+      code_metier
+      intitule_metier
+    }
+  }
+`;
+export const UPDATE_METIER = gql`
+  mutation update_metier($code_metier: Int!, $intitule_metier: String!) {
+    updateMetier(code_metier: $code_metier, intitule_metier: $intitule_metier) {
+      code
+    }
+  }
+`;
+export const DELETE_METIER = gql`
+  mutation deleteMetier($code_metier: Int!) {
+    deleteMetier(code_metier: $code_metier) {
+      metier {
+        code_metier
+      }
+    }
+  }
+`;
+export const ADD_PARTICIPER = gql`
+  mutation create_participer(
+    $rapport_eval: String!
+    $note_QCM: Float!
+    $date_eval: Date!
+    $ParticipantCodeParticipant: Int
+    $SessionCISession: Int
+  ) {
+    createParticiper(
+      rapport_eval: $rapport_eval
+      note_QCM: $note_QCM
+      date_eval: $date_eval
+      ParticipantCodeParticipant: $ParticipantCodeParticipant
+      SessionCISession: $SessionCISession
+    ) {
+      rapport_eval
+      note_QCM
+      date_eval
+      ParticipantCodeParticipant
+      SessionCISession
+    }
+  }
+`;
+export const UPDATE_PARTICIPER = gql`
+  mutation update_participer(
+    $rapport_eval: String!
+    $note_QCM: Float!
+    $date_eval: Date!
+    $ParticipantCodeParticipant: Int
+    $SessionCISession: Int
+  ) {
+    updateParticiper(
+      rapport_eval: $rapport_eval
+      note_QCM: $note_QCM
+      date_eval: $date_eval
+      ParticipantCodeParticipant: $ParticipantCodeParticipant
+      SessionCISession: $SessionCISession
+    ) {
+      code
+    }
+  }
+`;
+export const DELETE_PARTICIPER = gql`
+  mutation deleteParticiper(
+    $ParticipantCodeParticipant: Int
+    $SessionCISession: Int
+  ) {
+    deletParticiper(
+      ParticipantCodeParticipant: $ParticipantCodeParticipant
+      SessionCISession: $SessionCISession
+    ) {
+      session {
+        CI_session
+      }
+      participant {
+        code_participant
+      }
+    }
+  }
+`;
+export const ADD_MOTCLE = gql`
+  mutation create_motcle($motcle: String, $FormationCIFormation: Int) {
+    createMotCle(motcle: $motcle, FormationCIFormation: $FormationCIFormation) {
+      motcle
+      FormationCIFormation
+    }
+  }
+`;
+export const UPDATE_MOT_CLE = gql`
+  mutation update_motcle($motcle: String!, $FormationCIFormation: Int) {
+    updateMotCle(motcle: $motcle, FormationCIFormation: $FormationCIFormation) {
+      code
+    }
+  }
+`;
+export const DELETE_MOTCLE = gql`
+  mutation deleteMotcle($motcle: Int!) {
+    deleteMotCle(motcle: $motcle) {
+      motcle {
+        motcle
+      }
+    }
+  }
+`;
+export const ADD_FORMATEUR_FORMATION = gql`
+  mutation create_formateur_formation(
+    $validation_f: Boolean!
+    $date_validation: Date!
+    $FormationCIFormation: Int
+    $FormateurCodeFormateur: String
+  ) {
+    createMotCle(
+      validation_f: $validation_f
+      date_validation: $date_validation
+      FormationCIFormation: $FormationCIFormation
+      FormateurCodeFormateur: $FormateurCodeFormateur
+    ) {
+      validation_f
+      date_validation
+      FormationCIFormation
+      FormateurCodeFormateur
+    }
+  }
+`;
+
+export const UPDATE_FORMATEUR_FORMATION = gql`
+  mutation update_formateur_formation(
+    $validation_f: Boolean!
+    $date_validation: Date!
+    $FormationCIFormation: Int
+    $FormateurCodeFormateur: String
+  ) {
+    updateFormateur_Formation(
+      validation_f: $validation_f
+      date_validation: $date_validation
+      FormationCIFormation: $FormationCIFormation
+      FormateurCodeFormateur: $FormateurCodeFormateur
+    ) {
+      code
+    }
+  }
+`;
+
+export const DELETE_FORMATEUR_FORMATION = gql`
+  mutation deleteFormateur_formation(
+    $FormationCIFormation: Int
+    $FormateurCodeFormateur: String
+  ) {
+    deleteFormateur_Formation(
+      FormationCIFormation: $FormationCIFormation
+      FormateurCodeFormateur: $FormateurCodeFormateur
+    ) {
+      formation {
+        CI_formation
+      }
+      formateur {
+        code_formateur
       }
     }
   }

@@ -41,7 +41,7 @@ function SupportItem() {
         ) : (
           <EditSupport
             className=""
-            id="navbarSupportedContent"
+            id={id}
             support={support}
             refetch={refetch}
             setEdit={setEdit}

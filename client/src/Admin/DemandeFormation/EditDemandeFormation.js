@@ -1,19 +1,21 @@
 import React from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
-import { UPDATE_DEMANDE } from "../GraphQl/Mutation";
+import { UPDATE_DEMANDEfORMATION } from "../GraphQl/Mutation";
 import { GET_FORMATIONS, GET_CLIENTS, GET_DEMANDEURS } from "../GraphQl/Query";
+import { etatList } from "../../Utils/Enums";
 
 import deepEqual from "lodash.isequal";
 import { DemandeSchema } from "../../Utils/Validation";
 function EditDemande(props) {
-  const [updateDemande, res] = useMutation(UPDATE_DEMANDE);
+  const [updateDemande, res] = useMutation(UPDATE_DEMANDEfORMATION);
   const GetFormation = useQuery(GET_FORMATIONS);
   const GetClient = useQuery(GET_CLIENTS);
   const GetDemandeur = useQuery(GET_DEMANDEURS);
   const demandeformation = props.demandeformation
     ? props.demandeformation
     : null;
+
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -29,17 +31,19 @@ function EditDemande(props) {
           hr_fin_j_prev: demandeformation && demandeformation.hr_fin_j_prev,
           hr_j_prev: demandeformation && demandeformation.hr_j_prev,
           ClientCodeClient:
-            demandeformation && demandeformation.ClientCodeClient,
+            demandeformation && demandeformation.client.code_client,
           FormationCIFormation:
-            demandeformation && demandeformation.FormationCIFormation,
+            demandeformation && demandeformation.formation.CI_formation,
           DemandeurCodeDemandeur:
-            demandeformation && demandeformation.DemandeurCodeDemandeur,
+            demandeformation && demandeformation.demandeur.code_demandeur,
         }}
         validationSchema={DemandeSchema}
         onSubmit={async (values) => {
           try {
+            debugger;
             await updateDemande({
               variables: {
+                code_demande: demandeformation.code_demande,
                 date_demande: values.date_demande,
                 type_demande: values.type_demande,
                 etat_demande: values.etat_demande,
@@ -127,14 +131,7 @@ function EditDemande(props) {
                 <label htmlFor="Etat" className="col-form-label">
                   Etat:
                 </label>
-                <input
-                  required
-                  type="text"
-                  className="form-control"
-                  id="etat_demande"
-                  onChange={handleChange}
-                  value={values.etat_demande}
-                />
+
                 <Field
                   component="select"
                   className="form-control"
@@ -143,9 +140,13 @@ function EditDemande(props) {
                   value={values.etat_demande}
                 >
                   <option value="">----choose Etat----</option>
-                  <option>Refusée</option>
-                  <option>En cours</option>
-                  <option>Validée</option>
+                  {etatList.map((etat, idx) => {
+                    return (
+                      <option key={idx} values={etat}>
+                        {etat}
+                      </option>
+                    );
+                  })}
                 </Field>
               </div>
               <div className="form-group">
@@ -221,8 +222,8 @@ function EditDemande(props) {
                   value={values.mode_demande}
                 >
                   <option value="">----choose Mode----</option>
-                  <option>Présentielle</option>
-                  <option>En Ligne</option>
+                  <option value="Présentielle">Présentielle</option>
+                  <option value="En Ligne">En Ligne</option>
                 </Field>
               </div>
               <div className="form-group">
@@ -279,7 +280,7 @@ function EditDemande(props) {
                       : "form-control text-input"
                   }
                   name="hr_j_prev"
-                  type="text"
+                  type="number"
                 />
                 {errors.hr_j_prev && touched.hr_j_prev ? (
                   <div>{errors.hr_j_prev}</div>
@@ -370,7 +371,7 @@ function EditDemande(props) {
                   disabled={isSubmitting}
                   className="btn btn-primary"
                 >
-                  Add Demandeur
+                  Update Demande
                 </button>
               </div>
             </form>

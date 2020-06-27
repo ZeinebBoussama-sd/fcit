@@ -8,7 +8,9 @@ import { SupportSchema } from "../../Utils/Validation";
 function EditSupport(props) {
   const [updateSupport, res] = useMutation(UPDATE_SUPPORT);
   const support = props.support ? props.support : null;
-
+  const close = () => {
+    props.setEdit(false);
+  };
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -21,6 +23,7 @@ function EditSupport(props) {
           try {
             await updateSupport({
               variables: {
+                code_support: parseInt(props.id),
                 titre_support: values.titre_support,
                 date_support: values.date_support,
               },
@@ -62,7 +65,7 @@ function EditSupport(props) {
                         : "form-control is-valid"
                       : "form-control text-input"
                   }
-                  name="code_fotitre_supportrmateur"
+                  name="titre_support"
                   type="text"
                 />
                 {errors.titre_support && touched.titre_support ? (
@@ -96,6 +99,9 @@ function EditSupport(props) {
                   type="button"
                   className="btn btn-secondary"
                   data-dismiss="modal"
+                  onClick={() => {
+                    close();
+                  }}
                 >
                   Close
                 </button>

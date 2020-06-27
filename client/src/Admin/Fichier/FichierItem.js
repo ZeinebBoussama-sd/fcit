@@ -41,7 +41,7 @@ function FichierItem() {
         ) : (
           <EditFichier
             className=""
-            id="navbarSupportedContent"
+            id={id}
             fichier={fichier}
             refetch={refetch}
             setEdit={setEdit}

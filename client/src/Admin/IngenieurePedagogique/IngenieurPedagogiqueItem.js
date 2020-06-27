@@ -44,7 +44,7 @@ function IngenieurPedagogiueItem() {
         ) : (
           <EditIngenieurPedadogique
             className=""
-            id="navbarSupportedContent"
+            id={id}
             ingenieurpedagogique={ingenieurpedagogique}
             refetch={refetch}
             setEdit={setEdit}

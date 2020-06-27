@@ -18,8 +18,6 @@ function AddValidation(props) {
   const GetFormateurs = useQuery(GET_FORMATEURS);
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :{error}(</p>;
   return (
     <div>
       <button
@@ -142,7 +140,7 @@ function AddValidation(props) {
                               : "form-control text-input"
                           }
                           name="decision_r"
-                          type="boolean"
+                          type="number"
                         />
                         {errors.decision_r && touched.decision_r ? (
                           <div>{errors.decision_r}</div>
@@ -181,7 +179,7 @@ function AddValidation(props) {
                               : "form-control text-input"
                           }
                           name="remarque"
-                          type="number"
+                          type="text"
                         />
                         {errors.remarque && touched.remarque ? (
                           <div>{errors.remarque}</div>
@@ -235,7 +233,7 @@ function AddValidation(props) {
                           multiple={false}
                         >
                           <option value="">---choose ingenieur---</option>
-                          {Getingenieurpedagogique.date &&
+                          {Getingenieurpedagogique.data &&
                             Getingenieurpedagogique.data.allIngenieurPedagogiques.map(
                               (ingenieurpedagogique) => {
                                 return (
@@ -266,7 +264,7 @@ function AddValidation(props) {
                         >
                           <option value="">---choose support---</option>
                           {GetSupportMini.data &&
-                            GetSupportMini.data.allSupportss.map((support) => {
+                            GetSupportMini.data.allSupports.map((support) => {
                               return (
                                 <option
                                   key={support.code_support}

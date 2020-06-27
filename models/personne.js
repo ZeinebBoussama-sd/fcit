@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     cin_p: {
       type: DataTypes.INTEGER(8),
       allowNull: false,
+      unique: true,
     },
   });
   Personne.associate = function (models) {

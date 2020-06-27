@@ -12,6 +12,9 @@ function EditIngenieurPedagogique(props) {
   const ingenieurpedagogique = props.ingenieurpedagogique
     ? props.ingenieurpedagogique
     : null;
+  const close = () => {
+    props.setEdit(false);
+  };
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -32,6 +35,7 @@ function EditIngenieurPedagogique(props) {
           try {
             await updateIngenieurPedagogique({
               variables: {
+                code_IP: parseInt(props.id),
                 nom_ing: values.nom_ing,
                 prenom_ing: values.prenom_ing,
                 cv_ing: values.cv_ing,
@@ -161,7 +165,7 @@ function EditIngenieurPedagogique(props) {
                       : "form-control text-input"
                   }
                   name="tel_ing"
-                  type="number"
+                  type="text"
                 />
                 {errors.tel_ing && touched.tel_ing ? (
                   <div>{errors.tel_ing}</div>
@@ -252,6 +256,9 @@ function EditIngenieurPedagogique(props) {
                   type="button"
                   className="btn btn-secondary"
                   data-dismiss="modal"
+                  onClick={() => {
+                    close();
+                  }}
                 >
                   Close
                 </button>

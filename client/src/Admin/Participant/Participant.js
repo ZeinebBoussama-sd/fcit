@@ -5,6 +5,8 @@ import AddParticipant from "./AddParticipant";
 import { DELETE_PARTICIPANT } from "../GraphQl/Mutation";
 import { Link } from "react-router-dom";
 import WarningModal from "../component/WarningModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 function Participant() {
   const { loading, error, data, refetch } = useQuery(GET_PARTICIPANTS);
   const [deleteParticipant, res] = useMutation(DELETE_PARTICIPANT);
@@ -15,7 +17,7 @@ function Participant() {
     try {
       await deleteParticipant({
         variables: {
-          code_participant: values,
+          code_participant: parseInt(values),
         },
       });
     } catch (error) {
@@ -23,6 +25,7 @@ function Participant() {
     }
     refetch();
   };
+  console.log(data);
   return (
     <div className="mt-11">
       <AddParticipant refetch={refetch} />
@@ -30,45 +33,58 @@ function Participant() {
         <table className="mt-2 table table-hover table-fixed">
           <thead>
             <tr>
-              <th scope="col" className="col-1">
-                code
-              </th>
-              <th scope="col" className="col-2">
+              <th scope="col" className="col-3">
                 Nom
               </th>
-              <th scope="col" className="col-2">
+              <th scope="col" className="col-3">
                 Prenom
               </th>
-              <th scope="col" className="col-1">
+              <th scope="col" className="col-2">
                 CIN
               </th>
-              <th scope="col" className="col-1">
-                Eai
+              <th scope="col" className="col-2">
+                Client
               </th>
-              <th scope="col" className="col-1"></th>
-              <th scope="col" className="col-1"></th>
+              <th scope="col" className="col-1">
+                -
+              </th>
+              <th scope="col" className="col-1">
+                -
+              </th>
             </tr>
           </thead>
           <tbody className="overflow-auto height-9">
-            {data.allParticipants.map((particpant, idx) => (
+            {data.allParticipants.map((participant, idx) => (
               <tr key={idx}>
-                <th scope="row" className="col-1">
-                  {particpant.code_participant}
-                </th>
-
                 <Link to={`/participant/${participant.code_participant}`}>
-                  <td className="col-2">{participant.nom_participant}</td>
+                  <td className="col-3">{participant.nom_participant}</td>
                 </Link>
-                <td className="col-2">{particpant.prenom_participant}</td>
-                <td className="col-1">{participant.carte_identite}</td>
-                <td className="col-1"></td>
-                <td className="col-1"></td>
+                <td className="col-3">{participant.prenom_participant}</td>
+                <td className="col-2">{participant.carte_identite}</td>
+                <td className="col-2">
+                  {" "}
+                  {participant.client
+                    ? participant.client.nom_client
+                    : "--"}{" "}
+                </td>
+
+                <td className="col-1">
+                  <center>
+                    <Link to={`/participant/${participant.code_participant}`}>
+                      <FontAwesomeIcon
+                        icon={faInfoCircle}
+                        className="mr-1 pointer"
+                        color="yellow"
+                      />
+                    </Link>
+                  </center>
+                </td>
 
                 <td className="col-1">
                   <center>
                     <WarningModal
                       dlt={dlt}
-                      code={particpant.code_participant}
+                      code={participant.code_participant}
                     />
                   </center>
                 </td>

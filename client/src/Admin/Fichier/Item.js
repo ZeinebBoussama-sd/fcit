@@ -1,6 +1,8 @@
 import React from "react";
 function Item(props) {
   const data = props.fichier ? props.fichier : null;
+  console.log(data);
+
   return (
     <div className="container ">
       <div className="card container">
@@ -26,7 +28,9 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-3">Support:</b>
-          <p className="col">{data && data.support.titre_support}</p>
+          <p className="col">
+            {data && data.support ? data.support.titre_support : "--"}
+          </p>
         </div>
       </div>
     </div>

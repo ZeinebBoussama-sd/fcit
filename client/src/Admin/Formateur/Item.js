@@ -72,17 +72,9 @@ function Item(props) {
         <div className="row">
           <b className="col-3">Copie CIN:</b>
           <a
-            href="C:\Users\Sadok\Project\Zeineb\fcit\src\upload\2\formateur\cin\biljett.pdf"
-            target="_blank"
-            download
-          >
-            Download
-          </a>
-          <a
             className="col pointer"
             target="__blank"
             download
-            // onClick={(e) => download_file(data ? data.copie_cin : "")}
             href={data ? data.copie_cin : ""}
           >
             {data && data.copie_cin ? data.copie_cin : "No file"}

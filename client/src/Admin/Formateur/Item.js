@@ -1,8 +1,6 @@
 import React from "react";
-import fs from "fs";
 import { DOWNLOAD_FILE } from "../GraphQl/Mutation";
 import { useMutation } from "@apollo/react-hooks";
-import { Link } from "react-router-dom";
 
 function Item(props) {
   const [downloadFile, res] = useMutation(DOWNLOAD_FILE);
@@ -18,6 +16,15 @@ function Item(props) {
     }
   };
   const data = props.formateur ? props.formateur : null;
+
+  const convertDate = (dateInt) => {
+    if(!!dateInt){
+      const date = new Date(dateInt)
+      return date.toLocaleDateString("fr-FR");
+    }
+    return "";
+  };
+
   return (
     <div className="container ">
       <div className="card container">
@@ -69,8 +76,8 @@ function Item(props) {
           <p className="col">{data && data.adr_f}</p>
         </div>
         <div className="row">
-          <b className="col-3">Date D'ajout:</b>
-          <p className="col">{data && data.date_dajout}</p>
+          <b className="col-3">Date d'ajout:</b>
+          <p className="col">{data && convertDate(data.date_dajout)}</p>
         </div>
         <div className="row">
           <b className="col-3">CIN:</b>

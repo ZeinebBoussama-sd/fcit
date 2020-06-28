@@ -43,7 +43,14 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-3">CV:</b>
-          <p className="col">{data && data.cv_f}</p>
+          <a
+              className="col pointer"
+              target="__blank"
+              download
+              href={data ? data.cv_f : ""}
+          >
+            {data && data.cv_f ? data.cv_f : "No file"}
+          </a>
         </div>
         <div className="row">
           <b className="col-3">Email::</b>

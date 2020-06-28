@@ -93,9 +93,14 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-3">Copie Passeport:</b>
-          <p className="col">
+          <a
+              className="col pointer"
+              target="__blank"
+              download
+              href={data ? data.copie_passeport : ""}
+          >
             {data && data.copie_passeport ? data.copie_passeport : "No file"}
-          </p>
+          </a>
         </div>
         <div className="row">
           <b className="col-3"> Numéro de Visa:</b>
@@ -115,9 +120,14 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-3">Copie de RIB:</b>
-          <p className="col">
+          <a
+              className="col pointer"
+              target="__blank"
+              download
+              href={data ? data.copie_RIB : ""}
+          >
             {data && data.copie_RIB ? data.copie_RIB : "No file"}
-          </p>
+          </a>
         </div>
       </div>
     </div>

@@ -6,55 +6,59 @@ const fs = require("fs");
 const request = require("request");
 const formidable = require("formidable")
 
-const storeUpload = (stream, filename, folder, ID, type) => {
-  fs.access(`./src/upload/${ID}/${type}/${folder}`, (error) => {
-    if (!error) {
-      try {
-        fs.access(
-            `./src/upload/${ID}/${type}/${folder}/${filename}`,
-            fs.F_OK,
-            (err) => {
-              if (err) {
-                fs.createWriteStream(
-                    `./src/upload/${ID}/${type}/${folder}/${filename}`
-                );
-                console.log(`${filename} is uploaded`);
-                const path = `./src/upload/${ID}/${type}/${folder}/${filename}`;
-                return new Promise((resolve, reject) =>
-                    stream
-                        .pipe(fs.createWriteStream(path))
-                        .on("finish", () => resolve({ID, path, filename}))
-                        .on("error", reject)
-                );
-              } else {
-                console.log("file already exict");
-                return "file exict";
+const storeUpload = (file, folder, ID, type) => {
+  if(!!file){
+    const {filename, stream} = file;
+    const folderPath = `./src/upload/${ID}/${type}/${folder}`;
+    fs.access(folderPath, (error) => {
+      if (!error) {
+        try {
+          fs.access(
+              `${folderPath}/${filename}`,
+              fs.F_OK,
+              (err) => {
+                if (err) {
+                  fs.createWriteStream(
+                      `${folderPath}/${filename}`
+                  );
+                  console.log(`${filename} is uploaded`);
+                  const path = `${folderPath}/${filename}`;
+                  return new Promise((resolve, reject) =>
+                      stream
+                          .pipe(fs.createWriteStream(path))
+                          .on("finish", () => resolve({ID, path, filename}))
+                          .on("error", reject)
+                  );
+                } else {
+                  console.log("file already exict");
+                  return "file exict";
+                }
               }
-            }
-        );
-      } catch (error) {
-        console.log(error);
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        try {
+          fs.mkdirSync(folderPath, {
+            recursive: true,
+          });
+          console.log(`${filename} is uploaded`);
+          const path = `${folderPath}/${filename}`;
+          return new Promise((resolve, reject) =>
+              stream
+                  .pipe(fs.createWriteStream(path))
+                  .on("finish", () => resolve({ ID, path, filename}))
+                  .on("error", reject)
+          );
+        } catch (e) {
+          console.log(e);
+          // fs.mkdirpath(path.dirname(dirPath));
+          // fs.mkdirpath("./client/upload");
+        }
       }
-    } else {
-      try {
-        fs.mkdirSync(`./src/upload/${ID}/${type}/${folder}`, {
-          recursive: true,
-        });
-        console.log(`${filename} is uploaded`);
-        const path = `./src/upload/${ID}/${type}/${folder}/${filename}`;
-        return new Promise((resolve, reject) =>
-            stream
-                .pipe(fs.createWriteStream(path))
-                .on("finish", () => resolve({ ID, path, filename}))
-                .on("error", reject)
-        );
-      } catch (e) {
-        console.log(e);
-        // fs.mkdirpath(path.dirname(dirPath));
-        // fs.mkdirpath("./client/upload");
-      }
-    }
-  });
+    });
+  }
 }
 
 const resolvers = {
@@ -564,29 +568,25 @@ const resolvers = {
       const copie_passeport = await args.copie_passeport;
       const copie_RIB = await args.copie_RIB;
       const upload_cv_f = await storeUpload(
-          cv_f.createReadStream(),
-          cv_f.filename,
+          cv_f,
         "cv_f",
         args.code_formateur,
         "formateur"
       );
       const upload_cin = await storeUpload(
-        copie_cin.createReadStream(),
-        copie_cin.filename,
+        copie_cin,
         "cin",
         args.code_formateur,
         "formateur"
       );
       const upload_passeport = await storeUpload(
-        copie_passeport.createReadStream(),
-        copie_passeport.filename,
+        copie_passeport,
         "passeport",
         args.code_formateur,
         "formateur"
       );
       const upload_RIB_f = await storeUpload(
-        copie_RIB.createReadStream(),
-        copie_RIB.filename,
+        copie_RIB,
         "RIB_f",
         args.code_formateur,
         "formateur"

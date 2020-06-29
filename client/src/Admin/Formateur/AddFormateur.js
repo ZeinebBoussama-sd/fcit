@@ -118,14 +118,14 @@ function AddFormateur(props) {
                         adr_f: values.adr_f,
                         date_dajout: values.date_dajout,
                         cin_f: values.cin_f,
-                        copie_cin: values.cv_f,
+                        copie_cin: values.copie_cin,
                         passeport_f: values.passeport_f,
-                        copie_passeport: values.cv_f,
+                        copie_passeport: values.copie_passeport,
                         visa_f: values.visa_f,
                         val_visa: values.val_visa,
                         tarif_f: values.tarif_f,
                         RIB_f: values.RIB_f,
-                        copie_RIB: values.cv_f,
+                        copie_RIB: values.copie_RIB,
                         formationCIFormation: parseInt(
                           values.FormationCIFormation
                         ),

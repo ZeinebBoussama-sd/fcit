@@ -7,6 +7,8 @@ import deepEqual from "lodash.isequal";
 import { FormateurSchema } from "../../Utils/Validation";
 import { DropzoneField } from "../component/DropzoneField";
 import fs from 'fs'
+import moment from 'moment'
+
 function EditFormateur(props) {
   const [updateFormateur] = useMutation(UPDATE_FORMATEUR);
   const GetFormations = useQuery(GET_FORMATIONS);
@@ -15,8 +17,11 @@ function EditFormateur(props) {
     props.setEdit(false);
   };
   // const fileC = fs.ReadStream(formateur.cv_f)
-  console.log('fileC',fs);
-  
+  var reader = new FileReader();
+  debugger
+    const a = reader.readAsArrayBuffer(formateur.cv_f);
+    console.log(a);
+    
   // useEffect(() => {
   //   // Update the document title using the browser API
   //   document.title = `You clicked ${count} times`;
@@ -40,13 +45,13 @@ function EditFormateur(props) {
           NSS: formateur && formateur.NSS,
           salaire_f: formateur && formateur.salaire_f,
           adr_f: formateur && formateur.adr_f,
-          date_dajout: formateur && formateur.date_dajout,
+          date_dajout: formateur && moment(formateur.date_dajout).format('yyyy-MM-DD'),
           cin_f: formateur && formateur.cin_f,
           copie_cin: [],
           passeport_f: formateur && formateur.passeport_f,
           copie_passeport: [],
           visa_f: formateur && formateur.visa_f,
-          val_visa: formateur && formateur.val_visa,
+          val_visa: formateur && moment(formateur.val_visa).format('yyyy-MM-DD'),
           tarif_f: formateur && formateur.tarif_f,
           RIB_f: formateur && formateur.RIB_f,
           copie_RIB: [],
@@ -381,7 +386,7 @@ function EditFormateur(props) {
               </div>
               <div className="form-group">
                 <label htmlFor="val_visa" className="col-form-label">
-                  val_visa
+                Date de visa:
                 </label>
                 <Field className="form-control" name="val_visa" type="date" />
                 {errors.val_visa && touched.val_visa ? (

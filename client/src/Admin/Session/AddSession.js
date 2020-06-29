@@ -89,7 +89,6 @@ function AddSession(props) {
                 //validationSchema={SessionSchema}
                 onSubmit={async (values) => {
                   try {
-                    debugger;
                     await AddSession({
                       variables: {
                         code_session: values.code_session,

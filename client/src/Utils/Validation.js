@@ -21,9 +21,9 @@ export const FormateurSchema = Yup.object().shape({
     .min(10, "Too Short!")
     .max(10, "Too Long!")
     .required("Required"),
-  salaire_f: Yup.string()
-    .min(3, "Too Short!")
-    .max(30, "Too Long!")
+  salaire_f: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+  (value + '').match(/^\d{4}\.{1}\d{3}/)
+)
     .required("Required"),
   adr_f: Yup.string().required("Required"),
   date_dajout: Yup.string().required("Required"),
@@ -42,7 +42,9 @@ export const FormateurSchema = Yup.object().shape({
     .max(10, "Too Long!")
     .required("Required"),
   val_visa: Yup.date().required("Required"),
-  tarif_f: Yup.number().required("Required"),
+  tarif_f: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+  (value + '').match(/^\d{4}\.{1}\d{3}/)
+),
   RIB_f: Yup.string()
     .min(20, "Too Short!")
     .max(20, "Too Long!")
@@ -59,7 +61,9 @@ export const FormationSchema = Yup.object().shape({
   nbre_min_part: Yup.number().required("Required"),
   description_formation: Yup.string().required("Required"),
   catagorie_formation: Yup.string().required("Required"),
-  prix_formation: Yup.string().required("Required"),
+  prix_formation: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+  (value + '').match(/^\d{4}\.{1}\d{3}/)
+).required("Required"),
   participant: Yup.string().required("Required"),
   prerequis: Yup.string().required("Required"),
   ThemeCodeTheme: Yup.string().required("Required"),
@@ -86,9 +90,9 @@ export const IngenieurPedagogiqueSchema = Yup.object().shape({
     .min(10, "Too Short!")
     .max(10, "Too Long!")
     .required("Required"),
-  salaire_ing: Yup.number()
-    .min(3, "Too Short!")
-    .max(10000, "Too Long!")
+  salaire_ing: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+  (value + '').match(/^\d{4}\.{1}\d{3}/)
+)
     .required("Required"),
   specialite_ing: Yup.string().required("Required"),
   adr_ing: Yup.string().required("Required"),
@@ -182,12 +186,22 @@ export const SessionSchema = Yup.object().shape({
     .min(1, "Too Short!")
     .max(2, "Too Long!")
     .required("Required"),
-  honoraire_sess: Yup.number(),
+  honoraire_sess: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+  (value + '').match(/^\d{4}\.{1}\d{3}/)
+),
 
-  frais_sejour: Yup.number(),
-  frais_transport: Yup.number(),
-  perdiem: Yup.number(),
-  autres_frais: Yup.number(),
+  frais_sejour: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+  (value + '').match(/^\d{4}\.{1}\d{3}/)
+),
+  frais_transport: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+  (value + '').match(/^\d{4}\.{1}\d{3}/)
+),
+  perdiem: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+  (value + '').match(/^\d{4}\.{1}\d{3}/)
+),
+  autres_frais: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+  (value + '').match(/^\d{4}\.{1}\d{3}/)
+),
   note_eval_formateur: Yup.number(),
   type_sess: Yup.number(),
   date_deb_sess: Yup.number(),
@@ -195,7 +209,9 @@ export const SessionSchema = Yup.object().shape({
     .min(1, "Too Short!")
     .max(30, "Too Long!")
     .required("Required"),
-  prix_session: Yup.number().required("Required"),
+  prix_session: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
+  (value + '').match(/^\d{4}\.{1}\d{3}/)
+).required("Required"),
 
   ClientCodeClient: Yup.string().required("Required"),
   FormationCIFormation: Yup.number().required("Required"),

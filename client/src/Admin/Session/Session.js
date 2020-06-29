@@ -5,6 +5,7 @@ import AddSession from "./AddSession";
 import { Link } from "react-router-dom";
 import WarningModal from "../component/WarningModal";
 import { DELETE_SESSION } from "../GraphQl/Mutation";
+import { convertDate } from "../../Utils/ConvertData";
 
 function Session() {
   const { loading, error, data, refetch } = useQuery(GET_SESSIONS);
@@ -68,7 +69,7 @@ function Session() {
                     </th>
                   </Link>
                   <td className="col-1">{session.type_sess}</td>
-                  <td className="col-2">{session.date_deb_sess}</td>
+                  <td className="col-2">{convertDate(session.date_deb_sess)}</td>
                   <td className="col-2">
                     {session && session.client && session.client.nom_client}
                   </td>
@@ -79,7 +80,7 @@ function Session() {
                     {session.formateur && session.formateur.nom_f}
                   </td>
                   <td className="col-1">
-                    {session.support.titre_support
+                    {session.support&&session.support.titre_support
                       ? session.support.titre_support
                       : "--"}
                   </td>

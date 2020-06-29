@@ -281,13 +281,21 @@ export const GET_SESSION = gql`
       frais_transport
       perdiem
       autres_frais
+      note_eval_formateur
+      client {
+        code_client
+        nom_client
+      }
       formation {
+        CI_formation
         intitule
       }
       formateur {
+        code_formateur
         nom_f
       }
       support {
+        code_support
         titre_support
       }
       participant {

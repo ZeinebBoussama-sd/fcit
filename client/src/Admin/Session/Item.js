@@ -1,91 +1,91 @@
 import React from "react";
+import { convertDate } from "../../Utils/ConvertData";
 
 function Item(props) {
   const data = props.session ? props.session : null;
-  console.log(data);
   return (
     <div className="container">
       <div className="card container">
         <div className="row mt-3">
-          <b className="col-2">Type:</b>
+          <b className="col-3">Type:</b>
           <p className="col">{data && data.type_sess}</p>
         </div>
         <div className="row">
-          <b className="col-2">Mode:</b>
+          <b className="col-3">Mode:</b>
           <p className="col">{data && data.mode_session}</p>
         </div>
         <div className="row">
-          <b className="col-2">Date Debut:</b>
-          <p className="col">{data && data.date_deb_sess}</p>
+          <b className="col-3">Date Debut:</b>
+          <p className="col">{data && convertDate(data.date_deb_sess)}</p>
         </div>
         <div className="row">
-          <b className="col-2">Durée Session:</b>
+          <b className="col-3">Durée Session:</b>
           <p className="col">{data && data.duree_sess}</p>
         </div>
         <div className="row">
-          <b className="col-2">Nmbre d'heure par jour:</b>
+          <b className="col-3">Nmbre d'heure par jour:</b>
           <p className="col">{data && data.hr_j_session}</p>
         </div>
         <div className="row">
-          <b className="col-2">Heure Debut:</b>
+          <b className="col-3">Heure Debut:</b>
           <p className="col">{data && data.hr_deb_j}</p>
         </div>
         <div className="row">
-          <b className="col-2">Heure Fin:</b>
+          <b className="col-3">Heure Fin:</b>
           <p className="col">{data && data.hr_fin_j}</p>
         </div>
         <div className="row">
-          <b className="col-2">Lieu:</b>
+          <b className="col-3">Lieu:</b>
           <p className="col">{data && data.lieu_sess}</p>
         </div>
         <div className="row">
-          <b className="col-2">Prix:</b>
+          <b className="col-3">Prix:</b>
           <p className="col">{data && data.prix_session}</p>
         </div>
         <div className="row">
-          <b className="col-2">Honoraire:</b>
+          <b className="col-3">Honoraire:</b>
           <p className="col">{data && data.honoraire_sess}</p>
         </div>
         <div className="row">
-          <b className="col-2">Frais sejour:</b>
+          <b className="col-3">Frais sejour:</b>
           <p className="col">{data && data.frais_sejour}</p>
         </div>
         <div className="row">
-          <b className="col-2">Frais Transport:</b>
+          <b className="col-3">Frais Transport:</b>
           <p className="col">{data && data.frais_transport}</p>
         </div>
         <div className="row">
-          <b className="col-2">Perdiem:</b>
+          <b className="col-3">Perdiem:</b>
           <p className="col">{data && data.perdiem}</p>
         </div>
         <div className="row">
-          <b className="col-2">Autres Frais:</b>
+          <b className="col-3">Autres Frais:</b>
           <p className="col">{data && data.autres_frais}</p>
         </div>
         <div className="row">
-          <b className="col-2">Formateur:</b>
+          <b className="col-3">Formateur:</b>
           <p className="col">{data && data.formateur.nom_f}</p>
         </div>
         <div className="row">
-          <b className="col-2">Note du Formateur:</b>
+          <b className="col-3">Note du Formateur:</b>
           <p className="col">{data && data.note_eval_formateur}</p>
         </div>
         <div className="row">
-          <b className="col-2">Formation:</b>
+          <b className="col-3">Formation:</b>
           <p className="col">{data && data.formation.intitule}</p>
         </div>
         <div className="row">
-          <b className="col-2">Client:</b>
+          <b className="col-3">Client:</b>
           <p className="col">{data && data.client && data.client.nom_client}</p>
         </div>
         <div className="row">
-          <b className="col-2">Support:</b>
-          <p className="col">{data && data.support.titre_support}</p>
+          <b className="col-3">Support:</b>
+          <p className="col">{data && data.support ? data.support.titre_support: '--'}</p>
         </div>
         <div className="row">
-          <b className="col-2">Participant:</b>
+          <b className="col-3">Participant:</b>
           <p className="col">
-            {data && data.participant && data.participant.length}
+            {data && data.participant && data.participant.length} items
           </p>
         </div>
       </div>

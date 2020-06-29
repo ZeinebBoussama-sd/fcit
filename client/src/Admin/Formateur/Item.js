@@ -56,7 +56,7 @@ function Item(props) {
               download
               href={data ? data.cv_f : ""}
           >
-            {data && data.cv_f ? data.cv_f : "No file"}
+            {data && data.cv_f ? data.cv_f.replace(/^.*[\\\/]/, ''): "No file"}
           </a>
         </div>
         <div className="row">
@@ -91,7 +91,7 @@ function Item(props) {
             download
             href={data ? data.copie_cin : ""}
           >
-            {data && data.copie_cin ? data.copie_cin : "No file"}
+            {data && data.copie_cin ? data.copie_cin.replace(/^.*[\\\/]/, '') : "No file"}
           </a>
         </div>
         <div className="row">
@@ -106,7 +106,7 @@ function Item(props) {
               download
               href={data ? data.copie_passeport : ""}
           >
-            {data && data.copie_passeport ? data.copie_passeport : "No file"}
+            {data && data.copie_passeport ? data.copie_passeport.replace(/^.*[\\\/]/, '') : "No file"}
           </a>
         </div>
         <div className="row">
@@ -115,7 +115,7 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-3">Date de visa:</b>
-          <p className="col">{data && data.val_visa}</p>
+          <p className="col">{data && convertDate(data.val_visa)}</p>
         </div>
         <div className="row">
           <b className="col-3">Tarif:</b>
@@ -133,7 +133,7 @@ function Item(props) {
               download
               href={data ? data.copie_RIB : ""}
           >
-            {data && data.copie_RIB ? data.copie_RIB : "No file"}
+            {data && data.copie_RIB ? data.copie_RIB.replace(/^.*[\\\/]/, '') : "No file"}
           </a>
         </div>
       </div>

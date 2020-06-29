@@ -8,6 +8,7 @@ import WarningModal from "../component/WarningModal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import ThemeItem from "./ThemeItem";
 function Theme() {
   const { loading, error, data, refetch } = useQuery(GET_THEMES);
   const [deleteTheme, res] = useMutation(DELETE_THEME);
@@ -49,7 +50,7 @@ function Theme() {
           <tbody>
             {data.allThemes.map((theme, idx) => (
               <tr key={idx}>
-                <Link to to={`/theme/${theme.code_theme}`}>
+                <Link to to={`/theme/${theme.code_theme}`} >
                   <td scope="row" className="col-1">
                     {theme.code_theme}
                   </td>

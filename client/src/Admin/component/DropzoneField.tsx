@@ -20,7 +20,7 @@ export const DropzoneField: React.SFC<FieldProps<any>> = ({
       {...props}
     >
       {({ getRootProps, getInputProps }) => (
-        <div className='container'>
+        <section className='container'>
           <div
             {...getRootProps({
               className: 'dropzone',
@@ -30,7 +30,7 @@ export const DropzoneField: React.SFC<FieldProps<any>> = ({
             <input {...getInputProps()} />
             <p>Drag 'n' drop some files here, or click to select files</p>
           </div>
-        </div>
+        </section>
       )}
     </Dropzone>
   );

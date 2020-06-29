@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import Item from "./Item";
 import EditTheme from "./EditTheme";
-function ThemeItem() {
+function ThemeItem(props) {
   let { id } = useParams();
 
   const { loading, error, data, refetch } = useQuery(GET_THEME, {
@@ -17,7 +17,7 @@ function ThemeItem() {
   const action = () => {
     edit ? setEdit(false) : setEdit(true);
   };
-  console.log(theme);
+  console.log('props',props);
 
   return (
     <div className=" mt-11 ">
@@ -42,6 +42,7 @@ function ThemeItem() {
             id="navbarSupportedContent"
             theme={theme}
             refetch={refetch}
+            reftechAllTheme={props}
             setEdit={setEdit}
           />
         )}

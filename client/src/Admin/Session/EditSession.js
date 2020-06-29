@@ -10,6 +10,8 @@ import {
 import { UPDATE_SESSION } from "../GraphQl/Mutation";
 import { SessionSchema } from "../../Utils/Validation";
 import deepEqual from "lodash.isequal";
+import moment from 'moment';
+import { convertDate } from "../../Utils/ConvertData";
 
 function EditSession(props) {
   const [updateSession] = useMutation(UPDATE_SESSION);
@@ -18,7 +20,8 @@ function EditSession(props) {
   const GetFormateurs = useQuery(GET_FORMATEURS);
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
   const session = props.session ? props.session : null;
-
+console.log('session',moment(session.date_deb_sess).format('yyyy-MM-DD').toString())
+debugger
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -36,13 +39,13 @@ function EditSession(props) {
           autres_frais: session && session.autres_frais,
           note_eval_formateur: session && session.note_eval_formateur,
           type_sess: session && session.type_sess,
-          date_deb_sess: session && session.date_deb_sess,
+          date_deb_sess: session && moment(session.date_deb_sess).format('yyyy-MM-DD'),
           lieu_sess: session && session.lieu_sess,
           prix_session: session && session.prix_session,
-          ClientCodeClient: session && session.ClientCodeClient,
-          FormationCIFormation: session && session.FormationCIFormation,
-          FormateurCodeFormateur: session && session.FormateurCodeFormateur,
-          SupportCodeSupport: session && session.SupportCodeSupport,
+          ClientCodeClient: session && session.client && session.client.code_client,
+          FormationCIFormation: session && session.formation && session.formation.CI_formation,
+          FormateurCodeFormateur: session && session.formateur && session.formateur.code_formateur,
+          SupportCodeSupport: session && session.support && session.support.code_support,
         }}
         validationSchema={SessionSchema}
         onSubmit={async (values) => {
@@ -369,7 +372,7 @@ function EditSession(props) {
                 <select
                   className="form-control"
                   onChange={handleChange}
-                  value={values.ClientId}
+                  value={values.ClientCodeClient}
                   id="ClientCodeClient"
                 >
                   <option value="">---choose Client----</option>

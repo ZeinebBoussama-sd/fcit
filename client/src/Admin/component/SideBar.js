@@ -62,7 +62,7 @@ function SideBar(props) {
 
       <ul className="list-unstyled components">
         <li>
-          <NavLink to="#" onClick={() => subShow()}>
+          <NavLink to="#" color="white" onClick={() => subShow()}>
             {!show ? (
               <FontAwesomeIcon
                 icon={faPlus}

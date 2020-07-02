@@ -169,13 +169,15 @@ table ::-webkit-scrollbar-thumb:hover {
 #sidebar {
   min-width: 270px;
   max-width: 270px;
-  background: #fdfdfd;
-  color: #384bb9;
+  background: #343a40;
+  color: #fff;
   transition: all 0.3s;
 }
+
 #sidebar button {
-  color: #007aff;
+  color: #fff;
 }
+
 #sidebar.mini {
   min-width: 80px;
   max-width: 80px;
@@ -193,6 +195,7 @@ table ::-webkit-scrollbar-thumb:hover {
 
 #sidebar ul li a {
   text-align: left;
+  color: #fff !important;
 }
 
 #sidebar.mini ul li a {
@@ -234,7 +237,7 @@ table ::-webkit-scrollbar-thumb:hover {
 #sidebar .sidebar-header {
   margin-top: 80px;
   padding: 20px;
-  background: #fdfdfd;
+  background: #343a40;
 }
 
 #sidebar .sidebar-header strong {

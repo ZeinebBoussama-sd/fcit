@@ -2,13 +2,13 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import { ADD_MOTCLE } from "../GraphQl/Mutation";
-import { GET_FORMATION } from "../GraphQl/Query";
+import { GET_FORMATIONS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
 
 import { MotCleSchema } from "../../Utils/Validation";
 
 function AddMotCle(props) {
-  const GetFormation = useQuery(GET_FORMATION);
+  const GetFormation = useQuery(GET_FORMATIONS);
   const [AddMotCle, res] = useMutation(ADD_MOTCLE);
 
   return (

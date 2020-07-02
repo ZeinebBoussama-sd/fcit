@@ -39,7 +39,7 @@
 .table-fixed thead > tr > th::after {
   float: left;
   position: relative;
-  content: '';
+  content: "";
   clear: both;
   display: block;
 }
@@ -122,7 +122,7 @@ table ::-webkit-scrollbar-thumb:hover {
 }
 .pt1 {
   background-image: linear-gradient(rgba(27, 81, 239, 0.2), rgba(1, 1, 6, 0.95)),
-    url('../foundation/home/methodologie-formation.jpg');
+    url("../foundation/home/methodologie-formation.jpg");
   background-size: cover;
   background-position: center;
   margin-top: 86px;
@@ -133,7 +133,7 @@ table ::-webkit-scrollbar-thumb:hover {
       rgba(5, 5, 6, 0.83),
       rgba(108, 108, 162, 0.57)
     ),
-    url('../foundation/home/technologie.jpg');
+    url("../foundation/home/technologie.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -169,8 +169,8 @@ table ::-webkit-scrollbar-thumb:hover {
 #sidebar {
   min-width: 270px;
   max-width: 270px;
-  background: #2f323a;
-  color: #fff;
+  background: #fdfdfd;
+  color: #384bb9;
   transition: all 0.3s;
 }
 #sidebar button {
@@ -215,14 +215,26 @@ table ::-webkit-scrollbar-thumb:hover {
   margin-bottom: 5px;
 }
 
+#sidebar.mini ul li div ul {
+  display: contents !important;
+  font-size: 1em;
+}
+
 #sidebar.mini ul ul a {
   padding: 10px !important;
+}
+
+#sidebar ul li div ul a {
+  font-size: 1em;
+}
+#sidebar ul li div {
+  box-shadow: inset 3px 4px 8px 2px rgba(0, 0, 0, 0.08);
 }
 
 #sidebar .sidebar-header {
   margin-top: 80px;
   padding: 20px;
-  background: #2f323a;
+  background: #fdfdfd;
 }
 
 #sidebar .sidebar-header strong {
@@ -237,7 +249,7 @@ table ::-webkit-scrollbar-thumb:hover {
 
 #sidebar ul li a {
   padding: 15px;
-  font-size: 1.3em;
+  font-size: 1.2em;
   display: block;
 }
 

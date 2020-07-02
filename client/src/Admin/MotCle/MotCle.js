@@ -38,7 +38,7 @@ function MotCle() {
               <th scope="col" className="col-3">
                 Mot Clé
               </th>
-              <th scope="col" className="col-2">
+              <th scope="col" className="col-7">
                 Formation
               </th>
 
@@ -55,9 +55,9 @@ function MotCle() {
               data.allMotCles.map((motcle, idx) => (
                 <tr key={idx}>
                   <Link to={`/motcle/${motcle.motcle}`}>
-                    <td className="col-2">{motcle.motcle}</td>
+                    <td className="col-3">{motcle.motcle}</td>
                   </Link>
-                  <td className="col-1">
+                  <td className="col-7">
                     {motcle.formation ? motcle.formation.intitule : "--"}
                   </td>
 

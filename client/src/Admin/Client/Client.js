@@ -60,9 +60,11 @@ function Client() {
                   <th scope="row" className="col-1">
                     {client.code_client}
                   </th>
-                  <Link to={`/client/${client.code_client}`}>
-                    <td className="col-2">{client.nom_client}</td>
-                  </Link>
+                  <td className="col-2">
+                    <Link to={`/client/${client.code_client}`}>
+                      {client.nom_client}
+                    </Link>
+                  </td>
                   <td className="col-2">{client.email_client}</td>
                   <td className="col-2">{client.tel_client}</td>
                   <td className="col-1">

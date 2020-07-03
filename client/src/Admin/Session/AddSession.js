@@ -11,6 +11,7 @@ import {
 import { ADD_SESSION } from "../GraphQl/Mutation";
 import { SessionSchema } from "../../Utils/Validation";
 import deepEqual from "lodash.isequal";
+import moment from "moment";
 
 function AddSession(props) {
   const [AddSession] = useMutation(ADD_SESSION);
@@ -20,10 +21,12 @@ function AddSession(props) {
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
   const [subOptions, setSubOption] = useState(undefined);
   const [valide, setValide] = useState(false);
+
   const sub = (e) => {
-    console.log("e", e.currentTarget.selectedIndex - 1);
+    console.log("selectIndex", e.currentTarget.selectedIndex - 1);
     setSubOption(e.currentTarget.selectedIndex - 1);
   };
+  // console.log("props", props.allSessions.filter(session=>session.CI.session === ));
 
   return (
     <div>
@@ -141,7 +144,29 @@ function AddSession(props) {
                     handleReset,
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
-
+                  const allFormateurs =
+                    GetFormations.data &&
+                    GetFormations.data.allFormations[subOptions] &&
+                    GetFormations.data.allFormations[subOptions].formateur;
+                  {
+                    /* .filter(
+                      (f) =>
+                        f.date_deb_sess ===
+                        moment(values.date_deb_sess).format("YYYY-MM-DD")
+                    ); */
+                  }
+                  const f_list = [];
+                  allFormateurs &&
+                    allFormateurs.map((a) => {
+                      const foundDate = a.session.find(
+                        (f) =>
+                          moment(f.date_deb_sess).format("YYYY-MM-DD") ===
+                          moment(values.date_deb_sess).format("YYYY-MM-DD")
+                      );
+                      if (!foundDate) {
+                        f_list.push(a);
+                      }
+                    });
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
@@ -508,17 +533,16 @@ function AddSession(props) {
                               id="FormateurCodeFormateur"
                             >
                               <option value="">---Choose Formateur----</option>
-                              {GetFormations.data &&
-                                GetFormations.data.allFormations[subOptions] &&
-                                GetFormations.data.allFormations[
-                                  subOptions
-                                ].formateur.map((formateur) => {
+                              {f_list &&
+                                f_list.map((formateur) => {
                                   return (
                                     <option
                                       key={formateur.code_formateur}
                                       value={formateur.code_formateur}
                                     >
-                                      {formateur.nom_f}
+                                      {formateur.nom_f +
+                                        " " +
+                                        formateur.prenom_f}
                                     </option>
                                   );
                                 })}

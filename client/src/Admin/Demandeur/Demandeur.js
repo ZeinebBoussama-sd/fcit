@@ -57,11 +57,11 @@ function Demandeur() {
           <tbody>
             {data.allDemandeurs.map((demandeur, idx) => (
               <tr key={idx}>
-                <Link to={`/demandeur/${demandeur.code_demandeur}`}>
-                  <td scope="row" className="col-2">
+                <td scope="row" className="col-2">
+                  <Link to={`/demandeur/${demandeur.code_demandeur}`}>
                     {demandeur.nom_demandeur}
-                  </td>
-                </Link>
+                  </Link>
+                </td>
                 <td scope="row" className="col-3">
                   {demandeur.prenom_demandeur}
                 </td>

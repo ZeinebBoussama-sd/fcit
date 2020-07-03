@@ -57,11 +57,11 @@ function Validation() {
             {data.allValidations &&
               data.allValidations.map((validation, idx) => (
                 <tr key={idx}>
-                  <Link to={`/validationn/${validation.code_val}`}>
-                    <th scope="row" className="col-1">
+                  <th scope="row" className="col-1">
+                    <Link to={`/validationn/${validation.code_val}`}>
                       {validation.date}
-                    </th>
-                  </Link>
+                    </Link>
+                  </th>
 
                   <td className="col-1">{validation.decision_r}</td>
 

@@ -102,6 +102,9 @@ table ::-webkit-scrollbar-thumb:hover {
 .height-5 {
   height: 50vh;
 }
+.pl-6 {
+  padding-left: 2.5rem !important;
+}
 .mt-7 {
   margin-top: 4rem !important;
 }
@@ -195,7 +198,7 @@ table ::-webkit-scrollbar-thumb:hover {
 
 #sidebar ul li a {
   text-align: left;
-  color: #fff !important;
+  color: #fff;
 }
 
 #sidebar.mini ul li a {

@@ -56,9 +56,11 @@ function Metier() {
             {data.allMetiers &&
               data.allMetiers.map((metier, idx) => (
                 <tr key={idx}>
-                  <Link to={`/metier/${metier.code_metier}`}>
-                    <td className="col-2">{metier.code_metier}</td>
-                  </Link>
+                  <td className="col-2">
+                    <Link to={`/metier/${metier.code_metier}`}>
+                      {metier.code_metier}
+                    </Link>
+                  </td>
                   <td className="col-2">{metier.intitule_metier}</td>
                   <td className="col-1">
                     {metier.formation ? metier.formation.intitule : "--"}

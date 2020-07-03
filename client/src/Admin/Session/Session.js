@@ -14,9 +14,10 @@ function Session() {
   if (error) return <p>Error :{error}(</p>;
   const dlt = async (values) => {
     try {
+      debugger;
       await deleteSession({
         variables: {
-          code_session: values,
+          CI_session: parseInt(values),
         },
       });
     } catch (error) {
@@ -27,7 +28,7 @@ function Session() {
   console.log(data);
   return (
     <div className="mt-11 ">
-      <AddSession refetch={refetch} />
+      <AddSession refetch={refetch} allSessions={data} />
       <div className="table-responsive">
         <table className=" table table-hover table-fixed">
           <thead>
@@ -61,36 +62,44 @@ function Session() {
           </thead>
           <tbody>
             {data.allSessions &&
-              data.allSessions.map((session, idx) => (
-                <tr key={idx}>
-                  <Link to={`/session/${session.CI_session}`}>
+              data.allSessions.map((session, idx) => {
+                return (
+                  <tr key={idx}>
                     <th scope="row" className="col-1">
-                      {session.code_session}
+                      <Link to={`/session/${session.CI_session}`}>
+                        {session.code_session}
+                      </Link>
                     </th>
-                  </Link>
-                  <td className="col-1">{session.type_sess}</td>
-                  <td className="col-2">{convertDate(session.date_deb_sess)}</td>
-                  <td className="col-2">
-                    {session && session.client && session.client.nom_client}
-                  </td>
-                  <td className="col-2">
-                    {session.formation && session.formation.intitule}
-                  </td>
-                  <td className="col-2">
-                    {session.formateur && session.formateur.nom_f}
-                  </td>
-                  <td className="col-1">
-                    {session.support&&session.support.titre_support
-                      ? session.support.titre_support
-                      : "--"}
-                  </td>
-                  <td className="col-1">
-                    <center>
-                      <WarningModal dlt={dlt} code={session.code_session} />
-                    </center>
-                  </td>
-                </tr>
-              ))}
+                    <td className="col-1">{session.type_sess}</td>
+                    <td className="col-2">
+                      {convertDate(session.date_deb_sess)}
+                    </td>
+                    <td className="col-2">
+                      {session && session.client && session.client.nom_client}
+                    </td>
+                    <td className="col-2">
+                      {session.formation && session.formation.intitule}
+                    </td>
+                    <td className="col-2">
+                      {session.formateur && session.formateur.nom_f}
+                    </td>
+                    <td className="col-1">
+                      {session.support && session.support.titre_support
+                        ? session.support.titre_support
+                        : "--"}
+                    </td>
+                    <td className="col-1">
+                      <center>
+                        <WarningModal
+                          dlt={dlt}
+                          code={session.CI_session}
+                          session={session}
+                        />
+                      </center>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>

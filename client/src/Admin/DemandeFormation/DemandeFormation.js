@@ -5,7 +5,7 @@ import AddDemande from "./AddDemande";
 import { Link } from "react-router-dom";
 import WarningModal from "../component/WarningModal";
 import { DELETE_DEMANDE } from "../GraphQl/Mutation";
-
+import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -35,13 +35,13 @@ function DemandeFormation() {
           <thead>
             <tr>
               <th scope="col" className="col-2">
-                Date demande{" "}
+                Date demande
               </th>
               <th scope="col" className="col-1">
-                Etat{" "}
+                Etat
               </th>
               <th scope="col" className="col-2">
-                Client{" "}
+                Client
               </th>
               <th scope="col" className="col-2">
                 Formation
@@ -60,9 +60,13 @@ function DemandeFormation() {
           <tbody>
             {data.allDemandeFormations.map((demandeformation, idx) => (
               <tr key={idx}>
-                <Link to={`/demandeformation/${demandeformation.code_demande}`}>
-                  <td className="col-2">{demandeformation.date_demande}</td>
-                </Link>
+                <td className="col-2">
+                  <Link
+                    to={`/demandeformation/${demandeformation.code_demande}`}
+                  >
+                    {moment(demandeformation.date_demande).format("YYYY-DD-MM")}
+                  </Link>
+                </td>
                 <td className="col-1">{demandeformation.etat_demande}</td>
                 <td className="col-2">
                   {demandeformation.client

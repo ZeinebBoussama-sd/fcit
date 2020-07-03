@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { FieldProps } from 'formik';
-import Dropzone from 'react-dropzone';
+import * as React from "react";
+import { FieldProps } from "formik";
+import Dropzone from "react-dropzone";
 
 export const DropzoneField: React.SFC<FieldProps<any>> = ({
   field: { name },
@@ -12,7 +12,6 @@ export const DropzoneField: React.SFC<FieldProps<any>> = ({
     <Dropzone
       multiple={false}
       onDrop={([file]) => {
-        debugger
         setFieldValue(name, file);
         console.log(file);
         console.log(URL.createObjectURL(file));
@@ -20,10 +19,10 @@ export const DropzoneField: React.SFC<FieldProps<any>> = ({
       {...props}
     >
       {({ getRootProps, getInputProps }) => (
-        <section className='container'>
+        <section className="container">
           <div
             {...getRootProps({
-              className: 'dropzone',
+              className: "dropzone",
               onDrop: (event) => event.stopPropagation(),
             })}
           >

@@ -4,9 +4,10 @@ import { Formik, Field } from "formik";
 import { UPDATE_DEMANDEfORMATION } from "../GraphQl/Mutation";
 import { GET_FORMATIONS, GET_CLIENTS, GET_DEMANDEURS } from "../GraphQl/Query";
 import { etatList } from "../../Utils/Enums";
-
+import moment from "moment";
 import deepEqual from "lodash.isequal";
 import { DemandeSchema } from "../../Utils/Validation";
+
 function EditDemande(props) {
   const [updateDemande, res] = useMutation(UPDATE_DEMANDEfORMATION);
   const GetFormation = useQuery(GET_FORMATIONS);
@@ -20,7 +21,9 @@ function EditDemande(props) {
     <div className="card-body" id="navbarSupportedContent">
       <Formik
         initialValues={{
-          date_demande: demandeformation && demandeformation.date_demande,
+          date_demande:
+            demandeformation &&
+            moment(demandeformation.date_demande).format("YYYY-MM-DD"),
           type_demande: demandeformation && demandeformation.type_demande,
           etat_demande: demandeformation && demandeformation.etat_demande,
           prix_prevu: demandeformation && demandeformation.prix_prevu,

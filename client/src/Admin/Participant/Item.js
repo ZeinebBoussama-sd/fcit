@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import AddParticiper from "../Participer/AddParticiper";
+
 function Item(props) {
   const data = props.participant ? props.participant : null;
-  console.log(data);
   return (
     <div className="container ">
       <div className="card container">
@@ -22,6 +23,7 @@ function Item(props) {
           <p className="col">{data && data.client && data.client.nom_client}</p>
         </div>
       </div>
+      <AddParticiper code_participant={data && data.code_participant} />
     </div>
   );
 }

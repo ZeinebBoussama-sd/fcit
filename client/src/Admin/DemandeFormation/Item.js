@@ -1,5 +1,5 @@
 import React from "react";
-
+import moment from "moment";
 function Item(props) {
   const data = props.demandeformation ? props.demandeformation : null;
 
@@ -12,7 +12,9 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-2">date_demande:</b>
-          <p className="col">{data && data.date_demande}</p>
+          <p className="col">
+            {data && moment(data.date_demande).format("yyyy-MM-DD")}
+          </p>
         </div>
         <div className="row">
           <b className="col-2">duree_prevu:</b>

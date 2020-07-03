@@ -71,9 +71,11 @@ function Formateur() {
                   {formateur.code_formateur}
                 </th>
 
-                <Link to={`/formateur/${formateur.code_formateur}`}>
-                  <td className="col-2">{formateur.nom_f}</td>
-                </Link>
+                <td className="col-2">
+                  <Link to={`/formateur/${formateur.code_formateur}`}>
+                    {formateur.nom_f}
+                  </Link>
+                </td>
                 <td className="col-2">{formateur.prenom_f}</td>
                 <td className="col-1">{formateur.classe_f}</td>
                 <td className="col-2">{formateur.email_f}</td>

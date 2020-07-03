@@ -62,7 +62,7 @@ function SideBar(props) {
 
       <ul className="list-unstyled components">
         <li>
-          <NavLink to="#" color="white" onClick={() => subShow()}>
+          <NavLink to="#" onClick={() => subShow()}>
             {!show ? (
               <FontAwesomeIcon
                 icon={faPlus}
@@ -78,62 +78,67 @@ function SideBar(props) {
             )}
             <span>Personnels</span>
           </NavLink>
-          <div class={`collapse ${show}`} id="collapseExample">
-            <ul>
-              <NavLink
-                to="/formateur"
-                activeStyle={{
-                  color: "red",
-                  borderRight: "solid 4px red",
-                }}
-              >
-                <FontAwesomeIcon
-                  icon={faChalkboardTeacher}
-                  className="mr-1"
-                  id="sidebar_btn"
-                />
-                <span>Formateur</span>
-              </NavLink>
-            </ul>
-            <ul>
-              <NavLink
-                to="/ingenieur_pedagogique"
-                activeStyle={{ color: "red", borderRight: "solid 4px red" }}
-              >
-                <FontAwesomeIcon
-                  icon={faBrain}
-                  className="mr-1"
-                  id="sidebar_btn"
-                />
-                <span>Ingenieur Pedagogique</span>
-              </NavLink>
-            </ul>
-            <ul>
-              <NavLink
-                to="/demandeur"
-                activeStyle={{ color: "red", borderRight: "solid 4px red" }}
-              >
-                <FontAwesomeIcon
-                  icon={faIdBadge}
-                  className="mr-1"
-                  id="sidebar_btn"
-                />
-                <span>Demandeur</span>
-              </NavLink>
-            </ul>
-            <ul>
-              <NavLink
-                to="/participant"
-                activeStyle={{ color: "red", borderRight: "solid 4px red" }}
-              >
-                <FontAwesomeIcon
-                  icon={faUsers}
-                  className="mr-1"
-                  id="sidebar_btn"
-                />
-                <span> Participant</span>
-              </NavLink>
-            </ul>
+          <div className={`collapse ${show}`}>
+            <NavLink
+              className="pl-6"
+              to="/formateur"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faChalkboardTeacher}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Formateur</span>
+            </NavLink>
+            <NavLink
+              className="pl-6"
+              to="/ingenieur_pedagogique"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faBrain}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Ingenieur Pedagogique</span>
+            </NavLink>
+            <NavLink
+              className="pl-6"
+              to="/demandeur"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faIdBadge}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Demandeur</span>
+            </NavLink>
+            <NavLink
+              className="pl-6"
+              to="/participant"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faUsers}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span> Participant</span>
+            </NavLink>
           </div>
         </li>
         <li>
@@ -153,78 +158,91 @@ function SideBar(props) {
             )}
             <span>Formation</span>
           </NavLink>
-          <div class={`collapse ${showFormation}`} id="collapseExample">
-            <ul>
-              <NavLink
-                to="/formation"
-                activeStyle={{ color: "red", borderRight: "solid 4px red" }}
-              >
-                <FontAwesomeIcon
-                  icon={faGraduationCap}
-                  className="mr-1"
-                  id="sidebar_btn"
-                />
-                <span>Formation</span>
-              </NavLink>
-            </ul>
-            <ul>
-              <NavLink
-                to="/motcle"
-                activeStyle={{ color: "red", borderRight: "solid 4px red" }}
-              >
-                <FontAwesomeIcon
-                  icon={faPencilAlt}
-                  className="mr-1"
-                  id="sidebar_btn"
-                />
-                <span>Mot Clé</span>
-              </NavLink>
-            </ul>
-            <ul>
-              <NavLink
-                to="/theme"
-                activeStyle={{ color: "red", borderRight: "solid 4px red" }}
-              >
-                <FontAwesomeIcon
-                  icon={faPaintBrush}
-                  className="mr-1"
-                  id="sidebar_btn"
-                />
-                <span>Theme</span>
-              </NavLink>
-            </ul>
-            <ul>
-              <NavLink
-                to="/support"
-                activeStyle={{ color: "red", borderRight: "solid 4px red" }}
-              >
-                <FontAwesomeIcon
-                  icon={faLaptop}
-                  className="mr-1"
-                  id="sidebar_btn"
-                />
-                <span>Support</span>
-              </NavLink>
-            </ul>
-            <ul>
-              <NavLink
-                to="/fichier"
-                activeStyle={{ color: "red", borderRight: "solid 4px red" }}
-              >
-                <FontAwesomeIcon
-                  icon={faFileAlt}
-                  className="mr-1"
-                  id="sidebar_btn"
-                />
-                <span> Fichier</span>
-              </NavLink>
-            </ul>
+          <div className={`collapse ${showFormation}`}>
+            <NavLink
+              className="pl-6"
+              to="/formation"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faGraduationCap}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Formation</span>
+            </NavLink>
+            <NavLink
+              className="pl-6"
+              to="/motcle"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faPencilAlt}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Mot Clé</span>
+            </NavLink>
+            <NavLink
+              className="pl-6"
+              to="/theme"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faPaintBrush}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Theme</span>
+            </NavLink>
+            <NavLink
+              className="pl-6"
+              to="/support"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faLaptop}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Support</span>
+            </NavLink>
+            <NavLink
+              className="pl-6"
+              to="/fichier"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faFileAlt}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span> Fichier</span>
+            </NavLink>
           </div>
         </li>
         <li>
           <NavLink
             to="/demandeformation"
-            activeStyle={{ color: "red", borderRight: "solid 4px red" }}
+            activeStyle={{
+              color: "dodgerblue",
+              borderRight: "solid 4px dodgerblue",
+            }}
           >
             <FontAwesomeIcon
               icon={faCommentAlt}
@@ -237,7 +255,10 @@ function SideBar(props) {
         <li>
           <NavLink
             to="/dateprevue"
-            activeStyle={{ color: "red", borderRight: "solid 4px red" }}
+            activeStyle={{
+              color: "dodgerblue",
+              borderRight: "solid 4px dodgerblue",
+            }}
           >
             <FontAwesomeIcon
               icon={faCalendarAlt}
@@ -250,7 +271,10 @@ function SideBar(props) {
         <li>
           <NavLink
             to="/participer"
-            activeStyle={{ color: "red", borderRight: "solid 4px red" }}
+            activeStyle={{
+              color: "dodgerblue",
+              borderRight: "solid 4px dodgerblue",
+            }}
           >
             <FontAwesomeIcon icon={faRing} className="mr-1" id="sidebar_btn" />
             <span> Participer</span>
@@ -259,7 +283,10 @@ function SideBar(props) {
         <li>
           <NavLink
             to="/metier"
-            activeStyle={{ color: "red", borderRight: "solid 4px red" }}
+            activeStyle={{
+              color: "dodgerblue",
+              borderRight: "solid 4px dodgerblue",
+            }}
           >
             <FontAwesomeIcon
               icon={faIdCardAlt}
@@ -272,7 +299,10 @@ function SideBar(props) {
         <li>
           <NavLink
             to="/client"
-            activeStyle={{ color: "red", borderRight: "solid 4px red" }}
+            activeStyle={{
+              color: "dodgerblue",
+              borderRight: "solid 4px dodgerblue",
+            }}
           >
             <FontAwesomeIcon
               icon={faUserTie}
@@ -285,7 +315,10 @@ function SideBar(props) {
         <li>
           <NavLink
             to="/session"
-            activeStyle={{ color: "red", borderRight: "solid 4px red" }}
+            activeStyle={{
+              color: "dodgerblue",
+              borderRight: "solid 4px dodgerblue",
+            }}
           >
             <FontAwesomeIcon
               icon={faDiagnoses}
@@ -298,7 +331,10 @@ function SideBar(props) {
         <li>
           <NavLink
             to="/validation"
-            activeStyle={{ color: "red", borderRight: "solid 4px red" }}
+            activeStyle={{
+              color: "dodgerblue",
+              borderRight: "solid 4px dodgerblue",
+            }}
           >
             <FontAwesomeIcon
               icon={faCheckCircle}

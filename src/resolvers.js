@@ -4,37 +4,31 @@ const { Kind } = require("graphql/language");
 const { ApolloError } = require("apollo-server-core");
 const fs = require("fs");
 const request = require("request");
-const formidable = require("formidable")
+const formidable = require("formidable");
 
 const storeUpload = (file, folder, ID, type) => {
-  if(!!file){
-    const {filename, stream} = file;
+  if (!!file) {
+    const { filename, stream } = file;
     const folderPath = `./src/upload/${ID}/${type}/${folder}`;
     fs.access(folderPath, (error) => {
       if (!error) {
         try {
-          fs.access(
-              `${folderPath}/${filename}`,
-              fs.F_OK,
-              (err) => {
-                if (err) {
-                  fs.createWriteStream(
-                      `${folderPath}/${filename}`
-                  );
-                  console.log(`${filename} is uploaded`);
-                  const path = `${folderPath}/${filename}`;
-                  return new Promise((resolve, reject) =>
-                      stream
-                          .pipe(fs.createWriteStream(path))
-                          .on("finish", () => resolve({ID, path, filename}))
-                          .on("error", reject)
-                  );
-                } else {
-                  console.log("file already exict");
-                  return "file exict";
-                }
-              }
-          );
+          fs.access(`${folderPath}/${filename}`, fs.F_OK, (err) => {
+            if (err) {
+              fs.createWriteStream(`${folderPath}/${filename}`);
+              console.log(`${filename} is uploaded`);
+              const path = `${folderPath}/${filename}`;
+              return new Promise((resolve, reject) =>
+                stream
+                  .pipe(fs.createWriteStream(path))
+                  .on("finish", () => resolve({ ID, path, filename }))
+                  .on("error", reject)
+              );
+            } else {
+              console.log("file already exict");
+              return "file exict";
+            }
+          });
         } catch (error) {
           console.log(error);
         }
@@ -46,10 +40,10 @@ const storeUpload = (file, folder, ID, type) => {
           console.log(`${filename} is uploaded`);
           const path = `${folderPath}/${filename}`;
           return new Promise((resolve, reject) =>
-              stream
-                  .pipe(fs.createWriteStream(path))
-                  .on("finish", () => resolve({ ID, path, filename}))
-                  .on("error", reject)
+            stream
+              .pipe(fs.createWriteStream(path))
+              .on("finish", () => resolve({ ID, path, filename }))
+              .on("error", reject)
           );
         } catch (e) {
           console.log(e);
@@ -59,7 +53,7 @@ const storeUpload = (file, folder, ID, type) => {
       }
     });
   }
-}
+};
 
 const resolvers = {
   Date: new GraphQLScalarType({
@@ -162,6 +156,9 @@ const resolvers = {
     },
     async participer(root, { id }, { models }) {
       return models.Participer.findByPk(id);
+    },
+    async allParticipers(root, args, { models }) {
+      return models.Participer.findAll();
     },
     async session(root, { CI_session }, { models }) {
       return models.Session.findByPk(CI_session);
@@ -568,7 +565,7 @@ const resolvers = {
       const copie_passeport = await args.copie_passeport;
       const copie_RIB = await args.copie_RIB;
       const upload_cv_f = await storeUpload(
-          cv_f,
+        cv_f,
         "cv_f",
         args.code_formateur,
         "formateur"
@@ -798,24 +795,22 @@ const resolvers = {
       });
       return this.deleteMotCle;
     },
-    async createParticiper(
-      root,
-      {
+    async createParticiper(root, args, { models }) {
+      const rapport_eval = args.rapport_eval;
+      const upload_rapport_eval = await storeUpload(
         rapport_eval,
-        note_QCM,
-        date_eval,
-        ParticipantCodeParticipant,
-        SessionCISession,
-      },
-      { models }
-    ) {
-      return models.Participer.create({
+        "rapport_eval",
+        args.code_participert,
+        "formateur"
+      );
+      const createParticiper = await models.Participer.create({
         rapport_eval,
         note_QCM,
         date_eval,
         ParticipantCodeParticipant,
         SessionCISession,
       });
+      return createParticiper;
     },
     async updateParticiper(root, args, { models }) {
       const updateParticiper = await models.Participer.update(
@@ -900,7 +895,7 @@ const resolvers = {
     },
     async deleteSession(root, args, { models }) {
       const deleteSession = await models.Session.destroy({
-        where: { code_session: args.code_session },
+        where: { CI_session: args.CI_session },
       });
       return deleteSession;
     },
@@ -1077,7 +1072,7 @@ const resolvers = {
   },
   Formateur: {
     async session(formateur) {
-      return formateur.getSession();
+      return formateur.getSessions();
     },
     async formation(formateur) {
       return formateur.getFormation();

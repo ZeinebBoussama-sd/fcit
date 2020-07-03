@@ -47,11 +47,11 @@ function DatePrevue() {
           <tbody>
             {data.allDatePrevues.map((dateprevue, idx) => (
               <tr key={idx}>
-                <Link to to={`/dateprevue/${dateprevue.date_prev}`}>
-                  <td scope="row" className="col-10">
+                <td scope="row" className="col-10">
+                  <Link to to={`/dateprevue/${dateprevue.date_prev}`}>
                     {dateprevue.date_prev}
-                  </td>
-                </Link>
+                  </Link>
+                </td>
 
                 <td className="col-1">
                   <center>

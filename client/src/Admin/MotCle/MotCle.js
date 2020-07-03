@@ -54,9 +54,9 @@ function MotCle() {
             {data.allMotCles &&
               data.allMotCles.map((motcle, idx) => (
                 <tr key={idx}>
-                  <Link to={`/motcle/${motcle.motcle}`}>
-                    <td className="col-3">{motcle.motcle}</td>
-                  </Link>
+                  <td className="col-3">
+                    <Link to={`/motcle/${motcle.motcle}`}>{motcle.motcle}</Link>
+                  </td>
                   <td className="col-7">
                     {motcle.formation ? motcle.formation.intitule : "--"}
                   </td>

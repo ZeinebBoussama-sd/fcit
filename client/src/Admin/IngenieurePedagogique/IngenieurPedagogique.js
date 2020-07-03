@@ -68,11 +68,13 @@ function IngenieurPedagogique() {
           <tbody>
             {data.allIngenieurPedagogiques.map((ingenieur_pedagogique, idx) => (
               <tr key={idx}>
-                <Link
-                  to={`/ingenieur_pedagogique/${ingenieur_pedagogique.code_IP}`}
-                >
-                  <td className="col-2">{ingenieur_pedagogique.nom_ing}</td>
-                </Link>
+                <td className="col-2">
+                  <Link
+                    to={`/ingenieur_pedagogique/${ingenieur_pedagogique.code_IP}`}
+                  >
+                    {ingenieur_pedagogique.nom_ing}
+                  </Link>
+                </td>
                 <td className="col-1">{ingenieur_pedagogique.prenom_ing}</td>
                 <td className="col-2">{ingenieur_pedagogique.email_ing}</td>
                 <td className="col-2">{ingenieur_pedagogique.tel_ing}</td>

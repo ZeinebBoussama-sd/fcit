@@ -60,9 +60,11 @@ function Participer() {
           <tbody className="overflow-auto height-9">
             {data.allParticipants.map((participant, idx) => (
               <tr key={idx}>
-                <Link to={`/participant/${participant.code_participant}`}>
-                  <td className="col-3">{participant.nom_participant}</td>
-                </Link>
+                <td className="col-3">
+                  <Link to={`/participant/${participant.code_participant}`}>
+                    {participant.nom_participant}
+                  </Link>
+                </td>
                 <td className="col-3">{participant.prenom_participant}</td>
                 <td className="col-2">{participant.carte_identite}</td>
                 <td className="col-2">

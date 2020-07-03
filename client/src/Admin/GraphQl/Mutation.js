@@ -939,7 +939,7 @@ export const DELETE_METIER = gql`
 `;
 export const ADD_PARTICIPER = gql`
   mutation create_participer(
-    $rapport_eval: String!
+    $rapport_eval: Upload!
     $note_QCM: Float!
     $date_eval: Date!
     $ParticipantCodeParticipant: Int

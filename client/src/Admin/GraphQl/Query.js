@@ -7,7 +7,11 @@ export const GET_FORMATIONSOPTIONS = gql`
       intitule
       formateur {
         code_formateur
+        prenom_f
         nom_f
+        session {
+          date_deb_sess
+        }
       }
     }
   }
@@ -255,6 +259,7 @@ export const GET_SESSIONS = gql`
         intitule
       }
       formateur {
+        prenom_f
         nom_f
       }
       support {
@@ -292,6 +297,7 @@ export const GET_SESSION = gql`
       }
       formateur {
         code_formateur
+        prenom_f
         nom_f
       }
       support {

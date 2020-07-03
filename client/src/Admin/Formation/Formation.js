@@ -68,9 +68,11 @@ function Formation() {
                   <th scope="row" className="col-1">
                     {formation.code_formation}
                   </th>
-                  <Link to={`/formation/${formation.CI_formation}`}>
-                    <td className="col-3">{formation.intitule}</td>
-                  </Link>
+                  <td className="col-3">
+                    <Link to={`/formation/${formation.CI_formation}`}>
+                      {formation.intitule}
+                    </Link>
+                  </td>
                   <td className="col-1">{formation.duree_formation}</td>
                   <td className="col-2">{formation.catagorie_formation}</td>
                   <td className="col-1">{formation.prix_formation}</td>

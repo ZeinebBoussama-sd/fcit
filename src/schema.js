@@ -676,7 +676,7 @@ const typeDefs = gql`
       FormateurCodeFormateur: String
       SupportCodeSupport: Int
     ): DeleteSessionMutationResponse
-    deleteSession(code_session: String!): DeleteSessionMutationResponse
+    deleteSession(CI_session: Int!): DeleteSessionMutationResponse
     createSupport(titre_support: String!, date_support: Date!): Support!
     deleteSupport(code_support: Int!): DeleteSupportMutationResponse
     updateSupport(

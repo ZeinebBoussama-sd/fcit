@@ -1,27 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import {
-  GET_FORMATEURS,
   GET_SUPPORT_MINI,
   GET_CLIENTS,
-  GET_FORMATIONS,
+  GET_FORMATIONSOPTIONS,
 } from "../GraphQl/Query";
 import { UPDATE_SESSION } from "../GraphQl/Mutation";
 import { SessionSchema } from "../../Utils/Validation";
 import deepEqual from "lodash.isequal";
-import moment from 'moment';
-import { convertDate } from "../../Utils/ConvertData";
+import moment from "moment";
 
 function EditSession(props) {
-  const [updateSession] = useMutation(UPDATE_SESSION);
-  const GetClients = useQuery(GET_CLIENTS);
-  const GetFormations = useQuery(GET_FORMATIONS);
-  const GetFormateurs = useQuery(GET_FORMATEURS);
-  const GetSupportMini = useQuery(GET_SUPPORT_MINI);
   const session = props.session ? props.session : null;
-console.log('session',moment(session.date_deb_sess).format('yyyy-MM-DD').toString())
-debugger
+
+  const [updateSession] = useMutation(UPDATE_SESSION);
+
+  const GetClients = useQuery(GET_CLIENTS);
+  const GetFormations = useQuery(GET_FORMATIONSOPTIONS);
+  const GetSupportMini = useQuery(GET_SUPPORT_MINI);
+
+  const FormationIDX = GetFormations.data
+    ? GetFormations.data.allFormations.findIndex(
+        (f) => f.CI_formation === session.formation.CI_formation
+      )
+    : undefined;
+
+  const FormateurIDX = GetFormations.data
+    ? GetFormations.data.allFormations[FormationIDX].formateur.findIndex(
+        (f) => f.code_formateur === session.formateur.code_formateur
+      )
+    : undefined;
+  const [subOptions, setSubOption] = useState(FormationIDX);
+  console.log("subOptions", subOptions);
+
+  useEffect(() => {
+    setSubOption(FormationIDX);
+  }, [FormationIDX]);
+  const sub = (e) => {
+    debugger;
+    setSubOption(e.currentTarget.selectedIndex - 1);
+  };
+  console.log("session", session);
+  console.log("formations", GetFormations);
+  console.log("FormationIDX", FormationIDX);
+
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -39,13 +62,18 @@ debugger
           autres_frais: session && session.autres_frais,
           note_eval_formateur: session && session.note_eval_formateur,
           type_sess: session && session.type_sess,
-          date_deb_sess: session && moment(session.date_deb_sess).format('yyyy-MM-DD'),
+          date_deb_sess:
+            session && moment(session.date_deb_sess).format("yyyy-MM-DD"),
           lieu_sess: session && session.lieu_sess,
           prix_session: session && session.prix_session,
-          ClientCodeClient: session && session.client && session.client.code_client,
-          FormationCIFormation: session && session.formation && session.formation.CI_formation,
-          FormateurCodeFormateur: session && session.formateur && session.formateur.code_formateur,
-          SupportCodeSupport: session && session.support && session.support.code_support,
+          ClientCodeClient:
+            session && session.client && session.client.code_client,
+          FormationCIFormation:
+            session && session.formation && session.formation.CI_formation,
+          FormateurCodeFormateur:
+            session && session.formateur && session.formateur.code_formateur,
+          SupportCodeSupport:
+            session && session.support && session.support.code_support,
         }}
         validationSchema={SessionSchema}
         onSubmit={async (values) => {
@@ -112,6 +140,7 @@ debugger
                 </label>
 
                 <Field
+                  disabled
                   className={
                     hasChanged
                       ? errors.code_session
@@ -393,7 +422,10 @@ debugger
                 <label htmlFor="Formation">Formation:</label>
                 <select
                   className="form-control"
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    handleChange(e);
+                    sub(e);
+                  }}
                   value={values.FormationCIFormation}
                   id="FormationCIFormation"
                 >
@@ -411,28 +443,39 @@ debugger
                     })}
                 </select>
               </div>
-              <div className="form-group">
-                <label htmlFor="Formateur">Formateur:</label>
-                <select
-                  className="form-control"
-                  onChange={handleChange}
-                  value={values.FormateurCodeFormateur}
-                  id="FormateurCodeFormateur"
-                >
-                  <option value="">---Choose Formateur----</option>
-                  {GetFormateurs.data &&
-                    GetFormateurs.data.allFormateurs.map((formateur) => {
-                      return (
-                        <option
-                          key={formateur.code_formateur}
-                          value={formateur.code_formateur}
-                        >
-                          {formateur.nom_f}
-                        </option>
-                      );
-                    })}
-                </select>
-              </div>
+              {values.FormationCIFormation && (
+                <>
+                  <div className="form-group">
+                    <label htmlFor="Formateur">Formateur:</label>
+                    <Field
+                      multiple={false}
+                      component="select"
+                      className="form-control"
+                      name="FormateurCodeFormateur"
+                      onChange={(e) => {
+                        handleChange(e);
+                        sub(e);
+                      }}
+                    >
+                      <option value="">---Choose Formateur----</option>
+                      {GetFormations.data &&
+                        GetFormations.data.allFormations[subOptions] &&
+                        GetFormations.data.allFormations[
+                          subOptions
+                        ].formateur.map((formateur) => {
+                          return (
+                            <option
+                              key={formateur.code_formateur}
+                              value={formateur.code_formateur}
+                            >
+                              {formateur.nom_f + " " + formateur.prenom_f}
+                            </option>
+                          );
+                        })}
+                    </Field>
+                  </div>
+                </>
+              )}
               <div className="form-group">
                 <label htmlFor="Formation">Support:</label>
                 <select

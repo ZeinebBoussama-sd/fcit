@@ -50,11 +50,11 @@ function Theme() {
           <tbody>
             {data.allThemes.map((theme, idx) => (
               <tr key={idx}>
-                <Link to to={`/theme/${theme.code_theme}`} >
-                  <td scope="row" className="col-1">
+                <td scope="row" className="col-1">
+                  <Link to to={`/theme/${theme.code_theme}`}>
                     {theme.code_theme}
-                  </td>
-                </Link>
+                  </Link>
+                </td>
                 <td className="col-9">
                   {theme.nom_theme ? theme.nom_theme : "--"}
                 </td>

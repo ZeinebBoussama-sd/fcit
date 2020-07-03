@@ -2,20 +2,21 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import { ADD_PARTICIPER } from "../GraphQl/Mutation";
-import { GET_PARTICIPANTS } from "../GraphQl/Query";
+import { GET_SESSIONS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
-
 import { ParticiperSchema } from "../../Utils/Validation";
+import { DropzoneField } from "../component/DropzoneField";
 
 function AddParticiper(props) {
-  const GetClients = useQuery(GET_PARTICIPANTS);
+  const GetSessions = useQuery(GET_SESSIONS);
   const [AddParticipant, res] = useMutation(ADD_PARTICIPER);
-
+  //console.log(GetClients);
+  const code_participant = props.code_participant;
   return (
     <div>
       <button
         type="button"
-        className="btn btn-primary"
+        className="btn btn-primary btn-lg btn-block"
         data-toggle="modal"
         data-target="#exampleModal"
         data-whatever="@getbootstrap"
@@ -53,7 +54,6 @@ function AddParticiper(props) {
                   rapport_eval: undefined,
                   note_QCM: undefined,
                   date_eval: undefined,
-                  ParticipantCodeParticipant: undefined,
                   SessionCISession: undefined,
                 }}
                 validationSchema={ParticiperSchema}
@@ -64,9 +64,7 @@ function AddParticiper(props) {
                         rapport_eval: values.rapport_eval,
                         note_QCM: values.note_QCM,
                         date_eval: values.date_eval,
-                        ParticipantCodeParticipant: parseInt(
-                          values.ParticipantCodeParticipant
-                        ),
+                        ParticipantCodeParticipant: parseInt(code_participant),
                         SessionCISession: parseInt(values.SessionCISession),
                       },
                     });
@@ -95,10 +93,32 @@ function AddParticiper(props) {
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
                         <label htmlFor="Note QCM" className="col-form-label">
+                          Rapport Eval
+                        </label>
+
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.rapport_eval
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="rapport_eval"
+                          type="file"
+                          component={DropzoneField}
+                        />
+                        {errors.rapport_eval && touched.rapport_eval ? (
+                          <div>{errors.rapport_eval}</div>
+                        ) : null}
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="Note QCM" className="col-form-label">
                           Note QCM
                         </label>
 
                         <Field
+                          placeholder="xxxx,xxx"
                           className={
                             hasChanged
                               ? errors.note_QCM
@@ -114,80 +134,56 @@ function AddParticiper(props) {
                         ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="Prenom" className="col-form-label">
-                          Prenom
+                        <label htmlFor="date_eval" className="col-form-label">
+                          date_eval
                         </label>
                         <Field
                           className={
                             hasChanged
-                              ? errors.prenom_participant
+                              ? errors.date_eval
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          name="prenom_participant"
-                          type="text"
+                          name="date_eval"
+                          type="date"
                         />
-                        {errors.prenom_participant &&
-                        touched.prenom_participant ? (
-                          <div>{errors.prenom_participant}</div>
+                        {errors.date_eval && touched.date_eval ? (
+                          <div>{errors.date_eval}</div>
                         ) : null}
                       </div>
-
                       <div className="form-group">
-                        <label htmlFor="Tel" className="col-form-label">
-                          CIN
-                        </label>
-
-                        <Field
-                          className={
-                            hasChanged
-                              ? errors.carte_identite
-                                ? "form-control is-invalid"
-                                : "form-control is-valid"
-                              : "form-control text-input"
-                          }
-                          name="carte_identite"
-                          type="text"
-                        />
-                        {errors.carte_identite && touched.carte_identite ? (
-                          <div>{errors.carte_identite}</div>
-                        ) : null}
-                      </div>
-
-                      <div className="form-group">
-                        <label htmlFor="Client">Client:</label>
+                        <label htmlFor="Session">Session:</label>
 
                         <Field
                           component="select"
                           className={
                             hasChanged
-                              ? errors.ClientCodeClient
+                              ? errors.SessionCISession
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
                           className="form-control"
-                          name="ClientCodeClient"
+                          name="SessionCISession"
                           multiple={false}
                         >
-                          <option value="">---Choose Client----</option>
-                          {GetClients.data &&
-                            GetClients.data.allClients.map((client) => {
+                          <option value="">---Choose Session----</option>
+                          {GetSessions.data &&
+                            GetSessions.data.allSessions.map((session) => {
                               return (
                                 <option
-                                  key={client.code_client}
-                                  value={client.code_client}
+                                  key={session.code_client}
+                                  value={session.code_client}
                                 >
-                                  {client.nom_client}
+                                  {session.nom_client}
                                 </option>
                               );
                             })}
                         </Field>
-                        {errors.FormationCIFormation &&
-                        touched.FormationCIFormation ? (
+                        {errors.SessionCISession && touched.SessionCISession ? (
                           <div className="text-danger">
-                            {errors.FormationCIFormation}
+                            {errors.SessionCISession}
                           </div>
                         ) : null}
                       </div>

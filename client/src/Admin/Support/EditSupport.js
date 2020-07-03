@@ -4,6 +4,7 @@ import { Formik, Field } from "formik";
 import { UPDATE_SUPPORT } from "../GraphQl/Mutation";
 import deepEqual from "lodash.isequal";
 import { SupportSchema } from "../../Utils/Validation";
+import moment from "moment";
 
 function EditSupport(props) {
   const [updateSupport, res] = useMutation(UPDATE_SUPPORT);
@@ -16,7 +17,8 @@ function EditSupport(props) {
       <Formik
         initialValues={{
           titre_support: support && support.titre_support,
-          date_support: support && support.date_support,
+          date_support:
+            support && moment(support.date_support).format("yyyy-MM-DD"),
         }}
         validationSchema={SupportSchema}
         onSubmit={async (values) => {

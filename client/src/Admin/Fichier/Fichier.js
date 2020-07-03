@@ -65,9 +65,11 @@ function Fichier() {
             {data.allFichiers &&
               data.allFichiers.map((fichier, idx) => (
                 <tr key={idx}>
-                  <Link to={`/fichier/${fichier.code_fichier}`}>
-                    <td className="col-2">{fichier.nom_fichier}</td>
-                  </Link>
+                  <td className="col-2">
+                    <Link to={`/fichier/${fichier.code_fichier}`}>
+                      {fichier.nom_fichier}
+                    </Link>
+                  </td>
                   <td className="col-2">{fichier.type_fichier}</td>
                   <td className="col-1">{fichier.taille_max}</td>
                   <td className="col-2">{fichier.url_fichier}</td>

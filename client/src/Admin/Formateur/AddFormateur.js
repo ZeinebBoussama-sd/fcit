@@ -53,7 +53,7 @@ function AddFormateur(props) {
               <Formik
                 enableReinitialize
                 initialValues={{
-                  FormationCIFormation: "",
+                  FormationCIFormation: [],
                   code_formateur: "",
                   nom_f: "",
                   prenom_f: "",
@@ -103,8 +103,10 @@ function AddFormateur(props) {
                         tarif_f: values.tarif_f,
                         RIB_f: values.RIB_f,
                         copie_RIB: values.copie_RIB,
-                        formationCIFormation: parseInt(
-                          values.FormationCIFormation
+                        formationCIFormation: values.FormationCIFormation.map(
+                          (f) => {
+                            return parseInt(f);
+                          }
                         ),
                       },
                     });
@@ -498,7 +500,6 @@ function AddFormateur(props) {
                         <label htmlFor="RIB_f" className="col-form-label">
                           RIB_f
                         </label>
-
                         <Field
                           className="form-control"
                           name="RIB_f"
@@ -526,12 +527,12 @@ function AddFormateur(props) {
 
                       <div className="form-group">
                         <label htmlFor="Formation">Formation:</label>
-
                         <Field
                           component="select"
-                          className="form-control"
+                          className="form-control selectpicker"
+                          multiple
+                          data-live-search="true"
                           name="FormationCIFormation"
-                          multiple={false}
                         >
                           <option value="">---Choose Formation----</option>
                           {GetFormations.data &&

@@ -518,7 +518,7 @@ const typeDefs = gql`
       tarif_f: Float
       RIB_f: String
       copie_RIB: Upload
-      formationCIFormation: Int
+      formationCIFormation: [Int]
     ): Formateur!
 
     deleteFormateur(code_formateur: String!): DeleteFormateurMutationResponse
@@ -545,6 +545,7 @@ const typeDefs = gql`
       tarif_f: Float
       RIB_f: String
       copie_RIB: String
+      formationCIFormation: [Int]
     ): DeleteFormateurMutationResponse!
 
     createFormation(
@@ -661,8 +662,10 @@ const typeDefs = gql`
       FormateurCodeFormateur: String
       SupportCodeSupport: Int
     ): Session!
+
     updateSession(
       type_sess: String!
+      code_session: String!
       mode_session: String!
       date_deb_sess: Date!
       duree_sess: Int!
@@ -682,7 +685,9 @@ const typeDefs = gql`
       FormateurCodeFormateur: String
       SupportCodeSupport: Int
     ): DeleteSessionMutationResponse
+
     deleteSession(CI_session: Int!): DeleteSessionMutationResponse
+
     createSupport(titre_support: String!, date_support: Date!): Support!
     deleteSupport(code_support: Int!): DeleteSupportMutationResponse
     updateSupport(

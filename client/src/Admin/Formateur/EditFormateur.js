@@ -6,8 +6,8 @@ import { GET_FORMATIONS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
 import { FormateurSchema } from "../../Utils/Validation";
 import { DropzoneField } from "../component/DropzoneField";
-import fs from 'fs'
-import moment from 'moment'
+import fs from "fs";
+import moment from "moment";
 
 function EditFormateur(props) {
   const [updateFormateur] = useMutation(UPDATE_FORMATEUR);
@@ -17,19 +17,27 @@ function EditFormateur(props) {
     props.setEdit(false);
   };
   // const fileC = fs.ReadStream(formateur.cv_f)
-  var reader = new FileReader();
-  debugger
-    const a = reader.readAsArrayBuffer(formateur.cv_f);
-    console.log(a);
-    
+  // var reader = new FileReader();
+  // debugger
+  //   const a = reader.readAsArrayBuffer(formateur.cv_f);
+  //   console.log(a);
+
   // useEffect(() => {
   //   // Update the document title using the browser API
   //   document.title = `You clicked ${count} times`;
   // });
-  const cv_F = formateur && formateur.cv_f
-  const copie_passeport= formateur && formateur.copie_passeport
-  const copie_RIB= formateur && formateur.copie_RIB
-  const copie_cin = formateur && formateur.copie_cin
+  const cv_F = formateur && formateur.cv_f;
+  const copie_passeport = formateur && formateur.copie_passeport;
+  const copie_RIB = formateur && formateur.copie_RIB;
+  const copie_cin = formateur && formateur.copie_cin;
+  const formation =
+    formateur &&
+    formateur.formation &&
+    formateur.formation.map((f) => {
+      return parseInt(f.CI_formation);
+    });
+  console.log("formation", formation);
+
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -45,16 +53,19 @@ function EditFormateur(props) {
           NSS: formateur && formateur.NSS,
           salaire_f: formateur && formateur.salaire_f,
           adr_f: formateur && formateur.adr_f,
-          date_dajout: formateur && moment(formateur.date_dajout).format('yyyy-MM-DD'),
+          date_dajout:
+            formateur && moment(formateur.date_dajout).format("yyyy-MM-DD"),
           cin_f: formateur && formateur.cin_f,
           copie_cin: [],
           passeport_f: formateur && formateur.passeport_f,
           copie_passeport: [],
           visa_f: formateur && formateur.visa_f,
-          val_visa: formateur && moment(formateur.val_visa).format('yyyy-MM-DD'),
+          val_visa:
+            formateur && moment(formateur.val_visa).format("yyyy-MM-DD"),
           tarif_f: formateur && formateur.tarif_f,
           RIB_f: formateur && formateur.RIB_f,
           copie_RIB: [],
+          formationCIFormation: formation,
         }}
         validationSchema={FormateurSchema}
         onSubmit={async (values) => {
@@ -82,6 +93,9 @@ function EditFormateur(props) {
                 tarif_f: values.tarif_f,
                 RIB_f: values.RIB_f,
                 copie_RIB: values.copie_RIB,
+                formationCIFormation: values.FormationCIFormation.map((f) => {
+                  return f;
+                }),
               },
             });
           } catch (e) {
@@ -223,7 +237,7 @@ function EditFormateur(props) {
                   name="cv_f"
                   component={DropzoneField}
                 />
-                <b>{cv_F.replace(/^.*[\\\/]/, '')}</b>
+                <b>{cv_F.replace(/^.*[\\\/]/, "")}</b>
                 {errors.cv_f && touched.cv_f ? (
                   <div className="text-danger">{errors.cv_f}</div>
                 ) : null}
@@ -335,8 +349,13 @@ function EditFormateur(props) {
                 <label htmlFor="copie_cin" className="col-form-label">
                   copie cin
                 </label>
-                <Field className="form-control" name="copie_cin" type="file"  component={DropzoneField}/>
-                <b>{copie_cin.replace(/^.*[\\\/]/, '')}</b>
+                <Field
+                  className="form-control"
+                  name="copie_cin"
+                  type="file"
+                  component={DropzoneField}
+                />
+                <b>{copie_cin.replace(/^.*[\\\/]/, "")}</b>
                 {errors.copie_cin && touched.copie_cin ? (
                   <div>{errors.copie_cin}</div>
                 ) : null}
@@ -367,7 +386,7 @@ function EditFormateur(props) {
                   type="file"
                   component={DropzoneField}
                 />
-                                <b>{copie_passeport.replace(/^.*[\\\/]/, '')}</b>
+                <b>{copie_passeport.replace(/^.*[\\\/]/, "")}</b>
 
                 {errors.copie_passeport && touched.copie_passeport ? (
                   <div>{errors.copie_passeport}</div>
@@ -386,7 +405,7 @@ function EditFormateur(props) {
               </div>
               <div className="form-group">
                 <label htmlFor="val_visa" className="col-form-label">
-                Date de visa:
+                  Date de visa:
                 </label>
                 <Field className="form-control" name="val_visa" type="date" />
                 {errors.val_visa && touched.val_visa ? (
@@ -418,12 +437,12 @@ function EditFormateur(props) {
                   copie_RIB
                 </label>
                 <Field
-                          className="form-control"
-                          name="copie_RIB"
-                          type="file"
-                          component={DropzoneField}
-                        />
-                <b>{copie_RIB.replace(/^.*[\\\/]/, '')}</b>
+                  className="form-control"
+                  name="copie_RIB"
+                  type="file"
+                  component={DropzoneField}
+                />
+                <b>{copie_RIB.replace(/^.*[\\\/]/, "")}</b>
                 {errors.copie_RIB && touched.copie_RIB ? (
                   <div>{errors.copie_RIB}</div>
                 ) : null}
@@ -433,9 +452,10 @@ function EditFormateur(props) {
 
                 <Field
                   component="select"
-                  className="form-control"
+                  className="form-control selectpicker"
                   name="FormationCIFormation"
-                  multiple={false}
+                  multiple
+                  data-live-search="true"
                 >
                   <option value="">---Choose Formation----</option>
                   {GetFormations.data &&

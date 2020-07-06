@@ -18,12 +18,13 @@ function Item(props) {
   const data = props.formateur ? props.formateur : null;
 
   const convertDate = (dateInt) => {
-    if(!!dateInt){
-      const date = new Date(dateInt)
+    if (!!dateInt) {
+      const date = new Date(dateInt);
       return date.toLocaleDateString("fr-FR");
     }
     return "";
   };
+  console.log(data);
 
   return (
     <div className="container ">
@@ -41,6 +42,16 @@ function Item(props) {
           <p className="col">{data && data.prenom_f}</p>
         </div>
         <div className="row">
+          <b className="col-3">Formation:</b>
+          <p className="col">
+            {data &&
+              data.formation &&
+              data.formation.map((f) => {
+                return <li>{f.intitule}</li>;
+              })}
+          </p>
+        </div>
+        <div className="row">
           <b className="col-3">Classe:</b>
           <p className="col">{data && data.classe_f}</p>
         </div>
@@ -51,12 +62,12 @@ function Item(props) {
         <div className="row">
           <b className="col-3">CV:</b>
           <a
-              className="col pointer"
-              target="__blank"
-              download
-              href={data ? data.cv_f : ""}
+            className="col pointer"
+            target="__blank"
+            download
+            href={data ? data.cv_f : ""}
           >
-            {data && data.cv_f ? data.cv_f.replace(/^.*[\\\/]/, ''): "No file"}
+            {data && data.cv_f ? data.cv_f.replace(/^.*[\\\/]/, "") : "No file"}
           </a>
         </div>
         <div className="row">
@@ -91,7 +102,9 @@ function Item(props) {
             download
             href={data ? data.copie_cin : ""}
           >
-            {data && data.copie_cin ? data.copie_cin.replace(/^.*[\\\/]/, '') : "No file"}
+            {data && data.copie_cin
+              ? data.copie_cin.replace(/^.*[\\\/]/, "")
+              : "No file"}
           </a>
         </div>
         <div className="row">
@@ -101,12 +114,14 @@ function Item(props) {
         <div className="row">
           <b className="col-3">Copie Passeport:</b>
           <a
-              className="col pointer"
-              target="__blank"
-              download
-              href={data ? data.copie_passeport : ""}
+            className="col pointer"
+            target="__blank"
+            download
+            href={data ? data.copie_passeport : ""}
           >
-            {data && data.copie_passeport ? data.copie_passeport.replace(/^.*[\\\/]/, '') : "No file"}
+            {data && data.copie_passeport
+              ? data.copie_passeport.replace(/^.*[\\\/]/, "")
+              : "No file"}
           </a>
         </div>
         <div className="row">
@@ -128,12 +143,14 @@ function Item(props) {
         <div className="row">
           <b className="col-3">Copie de RIB:</b>
           <a
-              className="col pointer"
-              target="__blank"
-              download
-              href={data ? data.copie_RIB : ""}
+            className="col pointer"
+            target="__blank"
+            download
+            href={data ? data.copie_RIB : ""}
           >
-            {data && data.copie_RIB ? data.copie_RIB.replace(/^.*[\\\/]/, '') : "No file"}
+            {data && data.copie_RIB
+              ? data.copie_RIB.replace(/^.*[\\\/]/, "")
+              : "No file"}
           </a>
         </div>
       </div>

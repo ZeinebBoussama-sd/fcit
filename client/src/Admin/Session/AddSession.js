@@ -101,7 +101,7 @@ function AddSession(props) {
                         duree_sess: values.duree_sess,
                         hr_deb_j: values.hr_deb_j,
                         hr_fin_j: values.hr_fin_j,
-                        hr_j_session: values.hr_j_session,
+                        hr_j_session: parseInt(values.hr_j_session),
                         honoraire_sess: values.honoraire_sess,
                         frais_sejour: values.frais_sejour,
                         frais_transport: values.frais_transport,

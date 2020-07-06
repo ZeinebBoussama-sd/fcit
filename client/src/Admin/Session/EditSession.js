@@ -92,7 +92,7 @@ function EditSession(props) {
             session && session.support && session.support.code_support,
           valid: v ? v : 1,
         }}
-        validationSchema={SessionSchema}
+        //validationSchema={SessionSchema}
         onSubmit={async (values) => {
           try {
             await updateSession({
@@ -102,7 +102,7 @@ function EditSession(props) {
                 duree_sess: values.duree_sess,
                 hr_deb_j: values.hr_deb_j,
                 hr_fin_j: values.hr_fin_j,
-                hr_j_session: values.hr_j_session,
+                hr_j_session: parseInt(values.hr_j_session),
                 honoraire_sess: values.honoraire_sess,
                 frais_sejour: values.frais_sejour,
                 frais_transport: values.frais_transport,
@@ -118,13 +118,13 @@ function EditSession(props) {
                   : "",
                 FormationCIFormation: values.FormationCIFormation
                   ? parseInt(values.FormationCIFormation)
-                  : null,
+                  : undefined,
                 FormateurCodeFormateur: values.FormateurCodeFormateur
                   ? values.FormateurCodeFormateur
                   : "",
                 SupportCodeSupport: values.SupportCodeSupport
                   ? parseInt(values.SupportCodeSupport)
-                  : null,
+                  : undefined,
               },
             });
           } catch (e) {
@@ -164,7 +164,6 @@ function EditSession(props) {
           allFormateurs &&
             allFormateurs.map((a) => {
               if (f_list.length !== 0) {
-                debugger;
                 a.session.map((f) => {
                   if (
                     session &&

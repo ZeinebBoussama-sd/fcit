@@ -309,26 +309,7 @@ export const UPDATE_SESSION = gql`
       FormateurCodeFormateur: $FormateurCodeFormateur
       SupportCodeSupport: $SupportCodeSupport
     ) {
-      code_session
-      mode_session
-      duree_sess
-      hr_deb_j
-      hr_fin_j
-      hr_j_session
-      honoraire_sess
-      frais_sejour
-      frais_transport
-      perdiem
-      autres_frais
-      note_eval_formateur
-      type_sess
-      date_deb_sess
-      lieu_sess
-      prix_session
-      ClientCodeClient
-      FormateurCodeFormateur
-      FormationCIFormation
-      SupportCodeSupport
+      code
     }
   }
 `;
@@ -364,7 +345,7 @@ export const ADD_FORMATEUR = gql`
     $tarif_f: Float
     $RIB_f: String
     $copie_RIB: Upload
-    $formationCIFormation: Int
+    $formationCIFormation: [Int]
   ) {
     createFormateur(
       code_formateur: $code_formateur
@@ -436,6 +417,7 @@ export const UPDATE_FORMATEUR = gql`
     $tarif_f: Float
     $RIB_f: String
     $copie_RIB: String
+    $formationCIFormation: [Int]
   ) {
     updateFormateur(
       code_formateur: $code_formateur
@@ -459,6 +441,7 @@ export const UPDATE_FORMATEUR = gql`
       tarif_f: $tarif_f
       RIB_f: $RIB_f
       copie_RIB: $copie_RIB
+      formationCIFormation: $formationCIFormation
     ) {
       code
     }

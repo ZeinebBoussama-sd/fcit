@@ -173,22 +173,7 @@ const resolvers = {
       return models.Formation.findByPk(CI_formation);
     },
     async allFormations(root, args, { models }) {
-      const allFormations = await models.Formation.findAll({
-        include: [{ all: true }],
-      });
-      // const a =  allFormations.map((p) =>
-      //   p.getFormateurs({
-      //     include: [
-      //       {
-      //         model: models.Formateur_Formation,
-      //         through: {
-      //           attributes: ["validation_f"],
-      //         },
-      //       },
-      //     ],
-      //   })
-      // );
-      // const b = await a
+      const allFormations = await models.Formation.findAll();
       return allFormations;
     },
     async ingenieurpedagogique(root, { code_IP }, { models }) {
@@ -253,7 +238,6 @@ const resolvers = {
         return true;
       }
     },
-
     singleUpload: async (parent, args) => {
       const { createReadStream, filename } = await args.file;
       const file = await args.file;
@@ -479,7 +463,6 @@ const resolvers = {
       );
       return updateDemandeFormation;
     },
-
     async deleteDemande(root, args, { models }) {
       const deleteDemande = await models.Demande.destroy({
         where: { code_demande: args.code_demande },
@@ -495,7 +478,6 @@ const resolvers = {
         where: { date_prev: args.date_prev },
       });
     },
-
     async createFichier(
       root,
       {
@@ -558,7 +540,6 @@ const resolvers = {
       );
       return updateDemandeur;
     },
-
     async deleteDemandeur(root, args, { models }) {
       const deleteDemandeur = await models.Demandeur.destroy({
         where: { code_demandeur: args.code_demandeur },
@@ -688,12 +669,15 @@ const resolvers = {
         RIB_f: args.RIB_f,
         copie_RIB: `${__dirname}/upload/${args.code_formateur}/formateur/RIB_f/${copie_RIB.filename}`,
       });
-      const addFormateurFormation = await models.Formateur_Formation.create({
-        FormationCIFormation: args.formationCIFormation,
-        FormateurCodeFormateur: args.code_formateur,
-        date_validation: "2020-01-01 00:00:00.000 +00:00",
-        validation_f: 1,
-      });
+      const addFormateurFormation = args.formationCIFormation.map(
+        async (f) =>
+          await models.Formateur_Formation.create({
+            FormationCIFormation: f,
+            FormateurCodeFormateur: args.code_formateur,
+            date_validation: "2020-01-01 00:00:00.000 +00:00",
+            validation_f: 1,
+          })
+      );
       return addFormateur;
     },
     async updateFormateur(root, args, { models }) {
@@ -858,7 +842,6 @@ const resolvers = {
         motcle,
       });
     },
-
     async deleteMotCle(root, args, { models }) {
       const deleteMotCle = await models.MotCle.destroy({
         where: { motcle: args.motcle },
@@ -937,7 +920,7 @@ const resolvers = {
       return addSession;
     },
     async updateSession(root, args, { models }) {
-      const updateSession = await models.Support.update(
+      const updateSession = await models.Session.update(
         {
           type_sess: args.type_sess,
           mode_session: args.mode_session,
@@ -957,11 +940,13 @@ const resolvers = {
           ClientCodeClient: args.ClientCodeClient,
           FormationCIFormation: args.FormationCIFormation,
           FormateurCodeFormateur: args.FormateurCodeFormateur,
-          SupportCodeSupport: args.SupportCodeSupport,
+          SupportCodeSupport: args.SupportCodeSupport
+            ? args.SupportCodeSupport
+            : null,
         },
         { where: { code_session: args.code_session } }
       );
-      return updateSession;
+      return updateSession[0];
     },
     async deleteSession(root, args, { models }) {
       const deleteSession = await models.Session.destroy({
@@ -1145,7 +1130,7 @@ const resolvers = {
       return formateur.getSessions();
     },
     async formation(formateur) {
-      return formateur.getFormation();
+      return formateur.getFormations();
     },
     async validation(formateur) {
       return formateur.getValidations();

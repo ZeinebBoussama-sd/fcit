@@ -17,10 +17,7 @@ export const FormateurSchema = Yup.object().shape({
     .min(8, "Too Short!")
     .max(20, "Too Long!")
     .required("Required"),
-  NSS: Yup.string()
-    .min(10, "Too Short!")
-    .max(10, "Too Long!")
-    .required("Required"),
+  NSS: Yup.string().min(10, "Too Short!").max(10, "Too Long!"),
   salaire_f: Yup.number()
     .test("is-decimal", "invalid decimal", (value) =>
       (value + "").match(/^\d{4}\.{1}\d{3}/)
@@ -46,10 +43,7 @@ export const FormateurSchema = Yup.object().shape({
   tarif_f: Yup.number().test("is-decimal", "invalid decimal", (value) =>
     (value + "").match(/^\d{4}\.{1}\d{3}/)
   ),
-  RIB_f: Yup.string()
-    .min(20, "Too Short!")
-    .max(20, "Too Long!")
-    .required("Required"),
+  RIB_f: Yup.string().min(20, "Too Short!").max(20, "Too Long!"),
   copie_RIB: Yup.string().required("Required"),
 });
 export const FormationSchema = Yup.object().shape({
@@ -238,9 +232,9 @@ export const ValidationSchema = Yup.object().shape({
   decision_r: Yup.boolean().required("Required"),
   decision_f: Yup.boolean().required("Required"),
   remarque: Yup.string(),
-  IngenieurPedagogiqueCodeIP: Yup.number().required("Required"),
+  IngenieurPedagogiqueCodeIP: Yup.string().required("Required"),
   FormateurCodeFormateur: Yup.string().required("Required"),
-  SupportCodeSupport: Yup.number().required("Required"),
+  SupportCodeSupport: Yup.string().required("Required"),
 });
 export const ParticipantSchema = Yup.object().shape({
   nom_participant: Yup.string().required("Required"),

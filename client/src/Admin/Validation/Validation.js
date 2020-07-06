@@ -32,19 +32,19 @@ function Validation() {
         <table className="mt-2 table table-hover table-fixed">
           <thead>
             <tr>
-              <th scope="col" className="col-1">
+              <th scope="col" className="col-2">
                 date
               </th>
-              <th scope="col" className="col-1">
+              <th scope="col" className="col-2">
                 Decision Support
               </th>
-              <th scope="col" className="col-1">
+              <th scope="col" className="col-2">
                 Décision Formateur
               </th>
               <th scope="col" className="col-2">
                 I.P
               </th>
-              <th scope="col" className="col-1">
+              <th scope="col" className="col-2">
                 Formateur
               </th>
 
@@ -63,17 +63,17 @@ function Validation() {
                     </Link>
                   </th>
 
-                  <td className="col-1">{validation.decision_r}</td>
+                  <td className="col-2">{validation.decision_r}</td>
 
-                  <td className="col-1">{validation.decision_f}</td>
+                  <td className="col-2">{validation.decision_f}</td>
 
                   <td className="col-2">
                     {validation.ingenieurpedagogique.nom_ing}
                   </td>
-                  <td className="col-1">{validation.formateur.nom_f}</td>
+                  <td className="col-2">{validation.formateur.nom_f}</td>
                   <td className="col-2">{validation.support.titre_support}</td>
 
-                  <td className="col-1">
+                  <td className="col-2">
                     <center>
                       <WarningModal dlt={dlt} code={validation.code_val} />
                     </center>

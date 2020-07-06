@@ -47,6 +47,7 @@ function AddTheme(props) {
                   code_theme: "",
                   nom_theme: "",
                 }}
+                enableReinitialize
                 validationSchema={ThemeSchema}
                 onSubmit={async (values) => {
                   try {
@@ -95,7 +96,7 @@ function AddTheme(props) {
                           name="code_theme"
                           type="text"
                         />
-                        {errors.code_theme && touched.code_theme ? (
+                        {touched.code_theme ? (
                           <div>{errors.code_theme}</div>
                         ) : null}
                       </div>

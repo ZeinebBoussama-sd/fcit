@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import {
-  GET_FORMATEURS,
+  GET_FORMATEUR_FORMATIONS,
   GET_SUPPORT_MINI,
   GET_CLIENTS,
-  GET_FORMATIONS,
   GET_FORMATIONSOPTIONS,
 } from "../GraphQl/Query";
 import { ADD_SESSION } from "../GraphQl/Mutation";
@@ -14,19 +13,21 @@ import deepEqual from "lodash.isequal";
 import moment from "moment";
 
 function AddSession(props) {
+  const [CIF, setCIF] = useState();
+  const GetFormateurFormation = useQuery(GET_FORMATEUR_FORMATIONS, {
+    variables: {
+      FormationCIFormation: parseInt(CIF),
+    },
+  });
   const [AddSession] = useMutation(ADD_SESSION);
   const GetClients = useQuery(GET_CLIENTS);
   const GetFormations = useQuery(GET_FORMATIONSOPTIONS);
-  const GetFormateurs = useQuery(GET_FORMATEURS);
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
   const [subOptions, setSubOption] = useState(undefined);
-  const [valide, setValide] = useState(false);
 
   const sub = (e) => {
-    console.log("selectIndex", e.currentTarget.selectedIndex - 1);
     setSubOption(e.currentTarget.selectedIndex - 1);
   };
-  // console.log("props", props.allSessions.filter(session=>session.CI.session === ));
 
   return (
     <div>
@@ -81,13 +82,14 @@ function AddSession(props) {
                   autres_frais: undefined,
                   note_eval_formateur: undefined,
                   type_sess: undefined,
-                  date_deb_sess: undefined,
+                  date_deb_sess: "",
                   lieu_sess: undefined,
                   prix_session: undefined,
                   ClientCodeClient: "",
                   FormationCIFormation: undefined,
                   FormateurCodeFormateur: "",
                   SupportCodeSupport: undefined,
+                  valid: 1,
                 }}
                 //validationSchema={SessionSchema}
                 onSubmit={async (values) => {
@@ -144,27 +146,38 @@ function AddSession(props) {
                     handleReset,
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
+                  const filter_valid =
+                    GetFormateurFormation.data &&
+                    GetFormateurFormation.data.formateur_formation.filter(
+                      (f) => {
+                        if (values.valid !== "") {
+                          return (
+                            f.validation_f === Boolean(parseInt(values.valid))
+                          );
+                        }
+                      }
+                    );
                   const allFormateurs =
                     GetFormations.data &&
                     GetFormations.data.allFormations[subOptions] &&
                     GetFormations.data.allFormations[subOptions].formateur;
-                  {
-                    /* .filter(
-                      (f) =>
-                        f.date_deb_sess ===
-                        moment(values.date_deb_sess).format("YYYY-MM-DD")
-                    ); */
-                  }
                   const f_list = [];
                   allFormateurs &&
                     allFormateurs.map((a) => {
-                      const foundDate = a.session.find(
+                      const foundDate = a.session.filter(
                         (f) =>
                           moment(f.date_deb_sess).format("YYYY-MM-DD") ===
                           moment(values.date_deb_sess).format("YYYY-MM-DD")
                       );
-                      if (!foundDate) {
-                        f_list.push(a);
+                      debugger;
+                      if (foundDate.length === 0) {
+                        for (let i = 0; i < filter_valid.length; i++) {
+                          if (
+                            filter_valid[i].FormateurCodeFormateur ===
+                            a.code_formateur
+                          )
+                            f_list.push(a);
+                        }
                       }
                     });
                   return (
@@ -474,6 +487,7 @@ function AddSession(props) {
                           onChange={(e) => {
                             handleChange(e);
                             sub(e);
+                            setCIF(e.target.value);
                           }}
                           value={values.FormationCIFormation}
                           id="FormationCIFormation"
@@ -496,33 +510,38 @@ function AddSession(props) {
                       </div>
                       {values.FormationCIFormation && (
                         <>
-                          <div className="form-check">
-                            <Field
-                              onChange={setValide(1)}
-                              name="check"
-                              type="radio"
-                              className="form-check-input"
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="Formation"
-                            >
-                              V
-                            </label>
-                          </div>
-                          <div className="form-check">
-                            <Field
-                              onChange={setValide(0)}
-                              name="check"
-                              type="radio"
-                              className="form-check-input"
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="Formation"
-                            >
-                              NV
-                            </label>
+                          <div>
+                            <div className="form-check">
+                              <input
+                                onChange={handleChange}
+                                name="valid"
+                                type="radio"
+                                value={1}
+                                className="form-check-input"
+                                checked
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="Formation"
+                              >
+                                Valid
+                              </label>
+                            </div>
+                            <div className="form-check">
+                              <input
+                                onChange={handleChange}
+                                name="valid"
+                                type="radio"
+                                value={0}
+                                className="form-check-input"
+                              />
+                              <label
+                                className="form-check-label"
+                                htmlFor="Formation"
+                              >
+                                Not Valid
+                              </label>
+                            </div>
                           </div>
                           <div className="form-group">
                             <label htmlFor="Formateur">Formateur:</label>
@@ -578,6 +597,7 @@ function AddSession(props) {
                           type="button"
                           className="btn btn-secondary"
                           data-dismiss="modal"
+                          onClick={handleReset}
                         >
                           Close
                         </button>

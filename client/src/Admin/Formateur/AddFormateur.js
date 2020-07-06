@@ -83,7 +83,7 @@ function AddFormateur(props) {
                   classe_f: undefined,
                   fonction_f: undefined,
                   cv_f: [],
-                  email_f: '',
+                  email_f: "",
                   tel_f: undefined,
                   NSS: undefined,
                   salaire_f: undefined,
@@ -99,10 +99,10 @@ function AddFormateur(props) {
                   RIB_f: undefined,
                   copie_RIB: [],
                 }}
+                enableReinitialize
                 // validationSchema={FormateurSchema}
                 onSubmit={async (values) => {
                   try {
-                    debugger;
                     await AddFormateur({
                       variables: {
                         code_formateur: values.code_formateur,
@@ -584,6 +584,7 @@ function AddFormateur(props) {
                           type="button"
                           className="btn btn-secondary"
                           data-dismiss="modal"
+                          onClick={() => handleReset()}
                         >
                           Fermer
                         </button>

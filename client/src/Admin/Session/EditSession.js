@@ -5,6 +5,7 @@ import {
   GET_SUPPORT_MINI,
   GET_CLIENTS,
   GET_FORMATIONSOPTIONS,
+  GET_FORMATEUR_FORMATIONS,
 } from "../GraphQl/Query";
 import { UPDATE_SESSION } from "../GraphQl/Mutation";
 import { SessionSchema } from "../../Utils/Validation";
@@ -13,7 +14,14 @@ import moment from "moment";
 
 function EditSession(props) {
   const session = props.session ? props.session : null;
-
+  const [CIF, setCIF] = useState(
+    session && session.formation && session.formation.CI_formation
+  );
+  const GetFormateurFormation = useQuery(GET_FORMATEUR_FORMATIONS, {
+    variables: {
+      FormationCIFormation: parseInt(CIF),
+    },
+  });
   const [updateSession] = useMutation(UPDATE_SESSION);
 
   const GetClients = useQuery(GET_CLIENTS);
@@ -32,18 +40,26 @@ function EditSession(props) {
       )
     : undefined;
   const [subOptions, setSubOption] = useState(FormationIDX);
-  console.log("subOptions", subOptions);
-
+  const formateur_formation =
+    GetFormateurFormation.data &&
+    GetFormateurFormation.data.formateur_formation;
+  const isValid =
+    formateur_formation &&
+    formateur_formation.filter((f) => {
+      if (session && session.formation) {
+        return (
+          f.FormationCIFormation === session.formation.CI_formation,
+          f.FormateurCodeFormateur === session.formateur.code_formateur
+        );
+      }
+    });
+  const v = isValid && isValid.length > 0 && isValid[0].validation_f;
   useEffect(() => {
     setSubOption(FormationIDX);
   }, [FormationIDX]);
   const sub = (e) => {
-    debugger;
     setSubOption(e.currentTarget.selectedIndex - 1);
   };
-  console.log("session", session);
-  console.log("formations", GetFormations);
-  console.log("FormationIDX", FormationIDX);
 
   return (
     <div className="card-body" id="navbarSupportedContent">
@@ -74,6 +90,7 @@ function EditSession(props) {
             session && session.formateur && session.formateur.code_formateur,
           SupportCodeSupport:
             session && session.support && session.support.code_support,
+          valid: v ? v : 1,
         }}
         validationSchema={SessionSchema}
         onSubmit={async (values) => {
@@ -132,6 +149,47 @@ function EditSession(props) {
           } = props;
           const hasChanged = !deepEqual(values, initialValues);
 
+          const filter_valid =
+            formateur_formation &&
+            formateur_formation.filter((f) => {
+              if (values.valid !== "") {
+                return f.validation_f === Boolean(parseInt(values.valid));
+              }
+            });
+          const allFormateurs =
+            GetFormations.data &&
+            GetFormations.data.allFormations[subOptions] &&
+            GetFormations.data.allFormations[subOptions].formateur;
+          const f_list = [];
+          allFormateurs &&
+            allFormateurs.map((a) => {
+              if (f_list.length !== 0) {
+                debugger;
+                a.session.map((f) => {
+                  if (
+                    session &&
+                    moment(session.date_deb_sess).format("YYYY-MM-DD") ===
+                      moment(f.date_deb_sess).format("YYYY-MM-DD")
+                  ) {
+                    f_list.push(a);
+                  }
+                });
+              }
+              const foundDate = a.session.filter(
+                (f) =>
+                  moment(f.date_deb_sess).format("YYYY-MM-DD") ===
+                  moment(values.date_deb_sess).format("YYYY-MM-DD")
+              );
+
+              if (foundDate.length === 0) {
+                for (let i = 0; i < filter_valid.length; i++) {
+                  if (
+                    filter_valid[i].FormateurCodeFormateur === a.code_formateur
+                  )
+                    f_list.push(a);
+                }
+              }
+            });
           return (
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -425,6 +483,7 @@ function EditSession(props) {
                   onChange={(e) => {
                     handleChange(e);
                     sub(e);
+                    setCIF(e.target.value);
                   }}
                   value={values.FormationCIFormation}
                   id="FormationCIFormation"
@@ -445,6 +504,34 @@ function EditSession(props) {
               </div>
               {values.FormationCIFormation && (
                 <>
+                  <div>
+                    <div className="form-check">
+                      <input
+                        onChange={handleChange}
+                        name="valid"
+                        type="radio"
+                        //checked={values.valid === 1}
+                        value={1}
+                        className="form-check-input"
+                      />
+                      <label className="form-check-label" htmlFor="Formation">
+                        Valid
+                      </label>
+                    </div>
+                    <div className="form-check">
+                      <input
+                        onChange={handleChange}
+                        name="valid"
+                        type="radio"
+                        value={0}
+                        //checked={values.valid === 0}
+                        className="form-check-input"
+                      />
+                      <label className="form-check-label" htmlFor="Formation">
+                        Not Valid
+                      </label>
+                    </div>
+                  </div>
                   <div className="form-group">
                     <label htmlFor="Formateur">Formateur:</label>
                     <Field
@@ -452,17 +539,11 @@ function EditSession(props) {
                       component="select"
                       className="form-control"
                       name="FormateurCodeFormateur"
-                      onChange={(e) => {
-                        handleChange(e);
-                        sub(e);
-                      }}
+                      onChange={handleChange}
                     >
                       <option value="">---Choose Formateur----</option>
-                      {GetFormations.data &&
-                        GetFormations.data.allFormations[subOptions] &&
-                        GetFormations.data.allFormations[
-                          subOptions
-                        ].formateur.map((formateur) => {
+                      {f_list &&
+                        f_list.map((formateur) => {
                           return (
                             <option
                               key={formateur.code_formateur}
@@ -481,7 +562,9 @@ function EditSession(props) {
                 <select
                   className="form-control"
                   onChange={handleChange}
-                  value={values.SupportCodeSupport}
+                  value={
+                    values.SupportCodeSupport ? values.SupportCodeSupport : ""
+                  }
                   id="SupportCodeSupport"
                 >
                   <option value="">---Choose Support--</option>

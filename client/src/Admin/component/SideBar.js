@@ -80,7 +80,7 @@ function SideBar(props) {
           </NavLink>
           <div className={`collapse ${show}`}>
             <NavLink
-              className="pl-6"
+              className={active ? `` : "pl-6"}
               to="/formateur"
               activeStyle={{
                 color: "dodgerblue",
@@ -95,7 +95,7 @@ function SideBar(props) {
               <span>Formateur</span>
             </NavLink>
             <NavLink
-              className="pl-6"
+              className={active ? `` : "pl-6"}
               to="/ingenieur_pedagogique"
               activeStyle={{
                 color: "dodgerblue",
@@ -110,7 +110,7 @@ function SideBar(props) {
               <span>Ingenieur Pedagogique</span>
             </NavLink>
             <NavLink
-              className="pl-6"
+              className={active ? `` : "pl-6"}
               to="/demandeur"
               activeStyle={{
                 color: "dodgerblue",
@@ -125,7 +125,7 @@ function SideBar(props) {
               <span>Demandeur</span>
             </NavLink>
             <NavLink
-              className="pl-6"
+              className={active ? `` : "pl-6"}
               to="/participant"
               activeStyle={{
                 color: "dodgerblue",
@@ -160,7 +160,7 @@ function SideBar(props) {
           </NavLink>
           <div className={`collapse ${showFormation}`}>
             <NavLink
-              className="pl-6"
+              className={active ? `` : "pl-6"}
               to="/formation"
               activeStyle={{
                 color: "dodgerblue",
@@ -175,7 +175,7 @@ function SideBar(props) {
               <span>Formation</span>
             </NavLink>
             <NavLink
-              className="pl-6"
+              className={active ? `` : "pl-6"}
               to="/motcle"
               activeStyle={{
                 color: "dodgerblue",
@@ -190,7 +190,7 @@ function SideBar(props) {
               <span>Mot Clé</span>
             </NavLink>
             <NavLink
-              className="pl-6"
+              className={active ? `` : "pl-6"}
               to="/theme"
               activeStyle={{
                 color: "dodgerblue",
@@ -205,7 +205,7 @@ function SideBar(props) {
               <span>Theme</span>
             </NavLink>
             <NavLink
-              className="pl-6"
+              className={active ? `` : "pl-6"}
               to="/support"
               activeStyle={{
                 color: "dodgerblue",
@@ -220,7 +220,7 @@ function SideBar(props) {
               <span>Support</span>
             </NavLink>
             <NavLink
-              className="pl-6"
+              className={active ? `` : "pl-6"}
               to="/fichier"
               activeStyle={{
                 color: "dodgerblue",
@@ -266,18 +266,6 @@ function SideBar(props) {
               id="sidebar_btn"
             />
             <span> Date Prevue</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/participer"
-            activeStyle={{
-              color: "dodgerblue",
-              borderRight: "solid 4px dodgerblue",
-            }}
-          >
-            <FontAwesomeIcon icon={faRing} className="mr-1" id="sidebar_btn" />
-            <span> Participer</span>
           </NavLink>
         </li>
         <li>

@@ -53,7 +53,6 @@ function AddFormation(props) {
             </div>
             <div className="modal-body">
               <Formik
-                enableReinitialize
                 initialValues={{
                   code_formation: "",
                   intitule: "",
@@ -89,6 +88,7 @@ function AddFormation(props) {
                   }
                   props.refetch();
                 }}
+                enableReinitialize={true}
               >
                 {(props) => {
                   const {
@@ -321,6 +321,7 @@ function AddFormation(props) {
                           type="button"
                           className="btn btn-secondary"
                           data-dismiss="modal"
+                          onClick={() => handleReset()}
                         >
                           Close
                         </button>

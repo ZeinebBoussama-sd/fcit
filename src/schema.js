@@ -79,6 +79,8 @@ const typeDefs = gql`
   type Formateur_Formation {
     validation_f: Boolean!
     date_validation: Date!
+    FormateurCodeFormateur: String
+    FormationCIFormation: Int
     formation: Formation
     formateur: Formateur
   }
@@ -105,6 +107,7 @@ const typeDefs = gql`
     tarif_f: Float
     RIB_f: String
     copie_RIB: String
+    formateur_formation: [Formateur_Formation]
     formation: [Formation]
     session: [Session]
     validation: [Validation]
@@ -245,7 +248,10 @@ const typeDefs = gql`
     allValidations: [Validation!]!
     metier(code_metier: Int, intitule_metier: String): Metier
     allMetiers: [Metier!]!
-    formateur_formation(id: ID): Formateur_Formation
+    formateur_formation(
+      FormateurCodeFormateur: String
+      FormationCIFormation: Int
+    ): [Formateur_Formation]
     allFormateurs_Formations: [Formateur_Formation!]!
     participer(id: ID): Participer
     allParticipers: [Participer!]!

@@ -16,6 +16,30 @@ export const GET_FORMATIONSOPTIONS = gql`
     }
   }
 `;
+export const GET_FORMATEUR_FORMATIONS = gql`
+  query getformateur_formation(
+    $FormationCIFormation: Int
+    $FormateurCodeFormateur: String
+  ) {
+    formateur_formation(
+      FormationCIFormation: $FormationCIFormation
+      FormateurCodeFormateur: $FormateurCodeFormateur
+    ) {
+      validation_f
+      date_validation
+      FormateurCodeFormateur
+      FormationCIFormation
+    }
+  }
+`;
+export const GET_ALL_FORMATEUR_FORMATIONS = gql`
+  {
+    allFormateurs_Formations {
+      validation_f
+      date_validation
+    }
+  }
+`;
 
 export const GET_FORMATIONS = gql`
   {

@@ -5,6 +5,7 @@ const { ApolloError } = require("apollo-server-core");
 const fs = require("fs");
 const request = require("request");
 const formidable = require("formidable");
+const { Op } = require("sequelize");
 
 const storeUpload = (file, folder, ID, type) => {
   if (!!file) {
@@ -115,8 +116,46 @@ const resolvers = {
     async allMetiers(root, args, { models }) {
       return models.Metier.findAll();
     },
-    async formateur_formation(root, { id }, { models }) {
-      return models.Formateur_Formation.findByPk(id);
+    async allFormateurs_Formations(root, args, { models }) {
+      const findAll = await models.Formateur_Formation.findAll({
+        include: [
+          {
+            model: models.Formateur,
+          },
+          {
+            model: models.Formation,
+          },
+        ],
+      });
+      return findAll;
+    },
+    async formateur_formation(root, args, { models }) {
+      const FormationCIFormation = args.FormationCIFormation
+        ? args.FormationCIFormation
+        : null;
+      const FormateurCodeFormateur = args.FormateurCodeFormateur
+        ? args.FormateurCodeFormateur
+        : null;
+      const ff_List =
+        FormationCIFormation && FormateurCodeFormateur
+          ? await models.Formateur_Formation.findAll({
+              where: {
+                [Op.and]: [
+                  { FormateurCodeFormateur: FormateurCodeFormateur },
+                  { FormationCIFormation: FormationCIFormation },
+                ],
+              },
+            })
+          : await models.Formateur_Formation.findAll({
+              where: {
+                [Op.or]: [
+                  { FormateurCodeFormateur: FormateurCodeFormateur },
+                  { FormationCIFormation: FormationCIFormation },
+                ],
+              },
+            });
+
+      return ff_List;
     },
     async formateur(root, { code_formateur }, { models }) {
       return models.Formateur.findByPk(code_formateur);
@@ -134,7 +173,23 @@ const resolvers = {
       return models.Formation.findByPk(CI_formation);
     },
     async allFormations(root, args, { models }) {
-      return models.Formation.findAll();
+      const allFormations = await models.Formation.findAll({
+        include: [{ all: true }],
+      });
+      // const a =  allFormations.map((p) =>
+      //   p.getFormateurs({
+      //     include: [
+      //       {
+      //         model: models.Formateur_Formation,
+      //         through: {
+      //           attributes: ["validation_f"],
+      //         },
+      //       },
+      //     ],
+      //   })
+      // );
+      // const b = await a
+      return allFormations;
     },
     async ingenieurpedagogique(root, { code_IP }, { models }) {
       return models.IngenieurPedagogique.findByPk(code_IP);
@@ -210,13 +265,28 @@ const resolvers = {
       if (args.personne & args.societe)
         throw new ApolloError("can't add both Person and societe");
 
-      //lookin after person
+      //looking after person
       const findperson =
         args.personne &&
         (await models.Personne.findOne({
           where: { cin_p: args.personne },
         }));
       if (findperson) throw new ApolloError("this cin_p is already created");
+      //looking after adress
+      const findadress =
+        args.adr_client &&
+        (await models.Client.findOne({
+          where: { adr_client: args.adr_client },
+        }));
+      if (findadress) throw new ApolloError("this adress is already created");
+      //looking after telifon
+      const findtelefon =
+        args.tel_client &&
+        (await models.Client.findOne({
+          where: { tel_client: args.tel_client },
+        }));
+      if (findtelefon)
+        throw new ApolloError("this telifon number is already created");
 
       //looking after societe
       const findsociete =
@@ -1064,10 +1134,10 @@ const resolvers = {
   },
   Formateur_Formation: {
     async formateur(formateur_formation) {
-      return formateur_formation.getFormation();
+      return formateur_formation.getFormations();
     },
     async formation(formateur_formation) {
-      return formateur_formation.getformateur();
+      return formateur_formation.getFormateurs();
     },
   },
   Formateur: {

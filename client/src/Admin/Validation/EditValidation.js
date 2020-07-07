@@ -9,6 +9,7 @@ import {
 import { UPDATE_VALIDATION } from "../GraphQl/Mutation";
 import { ValidationSchema } from "../../Utils/Validation";
 import deepEqual from "lodash.isequal";
+import moment from "moment";
 
 function EditValidation(props) {
   const [active, setactive] = useState(false);
@@ -25,7 +26,8 @@ function EditValidation(props) {
       <Formik
         enableReinitialize
         initialValues={{
-          date_val: validation && validation.date_val,
+          date_val:
+            validation && moment(validation.date_val).format("YYYY-MM-DD"),
           decision_r: validation && validation.decision_r,
           decision_f: validation && validation.decision_f,
           remarque: validation && validation.remarque,
@@ -42,8 +44,8 @@ function EditValidation(props) {
             await updateValidation({
               variables: {
                 date_val: values.date_val,
-                decision_r: values.decision_r,
-                decision_f: values.decision_f,
+                decision_r: values.decision_r ? " 1" : " 0",
+                decision_f: values.decision_f ? 1 : 0,
                 remarque: values.remarque,
                 IngenieurPedagogiqueCodeIP: values.IngenieurPedagogiqueCodeIP,
                 FormateurCodeFormateur: values.FormateurCodeFormateur,
@@ -99,6 +101,7 @@ function EditValidation(props) {
                   Décision(Support) :
                 </label>
                 <Field
+                  component="select"
                   className={
                     hasChanged
                       ? errors.decision_r
@@ -107,18 +110,23 @@ function EditValidation(props) {
                       : "form-control text-input"
                   }
                   name="decision_r"
-                  type="boolean"
-                />
-                {errors.decision_r && touched.decision_r ? (
-                  <div>{errors.decision_r}</div>
-                ) : null}
+                >
+                  <option value="">---Choose décision---</option>
+
+                  <option key="0" value={0}>
+                    Refus
+                  </option>
+                  <option key="1" value={1}>
+                    accord
+                  </option>
+                </Field>
               </div>
               <div className="form-group">
                 <label htmlFor="decision_f" className="col-form-label">
                   Décision(Formateur):
                 </label>
-
                 <Field
+                  component="select"
                   className={
                     hasChanged
                       ? errors.decision_f
@@ -127,11 +135,16 @@ function EditValidation(props) {
                       : "form-control text-input"
                   }
                   name="decision_f"
-                  type="number"
-                />
-                {errors.decision_f && touched.decision_f ? (
-                  <div>{errors.decision_f}</div>
-                ) : null}
+                >
+                  <option value="">---Choose décision---</option>
+
+                  <option key={0} value={0}>
+                    Refus
+                  </option>
+                  <option key={1} value={1}>
+                    accord
+                  </option>
+                </Field>
               </div>
               <div className="form-group">
                 <label htmlFor="remarque" className="col-form-label">
@@ -229,7 +242,7 @@ function EditValidation(props) {
                 >
                   <option value="">---choose support---</option>
                   {GetSupportMini.data &&
-                    GetSupportMini.data.allSupportss.map((support) => {
+                    GetSupportMini.data.allSupports.map((support) => {
                       return (
                         <option
                           key={support.code_support}

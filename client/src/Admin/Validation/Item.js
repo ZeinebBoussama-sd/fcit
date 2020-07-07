@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 function Item(props) {
   const data = props.validation ? props.validation : null;
   return (
@@ -6,7 +7,9 @@ function Item(props) {
       <div className="card container">
         <div className="row mt-3">
           <b className="col-3"> Date :</b>
-          <p className="col">{data && data.date_val}</p>
+          <p className="col">
+            {data && moment(data.date_val).format("YYYY-MM-DD")}
+          </p>
         </div>
         <div className="row">
           <b className="col-3">Remarque:</b>
@@ -14,11 +17,11 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-3">Decision par rapport au Support:</b>
-          <p className="col">{data && data.decision_r}</p>
+          <p className="col">{data && data.decision_r ? "Refus" : "Accord"}</p>
         </div>
         <div className="row">
           <b className="col-3">Décision par rapport au Formateur:</b>
-          <p className="col">{data && data.decision_f}</p>
+          <p className="col">{data && data.decision_f ? "Refus" : "Accord"}</p>
         </div>
         <div className="row">
           <b className="col-3">Formateur:</b>
@@ -32,7 +35,6 @@ function Item(props) {
           <b className="col-3">Support:</b>
           <p className="col">{data && data.support.titre_support}</p>
         </div>
-        =
       </div>
     </div>
   );

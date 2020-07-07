@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-
+  Validation.associate = function (models) {
+    Validation.belongsTo(models.Formateur);
+    Validation.belongsTo(models.IngenieurPedagogique);
+    Validation.belongsTo(models.Support);
+  };
   return Validation;
 };

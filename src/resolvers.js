@@ -1212,7 +1212,7 @@ const resolvers = {
   },
   Validation: {
     async formateur(validation) {
-      return validation.getformateur();
+      return validation.getFormateur();
     },
     async ingenieurpedagogique(validation) {
       return validation.getIngenieurPedagogique();

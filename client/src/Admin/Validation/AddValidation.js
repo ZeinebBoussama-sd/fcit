@@ -74,17 +74,17 @@ function AddValidation(props) {
                     await addValidation({
                       variables: {
                         date_val: values.date_val,
-                        decision_r: values.decision_r,
-                        decision_f: values.decision_f,
+                        decision_r: Boolean(parseInt(values.decision_r)),
+                        decision_f: Boolean(parseInt(values.decision_f)),
                         remarque: values.remarque,
-                        IngenieurPedagogiqueCodeIP:
-                          values.IngenieurPedagogiqueCodeIP,
+                        IngenieurPedagogiqueCodeIP: parseInt(
+                          values.IngenieurPedagogiqueCodeIP
+                        ),
                         FormateurCodeFormateur: values.FormateurCodeFormateur,
-                        SupportCodeSupport: values.SupportCodeSupport,
+                        SupportCodeSupport: parseInt(values.SupportCodeSupport),
                       },
                     });
-                    alert(JSON.stringify(values, null, 2));
-                    setactive(false);
+                    //                    setactive(false);
                   } catch (e) {
                     console.log("e", e);
                   }
@@ -132,6 +132,7 @@ function AddValidation(props) {
                           Décision(Support) :
                         </label>
                         <Field
+                          component="select"
                           className={
                             hasChanged
                               ? errors.decision_r
@@ -140,18 +141,23 @@ function AddValidation(props) {
                               : "form-control text-input"
                           }
                           name="decision_r"
-                          type="number"
-                        />
-                        {errors.decision_r && touched.decision_r ? (
-                          <div>{errors.decision_r}</div>
-                        ) : null}
+                        >
+                          <option value="">---Choose décision---</option>
+
+                          <option key="0" value={0}>
+                            Refus
+                          </option>
+                          <option key="1" value={1}>
+                            accord
+                          </option>
+                        </Field>
                       </div>
                       <div className="form-group">
                         <label htmlFor="decision_f" className="col-form-label">
                           Décision(Formateur):
                         </label>
-
                         <Field
+                          component="select"
                           className={
                             hasChanged
                               ? errors.decision_f
@@ -160,12 +166,18 @@ function AddValidation(props) {
                               : "form-control text-input"
                           }
                           name="decision_f"
-                          type="number"
-                        />
-                        {errors.decision_f && touched.decision_f ? (
-                          <div>{errors.decision_f}</div>
-                        ) : null}
+                        >
+                          <option value="">---Choose décision---</option>
+
+                          <option key="0" value={0}>
+                            Refus
+                          </option>
+                          <option key="1" value={1}>
+                            accord
+                          </option>
+                        </Field>
                       </div>
+
                       <div className="form-group">
                         <label htmlFor="remarque" className="col-form-label">
                           remarque:

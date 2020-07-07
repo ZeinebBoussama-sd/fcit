@@ -212,6 +212,9 @@ const typeDefs = gql`
     remarque: String!
     formateur: Formateur
     ingenieurpedagogique: IngenieurPedagogique
+    FormateurCodeFormateur: String
+    IngenieurPedagogiqueCodeIP: Int
+    SupportCodeSupport: Int
     support: Support
   }
   type Query {

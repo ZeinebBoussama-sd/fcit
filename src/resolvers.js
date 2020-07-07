@@ -111,10 +111,10 @@ const resolvers = {
       return models.Fichier.findAll();
     },
     async metier(root, { code_metier }, { models }) {
-      return models.Metier.findByPk(code_metier);
+      return models.Metiers.findByPk(code_metier);
     },
     async allMetiers(root, args, { models }) {
-      return models.Metier.findAll();
+      return models.Metiers.findAll();
     },
     async allFormateurs_Formations(root, args, { models }) {
       const findAll = await models.Formateur_Formation.findAll({
@@ -546,13 +546,13 @@ const resolvers = {
       });
     },
     async createMetier(root, { code_metier, intitule_metier }, { models }) {
-      return models.Metier.create({
+      return models.Metiers.create({
         code_metier,
         intitule_metier,
       });
     },
     async updateMetier(root, args, { models }) {
-      const updateMetier = await models.Metier.update(
+      const updateMetier = await models.Metiers.update(
         {
           code_metier: args.code_metier,
           intitule_metier: args.intitule_metier,
@@ -562,7 +562,7 @@ const resolvers = {
       return updateMetier;
     },
     async deleteMetier(root, args, { models }) {
-      const deletMetier = await models.Metier.destroy({
+      const deletMetier = await models.Metiers.destroy({
         where: { code_metier: args.code_metier },
       });
     },
@@ -1114,7 +1114,7 @@ const resolvers = {
   },
   Metier: {
     async formation(metiers) {
-      return metiers.getFormation();
+      return metiers.getFormations();
     },
   },
   Formateur_Formation: {

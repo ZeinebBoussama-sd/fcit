@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-
+  Metiers.associate = function (models) {
+    Metiers.belongsToMany(models.Formation, { through: "donne_lieu" });
+  };
   return Metiers;
 };

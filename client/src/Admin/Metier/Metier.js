@@ -38,10 +38,10 @@ function Metier() {
               <th scope="col" className="col-2">
                 Code:
               </th>
-              <th scope="col" className="col-2">
+              <th scope="col" className="col-4">
                 Intitule
               </th>
-              <th scope="col" className="col-1">
+              <th scope="col" className="col-4">
                 Formation
               </th>
               <th scope="col" className="col-1">
@@ -61,8 +61,8 @@ function Metier() {
                       {metier.code_metier}
                     </Link>
                   </td>
-                  <td className="col-2">{metier.intitule_metier}</td>
-                  <td className="col-1">
+                  <td className="col-4">{metier.intitule_metier}</td>
+                  <td className="col-4">
                     {metier.formation ? metier.formation.intitule : "--"}
                   </td>
                   <td className="col-1">

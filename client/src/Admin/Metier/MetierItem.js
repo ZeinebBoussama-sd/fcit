@@ -10,14 +10,14 @@ function MetierItem() {
   let { id } = useParams();
 
   const { loading, error, data, refetch } = useQuery(GET_METIER, {
-    variables: { code_metier: id },
+    variables: { code_metier: parseInt(id) },
   });
   const [edit, setEdit] = useState(false);
   const metier = data ? data.metier : null;
   const action = () => {
     edit ? setEdit(false) : setEdit(true);
   };
-  console.log(metier);
+  console.log("metier", metier);
 
   return (
     <div className=" mt-11 ">

@@ -2,13 +2,13 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import { ADD_METIER } from "../GraphQl/Mutation";
-import { GET_FORMATION } from "../GraphQl/Query";
+import { GET_FORMATIONSOPTIONS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
 
 import { MetierSchema } from "../../Utils/Validation";
 
 function AddMetier(props) {
-  const GetFormation = useQuery(GET_FORMATION);
+  const GetFormation = useQuery(GET_FORMATIONSOPTIONS);
   const [AddMetier, res] = useMutation(ADD_METIER);
 
   return (
@@ -57,9 +57,10 @@ function AddMetier(props) {
                 validationSchema={MetierSchema}
                 onSubmit={async (values) => {
                   try {
+                    console.log("values", values);
                     await AddMetier({
                       variables: {
-                        code_metier: values.code_metier,
+                        code_metier: parseInt(values.code_metier),
                         intitule_metier: values.intitule_metier,
                         FormationCIFormation: parseInt(
                           values.FormationCIFormation
@@ -86,7 +87,7 @@ function AddMetier(props) {
                     handleReset,
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
-
+                  console.log("GetFormation", GetFormation);
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">

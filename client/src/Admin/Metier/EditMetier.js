@@ -2,13 +2,13 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import { UPDATE_METIER } from "../GraphQl/Mutation";
-import { GET_FORMATION } from "../GraphQl/Query";
+import { GET_FORMATIONSOPTIONS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
 
 import { MetierSchema } from "../../Utils/Validation";
 
 function EditMetier(props) {
-  const GetFormation = useQuery(GET_FORMATION);
+  const GetFormation = useQuery(GET_FORMATIONSOPTIONS);
   const [updateMetier, res] = useMutation(UPDATE_METIER);
   const metier = props.metier ? props.metier : null;
   const id = props.id;
@@ -30,7 +30,7 @@ function EditMetier(props) {
           try {
             await updateMetier({
               variables: {
-                code_metier: values.code_metier,
+                code_metier: parseInt(values.code_metier),
                 intitule_metier: values.intitule_metier,
                 FormationCIFormation: parseInt(values.FormationCIFormation),
               },

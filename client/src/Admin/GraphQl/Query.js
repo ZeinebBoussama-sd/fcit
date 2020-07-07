@@ -557,6 +557,10 @@ export const GET_METIER = gql`
     metier(code_metier: $code_metier) {
       code_metier
       intitule_metier
+      formation {
+        CI_formation
+        intitule
+      }
     }
   }
 `;

@@ -17,9 +17,7 @@ function Item(props) {
 
         <div className="row">
           <b className="col-3">Formation:</b>
-          <p className="col">
-            {data && data.support ? data.formation.intitule : "--"}
-          </p>
+          <p className="col">{data ? data.formation.intitule : "--"}</p>
         </div>
       </div>
     </div>

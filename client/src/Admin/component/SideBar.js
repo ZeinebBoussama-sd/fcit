@@ -28,12 +28,15 @@ function SideBar(props) {
   const [active, setactive] = useState(false);
   const [show, setShow] = useState("");
   const [showFormation, setShowFormation] = useState("");
+  const [showDemande, setShowDemande] = useState("");
   const activeSidebar = () => {
     active ? setactive(false) : setactive(true);
   };
   const subShow = (type) => {
     if (type === "formation") {
       showFormation === "" ? setShowFormation("show") : setShowFormation("");
+    } else if (type === "demande") {
+      showDemande === "" ? setShowDemande("show") : setShowDemande("");
     } else {
       show === "" ? setShow("show") : setShow("");
     }
@@ -234,71 +237,87 @@ function SideBar(props) {
               />
               <span> Fichier</span>
             </NavLink>
+            <NavLink
+              className={active ? `` : "pl-6"}
+              to="/metier"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faIdCardAlt}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Metier</span>
+            </NavLink>
           </div>
         </li>
         <li>
-          <NavLink
-            to="/demandeformation"
-            activeStyle={{
-              color: "dodgerblue",
-              borderRight: "solid 4px dodgerblue",
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faCommentAlt}
-              className="mr-1"
-              id="sidebar_btn"
-            />
-            <span>Demande Formation</span>
+          <NavLink to="#" onClick={() => subShow("demande")}>
+            {!showFormation ? (
+              <FontAwesomeIcon
+                icon={faPlus}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faMinus}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+            )}
+            <span>Demande</span>
           </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/dateprevue"
-            activeStyle={{
-              color: "dodgerblue",
-              borderRight: "solid 4px dodgerblue",
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faCalendarAlt}
-              className="mr-1"
-              id="sidebar_btn"
-            />
-            <span> Date Prevue</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/metier"
-            activeStyle={{
-              color: "dodgerblue",
-              borderRight: "solid 4px dodgerblue",
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faIdCardAlt}
-              className="mr-1"
-              id="sidebar_btn"
-            />
-            <span>Metier</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/client"
-            activeStyle={{
-              color: "dodgerblue",
-              borderRight: "solid 4px dodgerblue",
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faUserTie}
-              className="mr-1"
-              id="sidebar_btn"
-            />
-            <span>Client</span>
-          </NavLink>
+          <div className={`collapse ${showDemande}`}>
+            <NavLink
+              className={active ? `` : "pl-6"}
+              to="/demandeformation"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faCommentAlt}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Demande Formation</span>
+            </NavLink>
+            <NavLink
+              className={active ? `` : "pl-6"}
+              to="/dateprevue"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faCalendarAlt}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span> Date Prevue</span>
+            </NavLink>
+            <NavLink
+              className={active ? `` : "pl-6"}
+              to="/client"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faUserTie}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Client</span>
+            </NavLink>
+          </div>
         </li>
         <li>
           <NavLink

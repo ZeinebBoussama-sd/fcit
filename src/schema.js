@@ -477,12 +477,19 @@ const typeDefs = gql`
       SupportCodeSupport: Int
     ): DeleteFichierMutationResponse
     deleteFichier(code_fichier: Int!): DeleteFichierMutationResponse
-    createMetier(code_metier: Int!, intitule_metier: String!): Metier!
+
+    createMetier(
+      code_metier: Int!
+      intitule_metier: String!
+      FormationCIFormation: [Int]
+    ): Metier!
     updateMetier(
       code_metier: Int
       intitule_metier: String
+      FormationCIFormation: [Int]
     ): DeleteMetierMutationResponse
     deleteMetier(code_metier: Int!): DeleteMetierMutationResponse
+
     createFormateur_Formation(
       validation_f: Boolean!
       date_validation: Date!

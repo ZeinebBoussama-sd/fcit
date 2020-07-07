@@ -897,16 +897,32 @@ export const DELETE_DATEPREVUE = gql`
   }
 `;
 export const ADD_METIER = gql`
-  mutation create_metier($code_metier: Int!, $intitule_metier: String!) {
-    createMetier(code_metier: $code_metier, intitule_metier: $intitule_metier) {
+  mutation create_metier(
+    $code_metier: Int!
+    $intitule_metier: String!
+    $FormationCIFormation: [Int]
+  ) {
+    createMetier(
+      code_metier: $code_metier
+      intitule_metier: $intitule_metier
+      FormationCIFormation: $FormationCIFormation
+    ) {
       code_metier
       intitule_metier
     }
   }
 `;
 export const UPDATE_METIER = gql`
-  mutation update_metier($code_metier: Int!, $intitule_metier: String!) {
-    updateMetier(code_metier: $code_metier, intitule_metier: $intitule_metier) {
+  mutation update_metier(
+    $code_metier: Int!
+    $intitule_metier: String!
+    $FormationCIFormation: [Int]
+  ) {
+    updateMetier(
+      code_metier: $code_metier
+      intitule_metier: $intitule_metier
+      FormationCIFormation: $FormationCIFormation
+    ) {
       code
     }
   }

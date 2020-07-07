@@ -52,7 +52,7 @@ function AddMetier(props) {
                 initialValues={{
                   code_metier: "",
                   intitule_metier: undefined,
-                  FormationCIFormation: undefined,
+                  FormationCIFormation: [],
                 }}
                 validationSchema={MetierSchema}
                 onSubmit={async (values) => {
@@ -62,8 +62,8 @@ function AddMetier(props) {
                       variables: {
                         code_metier: parseInt(values.code_metier),
                         intitule_metier: values.intitule_metier,
-                        FormationCIFormation: parseInt(
-                          values.FormationCIFormation
+                        FormationCIFormation: values.FormationCIFormation.map(
+                          (f) => parseInt(f)
                         ),
                       },
                     });
@@ -134,6 +134,7 @@ function AddMetier(props) {
                         <label htmlFor="Formation">Formation:</label>
                         <select
                           className="form-control"
+                          multiple
                           onChange={handleChange}
                           value={values.FormationCIFormation}
                           id="FormationCIFormation"

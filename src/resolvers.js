@@ -545,11 +545,18 @@ const resolvers = {
         where: { code_demandeur: args.code_demandeur },
       });
     },
-    async createMetier(root, { code_metier, intitule_metier }, { models }) {
-      return models.Metiers.create({
-        code_metier,
-        intitule_metier,
+    async createMetier(root, args, { models }) {
+      const addMetie = await models.Metiers.create({
+        code_metier: args.code_metier,
+        intitule_metier: args.intitule_metier,
       });
+      const addDonne_lieu = args.FormationCIFormation.map(async (f) => {
+        await models.Donne_lieu.create({
+          FormationCIFormation: f,
+          MetierCodeMetier: args.code_metier,
+        });
+      });
+      return addMetie;
     },
     async updateMetier(root, args, { models }) {
       const updateMetier = await models.Metiers.update(

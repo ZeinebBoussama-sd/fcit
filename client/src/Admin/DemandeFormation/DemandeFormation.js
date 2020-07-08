@@ -55,6 +55,8 @@ function DemandeFormation() {
               <th scope="col" className="col-1">
                 Prix
               </th>
+              <th scope="col" className="col-1"><center>#</center></th>
+              <th scope="col" className="col-1"><center>#</center></th>
             </tr>
           </thead>
           <tbody>

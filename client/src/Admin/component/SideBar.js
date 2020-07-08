@@ -256,7 +256,7 @@ function SideBar(props) {
         </li>
         <li>
           <NavLink to="#" onClick={() => subShow("demande")}>
-            {!showFormation ? (
+            {!showDemande ? (
               <FontAwesomeIcon
                 icon={faPlus}
                 className="mr-1"

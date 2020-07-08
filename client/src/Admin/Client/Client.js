@@ -51,6 +51,8 @@ function Client() {
               <th scope="col" className="col-2">
                 Matricule Fiscale
               </th>
+              <th scope="col" className="col-1"><center>#</center></th>
+              <th scope="col" className="col-1"><center>#</center></th>
             </tr>
           </thead>
           <tbody>

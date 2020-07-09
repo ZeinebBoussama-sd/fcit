@@ -550,6 +550,7 @@ const resolvers = {
         code_metier: args.code_metier,
         intitule_metier: args.intitule_metier,
       });
+      const t = addMetie.createFormation();
       const addDonne_lieu = args.FormationCIFormation.map(async (f) => {
         await models.Donne_lieu.create({
           FormationCIFormation: f,

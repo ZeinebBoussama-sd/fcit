@@ -137,7 +137,7 @@ function Nav() {
           </li>
         </ul>
         <ul className="nav justify-content-end">
-          <NavLink className="nav-link" exact to="/admin">
+          <NavLink className="nav-link" exact to="/login">
             <button className="btn btn-outline-primary">S'authentifier</button>
           </NavLink>
         </ul>

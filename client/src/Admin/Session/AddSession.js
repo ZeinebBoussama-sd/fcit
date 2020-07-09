@@ -509,35 +509,37 @@ function AddSession(props) {
                         </select>
                       </div>
                       {values.FormationCIFormation && (
-                        <>
-                          <div>
-                            <div className="form-check">
+                        <div>
+                          <div className="form-check">
+                            <div className="custom-control custom-radio custom-control-inline">
                               <input
                                 onChange={handleChange}
                                 name="valid"
                                 type="radio"
                                 value={1}
-                                className="form-check-input"
+                                className="custom-control-input"
+                                id="valid"
                                 checked
                               />
                               <label
-                                className="form-check-label"
-                                htmlFor="Formation"
+                                className="custom-control-label"
+                                htmlFor="valid"
                               >
                                 Valid
                               </label>
                             </div>
-                            <div className="form-check">
+                            <div className="custom-control custom-radio ">
                               <input
                                 onChange={handleChange}
                                 name="valid"
                                 type="radio"
                                 value={0}
-                                className="form-check-input"
+                                className="custom-control-input"
+                                id="customRadioInline2"
                               />
                               <label
-                                className="form-check-label"
-                                htmlFor="Formation"
+                                className="custom-control-label"
+                                htmlFor="customRadioInline2"
                               >
                                 Not Valid
                               </label>
@@ -567,9 +569,8 @@ function AddSession(props) {
                                 })}
                             </select>
                           </div>
-                        </>
+                        </div>
                       )}
-
                       <div className="form-group">
                         <label htmlFor="Formation">Support:</label>
                         <select

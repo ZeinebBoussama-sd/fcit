@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 function Apropospt1() {
   return (
-    <div className='container-fluid'>
-      <div className='row mt-9 '>
-        <div className='col-md-6 bg-midnight text-white'>
-          <em className='container'>
-            <div className='px-5 py-5'>
+    <div className="container-fluid">
+      <div className="row mt-8 ">
+        <div className="col-md-6 bg-midnight text-white">
+          <em className="container">
+            <div className="px-5 py-5">
               <center>
                 <p>FCIT: QUI SOMMES-NOUS ? </p>
               </center>
@@ -20,9 +20,9 @@ function Apropospt1() {
             </div>
           </em>
         </div>
-        <div className='col-md-6 container'>
-          <em className='container'>
-            <div className='px-5 py-5'>
+        <div className="col-md-6 container">
+          <em className="container">
+            <div className="px-5 py-5">
               <center>
                 <h2>Vous vouliez nous joindre ? </h2>
               </center>

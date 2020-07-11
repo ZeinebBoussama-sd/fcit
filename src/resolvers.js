@@ -875,30 +875,14 @@ const resolvers = {
         return updateIngenieurPedagogique;
       }
     ),
-    // async updateIngenieurPedagogique(root, args, { models }) {
-    //   const updateIngenieurPedagogique = await models.IngenieurPedagogique.update(
-    //     {
-    //       nom_ing: args.nom_ing,
-    //       prenom_ing: args.prenom_ing,
-    //       cv_ing: args.cv_ing,
-    //       email_ing: args.email_ing,
-    //       tel_ing: args.tel_ing,
-    //       NSS_ing: args.NSS_ing,
-    //       salaire_ing: args.salaire_ing,
-    //       specialite_ing: args.specialite_ing,
-    //       adr_ing: args.adr_ing,
-    //     },
-    //     { where: { code_IP: args.code_IP } }
-    //   );
-    //   return updateIngenieurPedagogique;
-    // },
+
     async deleteIngenieurPedagogique(root, args, { models }) {
       const deleteIngenieurPedagogique = await models.IngenieurPedagogique.destroy(
         {
           where: { code_IP: args.code_IP },
         }
       );
-      return deleteInegnieurPedagogique;
+      return deleteIngenieurPedagogique;
     },
     async createParticipant(
       root,

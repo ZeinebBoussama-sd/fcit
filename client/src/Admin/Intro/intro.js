@@ -3,13 +3,16 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import { GET_INGENIEUR_PEDAGOGIQUE } from "../GraphQl/Query";
 import { Link } from "react-router-dom";
 import WarningModal from "../component/WarningModal";
-
+import jwt_decode from "jwt-decode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { getAccessToken } from "../../Utils/AccessToken";
 
 function Intro() {
+  var decoded = jwt_decode(getAccessToken());
+  console.log(decoded);
   const { loading, error, data } = useQuery(GET_INGENIEUR_PEDAGOGIQUE, {
-    variables: { code_IP: "1" },
+    variables: { code_IP: decoded.code_IP },
   });
 
   if (loading) return <p>Loading...</p>;

@@ -20,6 +20,7 @@ import {
   faRing,
   faPlus,
   faMinus,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
@@ -356,7 +357,7 @@ function SideBar(props) {
           <a onClick={DeleteAccessToken} href="/login">
             {" "}
             <FontAwesomeIcon
-              icon={faCheckCircle}
+              icon={faSignOutAlt}
               className="mr-1"
               id="sidebar_btn"
             />

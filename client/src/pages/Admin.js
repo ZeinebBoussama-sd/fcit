@@ -35,7 +35,7 @@ import Participer from "../Admin/Participer/Participer";
 import ParticiperItem from "../Admin/Participer/ParticiperItem";
 import Intro from "../Admin/Intro/intro";
 import Login from "./Login";
-function Admin() {
+function Admin({ history }) {
   const authToken = localStorage.getItem("token");
   console.log(authToken);
   const routes = [

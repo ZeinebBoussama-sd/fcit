@@ -53,6 +53,8 @@ function AddIngenieurPedagogique(props) {
                   salaire_ing: undefined,
                   specialite_ing: undefined,
                   adr_ing: undefined,
+                  password: undefined,
+                  role: "",
                 }}
                 validationSchema={IngenieurPedagogiqueSchema}
                 onSubmit={async (values) => {
@@ -66,7 +68,8 @@ function AddIngenieurPedagogique(props) {
                         tel_ing: values.tel_ing,
                         NSS_ing: values.NSS_ing,
                         salaire_ing: values.salaire_ing,
-
+                        password: values.password,
+                        role: values.role,
                         specialite_ing: values.specialite_ing,
                         adr_ing: values.adr_ing,
                       },
@@ -174,13 +177,31 @@ function AddIngenieurPedagogique(props) {
                         ) : null}
                       </div>
                       <div className="form-group">
+                        <label htmlFor="password" className="col-form-label">
+                          Password
+                        </label>
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.password
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="password"
+                          type="password"
+                        />
+                        {errors.password && touched.password ? (
+                          <div>{errors.password}</div>
+                        ) : null}
+                      </div>
+                      <div className="form-group">
                         <label
                           htmlFor="Telephone Ing"
                           className="col-form-label"
                         >
                           Telephone Ing
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -196,6 +217,15 @@ function AddIngenieurPedagogique(props) {
                           <div>{errors.tel_ing}</div>
                         ) : null}
                       </div>
+                      <select
+                        class="selectpicker"
+                        multiple
+                        data-live-search="true"
+                      >
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                      </select>
                       <div className="form-group">
                         <label htmlFor="NSS Ing" className="col-form-label">
                           NSS Ing
@@ -262,7 +292,6 @@ function AddIngenieurPedagogique(props) {
                         <label htmlFor="Adresse Ing" className="col-form-label">
                           Adresse Ing
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -278,7 +307,26 @@ function AddIngenieurPedagogique(props) {
                           <div>{errors.adr_ing}</div>
                         ) : null}
                       </div>
+                      <div className="form-group">
+                        <label htmlFor="role" className="col-form-label">
+                          Role:
+                        </label>
 
+                        <Field
+                          component="select"
+                          className="form-control"
+                          name="role"
+                          onChange={handleChange}
+                          value={values.role}
+                        >
+                          <option value="">----choose roles----</option>
+                          <option>Admin</option>
+                          <option>Administrateur</option>
+                        </Field>
+                        {errors.role && touched.role ? (
+                          <div>{errors.role}</div>
+                        ) : null}
+                      </div>
                       <div className="modal-footer">
                         <button
                           type="button"

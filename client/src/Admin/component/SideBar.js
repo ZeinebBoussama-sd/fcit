@@ -23,6 +23,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
+import { DeleteAccessToken } from "../../Utils/AccessToken";
 
 function SideBar(props) {
   const [active, setactive] = useState(false);
@@ -350,6 +351,17 @@ function SideBar(props) {
             />
             <span>Validation</span>
           </NavLink>
+        </li>
+        <li>
+          <a onClick={DeleteAccessToken} href="/login">
+            {" "}
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              className="mr-1"
+              id="sidebar_btn"
+            />
+            <span>LogOut</span>
+          </a>
         </li>
       </ul>
     </nav>

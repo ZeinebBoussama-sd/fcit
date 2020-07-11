@@ -3,6 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
+const { hash } = require("bcryptjs");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
@@ -34,7 +35,24 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
-sequelize.sync();
+sequelize.sync().then(async () => {
+  const hashedPassword = await hash("test123", 12);
+  const test = db.IngenieurPedagogique.create({
+    code_ing: 99,
+    nom_ing: "Test",
+    prenom_ing: "Test",
+    cv_ing: "qwe",
+    email_ing: "test@test.com",
+    tel_ing: "22020020",
+    NSS_ing: 22,
+    salaire_ing: 1111.123,
+    specialite_ing: "es6",
+    adr_ing: "Tunis Rue 4 ",
+    password: hashedPassword,
+    role: "Admin",
+  });
+  return test;
+});
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

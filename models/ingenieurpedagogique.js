@@ -13,11 +13,17 @@ module.exports = (sequelize, DataTypes) => {
       prenom_ing: { allowNull: false, type: DataTypes.STRING(20) },
       cv_ing: { allowNull: false, type: DataTypes.STRING },
       email_ing: { allowNull: false, type: DataTypes.STRING, unique: true },
+      password: {
+        type: DataTypes.STRING(7, 42),
+        allowNull: false,
+        required: true,
+      },
       tel_ing: { allowNull: false, type: DataTypes.STRING(20), unique: true },
       NSS_ing: { allowNull: false, type: DataTypes.INTEGER(10), unique: true },
       salaire_ing: { allowNull: false, type: DataTypes.FLOAT(7, 3) },
       specialite_ing: { allowNull: false, type: DataTypes.STRING(20) },
       adr_ing: { allowNull: false, type: DataTypes.STRING },
+      role: { type: DataTypes.STRING() },
     },
     {}
   );

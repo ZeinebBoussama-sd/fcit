@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import logofcit from "../foundation/logo/logofcit3.png";
 import { NavLink } from "react-router-dom";
+import { DeleteAccessToken, getAccessToken } from "../Utils/AccessToken";
 
 function Nav() {
+  // const logout = () => {
+  //   getAccessToken();
+  //   DeleteAccessToken();
+  //   setAuth(getAccessToken());
+  // };
+  // const log = () => {
+  //   getAccessToken();
+  //   setAuth(getAccessToken());
+  // };
+
   return (
     <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark ">
       <a className="navbar-brand" href="/">
@@ -137,9 +148,17 @@ function Nav() {
           </li>
         </ul>
         <ul className="nav justify-content-end">
+          {/* {auth !== null ? (
+            <NavLink className="nav-link" exact to="/">
+              <button className="btn btn-outline-danger" onClick={logout}>
+                LogOut
+              </button>
+            </NavLink>
+          ) : ( */}
           <NavLink className="nav-link" exact to="/login">
             <button className="btn btn-outline-primary">S'authentifier</button>
           </NavLink>
+          {/* )} */}
         </ul>
       </div>
     </nav>

@@ -137,6 +137,8 @@ const typeDefs = gql`
     prenom_ing: String!
     cv_ing: String!
     email_ing: String!
+    password: String
+    role: String
     tel_ing: String!
     NSS_ing: Int!
     salaire_ing: Float!
@@ -219,6 +221,7 @@ const typeDefs = gql`
   }
   type Query {
     uploads: [File]
+    me: IngenieurPedagogique
     client(code_client: ID, nom_client: String): Client
     allClients: [Client!]!
     demandeur(code_demandeur: ID, nom_demandeur: String): Demandeur
@@ -369,7 +372,8 @@ const typeDefs = gql`
   type Mutation {
     singleDownload(file: String!): File!
     singleUpload(file: Upload!): File!
-
+    login(email: String, password: String): String # login token
+    logout(code_IP: Int): String
     createClient(
       code_client: String!
       pays_client: String!
@@ -598,6 +602,8 @@ const typeDefs = gql`
       salaire_ing: Float!
       specialite_ing: String!
       adr_ing: String!
+      password: String
+      role: String
     ): IngenieurPedagogique!
 
     updateIngenieurPedagogique(
@@ -608,6 +614,8 @@ const typeDefs = gql`
       email_ing: String!
       tel_ing: String!
       NSS_ing: Int!
+      role: String
+      password: String
       salaire_ing: Float!
       specialite_ing: String!
       adr_ing: String!

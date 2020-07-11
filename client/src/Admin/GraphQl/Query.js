@@ -146,6 +146,7 @@ export const GET_INGENIEUR_PEDAGOGIQUES = gql`
       salaire_ing
       specialite_ing
       adr_ing
+      role
     }
   }
 `;
@@ -161,6 +162,8 @@ export const GET_INGENIEUR_PEDAGOGIQUE = gql`
       salaire_ing
       specialite_ing
       adr_ing
+      role
+      password
     }
   }
 `;

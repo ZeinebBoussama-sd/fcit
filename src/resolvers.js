@@ -1,4 +1,4 @@
-// const bcrypt = require("bcryptjs");
+const { hash, compare } = require("bcryptjs");
 const { GraphQLScalarType } = require("graphql");
 const { Kind } = require("graphql/language");
 const { ApolloError } = require("apollo-server-core");
@@ -6,6 +6,15 @@ const fs = require("fs");
 const request = require("request");
 const formidable = require("formidable");
 const { Op } = require("sequelize");
+const sendRefreshToken = require("./sendRefreshToken");
+const { combineResolvers } = require("graphql-resolvers");
+const { sign } = require("jsonwebtoken");
+const createRefreshToken = require("./auth");
+const createAccessToken = require("./auth");
+const isAuth = require("./isAuth");
+const { verify } = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const { JSONCookie } = require("cookie-parser");
 
 const storeUpload = (file, folder, ID, type) => {
   if (!!file) {
@@ -76,6 +85,26 @@ const resolvers = {
 
   Query: {
     uploads: (parent, args) => {},
+
+    // async me(root, args, { models, context }) {
+    //   const authorization = context.req.headers["authorization"];
+
+    //   if (!authorization) {
+    //     return null;
+    //   }
+
+    //   try {
+    //     const token = authorization.split(" ")[1];
+    //     const payload = verify(token, process.env.ACCESS_TOKEN_SECRET);
+    //     return models.IngenieurPedagogique.findOne({
+    //       where: { code_IP: payload.userId },
+    //     });
+    //   } catch (err) {
+    //     console.log(err);
+    //     return null;
+    //   }
+    // },
+
     async client(root, { code_client }, { models }) {
       return models.Client.findByPk(code_client);
     },
@@ -242,6 +271,31 @@ const resolvers = {
       const { createReadStream, filename } = await args.file;
       const file = await args.file;
       await storeUpload({ createReadStream, filename });
+      return true;
+    },
+    login: async (_, args, { models, secret, res }) => {
+      const user = await models.IngenieurPedagogique.findOne({
+        where: { email_ing: args.email },
+      });
+      if (!user) throw new Error("could not find user");
+      const valid = await compare(args.password, user.password);
+      if (!valid) {
+        throw new Error("bad password");
+      }
+      //login seccesful
+      sendRefreshToken(res, createRefreshToken(user));
+      // Send back tokens in cookies as response
+      // cookieParser("token", JSONCookie(createAccessToken(user)));
+      // res.cookie("x-token", createAccessToken(user));
+      // res.cookie("x-token-refresh", createRefreshToken(user), {
+      //   maxAge: 60 * 60 * 24 * 30,
+      //   //httpOnly: true,
+      // });
+      return createAccessToken(user);
+      // if (user) return Buffer.from(args.email).toString("base64");
+    },
+    async logout(_, args, { res }) {
+      sendRefreshToken(res, "");
       return true;
     },
     async createClient(root, args, { models }) {
@@ -775,10 +829,13 @@ const resolvers = {
         salaire_ing,
         specialite_ing,
         adr_ing,
+        password,
+        role,
       },
       { models }
     ) {
-      return models.IngenieurPedagogique.create({
+      const hashedPassword = await hash(password, 12);
+      const addIP = await models.IngenieurPedagogique.create({
         code_IP,
         nom_ing,
         prenom_ing,
@@ -789,25 +846,52 @@ const resolvers = {
         salaire_ing,
         specialite_ing,
         adr_ing,
+        password: hashedPassword,
+        role,
       });
+      return addIP;
     },
-    async updateIngenieurPedagogique(root, args, { models }) {
-      const updateIngenieurPedagogique = await models.IngenieurPedagogique.update(
-        {
-          nom_ing: args.nom_ing,
-          prenom_ing: args.prenom_ing,
-          cv_ing: args.cv_ing,
-          email_ing: args.email_ing,
-          tel_ing: args.tel_ing,
-          NSS_ing: args.NSS_ing,
-          salaire_ing: args.salaire_ing,
-          specialite_ing: args.specialite_ing,
-          adr_ing: args.adr_ing,
-        },
-        { where: { code_IP: args.code_IP } }
-      );
-      return updateIngenieurPedagogique;
-    },
+    updateIngenieurPedagogique: combineResolvers(
+      //      isAdmin,
+      async (parent, args, { models, me }) => {
+        const hashedPassword = await hash(args.password, 12);
+
+        const updateIngenieurPedagogique = await models.IngenieurPedagogique.update(
+          {
+            nom_ing: args.nom_ing,
+            prenom_ing: args.prenom_ing,
+            cv_ing: args.cv_ing,
+            email_ing: args.email_ing,
+            tel_ing: args.tel_ing,
+            NSS_ing: args.NSS_ing,
+            salaire_ing: args.salaire_ing,
+            specialite_ing: args.specialite_ing,
+            adr_ing: args.adr_ing,
+            password: hashedPassword,
+            role: args.role,
+          },
+          { where: { code_IP: args.code_IP } }
+        );
+        return updateIngenieurPedagogique;
+      }
+    ),
+    // async updateIngenieurPedagogique(root, args, { models }) {
+    //   const updateIngenieurPedagogique = await models.IngenieurPedagogique.update(
+    //     {
+    //       nom_ing: args.nom_ing,
+    //       prenom_ing: args.prenom_ing,
+    //       cv_ing: args.cv_ing,
+    //       email_ing: args.email_ing,
+    //       tel_ing: args.tel_ing,
+    //       NSS_ing: args.NSS_ing,
+    //       salaire_ing: args.salaire_ing,
+    //       specialite_ing: args.specialite_ing,
+    //       adr_ing: args.adr_ing,
+    //     },
+    //     { where: { code_IP: args.code_IP } }
+    //   );
+    //   return updateIngenieurPedagogique;
+    // },
     async deleteIngenieurPedagogique(root, args, { models }) {
       const deleteIngenieurPedagogique = await models.IngenieurPedagogique.destroy(
         {
@@ -978,7 +1062,6 @@ const resolvers = {
       );
       return updateSupport;
     },
-
     async deleteSupport(root, args, { models }) {
       const deleteSupport = await models.Support.destroy({
         where: { code_support: args.code_support },

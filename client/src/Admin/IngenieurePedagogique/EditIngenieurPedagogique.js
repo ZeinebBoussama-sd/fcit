@@ -29,6 +29,8 @@ function EditIngenieurPedagogique(props) {
           specialite_ing:
             ingenieurpedagogique && ingenieurpedagogique.specialite_ing,
           adr_ing: ingenieurpedagogique && ingenieurpedagogique.adr_ing,
+          password: ingenieurpedagogique && ingenieurpedagogique.password,
+          role: ingenieurpedagogique && ingenieurpedagogique.role,
         }}
         validationSchema={IngenieurPedagogiqueSchema}
         onSubmit={async (values) => {
@@ -43,7 +45,8 @@ function EditIngenieurPedagogique(props) {
                 tel_ing: values.tel_ing,
                 NSS_ing: values.NSS_ing,
                 salaire_ing: values.salaire_ing,
-
+                password: values.password,
+                role: values.role,
                 specialite_ing: values.specialite_ing,
                 adr_ing: values.adr_ing,
               },
@@ -152,6 +155,25 @@ function EditIngenieurPedagogique(props) {
                 ) : null}
               </div>
               <div className="form-group">
+                <label htmlFor="password" className="col-form-label">
+                  Password
+                </label>
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.password
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="password"
+                  type="password"
+                />
+                {errors.password && touched.password ? (
+                  <div>{errors.password}</div>
+                ) : null}
+              </div>
+              <div className="form-group">
                 <label htmlFor="Telephone Ing" className="col-form-label">
                   Telephone Ing
                 </label>
@@ -250,7 +272,24 @@ function EditIngenieurPedagogique(props) {
                   <div>{errors.adr_ing}</div>
                 ) : null}
               </div>
+              <div className="form-group">
+                <label htmlFor="role" className="col-form-label">
+                  Role:
+                </label>
 
+                <Field
+                  component="select"
+                  className="form-control"
+                  name="role"
+                  onChange={handleChange}
+                  value={values.role}
+                >
+                  <option value="">----choose roles----</option>
+                  <option>Admin</option>
+                  <option>Administrateur</option>
+                </Field>
+                {errors.role && touched.role ? <div>{errors.role}</div> : null}
+              </div>
               <div className="modal-footer">
                 <button
                   type="button"

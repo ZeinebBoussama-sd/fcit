@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Field } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import deepEqual from "lodash.isequal";
 import logofcit from "../foundation/logo/logofcit3.png";
+import { LOGIN } from "../Admin/GraphQl/Mutation";
+import { setAccessToken, getAccessToken } from "../Utils/AccessToken";
+import { Redirect } from "react-router";
 
-function Login() {
-  // const [login, res] = useMutation();
-
+function Login({ history }) {
+  const [login, res] = useMutation(LOGIN);
+  useEffect(() => {
+    const local = history.location.pathname;
+    console.log("local", local);
+    if (getAccessToken()) {
+      local === "/login" && history.push("/admin", { some: "state" });
+    }
+  });
   return (
     <div className="mt-8 ">
       <Formik
@@ -15,16 +24,21 @@ function Login() {
           password: "",
         }}
         enableReinitialize
-        //validationSchema={ThemeSchema}
+        //validationSchema={LoginSchema}
         onSubmit={async (values) => {
           try {
-            // await login({
-            //   variables: {
-            //     email: values.email,
-            //     password: values.password,
-            //   },
-            // });
-            console.log(values);
+            await login({
+              variables: {
+                email: values.email,
+                password: values.password,
+              },
+            }).then((res) => {
+              if (res.data) {
+                debugger;
+                setAccessToken(res.data.login);
+                history.push("/admin");
+              }
+            });
           } catch (e) {
             console.error(e.message);
           }
@@ -49,7 +63,7 @@ function Login() {
             <div className="login text-center">
               <form className="form-signin" onSubmit={handleSubmit}>
                 <img
-                  class="mb-4"
+                  className="mb-4"
                   src={logofcit}
                   alt=""
                   width="115"
@@ -71,7 +85,7 @@ function Login() {
                   id="email"
                   placeholder="email@example.com"
                   type="email"
-                  autofocus
+                  autoFocus
                 />
                 {touched.email ? (
                   <div className="invalid-feedback">{errors.email}</div>

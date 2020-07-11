@@ -466,6 +466,8 @@ export const ADD_INGENIEURPEDAGOGIQUE = gql`
     $salaire_ing: Float!
     $specialite_ing: String!
     $adr_ing: String!
+    $password: String
+    $role: String
   ) {
     createIngenieurPedagogique(
       nom_ing: $nom_ing
@@ -477,6 +479,8 @@ export const ADD_INGENIEURPEDAGOGIQUE = gql`
       salaire_ing: $salaire_ing
       specialite_ing: $specialite_ing
       adr_ing: $adr_ing
+      password: $password
+      role: $role
     ) {
       nom_ing
       prenom_ing
@@ -487,6 +491,7 @@ export const ADD_INGENIEURPEDAGOGIQUE = gql`
       salaire_ing
       specialite_ing
       adr_ing
+      role
     }
   }
 `;
@@ -502,6 +507,8 @@ export const UPDATE_INGENIEURPEDAGOGIQUE = gql`
     $salaire_ing: Float!
     $specialite_ing: String!
     $adr_ing: String!
+    $password: String
+    $role: String
   ) {
     updateIngenieurPedagogique(
       code_IP: $code_IP
@@ -514,6 +521,8 @@ export const UPDATE_INGENIEURPEDAGOGIQUE = gql`
       salaire_ing: $salaire_ing
       specialite_ing: $specialite_ing
       adr_ing: $adr_ing
+      password: $password
+      role: $role
     ) {
       code
     }
@@ -1082,5 +1091,10 @@ export const DOWNLOAD_FILE = gql`
     singleDownload(file: $file) {
       filename
     }
+  }
+`;
+export const LOGIN = gql`
+  mutation login($email: String, $password: String) {
+    login(email: $email, password: $password)
   }
 `;

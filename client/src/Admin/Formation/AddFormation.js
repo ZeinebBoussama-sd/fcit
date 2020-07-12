@@ -73,11 +73,11 @@ function AddFormation(props) {
                       variables: {
                         code_formation: values.code_formation,
                         intitule: values.intitule,
-                        duree_formation: values.duree_formation,
-                        nbre_min_part: values.nbre_min_part,
+                        duree_formation: parseInt(values.duree_formation),
+                        nbre_min_part: parseInt(values.nbre_min_part),
                         description_formation: values.description_formation,
                         catagorie_formation: values.catagorie_formation,
-                        prix_formation: values.prix_formation,
+                        prix_formation: parseInt(values.prix_formation),
                         prerequis: values.prerequis,
                         participant: values.participant,
                         ThemeCodeTheme: values.ThemeCodeTheme,
@@ -126,7 +126,9 @@ function AddFormation(props) {
                           type="text"
                         />
                         {errors.code_formation && touched.code_formation ? (
-                          <div>{errors.code_formation}</div>
+                          <div className="text-danger">
+                            {errors.code_formation}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -145,14 +147,13 @@ function AddFormation(props) {
                           type="text"
                         />
                         {errors.intitule && touched.intitule ? (
-                          <div>{errors.intitule}</div>
+                          <div className="text-danger">{errors.intitule}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Durée" className="col-form-label">
                           Durée:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -162,10 +163,12 @@ function AddFormation(props) {
                               : "form-control text-input"
                           }
                           name="duree_formation"
-                          type="number"
+                          type="text"
                         />
                         {errors.duree_formation && touched.duree_formation ? (
-                          <div>{errors.duree_formation}</div>
+                          <div className="text-danger">
+                            {errors.duree_formation}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -181,10 +184,12 @@ function AddFormation(props) {
                               : "form-control text-input"
                           }
                           name="nbre_min_part"
-                          type="number"
+                          type="text"
                         />
                         {errors.nbre_min_part && touched.nbre_min_part ? (
-                          <div>{errors.nbre_min_part}</div>
+                          <div className="text-danger">
+                            {errors.nbre_min_part}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -205,17 +210,24 @@ function AddFormation(props) {
                         />
                         {errors.description_formation &&
                         touched.description_formation ? (
-                          <div>{errors.description_formation}</div>
+                          <div className="text-danger">
+                            {errors.description_formation}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Categorie" className="col-form-label">
                           Categorie:
                         </label>
-
                         <Field
                           component="select"
-                          className="form-control"
+                          className={
+                            hasChanged
+                              ? errors.catagorie_formation
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
                           name="catagorie_formation"
                           onChange={handleChange}
                           value={values.catagorie_formation}
@@ -226,7 +238,9 @@ function AddFormation(props) {
                         </Field>
                         {errors.catagorie_formation &&
                         touched.catagorie_formation ? (
-                          <div>{errors.catagorie_formation}</div>
+                          <div className="text-danger">
+                            {errors.catagorie_formation}
+                          </div>
                         ) : null}
                       </div>
 
@@ -244,17 +258,18 @@ function AddFormation(props) {
                               : "form-control text-input"
                           }
                           name="prix_formation"
-                          type="number"
+                          type="text"
                         />
                         {errors.prix_formation && touched.prix_formation ? (
-                          <div>{errors.prix_formation}</div>
+                          <div className="text-danger">
+                            {errors.prix_formation}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Prerequis" className="col-form-label">
                           Prerequis:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -267,7 +282,7 @@ function AddFormation(props) {
                           type="text"
                         />
                         {errors.prerequis && touched.prerequis ? (
-                          <div>{errors.prerequis}</div>
+                          <div className="text-danger">{errors.prerequis}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -286,7 +301,9 @@ function AddFormation(props) {
                           type="text"
                         />
                         {errors.participant && touched.participant ? (
-                          <div>{errors.participant}</div>
+                          <div className="text-danger">
+                            {errors.participant}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -315,6 +332,11 @@ function AddFormation(props) {
                             );
                           })}
                         </Field>
+                        {errors.ThemeCodeTheme && touched.ThemeCodeTheme ? (
+                          <div className="text-danger">
+                            {errors.ThemeCodeTheme}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="modal-footer">
                         <button

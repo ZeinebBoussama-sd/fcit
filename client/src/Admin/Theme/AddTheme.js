@@ -97,7 +97,7 @@ function AddTheme(props) {
                           type="text"
                         />
                         {touched.code_theme ? (
-                          <div>{errors.code_theme}</div>
+                          <div className="text-danger">{errors.code_theme}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -117,7 +117,7 @@ function AddTheme(props) {
                           type="text"
                         />
                         {errors.nom_theme && touched.nom_theme ? (
-                          <div>{errors.nom_theme}</div>
+                          <div className="text-danger">{errors.nom_theme}</div>
                         ) : null}
                       </div>
 

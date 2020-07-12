@@ -1,23 +1,25 @@
 import * as Yup from "yup";
 export const FormateurSchema = Yup.object().shape({
-  code_formateur: Yup.string().max(5, "Too Long!").required("Required"),
+  code_formateur: Yup.string().max(5, "Too Long! (Max 5)").required("Required"),
   nom_f: Yup.string()
-    .min(3, "Too Short!")
-    .max(30, "Too Long!")
+    .min(3, "Too Short! (Min 3)")
+    .max(30, "Too Long! (Max 30)")
     .required("Required"),
   prenom_f: Yup.string()
-    .min(3, "Too Short!")
-    .max(30, "Too Long!")
+    .min(3, "Too Short! (Min 3)")
+    .max(30, "Too Long! (Max 30)")
     .required("Required"),
   classe_f: Yup.string().required("Required"),
   fonction_f: Yup.string().required("Required"),
   cv_f: Yup.string().required("Required"),
   email_f: Yup.string().email("Invalid email").required("Required"),
   tel_f: Yup.string()
-    .min(8, "Too Short!")
-    .max(20, "Too Long!")
+    .min(8, "Too Short! (Min 8)")
+    .max(20, "Too Long! (Max 20)")
     .required("Required"),
-  NSS: Yup.string().min(10, "Too Short!").max(10, "Too Long!"),
+  NSS: Yup.string()
+    .min(10, "Too Short! (Min 10)")
+    .max(10, "Too Long! (Max 10)"),
   salaire_f: Yup.number()
     .test("is-decimal", "invalid decimal", (value) =>
       (value + "").match(/^\d{4}\.{1}\d{3}/)
@@ -26,34 +28,40 @@ export const FormateurSchema = Yup.object().shape({
   adr_f: Yup.string().required("Required"),
   date_dajout: Yup.string().required("Required"),
   cin_f: Yup.string()
-    .min(8, "Too Short!")
-    .max(8, "Too Long!")
+    .min(8, "Too Short! (Must be 8 number)")
+    .max(8, "Too Long! (Must be 8 number)")
     .required("Required"),
   copie_cin: Yup.string().required("Required"),
   passeport_f: Yup.string()
-    .min(10, "Too Short!")
-    .max(10, "Too Long!")
+    .min(10, "Too Short! (Must be 10 number)")
+    .max(10, "Too Long! (Must be 10 number) ")
     .required("Required"),
   copie_passeport: Yup.string().required("Required"),
   visa_f: Yup.string()
-    .min(10, "Too Short!")
-    .max(10, "Too Long!")
+    .min(10, "Too Short! (Must be 8 number)")
+    .max(10, "Too Long! (Must be 8 number)")
     .required("Required"),
   val_visa: Yup.date().required("Required"),
   tarif_f: Yup.number().test("is-decimal", "invalid decimal", (value) =>
     (value + "").match(/^\d{4}\.{1}\d{3}/)
   ),
-  RIB_f: Yup.string().min(20, "Too Short!").max(20, "Too Long!"),
+  RIB_f: Yup.string()
+    .min(20, "Too Short! (Must be 20 number)")
+    .max(20, "Too Long! (Must be 20 number)"),
   copie_RIB: Yup.string().required("Required"),
 });
 export const FormationSchema = Yup.object().shape({
-  code_formation: Yup.string().max(5, "Too Long!").required("Required"),
+  code_formation: Yup.string().max(5, "Too Long! (Max 5)").required("Required"),
   intitule: Yup.string()
-    .min(3, "Too Short!")
-    .max(30, "Too Long!")
+    .min(3, "Too Short! (Min 3)")
+    .max(30, "Too Long! (Max 30)")
     .required("Required"),
-  duree_formation: Yup.number().required("Required"),
-  nbre_min_part: Yup.number().required("Required"),
+  duree_formation: Yup.number()
+    .test("is-number", "invalid number", (value) => (value + "").match(/^\d/))
+    .required("Required"),
+  nbre_min_part: Yup.number()
+    .test("is-number", "invalid number", (value) => (value + "").match(/^\d/))
+    .required("Required"),
   description_formation: Yup.string().required("Required"),
   catagorie_formation: Yup.string().required("Required"),
   prix_formation: Yup.number()
@@ -100,19 +108,19 @@ export const SupportSchema = Yup.object().shape({
 });
 export const ThemeSchema = Yup.object().shape({
   code_theme: Yup.string()
-    .min(2, "Too Short!")
-    .max(5, "Too Long!")
+    .min(2, "Too Short! (Min 2)")
+    .max(5, "Too Long! (Max 5)")
     .required("Required"),
   nom_theme: Yup.string()
-    .min(4, "Too Short!")
-    .max(30, "Too Long!")
+    .min(4, "Too Short! (Min 4)")
+    .max(30, "Too Long! (Max 30)")
     .required("Required"),
 });
 export const DemandeSchema = Yup.object().shape({
   date_demande: Yup.date().required("Required"),
   type_demande: Yup.string()
-    .min(2, "Too Short!")
-    .max(30, "Too Long!")
+    .min(2, "Too Short! (Min 2)")
+    .max(30, "Too Long! (Max 30)")
     .required("Required"),
   type_demande: Yup.string()
     .min(2, "Too Short!")
@@ -152,28 +160,28 @@ export const DemandeSchema = Yup.object().shape({
 });
 export const SessionSchema = Yup.object().shape({
   code_session: Yup.string()
-    .min(1, "Too Short!")
-    .max(5, "Too Long!")
+    .min(1, "Too Short! (Min 1)")
+    .max(5, "Too Long! (Max 5)")
     .required("Required"),
   mode_session: Yup.string()
-    .min(1, "Too Short!")
-    .max(10, "Too Long!")
+    .min(1, "Too Short! (Min 1)")
+    .max(10, "Too Long! (Max 10)")
     .required("Required"),
   duree_sess: Yup.number()
-    .min(1, "Too Short!")
-    .max(10, "Too Long!")
+    .min(1, "Too Short! (Min 1)")
+    .max(10, "Too Long! (Max 10)")
     .required("Required"),
   hr_deb_j: Yup.string()
-    .min(1, "Too Short!")
-    .max(5, "Too Long!")
+    .min(1, "Too Short! (Min 1)")
+    .max(5, "Too Long! (Max 5)")
     .required("Required"),
   hr_fin_j: Yup.string()
-    .min(1, "Too Short!")
+    .min(1, "Too Short! (Min 1)")
     .max(5, "Too Long!")
     .required("Required"),
   hr_j_session: Yup.string()
-    .min(1, "Too Short!")
-    .max(2, "Too Long!")
+    .min(1, "Too Short! (Min 1)")
+    .max(2, "Too Long! (Max 2)")
     .required("Required"),
   honoraire_sess: Yup.number().test("is-decimal", "invalid decimal", (value) =>
     (value + "").match(/^\d{4}\.{1}\d{3}/)
@@ -191,12 +199,20 @@ export const SessionSchema = Yup.object().shape({
   autres_frais: Yup.number().test("is-decimal", "invalid decimal", (value) =>
     (value + "").match(/^\d{4}\.{1}\d{3}/)
   ),
-  note_eval_formateur: Yup.number(),
-  type_sess: Yup.number(),
-  date_deb_sess: Yup.number(),
+  note_eval_formateur: Yup.number().test(
+    "is-decimal",
+    "invalid decimal",
+    (value) => (value + "").match(/^\d/)
+  ),
+  type_sess: Yup.number().test("is-number", "invalid number", (value) =>
+    (value + "").match(/^\d/)
+  ),
+  date_deb_sess: Yup.number().test("is-number", "invalid number", (value) =>
+    (value + "").match(/^\d/)
+  ),
   lieu_sess: Yup.string()
-    .min(1, "Too Short!")
-    .max(30, "Too Long!")
+    .min(1, "Too Short! (Min 1)")
+    .max(30, "Too Long! (Max 30)")
     .required("Required"),
   prix_session: Yup.number()
     .test("is-decimal", "invalid decimal", (value) =>

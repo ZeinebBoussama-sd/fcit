@@ -80,7 +80,6 @@ function AddSession(props) {
                   frais_transport: undefined,
                   perdiem: undefined,
                   autres_frais: undefined,
-                  note_eval_formateur: undefined,
                   type_sess: undefined,
                   date_deb_sess: "",
                   lieu_sess: undefined,
@@ -91,7 +90,7 @@ function AddSession(props) {
                   SupportCodeSupport: undefined,
                   valid: 1,
                 }}
-                //validationSchema={SessionSchema}
+                validationSchema={SessionSchema}
                 onSubmit={async (values) => {
                   try {
                     await AddSession({
@@ -107,7 +106,6 @@ function AddSession(props) {
                         frais_transport: values.frais_transport,
                         perdiem: values.perdiem,
                         autres_frais: values.autres_frais,
-                        note_eval_formateur: values.note_eval_formateur,
                         type_sess: values.type_sess,
                         date_deb_sess: values.date_deb_sess,
                         lieu_sess: values.lieu_sess,
@@ -199,7 +197,9 @@ function AddSession(props) {
                           type="text"
                         />
                         {errors.code_session && touched.code_session ? (
-                          <div>{errors.code_session}</div>
+                          <div className="text-danger">
+                            {errors.code_session}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -236,6 +236,11 @@ function AddSession(props) {
                           <option>Présentielle</option>
                           <option>En Ligne</option>
                         </Field>
+                        {errors.mode_session && touched.mode_session ? (
+                          <div className="text-danger">
+                            {errors.mode_session}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Date Debut" className="col-form-label">
@@ -253,7 +258,6 @@ function AddSession(props) {
                         <label htmlFor="Duree" className="col-form-label">
                           Duree:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -266,7 +270,7 @@ function AddSession(props) {
                           type="number"
                         />
                         {errors.duree_sess && touched.duree_sess ? (
-                          <div>{errors.duree_sess}</div>
+                          <div className="text-danger">{errors.duree_sess}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -286,7 +290,7 @@ function AddSession(props) {
                           type="text"
                         />
                         {errors.hr_deb_j && touched.hr_deb_j ? (
-                          <div>{errors.hr_deb_j}</div>
+                          <div className="text-danger">{errors.hr_deb_j}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -305,7 +309,7 @@ function AddSession(props) {
                           type="text"
                         />
                         {errors.hr_fin_j && touched.hr_fin_j ? (
-                          <div>{errors.hr_fin_j}</div>
+                          <div className="text-danger">{errors.hr_fin_j}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -328,7 +332,9 @@ function AddSession(props) {
                           type="number"
                         />
                         {errors.hr_j_session && touched.hr_j_session ? (
-                          <div>{errors.hr_j_session}</div>
+                          <div className="text-danger">
+                            {errors.hr_j_session}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -346,9 +352,6 @@ function AddSession(props) {
                           name="lieu_sess"
                           type="text"
                         />
-                        {errors.lieu_sess && touched.lieu_sess ? (
-                          <div>{errors.lieu_sess}</div>
-                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Prix" className="col-form-label">
@@ -367,7 +370,9 @@ function AddSession(props) {
                           type="number"
                         />
                         {errors.prix_session && touched.prix_session ? (
-                          <div>{errors.prix_session}</div>
+                          <div className="text-danger">
+                            {errors.prix_session}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -384,6 +389,11 @@ function AddSession(props) {
                           onChange={handleChange}
                           value={values.honoraire_sess}
                         />
+                        {errors.honoraire_sess && touched.honoraire_sess ? (
+                          <div className="text-danger">
+                            {errors.honoraire_sess}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label
@@ -399,6 +409,11 @@ function AddSession(props) {
                           onChange={handleChange}
                           value={values.frais_sejour}
                         />
+                        {errors.frais_sejour && touched.frais_sejour ? (
+                          <div className="text-danger">
+                            {errors.frais_sejour}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label
@@ -414,6 +429,11 @@ function AddSession(props) {
                           onChange={handleChange}
                           value={values.frais_transport}
                         />
+                        {errors.frais_transport && touched.frais_transport ? (
+                          <div className="text-danger">
+                            {errors.frais_transport}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="perdiem" className="col-form-label">
@@ -426,6 +446,9 @@ function AddSession(props) {
                           onChange={handleChange}
                           value={values.perdiem}
                         />
+                        {errors.perdiem && touched.perdiem ? (
+                          <div className="text-danger">{errors.perdiem}</div>
+                        ) : null}
                       </div>
 
                       <div className="form-group">
@@ -442,22 +465,13 @@ function AddSession(props) {
                           onChange={handleChange}
                           value={values.autres_frais}
                         />
+                        {errors.autres_frais && touched.autres_frais ? (
+                          <div className="text-danger">
+                            {errors.autres_frais}
+                          </div>
+                        ) : null}
                       </div>
-                      <div className="form-group">
-                        <label
-                          htmlFor="note_eval_formateur"
-                          className="col-form-label"
-                        >
-                          note_eval_formateur:
-                        </label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          id="note_eval_formateur"
-                          onChange={handleChange}
-                          value={values.note_eval_formateur}
-                        />
-                      </div>
+
                       <div className="form-group">
                         <label htmlFor="Client">Client:</label>
                         <select
@@ -479,6 +493,11 @@ function AddSession(props) {
                               );
                             })}
                         </select>
+                        {errors.ClientCodeClient && touched.ClientCodeClient ? (
+                          <div className="text-danger">
+                            {errors.ClientCodeClient}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Formation">Formation:</label>
@@ -507,6 +526,12 @@ function AddSession(props) {
                               }
                             )}
                         </select>
+                        {errors.FormationCIFormation &&
+                        touched.FormationCIFormation ? (
+                          <div className="text-danger">
+                            {errors.FormationCIFormation}
+                          </div>
+                        ) : null}
                       </div>
                       {values.FormationCIFormation && (
                         <div>
@@ -568,6 +593,12 @@ function AddSession(props) {
                                   );
                                 })}
                             </select>
+                            {errors.FormateurCodeFormateur &&
+                            touched.FormateurCodeFormateur ? (
+                              <div className="text-danger">
+                                {errors.FormateurCodeFormateur}
+                              </div>
+                            ) : null}
                           </div>
                         </div>
                       )}
@@ -592,6 +623,12 @@ function AddSession(props) {
                               );
                             })}
                         </select>
+                        {errors.SupportCodeSupport &&
+                        touched.SupportCodeSupport ? (
+                          <div className="text-danger">
+                            {errors.SupportCodeSupport}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="modal-footer">
                         <button

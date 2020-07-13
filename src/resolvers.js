@@ -924,26 +924,33 @@ const resolvers = {
       return this.deleteMotCle;
     },
     async createParticiper(root, args, { models }) {
-      const rapport_eval = args.rapport_eval;
+      const rapport_eval = await args.rapport_eval;
       const upload_rapport_eval = await storeUpload(
         rapport_eval,
         "rapport_eval",
-        args.code_participert,
-        "formateur"
+        args.ParticipantCodeParticipant,
+        "participert"
       );
       const createParticiper = await models.Participer.create({
-        rapport_eval,
-        note_QCM,
-        date_eval,
-        ParticipantCodeParticipant,
-        SessionCISession,
+        rapport_eval: `${__dirname}/upload/${args.ParticipantCodeParticipant}/participert/rapport_eval/${rapport_eval.filename}`,
+        note_QCM: args.note_QCM,
+        date_eval: args.date_eval,
+        ParticipantCodeParticipant: args.ParticipantCodeParticipant,
+        SessionCISession: args.SessionCISession,
       });
       return createParticiper;
     },
     async updateParticiper(root, args, { models }) {
+      const rapport_eval = await args.rapport_eval;
+      const upload_rapport_eval = await storeUpload(
+        rapport_eval,
+        "rapport_eval",
+        args.ParticipantCodeParticipant,
+        "participert"
+      );
       const updateParticiper = await models.Participer.update(
         {
-          rapport_eval: args.rapport_eval,
+          rapport_eval: `${__dirname}/upload/${args.ParticipantCodeParticipant}/participert/rapport_eval/${rapport_eval.filename}`,
           note_QCM: args.note_QCM,
           date_eval: args.date_eval,
           ParticipantCodeParticipant: args.ParticipantCodeParticipant,

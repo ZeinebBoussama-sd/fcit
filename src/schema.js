@@ -641,14 +641,14 @@ const typeDefs = gql`
     ): DeletePartcipantMutationResponse
     deleteParticipant(code_participant: Int!): DeletePartcipantMutationResponse
     createParticiper(
-      rapport_eval: String!
+      rapport_eval: Upload!
       note_QCM: Float!
       date_eval: Date!
       ParticipantCodeParticipant: Int
       SessionCISession: Int
     ): Participer!
     updateParticiper(
-      rapport_eval: String!
+      rapport_eval: Upload!
       note_QCM: Float!
       date_eval: Date!
       ParticipantCodeParticipant: Int

@@ -5,12 +5,12 @@ import deepEqual from "lodash.isequal";
 import logofcit from "../foundation/logo/logofcit3.png";
 import { LOGIN } from "../Admin/GraphQl/Mutation";
 import { setAccessToken, getAccessToken } from "../Utils/AccessToken";
+import { LoginSchema } from "../Utils/Validation";
 
 function Login({ history }) {
   const [login, res] = useMutation(LOGIN);
   useEffect(() => {
     const local = history && history.location.pathname;
-    console.log("local", local);
     if (getAccessToken()) {
       local === "/login" && history.push("/admin", { some: "state" });
     }
@@ -23,7 +23,7 @@ function Login({ history }) {
           password: "",
         }}
         enableReinitialize
-        //validationSchema={LoginSchema}
+        validationSchema={LoginSchema}
         onSubmit={async (values) => {
           try {
             await login({

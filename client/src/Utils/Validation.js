@@ -284,11 +284,13 @@ export const DatePrevueSchema = Yup.object().shape({
 });
 export const ParticiperSchema = Yup.object().shape({
   rapport_eval: Yup.string().required("Required"),
-  note_QCM: Yup.number()
-    .test("is-number", "invalid number", (value) =>
-      (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
-    )
+  note_QCM: Yup.string()
+    .matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
     .required("Required"),
   date_eval: Yup.date().required("Required"),
   SessionCISession: Yup.string().required("Required"),
+});
+export const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().required("Required"),
 });

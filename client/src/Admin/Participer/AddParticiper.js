@@ -51,7 +51,7 @@ function AddParticiper(props) {
               <Formik
                 enableReinitialize
                 initialValues={{
-                  rapport_eval: undefined,
+                  rapport_eval: [],
                   note_QCM: undefined,
                   date_eval: undefined,
                   SessionCISession: undefined,
@@ -88,14 +88,15 @@ function AddParticiper(props) {
                     handleReset,
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
-
+                  const rapport_eval_name =
+                    (values.rapport_eval || values.rapport_eval.length !== 0) &&
+                    values.rapport_eval.name;
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
                         <label htmlFor="Note QCM" className="col-form-label">
                           Rapport Eval
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -108,17 +109,18 @@ function AddParticiper(props) {
                           type="file"
                           component={DropzoneField}
                         />
+                        <b>{rapport_eval_name}</b>
                         {errors.rapport_eval && touched.rapport_eval ? (
-                          <div>{errors.rapport_eval}</div>
+                          <div className="text-danger">
+                            {errors.rapport_eval}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Note QCM" className="col-form-label">
                           Note QCM
                         </label>
-
                         <Field
-                          placeholder="xxxx,xxx"
                           className={
                             hasChanged
                               ? errors.note_QCM
@@ -130,7 +132,7 @@ function AddParticiper(props) {
                           type="number"
                         />
                         {errors.note_QCM && touched.note_QCM ? (
-                          <div>{errors.note_QCM}</div>
+                          <div className="text-danger">{errors.note_QCM}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -149,7 +151,7 @@ function AddParticiper(props) {
                           type="date"
                         />
                         {errors.date_eval && touched.date_eval ? (
-                          <div>{errors.date_eval}</div>
+                          <div className="text-danger">{errors.date_eval}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -173,10 +175,10 @@ function AddParticiper(props) {
                             GetSessions.data.allSessions.map((session) => {
                               return (
                                 <option
-                                  key={session.code_client}
-                                  value={session.code_client}
+                                  key={session.CI_session}
+                                  value={session.CI_session}
                                 >
-                                  {session.nom_client}
+                                  {session.code_session}
                                 </option>
                               );
                             })}

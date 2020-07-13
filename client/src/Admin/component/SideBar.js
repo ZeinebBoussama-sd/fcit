@@ -180,6 +180,7 @@ function SideBar(props) {
               <span>Formation</span>
             </NavLink>
             <NavLink
+              className={active ? `` : "pl-6"}
               to="/validation"
               activeStyle={{
                 color: "dodgerblue",

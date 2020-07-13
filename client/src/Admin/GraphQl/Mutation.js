@@ -963,14 +963,18 @@ export const ADD_PARTICIPER = gql`
       rapport_eval
       note_QCM
       date_eval
-      ParticipantCodeParticipant
-      SessionCISession
+      participant {
+        code_participant
+      }
+      session {
+        CI_session
+      }
     }
   }
 `;
 export const UPDATE_PARTICIPER = gql`
   mutation update_participer(
-    $rapport_eval: String!
+    $rapport_eval: Upload!
     $note_QCM: Float!
     $date_eval: Date!
     $ParticipantCodeParticipant: Int

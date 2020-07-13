@@ -52,7 +52,7 @@ export const FormateurSchema = Yup.object().shape({
     .min(10, "Too Short! (Min 10)")
     .max(10, "Too Long! (Max 10)"),
   salaire_f: Yup.number()
-    .test("is-decimal", "invalid decimal", (value) =>
+    .test("is-number", "invalid number", (value) =>
       (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
     )
     .required("Required"),
@@ -73,7 +73,7 @@ export const FormateurSchema = Yup.object().shape({
     .max(10, "Too Long! (Must be 8 number)")
     .required("Required"),
   val_visa: Yup.date().required("Required"),
-  tarif_f: Yup.number().test("is-decimal", "invalid decimal", (value) =>
+  tarif_f: Yup.number().test("is-number", "invalid number", (value) =>
     (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
   ),
   RIB_f: Yup.string()
@@ -100,7 +100,7 @@ export const FormationSchema = Yup.object().shape({
   description_formation: Yup.string().required("Required"),
   catagorie_formation: Yup.string().required("Required"),
   prix_formation: Yup.number()
-    .test("is-decimal", "invalid decimal", (value) =>
+    .test("is-number", "invalid number", (value) =>
       (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
     )
     .required("Required"),
@@ -135,7 +135,7 @@ export const IngenieurPedagogiqueSchema = Yup.object().shape({
     .max(10, "Too Long! Must be 10")
     .required("Required"),
   salaire_ing: Yup.number()
-    .test("is-decimal", "invalid decimal", (value) =>
+    .test("is-number", "invalid number", (value) =>
       (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
     )
     .required("Required"),
@@ -195,52 +195,27 @@ export const DemandeSchema = Yup.object().shape({
   DemandeurCodeDemandeur: Yup.number().required("Required"),
 });
 export const SessionSchema = Yup.object().shape({
-  code_session: Yup.string()
-    .min(1, "Too Short! (Min 1)")
-    .max(5, "Too Long! (Max 5)")
-    .required("Required"),
+  code_session: Yup.string().max(5, "Too Long! (Max 5)").required("Required"),
   mode_session: Yup.string().required("Required"),
   duree_sess: Yup.number().max(10, "Too Long! (Max 10)").required("Required"),
-  hr_deb_j: Yup.string()
-    .min(1, "Too Short! (Min 1)")
-    .max(5, "Too Long! (Max 5)")
-    .required("Required"),
+  hr_deb_j: Yup.string().max(5, "Too Long! (Max 5)").required("Required"),
   hr_fin_j: Yup.string().max(5, "Too Long! (Max 5)").required("Required"),
-  hr_j_session: Yup.string()
-    .min(1, "Too Short! (Min 1)")
-    .max(2, "Too Long! (Max 2)")
-    .required("Required"),
-  honoraire_sess: Yup.number().test("is-decimal", "invalid decimal", (value) =>
-    (value + "").match(/^[0-9]{1,11}(?:\.[0-9]{1,3})?$/)
-  ),
+  hr_j_session: Yup.string().max(2, "Too Long! (Max 2)").required("Required"),
+  honoraire_sess: Yup.string().matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/),
 
-  frais_sejour: Yup.number().test("is-decimal", "invalid decimal", (value) =>
-    (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
-  ),
-  frais_transport: Yup.number().test("is-decimal", "invalid decimal", (value) =>
-    (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
-  ),
-  perdiem: Yup.number().test("is-decimal", "invalid decimal", (value) =>
-    (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
-  ),
-  autres_frais: Yup.number().test("is-decimal", "invalid decimal", (value) =>
-    (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
-  ),
-  note_eval_formateur: Yup.number().test(
-    "is-decimal",
-    "invalid decimal",
-    (value) => (value + "").match(/^[0-9]/)
-  ),
+  frais_sejour: Yup.string().matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/),
+  frais_transport: Yup.string().matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/),
+  perdiem: Yup.string().matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/),
+  autres_frais: Yup.string().matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/),
+  note_eval_formateur: Yup.string().matches(/^[0-9]/),
   type_sess: Yup.string(),
   date_deb_sess: Yup.string().required("Required"),
   lieu_sess: Yup.string()
     .min(1, "Too Short! (Min 1)")
     .max(30, "Too Long! (Max 30)")
     .required("Required"),
-  prix_session: Yup.number()
-    .test("is-decimal", "invalid decimal", (value) =>
-      (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
-    )
+  prix_session: Yup.string()
+    .matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
     .required("Required"),
 
   ClientCodeClient: Yup.string().required("Required"),
@@ -310,7 +285,7 @@ export const DatePrevueSchema = Yup.object().shape({
 export const ParticiperSchema = Yup.object().shape({
   rapport_eval: Yup.string().required("Required"),
   note_QCM: Yup.number()
-    .test("is-decimal", "invalid decimal", (value) =>
+    .test("is-number", "invalid number", (value) =>
       (value + "").match(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
     )
     .required("Required"),

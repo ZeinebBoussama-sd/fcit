@@ -92,7 +92,7 @@ function EditSession(props) {
             session && session.support && session.support.code_support,
           valid: v ? v : 1,
         }}
-        //validationSchema={SessionSchema}
+        validationSchema={SessionSchema}
         onSubmit={async (values) => {
           try {
             await updateSession({
@@ -263,13 +263,20 @@ function EditSession(props) {
                 <label htmlFor="Date Debut" className="col-form-label">
                   Date Debut:
                 </label>
-                <input
+                <Field
                   type="date"
-                  className="form-control"
-                  id="date_deb_sess"
-                  onChange={handleChange}
-                  value={values.date_deb_sess}
+                  className={
+                    hasChanged
+                      ? errors.date_deb_sess
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="date_deb_sess"
                 />
+                {errors.date_deb_sess && touched.date_deb_sess ? (
+                  <div className="text-danger">{errors.date_deb_sess}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Duree" className="col-form-label">
@@ -370,7 +377,6 @@ function EditSession(props) {
                 <label htmlFor="Prix" className="col-form-label">
                   Prix:
                 </label>
-
                 <Field
                   className={
                     hasChanged

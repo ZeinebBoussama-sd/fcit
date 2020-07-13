@@ -180,6 +180,20 @@ function SideBar(props) {
               <span>Formation</span>
             </NavLink>
             <NavLink
+              to="/validation"
+              activeStyle={{
+                color: "dodgerblue",
+                borderRight: "solid 4px dodgerblue",
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                className="mr-1"
+                id="sidebar_btn"
+              />
+              <span>Validation</span>
+            </NavLink>
+            <NavLink
               className={active ? `` : "pl-6"}
               to="/motcle"
               activeStyle={{
@@ -337,22 +351,7 @@ function SideBar(props) {
             <span>Session </span>
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/validation"
-            activeStyle={{
-              color: "dodgerblue",
-              borderRight: "solid 4px dodgerblue",
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faCheckCircle}
-              className="mr-1"
-              id="sidebar_btn"
-            />
-            <span>Validation</span>
-          </NavLink>
-        </li>
+        <li></li>
         <li>
           <a onClick={DeleteAccessToken} href="/login">
             {" "}

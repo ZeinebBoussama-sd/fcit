@@ -60,7 +60,6 @@ function AddMetier(props) {
                     console.log("values", values);
                     await AddMetier({
                       variables: {
-                        code_metier: parseInt(values.code_metier),
                         intitule_metier: values.intitule_metier,
                         FormationCIFormation: values.FormationCIFormation.map(
                           (f) => parseInt(f)
@@ -87,34 +86,12 @@ function AddMetier(props) {
                     handleReset,
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
-                  console.log("GetFormation", GetFormation);
                   return (
                     <form onSubmit={handleSubmit}>
-                      <div className="form-group">
-                        <label htmlFor="Code" className="col-form-label">
-                          Code:
-                        </label>
-
-                        <Field
-                          className={
-                            hasChanged
-                              ? errors.code_metier
-                                ? "form-control is-invalid"
-                                : "form-control is-valid"
-                              : "form-control text-input"
-                          }
-                          name="code_metier"
-                          type="text"
-                        />
-                        {errors.code_metier && touched.code_metier ? (
-                          <div>{errors.code_metier}</div>
-                        ) : null}
-                      </div>
                       <div className="form-group">
                         <label htmlFor="Intitule" className="col-form-label">
                           Intitule:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -127,17 +104,24 @@ function AddMetier(props) {
                           type="text"
                         />
                         {errors.intitule_metier && touched.intitule_metier ? (
-                          <div>{errors.intitule_metier}</div>
+                          <div className="text-danger">
+                            {errors.intitule_metier}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Formation">Formation:</label>
-                        <select
-                          className="form-control"
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.FormationCIFormation
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
                           multiple
-                          onChange={handleChange}
-                          value={values.FormationCIFormation}
-                          id="FormationCIFormation"
+                          component={"select"}
+                          name="FormationCIFormation"
                         >
                           <option value="">---Choose Formation--</option>
                           {GetFormation.data &&
@@ -151,9 +135,14 @@ function AddMetier(props) {
                                 </option>
                               );
                             })}
-                        </select>
+                        </Field>
+                        {errors.FormationCIFormation &&
+                        touched.FormationCIFormation ? (
+                          <div className="text-danger">
+                            {errors.FormationCIFormation}
+                          </div>
+                        ) : null}
                       </div>
-
                       <div className="modal-footer">
                         <button
                           type="button"

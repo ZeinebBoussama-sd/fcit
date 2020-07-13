@@ -628,6 +628,7 @@ export const ADD_DEMANDE = gql`
     $hr_deb_j_prev: String!
     $hr_fin_j_prev: String!
     $hr_j_prev: Int!
+    $Date_Prevue: [Date]
     $ClientCodeClient: String
     $FormationCIFormation: Int
     $DemandeurCodeDemandeur: Int
@@ -636,6 +637,7 @@ export const ADD_DEMANDE = gql`
       date_demande: $date_demande
       type_demande: $type_demande
       etat_demande: $etat_demande
+      Date_Prevue: $Date_Prevue
       prix_prevu: $prix_prevu
       lieu_prevu: $lieu_prevu
       duree_prevu: $duree_prevu
@@ -676,6 +678,7 @@ export const UPDATE_DEMANDEfORMATION = gql`
     $hr_deb_j_prev: String!
     $hr_fin_j_prev: String!
     $hr_j_prev: Int!
+    $Date_Prevue: [Date]
     $ClientCodeClient: String
     $FormationCIFormation: Int
     $DemandeurCodeDemandeur: Int
@@ -685,6 +688,7 @@ export const UPDATE_DEMANDEfORMATION = gql`
       date_demande: $date_demande
       type_demande: $type_demande
       etat_demande: $etat_demande
+      Date_Prevue: $Date_Prevue
       prix_prevu: $prix_prevu
       lieu_prevu: $lieu_prevu
       duree_prevu: $duree_prevu
@@ -883,36 +887,20 @@ export const ADD_DATEPREEVUE = gql`
     }
   }
 `;
-export const UPDATE_DATEPREVUE = gql`
-  mutation update_dateprevue(
-    $date_prev: Date!
-    $DemandeFormationCodeDemande: Int
-  ) {
-    updateDatePrevue(
-      date_prev: $date_prev
-      DemandeFormationCodeDemande: $DemandeFormationCodeDemande
-    ) {
-      code
-    }
-  }
-`;
+
 export const DELETE_DATEPREVUE = gql`
-  mutation deleteDatePrevue($date_prev: Int!) {
+  mutation deleteDatePrevue($date_prev: Date!) {
     deleteDatePrevue(date_prev: $date_prev) {
-      dateprevue {
-        date_prev
-      }
+      code
     }
   }
 `;
 export const ADD_METIER = gql`
   mutation create_metier(
-    $code_metier: Int!
     $intitule_metier: String!
     $FormationCIFormation: [Int]
   ) {
     createMetier(
-      code_metier: $code_metier
       intitule_metier: $intitule_metier
       FormationCIFormation: $FormationCIFormation
     ) {

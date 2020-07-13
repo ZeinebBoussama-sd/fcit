@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 function WarningModal(props) {
+  console.log(props);
   return (
-    <>
+    <div>
       <FontAwesomeIcon
         icon={faTrashAlt}
         className="mr-1 pointer"
@@ -48,6 +49,7 @@ function WarningModal(props) {
                 type="button"
                 className="btn btn-warning"
                 onClick={() => {
+                  debugger;
                   props.dlt(props.code);
                 }}
                 data-dismiss="modal"
@@ -58,7 +60,7 @@ function WarningModal(props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 export default WarningModal;

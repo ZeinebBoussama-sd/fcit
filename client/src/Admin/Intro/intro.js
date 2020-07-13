@@ -10,20 +10,18 @@ import { getAccessToken } from "../../Utils/AccessToken";
 
 function Intro() {
   var decoded = jwt_decode(getAccessToken());
-  console.log(decoded);
   const { loading, error, data } = useQuery(GET_INGENIEUR_PEDAGOGIQUE, {
     variables: { code_IP: decoded.code_IP },
   });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
-  console.log(data.ingenieurpedagogique);
   return (
-    <div className="mt-11">
-      <h2>
+    <div className="intro height-8 mt-6" style={{ margin: "-20px" }}>
+      {/* <h2>
         <b> Welcome:</b> {data.ingenieurpedagogique.prenom_ing}{" "}
         {data.ingenieurpedagogique.nom_ing}
-      </h2>
+      </h2> */}
     </div>
   );
 }

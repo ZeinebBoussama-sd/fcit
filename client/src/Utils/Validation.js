@@ -225,21 +225,24 @@ export const SessionSchema = Yup.object().shape({
 });
 export const FichierSchema = Yup.object().shape({
   nom_fichier: Yup.string()
-    .min(5, "Too Short!")
-    .max(20, "Too Long!")
+    .min(5, "Too Short! (Min 5)")
+    .max(20, "Too Long! (Max 20)")
     .required("Required"),
-
   type_fichier: Yup.string()
-    .min(5, "Too Short!")
-    .max(20, "Too Long!")
+    .min(5, "Too Short! (Min 5)")
+    .max(20, "Too Long! (Max 20)")
     .required("Required"),
-  taille_max: Yup.number().required("Required"),
+  taille_max: Yup.string()
+    .matches(/^[0-9]/)
+    .required("Required"),
   url_fichier: Yup.string().required("Required"),
   nature_support: Yup.string()
     .min(4, "Too Short!")
     .max(10, "Too Long!")
     .required("Required"),
-  SupportCodeSupport: Yup.number().required("Required"),
+  SupportCodeSupport: Yup.string()
+    .matches(/^[0-9]/)
+    .required("Required"),
 });
 export const ValidationSchema = Yup.object().shape({
   date_val: Yup.date().required("Required"),
@@ -250,15 +253,6 @@ export const ValidationSchema = Yup.object().shape({
   FormateurCodeFormateur: Yup.string().required("Required"),
   SupportCodeSupport: Yup.string().required("Required"),
 });
-export const ParticipantSchema = Yup.object().shape({
-  nom_participant: Yup.string().required("Required"),
-  prenom_participant: Yup.string().required("Required"),
-  carte_identite: Yup.string()
-    .min(8, "Too Short!")
-    .max(8, "Too Long!")
-    .required("Required"),
-  ClientCodeClient: Yup.string().required("Required"),
-});
 export const MotCleSchema = Yup.object().shape({
   motcle: Yup.string()
     .min(1, "Too Short!")
@@ -268,19 +262,23 @@ export const MotCleSchema = Yup.object().shape({
   FormationCIFormation: Yup.string().required("Required"),
 });
 export const MetierSchema = Yup.object().shape({
-  code_metier: Yup.string()
-    .min(1, "Too Short!")
-    .max(5, "Too Long!")
-    .required("Required"),
+  code_metier: Yup.string().max(5, "Too Long! (Max 5)").required("Required"),
   intitule_metier: Yup.string()
-    .min(1, "Too Short!")
-    .max(30, "Too Long!")
+    .max(30, "Too Long! (Max 30)")
     .required("Required"),
   FormationCIFormation: Yup.string().required("Required"),
 });
 export const DatePrevueSchema = Yup.object().shape({
   date_prev: Yup.date().required("Required"),
-  DemandeFormationCodeDemande: Yup.number().required("Required"),
+});
+export const ParticipantSchema = Yup.object().shape({
+  nom_participant: Yup.string().required("Required"),
+  prenom_participant: Yup.string().required("Required"),
+  carte_identite: Yup.string()
+    .min(8, "Too Short! (Must be 8)")
+    .max(8, "Too Long! (Must be 8)")
+    .required("Required"),
+  ClientCodeClient: Yup.string().required("Required"),
 });
 export const ParticiperSchema = Yup.object().shape({
   rapport_eval: Yup.string().required("Required"),

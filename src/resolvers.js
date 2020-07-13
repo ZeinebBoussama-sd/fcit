@@ -522,15 +522,23 @@ const resolvers = {
         where: { code_demande: args.code_demande },
       });
     },
-    async createDatePrevue(root, { date_prev }, { models }) {
-      return models.DatePrevue.create({
-        date_prev,
+    async createDatePrevue(root, args, { models }) {
+      //find date
+      const dat = await models.DatePrevue.findOne({
+        where: { date_prev: args.date_prev },
       });
+      if (dat) throw new ApolloError("This Date already created!!");
+
+      const prevue = await models.DatePrevue.create({
+        date_prev: args.date_prev,
+      });
+      return prevue;
     },
     async deleteDatePrevue(root, args, { models }) {
       const deleteDatePrevue = await models.DatePrevue.destroy({
         where: { date_prev: args.date_prev },
       });
+      return deleteDatePrevue;
     },
     async createFichier(
       root,
@@ -600,10 +608,19 @@ const resolvers = {
       });
     },
     async createMetier(root, args, { models }) {
-      const addMetie = await models.Metiers.create({
-        code_metier: args.code_metier,
-        intitule_metier: args.intitule_metier,
-      });
+      const addMetie = await models.Metiers.create(
+        {
+          code_metier: args.code_metier,
+          intitule_metier: args.intitule_metier,
+        },
+        {
+          include: [
+            {
+              association: models.Metiers.Formations,
+            },
+          ],
+        }
+      );
       const t = addMetie.createFormation();
       const addDonne_lieu = args.FormationCIFormation.map(async (f) => {
         await models.Donne_lieu.create({
@@ -901,6 +918,7 @@ const resolvers = {
           nom_participant: args.nom_participant,
           prenom_participant: args.prenom_participant,
           carte_identite: args.carte_identite,
+          ClientCodeClient: args.ClientCodeClient,
         },
         { where: { code_participant: args.code_participant } }
       );

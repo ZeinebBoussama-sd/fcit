@@ -30,7 +30,6 @@ import MotCleItem from "../Admin/MotCle/MotCleItem";
 import Metier from "../Admin/Metier/Metier";
 import MetierItem from "../Admin/Metier/MetierItem";
 import DatePrevue from "../Admin/DatePrevue/DatePrevue";
-import DatePrevueItem from "../Admin/DatePrevue/DatePrevueItem";
 import Participer from "../Admin/Participer/Participer";
 import ParticiperItem from "../Admin/Participer/ParticiperItem";
 import Intro from "../Admin/Intro/intro";
@@ -56,12 +55,6 @@ function Admin({ history }) {
       exact: true,
       strict: false,
       component: () => (authToken ? <DatePrevue /> : <Login />),
-    },
-    {
-      path: "/dateprevue/:id",
-      exact: true,
-      strict: false,
-      component: () => (authToken ? <DatePrevueItem /> : <Login />),
     },
     {
       path: "/fichier",

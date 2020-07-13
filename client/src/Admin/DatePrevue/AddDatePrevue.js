@@ -58,9 +58,6 @@ function AddDatePrevue(props) {
                     await AddDatePrevue({
                       variables: {
                         date_prev: values.date_prev,
-                        DemandeFormationCodeDemande: parseInt(
-                          values.DemandeFormationCodeDemande
-                        ),
                       },
                     });
                   } catch (e) {
@@ -83,14 +80,12 @@ function AddDatePrevue(props) {
                     handleReset,
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
-
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
                         <label htmlFor="Nom" className="col-form-label">
                           Date
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -103,51 +98,9 @@ function AddDatePrevue(props) {
                           type="date"
                         />
                         {errors.date_prev && touched.date_prev ? (
-                          <div>{errors.date_prev}</div>
+                          <div className="text-danger">{errors.date_prev}</div>
                         ) : null}
                       </div>
-
-                      <div className="form-group">
-                        <label htmlFor="DemandeFormation">
-                          Demande Formation:
-                        </label>
-
-                        <Field
-                          component="select"
-                          className={
-                            hasChanged
-                              ? errors.DemandeFormationCodeDemande
-                                ? "form-control is-invalid"
-                                : "form-control is-valid"
-                              : "form-control text-input"
-                          }
-                          className="form-control"
-                          name="DemandeFormationCodeDemande"
-                          multiple={false}
-                        >
-                          <option value="">---Choose Demande----</option>
-                          {GetDemandeFormations.data &&
-                            GetDemandeFormations.data.allDemandeFormations.map(
-                              (demandeformation) => {
-                                return (
-                                  <option
-                                    key={demandeformation.code_demande}
-                                    value={demandeformation.code_demande}
-                                  >
-                                    {demandeformation.code_demande}
-                                  </option>
-                                );
-                              }
-                            )}
-                        </Field>
-                        {errors.DemandeFormationCodeDemande &&
-                        touched.DemandeFormationCodeDemande ? (
-                          <div className="text-danger">
-                            {errors.DemandeFormationCodeDemande}
-                          </div>
-                        ) : null}
-                      </div>
-
                       <div className="modal-footer">
                         <button
                           type="button"

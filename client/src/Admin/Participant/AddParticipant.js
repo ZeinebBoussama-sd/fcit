@@ -95,7 +95,6 @@ function AddParticipant(props) {
                         <label htmlFor="Nom" className="col-form-label">
                           Nom
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -108,7 +107,9 @@ function AddParticipant(props) {
                           type="text"
                         />
                         {errors.nom_participant && touched.nom_participant ? (
-                          <div>{errors.nom_participant}</div>
+                          <div className="text-danger">
+                            {errors.nom_participant}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -128,15 +129,15 @@ function AddParticipant(props) {
                         />
                         {errors.prenom_participant &&
                         touched.prenom_participant ? (
-                          <div>{errors.prenom_participant}</div>
+                          <div className="text-danger">
+                            {errors.prenom_participant}
+                          </div>
                         ) : null}
                       </div>
-
                       <div className="form-group">
                         <label htmlFor="Tel" className="col-form-label">
                           CIN
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -149,13 +150,13 @@ function AddParticipant(props) {
                           type="text"
                         />
                         {errors.carte_identite && touched.carte_identite ? (
-                          <div>{errors.carte_identite}</div>
+                          <div className="text-danger">
+                            {errors.carte_identite}
+                          </div>
                         ) : null}
                       </div>
-
                       <div className="form-group">
                         <label htmlFor="Client">Client:</label>
-
                         <Field
                           component="select"
                           className={
@@ -189,7 +190,6 @@ function AddParticipant(props) {
                           </div>
                         ) : null}
                       </div>
-
                       <div className="modal-footer">
                         <button
                           type="button"

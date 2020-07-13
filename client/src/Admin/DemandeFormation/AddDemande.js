@@ -2,8 +2,13 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import { ADD_DEMANDE } from "../GraphQl/Mutation";
-import { GET_FORMATIONS, GET_CLIENTS, GET_DEMANDEURS } from "../GraphQl/Query";
-
+import {
+  GET_FORMATIONS,
+  GET_CLIENTS,
+  GET_DEMANDEURS,
+  GET_DATE_PREVUES,
+} from "../GraphQl/Query";
+import moment from "moment";
 import deepEqual from "lodash.isequal";
 import { DemandeSchema } from "../../Utils/Validation";
 function AddDemande(props) {
@@ -11,6 +16,7 @@ function AddDemande(props) {
   const GetFormation = useQuery(GET_FORMATIONS);
   const GetClient = useQuery(GET_CLIENTS);
   const GetDemandeur = useQuery(GET_DEMANDEURS);
+  const GetDateprevue = useQuery(GET_DATE_PREVUES);
 
   return (
     <div>
@@ -60,6 +66,7 @@ function AddDemande(props) {
                   hr_deb_j_prev: undefined,
                   hr_fin_j_prev: undefined,
                   hr_j_prev: undefined,
+                  Date_Prevue: undefined,
                   ClientCodeClient: "",
                   FormationCIFormation: undefined,
                   DemandeurCodeDemandeur: undefined,
@@ -79,6 +86,7 @@ function AddDemande(props) {
                         hr_deb_j_prev: values.hr_deb_j_prev,
                         hr_fin_j_prev: values.hr_fin_j_prev,
                         hr_j_prev: values.hr_j_prev,
+                        Date_Prevue: values.Date_Prevue,
                         ClientCodeClient: values.ClientCodeClient
                           ? values.ClientCodeClient
                           : "",
@@ -389,6 +397,43 @@ function AddDemande(props) {
                         touched.FormationCIFormation ? (
                           <div className="text-danger">
                             {errors.FormationCIFormation}
+                          </div>
+                        ) : null}
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="Formation">Date Prevue:</label>
+                        <Field
+                          component="select"
+                          className={
+                            hasChanged
+                              ? errors.Date_Prevue
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          multiple
+                          name="Date_Prevue"
+                        >
+                          <option value="">---Choose Formation----</option>
+                          {GetDateprevue.data &&
+                            GetDateprevue.data.allDatePrevues.map(
+                              (Date_Prevue) => {
+                                return (
+                                  <option
+                                    key={Date_Prevue.Date_Prevue}
+                                    value={Date_Prevue.Date_Prevue}
+                                  >
+                                    {moment(Date_Prevue.Date_Prevue).format(
+                                      "YYYY-MM-DD"
+                                    )}
+                                  </option>
+                                );
+                              }
+                            )}
+                        </Field>
+                        {errors.Date_Prevue && touched.Date_Prevue ? (
+                          <div className="text-danger">
+                            {errors.Date_Prevue}
                           </div>
                         ) : null}
                       </div>

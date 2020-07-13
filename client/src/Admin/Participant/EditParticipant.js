@@ -77,7 +77,7 @@ function EditParticipant(props) {
                   type="text"
                 />
                 {errors.nom_participant && touched.nom_participant ? (
-                  <div>{errors.nom_participant}</div>
+                  <div className="text-danger">{errors.nom_participant}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -96,7 +96,7 @@ function EditParticipant(props) {
                   type="text"
                 />
                 {errors.prenom_participant && touched.prenom_participant ? (
-                  <div>{errors.prenom_participant}</div>
+                  <div className="text-danger">{errors.prenom_participant}</div>
                 ) : null}
               </div>
 
@@ -117,13 +117,11 @@ function EditParticipant(props) {
                   type="text"
                 />
                 {errors.carte_identite && touched.carte_identite ? (
-                  <div>{errors.carte_identite}</div>
+                  <div className="text-danger">{errors.carte_identite}</div>
                 ) : null}
               </div>
-
               <div className="form-group">
                 <label htmlFor="Formation">Client:</label>
-
                 <Field
                   component="select"
                   className={
@@ -154,7 +152,6 @@ function EditParticipant(props) {
                   <div className="text-danger">{errors.ClientCodeClient}</div>
                 ) : null}
               </div>
-
               <div className="modal-footer">
                 <button
                   type="button"

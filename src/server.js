@@ -41,7 +41,7 @@ const server = new ApolloServer({
       // const user = await models.IngenieurPedagogique.findOne({
       //   where: { email_ing: email },
       // });
-      if (!me) throw new AuthenticationError("you must be logged in");
+      //if (!me) throw new AuthenticationError("you must be logged in");
       return { me, models, res };
     }
     return { models, res };

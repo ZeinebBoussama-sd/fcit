@@ -2,7 +2,12 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import { UPDATE_DEMANDEfORMATION } from "../GraphQl/Mutation";
-import { GET_FORMATIONS, GET_CLIENTS, GET_DEMANDEURS } from "../GraphQl/Query";
+import {
+  GET_FORMATIONS,
+  GET_CLIENTS,
+  GET_DEMANDEURS,
+  GET_DATE_PREVUES,
+} from "../GraphQl/Query";
 import { etatList } from "../../Utils/Enums";
 import moment from "moment";
 import deepEqual from "lodash.isequal";
@@ -13,6 +18,8 @@ function EditDemande(props) {
   const GetFormation = useQuery(GET_FORMATIONS);
   const GetClient = useQuery(GET_CLIENTS);
   const GetDemandeur = useQuery(GET_DEMANDEURS);
+  const GetDateprevue = useQuery(GET_DATE_PREVUES);
+
   const demandeformation = props.demandeformation
     ? props.demandeformation
     : null;
@@ -37,6 +44,7 @@ function EditDemande(props) {
             demandeformation && demandeformation.client.code_client,
           FormationCIFormation:
             demandeformation && demandeformation.formation.CI_formation,
+          Date_Prevue: demandeformation && demandeformation.client.code_client,
           DemandeurCodeDemandeur:
             demandeformation && demandeformation.demandeur.code_demandeur,
         }}
@@ -56,6 +64,7 @@ function EditDemande(props) {
                 mode_demande: values.mode_demande,
                 hr_deb_j_prev: values.hr_deb_j_prev,
                 hr_fin_j_prev: values.hr_fin_j_prev,
+                Date_Prevue: values.Date_Prevue,
                 hr_j_prev: values.hr_j_prev,
                 ClientCodeClient: values.ClientCodeClient
                   ? values.ClientCodeClient
@@ -339,6 +348,37 @@ function EditDemande(props) {
                       );
                     })}
                 </Field>
+              </div>
+              <div className="form-group">
+                <label htmlFor="Formation">Date Prevue:</label>
+                <Field
+                  component="select"
+                  className={
+                    hasChanged
+                      ? errors.Date_Prevue
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  multiple
+                  name="Date_Prevue"
+                >
+                  <option value="">---Choose Date----</option>
+                  {GetDateprevue.data &&
+                    GetDateprevue.data.allDatePrevues.map((Date_Prevue) => {
+                      return (
+                        <option
+                          key={Date_Prevue.Date_Prevue}
+                          value={Date_Prevue.Date_Prevue}
+                        >
+                          {moment(Date_Prevue.Date_Prevue).format("YYYY-MM-DD")}
+                        </option>
+                      );
+                    })}
+                </Field>
+                {errors.Date_Prevue && touched.Date_Prevue ? (
+                  <div className="text-danger">{errors.Date_Prevue}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Formation">Demandeur:</label>

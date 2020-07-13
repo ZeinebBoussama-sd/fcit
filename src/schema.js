@@ -422,6 +422,7 @@ const typeDefs = gql`
       hr_deb_j_prev: String!
       hr_fin_j_prev: String!
       hr_j_prev: Int!
+      Date_Prevue: [Date]
       ClientCodeClient: String
       FormationCIFormation: Int
       DemandeurCodeDemandeur: Int
@@ -430,6 +431,7 @@ const typeDefs = gql`
 
     updateDemandeFormation(
       code_demande: ID
+      Date_Prevue: [Date]
       date_demande: Date!
       type_demande: String!
       etat_demande: String!
@@ -482,11 +484,7 @@ const typeDefs = gql`
     ): DeleteFichierMutationResponse
     deleteFichier(code_fichier: Int!): DeleteFichierMutationResponse
 
-    createMetier(
-      code_metier: Int!
-      intitule_metier: String!
-      FormationCIFormation: [Int]
-    ): Metier!
+    createMetier(intitule_metier: String!, FormationCIFormation: [Int]): Metier!
     updateMetier(
       code_metier: Int
       intitule_metier: String

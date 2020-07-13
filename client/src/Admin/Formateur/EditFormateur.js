@@ -37,7 +37,13 @@ function EditFormateur(props) {
       return parseInt(f.CI_formation);
     });
   console.log("formation", formation);
-
+  const f = formateur && formateur.cv_f;
+  // const d =
+  //   f &&
+  //   f.length !== 0 &&
+  //   fs.readFile(f, function (err, obj) {
+  //     console.log(obj);
+  //   });
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -121,13 +127,13 @@ function EditFormateur(props) {
           } = props;
           const hasChanged = !deepEqual(values, initialValues);
 
+          console.log("v", values);
           return (
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="Code" className="col-form-label">
                   Code Formateur
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -141,14 +147,13 @@ function EditFormateur(props) {
                   disabled
                 />
                 {errors.code_formateur && touched.code_formateur ? (
-                  <div>{errors.code_formateur}</div>
+                  <div className="text-danger">{errors.code_formateur}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Nom" className="col-form-label">
                   Nom
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -161,7 +166,7 @@ function EditFormateur(props) {
                   type="text"
                 />
                 {errors.nom_f && touched.nom_f ? (
-                  <div>{errors.nom_f}</div>
+                  <div className="text-danger">{errors.nom_f}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -180,7 +185,7 @@ function EditFormateur(props) {
                   type="text"
                 />
                 {errors.prenom_f && touched.prenom_f ? (
-                  <div>{errors.prenom_f}</div>
+                  <div className="text-danger">{errors.prenom_f}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -189,10 +194,14 @@ function EditFormateur(props) {
                 </label>
                 <Field
                   component="select"
-                  className="form-control"
+                  className={
+                    hasChanged
+                      ? errors.classe_f
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
                   name="classe_f"
-                  onChange={handleChange}
-                  value={values.classe_f}
                 >
                   <option value="">----choose Classe----</option>
                   <option>A</option>
@@ -200,6 +209,9 @@ function EditFormateur(props) {
                   <option>C</option>
                   <option>D</option>
                 </Field>
+                {errors.classe_f && touched.classe_f ? (
+                  <div className="text-danger">{errors.classe_f}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Fonction " className="col-form-label">
@@ -207,10 +219,14 @@ function EditFormateur(props) {
                 </label>
                 <Field
                   component="select"
-                  className="form-control"
+                  className={
+                    hasChanged
+                      ? errors.fonction_f
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
                   name="fonction_f"
-                  onChange={handleChange}
-                  value={values.fonction_f}
                 >
                   <option value="">----choose Fonction----</option>
                   <option>Enseignant</option>
@@ -219,12 +235,14 @@ function EditFormateur(props) {
                   <option>Technicien</option>
                   <option>Autres</option>
                 </Field>
+                {errors.fonction_f && touched.fonction_f ? (
+                  <div className="text-danger">{errors.fonction_f}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="CV" className="col-form-label">
                   CV
                 </label>
-
                 <Field
                   type="file"
                   className={
@@ -246,7 +264,6 @@ function EditFormateur(props) {
                 <label htmlFor="Email" className="col-form-label">
                   Email
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -259,14 +276,13 @@ function EditFormateur(props) {
                   type="email"
                 />
                 {errors.email_f && touched.email_f ? (
-                  <div>{errors.email_f}</div>
+                  <div className="text-danger">{errors.email_f}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Tel" className="col-form-label">
                   Tel
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -279,28 +295,45 @@ function EditFormateur(props) {
                   type="text"
                 />
                 {errors.tel_f && touched.tel_f ? (
-                  <div>{errors.tel_f}</div>
+                  <div className="text-danger">{errors.tel_f}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="NSS" className="col-form-label">
                   NSS
                 </label>
-                <Field className="form-control" name="NSS" type="number" />
-                {errors.NSS && touched.NSS ? <div>{errors.NSS}</div> : null}
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.NSS
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="NSS"
+                  type="number"
+                />
+                {errors.NSS && touched.NSS ? (
+                  <div className="text-danger">{errors.NSS}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Salaire" className="col-form-label">
                   Salaire
                 </label>
-
                 <Field
-                  className="form-control"
+                  className={
+                    hasChanged
+                      ? errors.salaire_f
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
                   name="salaire_f"
                   type="number"
                 />
                 {errors.salaire_f && touched.salaire_f ? (
-                  <div>{errors.salaire_f}</div>
+                  <div className="text-danger">{errors.salaire_f}</div>
                 ) : null}
               </div>
 
@@ -320,7 +353,7 @@ function EditFormateur(props) {
                   type="text"
                 />
                 {errors.adr_f && touched.adr_f ? (
-                  <div>{errors.adr_f}</div>
+                  <div className="text-danger">{errors.adr_f}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -328,21 +361,37 @@ function EditFormateur(props) {
                   Date dajout
                 </label>
                 <Field
-                  className="form-control"
+                  className={
+                    hasChanged
+                      ? errors.date_dajout
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
                   name="date_dajout"
                   type="date"
                 />
                 {errors.date_dajout && touched.date_dajout ? (
-                  <div>{errors.date_dajout}</div>
+                  <div className="text-danger">{errors.date_dajout}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="cin-f" className="col-form-label">
                   Cin f
                 </label>
-                <Field className="form-control" name="cin_f" type="number" />
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.cin_f
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="cin_f"
+                  type="number"
+                />
                 {errors.cin_f && touched.cin_f ? (
-                  <div>{errors.cin_f}</div>
+                  <div className="text-danger">{errors.cin_f}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -350,86 +399,136 @@ function EditFormateur(props) {
                   copie cin
                 </label>
                 <Field
-                  className="form-control"
+                  className={
+                    hasChanged
+                      ? errors.copie_cin
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
                   name="copie_cin"
                   type="file"
                   component={DropzoneField}
                 />
                 <b>{copie_cin.replace(/^.*[\\\/]/, "")}</b>
                 {errors.copie_cin && touched.copie_cin ? (
-                  <div>{errors.copie_cin}</div>
+                  <div className="text-danger">{errors.copie_cin}</div>
                 ) : null}
               </div>
-
               <div className="form-group">
                 <label htmlFor="passeport_f" className="col-form-label">
                   passeport_f
                 </label>
-
                 <Field
-                  className="form-control"
+                  className={
+                    hasChanged
+                      ? errors.passeport_f
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
                   name="passeport_f"
                   type="text"
                 />
                 {errors.passeport_f && touched.passeport_f ? (
-                  <div>{errors.passeport_f}</div>
+                  <div className="text-danger">{errors.passeport_f}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="copie_passeport" className="col-form-label">
                   copie_passeport
                 </label>
-
                 <Field
-                  className="form-control"
+                  className={
+                    hasChanged
+                      ? errors.copie_passeport
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
                   name="copie_passeport"
                   type="file"
                   component={DropzoneField}
                 />
                 <b>{copie_passeport.replace(/^.*[\\\/]/, "")}</b>
-
                 {errors.copie_passeport && touched.copie_passeport ? (
-                  <div>{errors.copie_passeport}</div>
+                  <div className="text-danger">{errors.copie_passeport}</div>
                 ) : null}
               </div>
-
               <div className="form-group">
                 <label htmlFor="visa_f" className="col-form-label">
                   visa_f
                 </label>
-
-                <Field className="form-control" name="visa_f" type="text" />
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.visa_f
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="visa_f"
+                  type="text"
+                />
                 {errors.visa_f && touched.visa_f ? (
-                  <div>{errors.visa_f}</div>
+                  <div className="text-danger">{errors.visa_f}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="val_visa" className="col-form-label">
                   Date de visa:
                 </label>
-                <Field className="form-control" name="val_visa" type="date" />
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.val_visa
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="val_visa"
+                  type="date"
+                />
                 {errors.val_visa && touched.val_visa ? (
-                  <div>{errors.val_visa}</div>
+                  <div className="text-danger">{errors.val_visa}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="tarif_f" className="col-form-label">
                   tarif_f
                 </label>
-
-                <Field className="form-control" name="tarif_f" type="number" />
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.tarif_f
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="tarif_f"
+                  type="number"
+                />
                 {errors.tarif_f && touched.tarif_f ? (
-                  <div>{errors.tarif_f}</div>
+                  <div className="text-danger">{errors.tarif_f}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="RIB_f" className="col-form-label">
                   RIB_f
                 </label>
-
-                <Field className="form-control" name="RIB_f" type="text" />
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.RIB_f
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="RIB_f"
+                  type="text"
+                />
                 {errors.RIB_f && touched.RIB_f ? (
-                  <div>{errors.RIB_f}</div>
+                  <div className="text-danger">{errors.RIB_f}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -437,14 +536,20 @@ function EditFormateur(props) {
                   copie_RIB
                 </label>
                 <Field
-                  className="form-control"
+                  className={
+                    hasChanged
+                      ? errors.copie_cin
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
                   name="copie_RIB"
                   type="file"
                   component={DropzoneField}
                 />
                 <b>{copie_RIB.replace(/^.*[\\\/]/, "")}</b>
                 {errors.copie_RIB && touched.copie_RIB ? (
-                  <div>{errors.copie_RIB}</div>
+                  <div className="text-danger">{errors.copie_RIB}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -476,7 +581,6 @@ function EditFormateur(props) {
                   </div>
                 ) : null}
               </div>
-
               <div className="modal-footer">
                 <button
                   type="button"

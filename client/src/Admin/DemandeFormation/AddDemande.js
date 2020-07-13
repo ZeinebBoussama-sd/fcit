@@ -130,32 +130,41 @@ function AddDemande(props) {
                           type="date"
                         />
                         {errors.date_demande && touched.date_demande ? (
-                          <div>{errors.date_demande}</div>
+                          <div className="text-danger">
+                            {errors.date_demande}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="type" className="col-form-label">
                           Type:
                         </label>
-
                         <Field
                           component="select"
-                          className="form-control"
+                          className={
+                            hasChanged
+                              ? errors.type_demande
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
                           name="type_demande"
-                          onChange={handleChange}
-                          value={values.type_demande}
                         >
                           <option value="">----Choose Type----</option>
                           <option>Inter</option>
                           <option>Intra</option>
                           <option>Séminaire</option>
                         </Field>
+                        {errors.type_demande && touched.type_demande ? (
+                          <div className="text-danger">
+                            {errors.type_demande}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Etat" className="col-form-label">
                           Etat:
                         </label>
-
                         <Field
                           component="select"
                           className="form-control"
@@ -173,7 +182,6 @@ function AddDemande(props) {
                         <label htmlFor="Prix" className="col-form-label">
                           Prix:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -186,14 +194,13 @@ function AddDemande(props) {
                           type="number"
                         />
                         {errors.prix_prevu && touched.prix_prevu ? (
-                          <div>{errors.prix_prevu}</div>
+                          <div className="text-danger">{errors.prix_prevu}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Lieu" className="col-form-label">
                           Lieu:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -206,14 +213,13 @@ function AddDemande(props) {
                           type="text"
                         />
                         {errors.lieu_prevu && touched.lieu_prevu ? (
-                          <div>{errors.lieu_prevu}</div>
+                          <div className="text-danger">{errors.lieu_prevu}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Duree" className="col-form-label">
                           Duree:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -226,31 +232,40 @@ function AddDemande(props) {
                           type="number"
                         />
                         {errors.duree_prevu && touched.duree_prevu ? (
-                          <div>{errors.duree_prevu}</div>
+                          <div className="text-danger">
+                            {errors.duree_prevu}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Mode" className="col-form-label">
                           Mode:
                         </label>
-
                         <Field
                           component="select"
-                          className="form-control"
+                          className={
+                            hasChanged
+                              ? errors.mode_demande
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
                           name="mode_demande"
-                          onChange={handleChange}
-                          value={values.mode_demande}
                         >
                           <option value="">----choose Mode----</option>
                           <option>Présentielle</option>
                           <option>En Ligne</option>
                         </Field>
+                        {errors.mode_demande && touched.mode_demande ? (
+                          <div className="text-danger">
+                            {errors.mode_demande}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Heure Debut" className="col-form-label">
                           Heure Debut:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -263,14 +278,15 @@ function AddDemande(props) {
                           type="text"
                         />
                         {errors.hr_deb_j_prev && touched.hr_deb_j_prev ? (
-                          <div>{errors.hr_deb_j_prev}</div>
+                          <div className="text-danger">
+                            {errors.hr_deb_j_prev}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Heure Fin" className="col-form-label">
                           Heure Fin:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -283,7 +299,9 @@ function AddDemande(props) {
                           type="text"
                         />
                         {errors.hr_fin_j_prev && touched.hr_fin_j_prev ? (
-                          <div>{errors.hr_fin_j_prev}</div>
+                          <div className="text-danger">
+                            {errors.hr_fin_j_prev}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -293,7 +311,6 @@ function AddDemande(props) {
                         >
                           Nb Heures par jour:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -306,18 +323,21 @@ function AddDemande(props) {
                           type="number"
                         />
                         {errors.hr_j_prev && touched.hr_j_prev ? (
-                          <div>{errors.hr_j_prev}</div>
+                          <div className="text-danger">{errors.hr_j_prev}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Formation">Client:</label>
-
                         <Field
                           component="select"
-                          className="form-control"
+                          className={
+                            hasChanged
+                              ? errors.ClientCodeClient
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
                           name="ClientCodeClient"
-                          onChange={handleChange}
-                          value={values.ClientCodeClient}
                         >
                           <option value="">---Choose Client--</option>
                           {GetClient.data &&
@@ -332,16 +352,25 @@ function AddDemande(props) {
                               );
                             })}
                         </Field>
+                        {errors.ClientCodeClient && touched.ClientCodeClient ? (
+                          <div className="text-danger">
+                            {errors.ClientCodeClient}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Formation">Formation:</label>
 
                         <Field
                           component="select"
-                          className="form-control"
+                          className={
+                            hasChanged
+                              ? errors.FormationCIFormation
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
                           name="FormationCIFormation"
-                          onChange={handleChange}
-                          value={values.FormationCIFormation}
                         >
                           <option value="">---Choose Formation----</option>
                           {GetFormation.data &&
@@ -356,16 +385,25 @@ function AddDemande(props) {
                               );
                             })}
                         </Field>
+                        {errors.FormationCIFormation &&
+                        touched.FormationCIFormation ? (
+                          <div className="text-danger">
+                            {errors.FormationCIFormation}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Formation">Demandeur:</label>
-
                         <Field
                           component="select"
-                          className="form-control"
+                          className={
+                            hasChanged
+                              ? errors.DemandeurCodeDemandeur
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
                           name="DemandeurCodeDemandeur"
-                          onChange={handleChange}
-                          value={values.DemandeurCodeDemandeur}
                         >
                           <option value="">---Choose Demandeur----</option>
                           {GetDemandeur.data &&
@@ -380,6 +418,12 @@ function AddDemande(props) {
                               );
                             })}
                         </Field>
+                        {errors.DemandeurCodeDemandeur &&
+                        touched.DemandeurCodeDemandeur ? (
+                          <div className="text-danger">
+                            {errors.DemandeurCodeDemandeur}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="modal-footer">
                         <button

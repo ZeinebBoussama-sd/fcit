@@ -1,8 +1,10 @@
 import React from "react";
-import { Formik } from "formik";
+import { Formik, Field, FieldArray } from "formik";
 import { useMutation } from "@apollo/react-hooks";
 import { counterList } from "../../Utils/Enums";
 import { UPDATE_CLIENT } from "../GraphQl/Mutation";
+import deepEqual from "lodash.isequal";
+import { ClientSchema } from "../../Utils/Validation";
 
 function EditClient(props) {
   const client = props.client ? props.client : null;
@@ -28,8 +30,10 @@ function EditClient(props) {
             ? client.societe
             : client.personne.cin_p,
         }}
+        //validationSchema={ClientSchema}
         onSubmit={async (values) => {
           try {
+            debugger;
             // new Promise((resolve) => setTimeout(resolve, 500));
             await updateClient({
               variables: {
@@ -56,40 +60,54 @@ function EditClient(props) {
             values,
             touched,
             errors,
-            dirty,
+            initialValues,
             isSubmitting,
             handleChange,
             handleBlur,
             handleSubmit,
             handleReset,
           } = props;
+          const hasChanged = !deepEqual(values, initialValues);
           return (
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="code" className="col-form-label">
                   Code Client:
                 </label>
-                <input
-                  disabled
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.code_client
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="code_client"
                   type="text"
-                  className="form-control"
-                  id="code_client"
-                  onChange={handleChange}
-                  value={values.code_client}
+                  disabled
                 />
+                {errors.code_client && touched.code_client ? (
+                  <div className="text-danger">{errors.code_client}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="nom" className="col-form-label">
                   Nom Client:
                 </label>
-                <input
-                  required
+                <Field
                   type="text"
-                  className="form-control"
-                  id="nom_client"
-                  onChange={handleChange}
-                  value={values.nom_client}
+                  className={
+                    hasChanged
+                      ? errors.nom_client
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="nom_client"
                 />
+                {errors.nom_client && touched.nom_client ? (
+                  <div className="text-danger">{errors.nom_client}</div>
+                ) : null}
               </div>
 
               {client && client.personne && (
@@ -97,13 +115,21 @@ function EditClient(props) {
                   <label htmlFor="personne" className="col-form-label">
                     CIN:
                   </label>
-                  <input
+                  <Field
+                    disabled={values.societe}
                     type="number"
-                    className="form-control"
-                    id="personne"
-                    onChange={handleChange}
-                    value={values.personne}
+                    className={
+                      values.personne && hasChanged
+                        ? errors.personne
+                          ? "form-control is-invalid"
+                          : "form-control is-valid"
+                        : "form-control text-input"
+                    }
+                    name="personne"
                   />
+                  {errors.personne && touched.personne ? (
+                    <div className="text-danger">{errors.personne}</div>
+                  ) : null}
                 </div>
               )}
 
@@ -113,13 +139,21 @@ function EditClient(props) {
                     <label htmlFor="societe" className="col-form-label">
                       Matricule Fiscale:
                     </label>
-                    <input
+                    <Field
+                      disabled={values.personne}
                       type="text"
-                      className="form-control"
-                      id="societe"
-                      onChange={handleChange}
-                      value={values.societe}
+                      className={
+                        values.societe && hasChanged
+                          ? errors.societe
+                            ? "form-control is-invalid"
+                            : "form-control is-valid"
+                          : "form-control text-input"
+                      }
+                      name="societe"
                     />
+                    {errors.societe && touched.societe ? (
+                      <div className="text-danger">{errors.societe}</div>
+                    ) : null}
                   </div>
                   <div className="form-group">
                     <label htmlFor="responsable" className="col-form-label">
@@ -139,47 +173,71 @@ function EditClient(props) {
                 <label htmlFor="Email" className="col-form-label">
                   Email
                 </label>
-                <input
-                  required
-                  type="email"
-                  className="form-control"
-                  id="email_client"
-                  onChange={handleChange}
-                  value={values.email_client}
+                <Field
+                  className={
+                    hasChanged
+                      ? errors.email_client
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="email_client"
+                  type="text"
                 />
+                {errors.email_client && touched.email_client ? (
+                  <div className="text-danger">{errors.email_client}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Tel" className="col-form-label">
                   Telephone:
                 </label>
-                <input
-                  required
+                <Field
                   type="tel"
-                  className="form-control"
-                  id="tel_client"
-                  onChange={handleChange}
-                  value={values.tel_client}
+                  className={
+                    hasChanged
+                      ? errors.tel_client
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="tel_client"
                 />
+                {errors.tel_client && touched.tel_client ? (
+                  <div className="text-danger">{errors.tel_client}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Adresse" className="col-form-label">
                   Adresse:
                 </label>
-                <input
+                <Field
                   type="text"
-                  className="form-control"
-                  id="adr_client"
-                  onChange={handleChange}
-                  value={values.adr_client}
+                  className={
+                    hasChanged
+                      ? errors.adr_client
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="adr_client"
                 />
+                {errors.adr_client && touched.adr_client ? (
+                  <div className="text-danger">{errors.adr_client}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="pays_client">Paye</label>
-                <select
-                  className="form-control"
-                  onChange={handleChange}
-                  value={values.pays_client}
-                  id="pays_client"
+                <Field
+                  component={"select"}
+                  className={
+                    hasChanged
+                      ? errors.pays_client
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="pays_client"
                 >
                   <option value="">---choose country----</option>
                   {counterList.map((country, idx) => {
@@ -189,9 +247,11 @@ function EditClient(props) {
                       </option>
                     );
                   })}
-                </select>
+                </Field>
+                {errors.pays_client && touched.pays_client ? (
+                  <div className="text-danger">{errors.pays_client}</div>
+                ) : null}
               </div>
-
               <div className="modal-footer">
                 <button
                   type="button"

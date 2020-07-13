@@ -167,7 +167,6 @@ function AddSession(props) {
                           moment(f.date_deb_sess).format("YYYY-MM-DD") ===
                           moment(values.date_deb_sess).format("YYYY-MM-DD")
                       );
-                      debugger;
                       if (foundDate.length === 0) {
                         for (let i = 0; i < filter_valid.length; i++) {
                           if (
@@ -184,7 +183,6 @@ function AddSession(props) {
                         <label htmlFor="Code" className="col-form-label">
                           Code Session:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -206,28 +204,39 @@ function AddSession(props) {
                         <label htmlFor="Type" className="col-form-label">
                           Type:
                         </label>
-
                         <Field
                           component="select"
-                          className="form-control"
+                          className={
+                            hasChanged
+                              ? errors.type_sess
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
                           name="type_sess"
-                          onChange={handleChange}
-                          value={values.type_sess}
                         >
                           <option value="">----choose Type----</option>
                           <option>Inter</option>
                           <option>Intra</option>
                           <option>Séminaire</option>
                         </Field>
+                        {errors.type_sess && touched.type_sess ? (
+                          <div className="text-danger">{errors.type_sess}</div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Mode" className="col-form-label">
                           Mode:
                         </label>
-
                         <Field
                           component="select"
-                          className="form-control"
+                          className={
+                            hasChanged
+                              ? errors.mode_session
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
                           name="mode_session"
                           onChange={handleChange}
                           value={values.mode_session}
@@ -246,16 +255,25 @@ function AddSession(props) {
                         <label htmlFor="Date Debut" className="col-form-label">
                           Date Debut:
                         </label>
-                        <input
+                        <Field
                           type="date"
-                          className="form-control"
-                          id="date_deb_sess"
-                          onChange={handleChange}
-                          value={values.date_deb_sess}
+                          className={
+                            hasChanged
+                              ? errors.date_deb_sess
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="date_deb_sess"
                         />
+                        {errors.date_deb_sess && touched.date_deb_sess ? (
+                          <div className="text-danger">
+                            {errors.date_deb_sess}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="Duree" className="col-form-label">
+                        <label htmlFor="duree_sess" className="col-form-label">
                           Duree:
                         </label>
                         <Field
@@ -277,7 +295,6 @@ function AddSession(props) {
                         <label htmlFor="hr_deb_j" className="col-form-label">
                           hr_deb_j:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -319,7 +336,6 @@ function AddSession(props) {
                         >
                           hr_j_session:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -352,6 +368,9 @@ function AddSession(props) {
                           name="lieu_sess"
                           type="text"
                         />
+                        {errors.lieu_sess && touched.lieu_sess ? (
+                          <div className="text-danger">{errors.lieu_sess}</div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Prix" className="col-form-label">
@@ -382,12 +401,16 @@ function AddSession(props) {
                         >
                           honoraire_sess:
                         </label>
-                        <input
+                        <Field
                           type="number"
-                          className="form-control"
-                          id="honoraire_sess"
-                          onChange={handleChange}
-                          value={values.honoraire_sess}
+                          className={
+                            hasChanged
+                              ? errors.honoraire_sess
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="honoraire_sess"
                         />
                         {errors.honoraire_sess && touched.honoraire_sess ? (
                           <div className="text-danger">
@@ -402,12 +425,16 @@ function AddSession(props) {
                         >
                           frais_sejour:
                         </label>
-                        <input
+                        <Field
                           type="number"
-                          className="form-control"
-                          id="frais_sejour"
-                          onChange={handleChange}
-                          value={values.frais_sejour}
+                          className={
+                            hasChanged
+                              ? errors.frais_sejour
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="frais_sejour"
                         />
                         {errors.frais_sejour && touched.frais_sejour ? (
                           <div className="text-danger">
@@ -422,12 +449,16 @@ function AddSession(props) {
                         >
                           frais_transport:
                         </label>
-                        <input
+                        <Field
                           type="number"
-                          className="form-control"
-                          id="frais_transport"
-                          onChange={handleChange}
-                          value={values.frais_transport}
+                          className={
+                            hasChanged
+                              ? errors.frais_transport
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="frais_transport"
                         />
                         {errors.frais_transport && touched.frais_transport ? (
                           <div className="text-danger">
@@ -439,18 +470,21 @@ function AddSession(props) {
                         <label htmlFor="perdiem" className="col-form-label">
                           perdiem:
                         </label>
-                        <input
+                        <Field
                           type="number"
-                          className="form-control"
-                          id="perdiem"
-                          onChange={handleChange}
-                          value={values.perdiem}
+                          className={
+                            hasChanged
+                              ? errors.perdiem
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="perdiem"
                         />
                         {errors.perdiem && touched.perdiem ? (
                           <div className="text-danger">{errors.perdiem}</div>
                         ) : null}
                       </div>
-
                       <div className="form-group">
                         <label
                           htmlFor="autres_frais"
@@ -458,12 +492,16 @@ function AddSession(props) {
                         >
                           autres_frais:
                         </label>
-                        <input
+                        <Field
                           type="number"
-                          className="form-control"
-                          id="autres_frais"
-                          onChange={handleChange}
-                          value={values.autres_frais}
+                          className={
+                            hasChanged
+                              ? errors.autres_frais
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="autres_frais"
                         />
                         {errors.autres_frais && touched.autres_frais ? (
                           <div className="text-danger">
@@ -474,11 +512,16 @@ function AddSession(props) {
 
                       <div className="form-group">
                         <label htmlFor="Client">Client:</label>
-                        <select
-                          className="form-control"
-                          onChange={handleChange}
-                          value={values.ClientId}
-                          id="ClientCodeClient"
+                        <Field
+                          component={"select"}
+                          className={
+                            hasChanged
+                              ? errors.ClientCodeClient
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="ClientCodeClient"
                         >
                           <option value="">---choose Client----</option>
                           {GetClients.data &&
@@ -492,7 +535,7 @@ function AddSession(props) {
                                 </option>
                               );
                             })}
-                        </select>
+                        </Field>
                         {errors.ClientCodeClient && touched.ClientCodeClient ? (
                           <div className="text-danger">
                             {errors.ClientCodeClient}
@@ -501,15 +544,21 @@ function AddSession(props) {
                       </div>
                       <div className="form-group">
                         <label htmlFor="Formation">Formation:</label>
-                        <select
-                          className="form-control"
+                        <Field
+                          component={"select"}
+                          className={
+                            hasChanged
+                              ? errors.FormationCIFormation
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
                           onChange={(e) => {
                             handleChange(e);
                             sub(e);
                             setCIF(e.target.value);
                           }}
-                          value={values.FormationCIFormation}
-                          id="FormationCIFormation"
+                          name="FormationCIFormation"
                         >
                           <option value="">---Choose Formation----</option>
                           {GetFormations.data &&
@@ -525,7 +574,7 @@ function AddSession(props) {
                                 );
                               }
                             )}
-                        </select>
+                        </Field>
                         {errors.FormationCIFormation &&
                         touched.FormationCIFormation ? (
                           <div className="text-danger">
@@ -572,11 +621,16 @@ function AddSession(props) {
                           </div>
                           <div className="form-group">
                             <label htmlFor="Formateur">Formateur:</label>
-                            <select
-                              className="form-control"
-                              onChange={handleChange}
-                              value={values.FormateurCodeFormateur}
-                              id="FormateurCodeFormateur"
+                            <Field
+                              component={"select"}
+                              className={
+                                hasChanged
+                                  ? errors.FormateurCodeFormateur
+                                    ? "form-control is-invalid"
+                                    : "form-control is-valid"
+                                  : "form-control text-input"
+                              }
+                              name="FormateurCodeFormateur"
                             >
                               <option value="">---Choose Formateur----</option>
                               {f_list &&
@@ -592,7 +646,7 @@ function AddSession(props) {
                                     </option>
                                   );
                                 })}
-                            </select>
+                            </Field>
                             {errors.FormateurCodeFormateur &&
                             touched.FormateurCodeFormateur ? (
                               <div className="text-danger">
@@ -604,11 +658,16 @@ function AddSession(props) {
                       )}
                       <div className="form-group">
                         <label htmlFor="Formation">Support:</label>
-                        <select
-                          className="form-control"
-                          onChange={handleChange}
-                          value={values.SupportCodeSupport}
-                          id="SupportCodeSupport"
+                        <Field
+                          component={"select"}
+                          className={
+                            hasChanged
+                              ? errors.SupportCodeSupport
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          name="SupportCodeSupport"
                         >
                           <option value="">---Choose Support--</option>
                           {GetSupportMini.data &&
@@ -622,7 +681,7 @@ function AddSession(props) {
                                 </option>
                               );
                             })}
-                        </select>
+                        </Field>
                         {errors.SupportCodeSupport &&
                         touched.SupportCodeSupport ? (
                           <div className="text-danger">

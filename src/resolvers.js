@@ -736,8 +736,8 @@ const resolvers = {
           await models.Formateur_Formation.create({
             FormationCIFormation: f,
             FormateurCodeFormateur: args.code_formateur,
-            date_validation: "2020-01-01 00:00:00.000 +00:00",
-            validation_f: 1,
+            date_validation: "",
+            validation_f: 0,
           })
       );
       return addFormateur;
@@ -745,12 +745,11 @@ const resolvers = {
     async updateFormateur(root, args, { models }) {
       const updateFormateur = await models.Formateur.update(
         {
-          code_formateur: args.code_formateur,
           nom_f: args.nom_f,
           prenom_f: args.prenom_f,
           classe_f: args.classe_f,
           fonction_f: args.fonction_f,
-          cv_f: args.cv_f,
+          cv_f: `${__dirname}/upload/${args.code_formateur}/formateur/cv_f/${cv_f.filename}`,
           email_f: args.email_f,
           tel_f: args.tel_f,
           NSS: args.NSS,
@@ -758,14 +757,14 @@ const resolvers = {
           adr_f: args.adr_f,
           date_dajout: args.date_dajout,
           cin_f: args.cin_f,
-          copie_cin: args.copie_cin,
+          copie_cin: `${__dirname}/upload/${args.code_formateur}/formateur/cin/${copie_cin.filename}`,
           passeport_f: args.passeport_f,
-          copie_passeport: args.copie_passeport,
+          copie_passeport: `${__dirname}/upload/${args.code_formateur}/formateur/passeport/${copie_passeport.filename}`,
           visa_f: args.visa_f,
           val_visa: args.val_visa,
           tarif_f: args.tarif_f,
           RIB_f: args.RIB_f,
-          copie_RIB: args.copie_RIB,
+          copie_RIB: `${__dirname}/upload/${args.code_formateur}/formateur/RIB_f/${copie_RIB.filename}`,
         },
         { where: { code_formateur: args.code_formateur } }
       );

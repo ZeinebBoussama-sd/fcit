@@ -4,7 +4,6 @@ import { Formik, Field } from "formik";
 import { ADD_DATEPREEVUE } from "../GraphQl/Mutation";
 import { GET_DEMANDE_FORMATIONS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
-
 import { DatePrevueSchema } from "../../Utils/Validation";
 
 function AddDatePrevue(props) {

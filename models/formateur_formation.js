@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     "Formateur_Formation",
     {
       validation_f: { type: DataTypes.BOOLEAN, allowNull: false },
-      date_validation: { type: DataTypes.DATE, allowNull: false },
+      date_validation: { type: DataTypes.DATE },
     },
     {}
   );

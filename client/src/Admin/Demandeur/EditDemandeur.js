@@ -60,7 +60,6 @@ function EditDemandeur(props) {
                 <label htmlFor="nom" className="col-form-label">
                   Nom:
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -73,7 +72,7 @@ function EditDemandeur(props) {
                   type="text"
                 />
                 {errors.nom_demandeur && touched.nom_demandeur ? (
-                  <div>{errors.nom_demandeur}</div>
+                  <div className="text-danger">{errors.nom_demandeur}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -92,7 +91,7 @@ function EditDemandeur(props) {
                   type="text"
                 />
                 {errors.prenom_demandeur && touched.prenom_demandeur ? (
-                  <div>{errors.prenom_demandeur}</div>
+                  <div className="text-danger">{errors.prenom_demandeur}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -111,14 +110,13 @@ function EditDemandeur(props) {
                   type="email"
                 />
                 {errors.email_demandeur && touched.email_demandeur ? (
-                  <div>{errors.email_demandeur}</div>
+                  <div className="text-danger">{errors.email_demandeur}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Tel" className="col-form-label">
                   Tel:
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -131,10 +129,9 @@ function EditDemandeur(props) {
                   type="text"
                 />
                 {errors.tel_demandeur && touched.tel_demandeur ? (
-                  <div>{errors.tel_demandeur}</div>
+                  <div className="text-danger">{errors.tel_demandeur}</div>
                 ) : null}
               </div>
-
               <div className="modal-footer">
                 <button
                   type="button"

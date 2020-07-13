@@ -25,6 +25,10 @@ function Item(props) {
           <p className="col">{data && data.etat_demande}</p>
         </div>
         <div className="row">
+          <b className="col-2">type:</b>
+          <p className="col">{data && data.type_demande}</p>
+        </div>
+        <div className="row">
           <b className="col-2">hr_deb_j_prev:</b>
           <p className="col">{data && data.hr_deb_j_prev}</p>
         </div>

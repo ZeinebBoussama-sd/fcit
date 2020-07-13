@@ -3,42 +3,11 @@ import { useMutation } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import { ADD_CLIENT } from "../GraphQl/Mutation";
 import { counterList } from "../../Utils/Enums";
-import * as Yup from "yup";
 import deepEqual from "lodash.isequal";
+import { ClientSchema } from "../../Utils/Validation";
 
 function AddClient(props) {
   const [addClient, res] = useMutation(ADD_CLIENT);
-
-  const ValidationSchema = Yup.object().shape({
-    code_client: Yup.string()
-      .max(5, "Too Long Max 5char!")
-      .required("Code is Required"),
-    nom_client: Yup.string()
-      .min(3, "Too Short!")
-      .max(30, "Too Long!")
-      .required("Required"),
-    email_client: Yup.string()
-      .email("Invalid email")
-      .required("Email is required!"),
-    tel_client: Yup.string()
-      .min(8, "Too Short!")
-      .max(20, "Too Long!")
-      .required("Required"),
-    adr_client: Yup.string()
-      .min(10, 'Too Short!')
-      .max(30, 'Too Long!')
-      .required('Required'),
-    pays_client: Yup.string().required('Required'),
-    cin_p: Yup.string().min(8, "Too Short!").max(8, "Too Long!"),
-    
-    // cin_p: Yup.number().test('is-decimal', 'invalid decimal', (value) =>
-    //   (value + '').match(/^\d{3}\.{1}\d{3}/)
-    // ),
-    //Yup.string().min(8, 'Too Short!').max(8, 'Too Long!'),
-    //   .required('Required'),
-    mat_fisc_sc: Yup.string().min(15, "Too Short!").max(15, "Too Long!"),
-    //   .required('Required'),
-  });
 
   return (
     <div>
@@ -92,11 +61,10 @@ function AddClient(props) {
                   PersonneId: undefined,
                   SocieteId: undefined,
                 }}
-                validationSchema={ValidationSchema}
+                validationSchema={ClientSchema}
                 onSubmit={async (values) => {
                   try {
-                    debugger
-                    // new Promise((resolve) => setTimeout(resolve, 500));
+                    new Promise((resolve) => setTimeout(resolve, 500));
                     await addClient({
                       variables: {
                         code_client: values.code_client,
@@ -133,10 +101,9 @@ function AddClient(props) {
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
-                        <label htmlFor="code" className="col-form-label">
+                        <label htmlFor="code_client" className="col-form-label">
                           Code Client:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -149,16 +116,16 @@ function AddClient(props) {
                           type="text"
                         />
                         {errors.code_client && touched.code_client ? (
-                          <div>{errors.code_client}</div>
+                          <div className="text-danger">
+                            {errors.code_client}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="nom" className="col-form-label">
+                        <label htmlFor="nom_client" className="col-form-label">
                           Nom Client:
                         </label>
-                        <input
-                          required
-                          type="text"
+                        <Field
                           className={
                             hasChanged
                               ? errors.nom_client
@@ -166,20 +133,19 @@ function AddClient(props) {
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          id="nom_client"
-                          onChange={handleChange}
-                          value={values.nom_client}
+                          name="nom_client"
+                          type="text"
                         />
                         {errors.nom_client && touched.nom_client ? (
-                          <div>{errors.nom_client}</div>
+                          <div className="text-danger">{errors.nom_client}</div>
                         ) : null}
                       </div>
 
                       <div className="form-group">
-                        <label htmlFor="CIN" className="col-form-label">
+                        <label htmlFor="cin_p" className="col-form-label">
                           CIN:
                         </label>
-                        <input
+                        <Field
                           disabled={values.mat_fisc_sc}
                           type="number"
                           className={
@@ -189,17 +155,17 @@ function AddClient(props) {
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          id="cin_p"
-                          onChange={handleChange}
-                          value={values.cin_p}
+                          name="cin_p"
                         />
+                        {errors.cin_p && touched.cin_p ? (
+                          <div className="text-danger">{errors.cin_p}</div>
+                        ) : null}
                       </div>
-
                       <div className="form-group">
                         <label htmlFor="mat_fisc_sc" className="col-form-label">
                           Matricule Fiscale:
                         </label>
-                        <input
+                        <Field
                           disabled={values.cin_p}
                           type="text"
                           className={
@@ -209,22 +175,23 @@ function AddClient(props) {
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          id="mat_fisc_sc"
-                          onChange={handleChange}
-                          value={values.mat_fisc_sc}
+                          name="mat_fisc_sc"
                         />
+                        {errors.mat_fisc_sc && touched.mat_fisc_sc ? (
+                          <div className="text-danger">
+                            {errors.mat_fisc_sc}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="responsable" className="col-form-label">
                           Responsable:
                         </label>
-                        <input
+                        <Field
                           disabled={values.cin_p}
                           type="text"
                           className={"form-control"}
-                          id="responsable"
-                          onChange={handleChange}
-                          value={values.responsable}
+                          name="responsable"
                         />
                       </div>
 
@@ -245,15 +212,16 @@ function AddClient(props) {
                         />
 
                         {errors.email_client && touched.email_client ? (
-                          <div>{errors.email_client}</div>
+                          <div className="text-danger">
+                            {errors.email_client}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Tel" className="col-form-label">
                           Telephone:
                         </label>
-                        <input
-                          required
+                        <Field
                           type="tel"
                           className={
                             hasChanged
@@ -262,16 +230,17 @@ function AddClient(props) {
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          id="tel_client"
-                          onChange={handleChange}
-                          value={values.tel_client}
+                          name="tel_client"
                         />
+                        {errors.tel_client && touched.tel_client ? (
+                          <div className="text-danger">{errors.tel_client}</div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Adresse" className="col-form-label">
                           Adresse:
                         </label>
-                        <input
+                        <Field
                           type="text"
                           className={
                             hasChanged
@@ -280,14 +249,16 @@ function AddClient(props) {
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          id="adr_client"
-                          onChange={handleChange}
-                          value={values.adr_client}
+                          name="adr_client"
                         />
+                        {errors.adr_client && touched.adr_client ? (
+                          <div className="text-danger">{errors.adr_client}</div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="pays_client">Paye</label>
-                        <select
+                        <Field
+                          component={"select"}
                           className={
                             hasChanged
                               ? errors.pays_client
@@ -295,9 +266,7 @@ function AddClient(props) {
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          onChange={handleChange}
-                          value={values.pays_client}
-                          id="pays_client"
+                          name="pays_client"
                         >
                           <option value="">---choose country----</option>
                           {counterList.map((country, idx) => {
@@ -307,7 +276,12 @@ function AddClient(props) {
                               </option>
                             );
                           })}
-                        </select>
+                        </Field>
+                        {errors.pays_client && touched.pays_client ? (
+                          <div className="text-danger">
+                            {errors.pays_client}
+                          </div>
+                        ) : null}
                       </div>
 
                       <div className="modal-footer">
@@ -323,7 +297,7 @@ function AddClient(props) {
                           disabled={isSubmitting}
                           className="btn btn-primary"
                         >
-                          AddClient
+                          Add Client
                         </button>
                       </div>
                     </form>

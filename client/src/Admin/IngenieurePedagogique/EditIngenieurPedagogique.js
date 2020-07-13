@@ -91,14 +91,13 @@ function EditIngenieurPedagogique(props) {
                   type="text"
                 />
                 {errors.nom_ing && touched.nom_ing ? (
-                  <div>{errors.nom_ing}</div>
+                  <div className="text-danger">{errors.nom_ing}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Prenom Ing" className="col-form-label">
                   Prenom Ing
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -111,14 +110,13 @@ function EditIngenieurPedagogique(props) {
                   type="text"
                 />
                 {errors.prenom_ing && touched.prenom_ing ? (
-                  <div>{errors.prenom_ing}</div>
+                  <div className="text-danger">{errors.prenom_ing}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Cv Ing" className="col-form-label">
                   Cv Ing
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -131,14 +129,13 @@ function EditIngenieurPedagogique(props) {
                   type="text"
                 />
                 {errors.cv_ing && touched.cv_ing ? (
-                  <div>{errors.cv_ing}</div>
+                  <div className="text-danger">{errors.cv_ing}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Email Ing" className="col-form-label">
                   Email Ing
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -151,7 +148,7 @@ function EditIngenieurPedagogique(props) {
                   type="text"
                 />
                 {errors.email_ing && touched.email_ing ? (
-                  <div>{errors.email_ing}</div>
+                  <div className="text-danger">{errors.email_ing}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -170,14 +167,13 @@ function EditIngenieurPedagogique(props) {
                   type="password"
                 />
                 {errors.password && touched.password ? (
-                  <div>{errors.password}</div>
+                  <div className="text-danger">{errors.password}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Telephone Ing" className="col-form-label">
                   Telephone Ing
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -190,14 +186,13 @@ function EditIngenieurPedagogique(props) {
                   type="text"
                 />
                 {errors.tel_ing && touched.tel_ing ? (
-                  <div>{errors.tel_ing}</div>
+                  <div className="text-danger">{errors.tel_ing}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="NSS Ing" className="col-form-label">
                   NSS Ing
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -210,14 +205,13 @@ function EditIngenieurPedagogique(props) {
                   type="number"
                 />
                 {errors.NSS_ing && touched.NSS_ing ? (
-                  <div>{errors.NSS_ing}</div>
+                  <div className="text-danger">{errors.NSS_ing}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Salaire Ing" className="col-form-label">
                   Salaire Ing
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -230,7 +224,7 @@ function EditIngenieurPedagogique(props) {
                   type="number"
                 />
                 {errors.salaire_ing && touched.salaire_ing ? (
-                  <div>{errors.salaire_ing}</div>
+                  <div className="text-danger">{errors.salaire_ing}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -249,14 +243,13 @@ function EditIngenieurPedagogique(props) {
                   type="text"
                 />
                 {errors.specialite_ing && touched.specialite_ing ? (
-                  <div>{errors.specialite_ing}</div>
+                  <div className="text-danger">{errors.specialite_ing}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Adresse Ing" className="col-form-label">
                   Adresse Ing
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -269,14 +262,13 @@ function EditIngenieurPedagogique(props) {
                   type="text"
                 />
                 {errors.adr_ing && touched.adr_ing ? (
-                  <div>{errors.adr_ing}</div>
+                  <div className="text-danger">{errors.adr_ing}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="role" className="col-form-label">
                   Role:
                 </label>
-
                 <Field
                   component="select"
                   className="form-control"
@@ -288,7 +280,9 @@ function EditIngenieurPedagogique(props) {
                   <option>Admin</option>
                   <option>Administrateur</option>
                 </Field>
-                {errors.role && touched.role ? <div>{errors.role}</div> : null}
+                {errors.role && touched.role ? (
+                  <div className="text-danger">{errors.role}</div>
+                ) : null}
               </div>
               <div className="modal-footer">
                 <button

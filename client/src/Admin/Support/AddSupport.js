@@ -84,7 +84,6 @@ function AddSupport(props) {
                         <label htmlFor="titre" className="col-form-label">
                           Titre Support:
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -97,14 +96,15 @@ function AddSupport(props) {
                           type="text"
                         />
                         {errors.titre_support && touched.titre_support ? (
-                          <div>{errors.titre_support}</div>
+                          <div className="text-danger">
+                            {errors.titre_support}
+                          </div>
                         ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="date" className="col-form-label">
                           Date Support:
                         </label>
-
                         <Field
                           className={
                             hasChanged

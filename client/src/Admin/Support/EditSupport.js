@@ -71,7 +71,7 @@ function EditSupport(props) {
                   type="text"
                 />
                 {errors.titre_support && touched.titre_support ? (
-                  <div>{errors.titre_support}</div>
+                  <div className="text-danger">{errors.titre_support}</div>
                 ) : null}
               </div>
               <div className="form-group">

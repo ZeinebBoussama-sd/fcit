@@ -4,11 +4,11 @@ import { Formik, Field } from "formik";
 import { ADD_FORMATEUR } from "../GraphQl/Mutation";
 import { GET_FORMATIONSOPTIONS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
-
+import fs from "fs";
 import { FormateurSchema } from "../../Utils/Validation";
 import { fileToBase64String } from "../../Utils/fileToBase64String";
 import { logDOM } from "@testing-library/react";
-import { DropzoneField } from "../component/DropzoneField.tsx";
+import { DropzoneField } from "../component/DropzoneField";
 
 function AddFormateur(props) {
   const GetFormations = useQuery(GET_FORMATIONSOPTIONS);
@@ -80,6 +80,7 @@ function AddFormateur(props) {
                 validationSchema={FormateurSchema}
                 onSubmit={async (values) => {
                   try {
+                    console.log("v", values);
                     await AddFormateur({
                       variables: {
                         code_formateur: values.code_formateur,
@@ -131,14 +132,25 @@ function AddFormateur(props) {
                     handleReset,
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
-
+                  const cv_f_name =
+                    (values.cv_f || values.cv_f.length !== 0) &&
+                    values.cv_f.name;
+                  const copie_cin_name =
+                    (values.copie_cin || values.copie_cin.length !== 0) &&
+                    values.copie_cin.name;
+                  const copie_passeport_name =
+                    (values.copie_passeport ||
+                      values.copie_passeport.length !== 0) &&
+                    values.copie_passeport.name;
+                  const copie_RIB_name =
+                    (values.copie_RIB || values.copie_RIB.length !== 0) &&
+                    values.copie_RIB.name;
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
                         <label htmlFor="Code" className="col-form-label">
                           Code Formateur
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -160,7 +172,6 @@ function AddFormateur(props) {
                         <label htmlFor="Nom" className="col-form-label">
                           Nom
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -206,11 +217,9 @@ function AddFormateur(props) {
                               ? errors.classe_f
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
-                              : "form-control"
+                              : "form-control text-input"
                           }
                           name="classe_f"
-                          onChange={handleChange}
-                          value={values.classe_f}
                         >
                           <option value="">----choose Classe----</option>
                           <option>A</option>
@@ -236,8 +245,6 @@ function AddFormateur(props) {
                               : "form-control"
                           }
                           name="fonction_f"
-                          onChange={handleChange}
-                          value={values.fonction_f}
                         >
                           <option value="">----choose Fonction----</option>
                           <option>Enseignant</option>
@@ -254,23 +261,22 @@ function AddFormateur(props) {
                         <label htmlFor="CV" className="col-form-label">
                           CV
                         </label>
-                        <div className="input-group mb-3">
-                          <Field
-                            className={
-                              hasChanged
-                                ? errors.cv_f
-                                  ? "form-control is-invalid"
-                                  : "form-control is-valid"
-                                : "form-control"
-                            }
-                            type="file"
-                            name="cv_f"
-                            component={DropzoneField}
-                          />
-                          {errors.cv_f && touched.cv_f ? (
-                            <div className="text-danger">{errors.cv_f}</div>
-                          ) : null}
-                        </div>
+                        <Field
+                          type="file"
+                          className={
+                            hasChanged
+                              ? errors.cv_f
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control"
+                          }
+                          name="cv_f"
+                          component={DropzoneField}
+                        />
+                        <b>{cv_f_name}</b>
+                        {errors.cv_f && touched.cv_f ? (
+                          <div className="text-danger">{errors.cv_f}</div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Email" className="col-form-label">
@@ -282,7 +288,7 @@ function AddFormateur(props) {
                               ? errors.email_f
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
-                              : "form-control text-input"
+                              : "form-control"
                           }
                           name="email_f"
                           type="email"
@@ -301,7 +307,7 @@ function AddFormateur(props) {
                               ? errors.tel_f
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
-                              : "form-control text-input"
+                              : "form-control"
                           }
                           name="tel_f"
                           type="text"
@@ -315,7 +321,13 @@ function AddFormateur(props) {
                           NSS
                         </label>
                         <Field
-                          className="form-control"
+                          className={
+                            hasChanged
+                              ? errors.NSS
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control"
+                          }
                           name="NSS"
                           type="number"
                         />
@@ -333,9 +345,8 @@ function AddFormateur(props) {
                               ? errors.salaire_f
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
-                              : "form-control text-input"
+                              : "form-control"
                           }
-                          className="form-control"
                           name="salaire_f"
                           type="number"
                         />
@@ -353,7 +364,7 @@ function AddFormateur(props) {
                               ? errors.adr_f
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
-                              : "form-control text-input"
+                              : "form-control"
                           }
                           name="adr_f"
                           type="text"
@@ -418,6 +429,7 @@ function AddFormateur(props) {
                           type="file"
                           component={DropzoneField}
                         />
+                        <b>{copie_cin_name}</b>
                         {errors.copie_cin && touched.copie_cin ? (
                           <div className="text-danger">{errors.copie_cin}</div>
                         ) : null}
@@ -426,7 +438,6 @@ function AddFormateur(props) {
                         <label htmlFor="passeport_f" className="col-form-label">
                           passeport_f
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -451,7 +462,6 @@ function AddFormateur(props) {
                         >
                           copie_passeport
                         </label>
-
                         <Field
                           className={
                             hasChanged
@@ -464,6 +474,7 @@ function AddFormateur(props) {
                           type="file"
                           component={DropzoneField}
                         />
+                        <b>{copie_passeport_name}</b>
                         {errors.copie_passeport && touched.copie_passeport ? (
                           <div className="text-danger">
                             {errors.copie_passeport}
@@ -491,7 +502,7 @@ function AddFormateur(props) {
                       </div>
                       <div className="form-group">
                         <label htmlFor="val_visa" className="col-form-label">
-                          val_visa
+                          Date de visa:
                         </label>
                         <Field
                           className={
@@ -499,7 +510,7 @@ function AddFormateur(props) {
                               ? errors.val_visa
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
-                              : "form-control"
+                              : "form-control text-input"
                           }
                           name="val_visa"
                           type="date"
@@ -512,14 +523,13 @@ function AddFormateur(props) {
                         <label htmlFor="tarif_f" className="col-form-label">
                           tarif_f
                         </label>
-
                         <Field
                           className={
                             hasChanged
                               ? errors.tarif_f
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
-                              : "form-control"
+                              : "form-control text-input"
                           }
                           name="tarif_f"
                           type="number"
@@ -538,7 +548,7 @@ function AddFormateur(props) {
                               ? errors.RIB_f
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
-                              : "form-control"
+                              : "form-control text-input"
                           }
                           name="RIB_f"
                           type="text"
@@ -551,32 +561,32 @@ function AddFormateur(props) {
                         <label htmlFor="copie_RIB" className="col-form-label">
                           copie_RIB
                         </label>
-
                         <Field
                           className={
                             hasChanged
-                              ? errors.copie_RIB
+                              ? errors.copie_cin
                                 ? "form-control is-invalid"
                                 : "form-control is-valid"
-                              : "form-control"
+                              : "form-control text-input"
                           }
                           name="copie_RIB"
                           type="file"
                           component={DropzoneField}
                         />
+                        <b>{copie_RIB_name}</b>
                         {errors.copie_RIB && touched.copie_RIB ? (
                           <div className="text-danger">{errors.copie_RIB}</div>
                         ) : null}
                       </div>
-
                       <div className="form-group">
                         <label htmlFor="Formation">Formation:</label>
+
                         <Field
                           component="select"
                           className="form-control selectpicker"
+                          name="FormationCIFormation"
                           multiple
                           data-live-search="true"
-                          name="FormationCIFormation"
                         >
                           <option value="">---Choose Formation----</option>
                           {GetFormations.data &&
@@ -600,7 +610,6 @@ function AddFormateur(props) {
                           </div>
                         ) : null}
                       </div>
-
                       <div className="modal-footer">
                         <button
                           type="button"

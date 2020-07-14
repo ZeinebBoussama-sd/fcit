@@ -21,6 +21,7 @@ import { createUploadLink } from "apollo-upload-client";
 import Login from "./pages/Login";
 import { getAccessToken } from "./Utils/AccessToken";
 import history from "./Utils/history";
+import NosCenter from "./pages/NosCenter";
 
 function App() {
   const httpLink = createUploadLink({
@@ -77,7 +78,7 @@ function App() {
           <Route path="/apropos" exact component={Apropos} />
           <Route path="/admin" exact component={Admin} />
           <Route path="/login" exact component={Login} />
-          <Route path="/contact" exact component={Contact} />
+          <Route path="/nos_centres" exact component={NosCenter} />
           <Route path="*" component={NotFound} />
         </Switch>
         <StoreProvider store={SnackbarStore}>

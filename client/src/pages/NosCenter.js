@@ -1,7 +1,14 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
 import Footer from "../component/Footer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapPin } from "@fortawesome/free-solid-svg-icons";
 function NosCenter() {
+  const AnyReactComponent = () => (
+    <div>
+      <FontAwesomeIcon size="9x" color={"red"} icon={faMapPin} />
+    </div>
+  );
   return (
     <div>
       <div className="mt-8">
@@ -12,12 +19,9 @@ function NosCenter() {
             }}
             defaultCenter={{ lat: 36.87017, lng: 10.311069 }}
             defaultZoom={15}
+            mark
           >
-            {/* <AnyReactComponent
-              lat={59.955413}
-              lng={30.337844}
-              text="My Marker"
-            /> */}
+            <AnyReactComponent lat={36.87017} lng={10.311069} />
           </GoogleMapReact>
         </div>
       </div>

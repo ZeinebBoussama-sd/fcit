@@ -3,7 +3,7 @@ function Apropospt1() {
   return (
     <div className="container-fluid">
       <div className="row mt-8 ">
-        <div className="col-md-6 bg-midnight text-white">
+        <div className="col-md-12 bg-midnight text-white">
           <em className="container">
             <div className="px-5 py-5">
               <center>
@@ -20,7 +20,7 @@ function Apropospt1() {
             </div>
           </em>
         </div>
-        <div className="col-md-6 container">
+        {/* <div className="col-md-6 container">
           <em className="container">
             <div className="px-5 py-5">
               <center>
@@ -30,7 +30,7 @@ function Apropospt1() {
               <button> renjoigner nous</button>
             </div>
           </em>
-        </div>
+        </div> */}
       </div>
     </div>
   );

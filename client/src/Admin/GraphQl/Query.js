@@ -345,6 +345,17 @@ export const GET_SESSION = gql`
     }
   }
 `;
+export const GET_DEMANDE_CLIENT = gql`
+{
+  allDemandeFormations {
+    code_demande
+    date_demande
+    client {
+      code_client
+      nom_client
+    }
+  }
+}`
 export const GET_DEMANDE_FORMATIONS = gql`
   {
     allDemandeFormations {

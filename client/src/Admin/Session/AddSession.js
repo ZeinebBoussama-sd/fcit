@@ -6,6 +6,7 @@ import {
   GET_SUPPORT_MINI,
   GET_CLIENTS,
   GET_FORMATIONSOPTIONS,
+  GET_DEMANDE_CLIENT,
 } from "../GraphQl/Query";
 import { ADD_SESSION } from "../GraphQl/Mutation";
 import { SessionSchema } from "../../Utils/Validation";
@@ -20,7 +21,7 @@ function AddSession(props) {
     },
   });
   const [AddSession] = useMutation(ADD_SESSION);
-  const GetClients = useQuery(GET_CLIENTS);
+  const GetClients = useQuery(GET_DEMANDE_CLIENT);
   const GetFormations = useQuery(GET_FORMATIONSOPTIONS);
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
   const [subOptions, setSubOption] = useState(undefined);
@@ -145,6 +146,15 @@ function AddSession(props) {
                     handleReset,
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
+                  const demande_filter =
+                    GetClients.data &&
+                    GetClients.data.allDemandeFormations.filter((f) => {
+                      return (
+                        moment(f.date_demande).format("YYYY-MM-DD") ===
+                        moment(values.date_deb_sess).format("YYYY-MM-DD")
+                      );
+                    });
+
                   const filter_valid =
                     GetFormateurFormation.data &&
                     GetFormateurFormation.data.formateur_formation.filter(
@@ -525,14 +535,14 @@ function AddSession(props) {
                           name="ClientCodeClient"
                         >
                           <option value="">---choose Client----</option>
-                          {GetClients.data &&
-                            GetClients.data.allClients.map((client) => {
+                          {demande_filter &&
+                            demande_filter.map((d) => {
                               return (
                                 <option
-                                  key={client.code_client}
-                                  value={client.code_client}
+                                  key={d.client.code_client}
+                                  value={d.client.code_client}
                                 >
-                                  {client.nom_client}
+                                  {d.client.nom_client}
                                 </option>
                               );
                             })}

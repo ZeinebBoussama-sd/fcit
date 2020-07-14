@@ -55,8 +55,12 @@ function DemandeFormation() {
               <th scope="col" className="col-1">
                 Prix
               </th>
-              <th scope="col" className="col-1"><center>#</center></th>
-              <th scope="col" className="col-1"><center>#</center></th>
+              <th scope="col" className="col-1">
+                <center>#</center>
+              </th>
+              <th scope="col" className="col-1">
+                <center>#</center>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -66,7 +70,7 @@ function DemandeFormation() {
                   <Link
                     to={`/demandeformation/${demandeformation.code_demande}`}
                   >
-                    {moment(demandeformation.date_demande).format("YYYY-DD-MM")}
+                    {moment(demandeformation.date_demande).format("YYYY-MM-DD")}
                   </Link>
                 </td>
                 <td className="col-1">{demandeformation.etat_demande}</td>

@@ -1,5 +1,5 @@
 import React from "react";
-import { convertDate } from "../../Utils/ConvertData";
+import moment from "moment";
 
 function Item(props) {
   const data = props.session ? props.session : null;
@@ -16,7 +16,9 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-3">Date Debut:</b>
-          <p className="col">{data && convertDate(data.date_deb_sess)}</p>
+          <p className="col">
+            {data && moment(data.date_deb_sess).format("YYYY-MM-DD")}
+          </p>
         </div>
         <div className="row">
           <b className="col-3">Durée Session:</b>
@@ -80,7 +82,9 @@ function Item(props) {
         </div>
         <div className="row">
           <b className="col-3">Support:</b>
-          <p className="col">{data && data.support ? data.support.titre_support: '--'}</p>
+          <p className="col">
+            {data && data.support ? data.support.titre_support : "--"}
+          </p>
         </div>
         <div className="row">
           <b className="col-3">Participant:</b>

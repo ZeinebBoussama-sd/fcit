@@ -70,7 +70,6 @@ function AddFichier(props) {
                 <label htmlFor="Titre" className="col-form-label">
                   Titre:
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -83,7 +82,7 @@ function AddFichier(props) {
                   type="text"
                 />
                 {errors.nom_fichier && touched.nom_fichier ? (
-                  <div>{errors.nom_fichier}</div>
+                  <div className="text-danger">{errors.nom_fichier}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -103,7 +102,7 @@ function AddFichier(props) {
                   type="text"
                 />
                 {errors.type_fichier && touched.type_fichier ? (
-                  <div>{errors.type_fichier}</div>
+                  <div className="text-danger">{errors.type_fichier}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -122,15 +121,13 @@ function AddFichier(props) {
                   type="number"
                 />
                 {errors.taille_max && touched.taille_max ? (
-                  <div>{errors.taille_max}</div>
+                  <div className="text-danger">{errors.taille_max}</div>
                 ) : null}
               </div>
-
               <div className="form-group">
                 <label htmlFor="URL" className="col-form-label">
                   URL:
                 </label>
-
                 <Field
                   type="text"
                   className={
@@ -150,7 +147,6 @@ function AddFichier(props) {
                 <label htmlFor="Nature Support" className="col-form-label">
                   Nature Support
                 </label>
-
                 <Field
                   className={
                     hasChanged
@@ -163,16 +159,23 @@ function AddFichier(props) {
                   type="text"
                 />
                 {errors.nature_support && touched.nature_support ? (
-                  <div>{errors.nature_support}</div>
+                  <div className="text-danger">{errors.nature_support}</div>
                 ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Support">Support:</label>
-                <select
-                  className="form-control"
+                <Field
+                  component={"select"}
+                  className={
+                    hasChanged
+                      ? errors.SupportCodeSupport
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
                   onChange={handleChange}
                   value={values.SupportCodeSupport}
-                  id="SupportCodeSupport"
+                  name="SupportCodeSupport"
                 >
                   <option value="">---Choose Support--</option>
                   {GetSupportMini.data &&
@@ -186,7 +189,10 @@ function AddFichier(props) {
                         </option>
                       );
                     })}
-                </select>
+                </Field>
+                {errors.SupportCodeSupport && touched.SupportCodeSupport ? (
+                  <div className="text-danger">{errors.SupportCodeSupport}</div>
+                ) : null}
               </div>
 
               <div className="modal-footer">

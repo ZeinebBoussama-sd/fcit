@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import WarningModal from "../component/WarningModal";
 import moment from "moment";
 import Item from "./Item";
+
 function Validation() {
   const { loading, error, data, refetch } = useQuery(GET_VALIDATIONS);
   const [deleteValidation, res] = useMutation(DELETE_VALIDATION);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error}(</p>;
+
   const dlt = async (values) => {
     try {
       await deleteValidation({
@@ -24,7 +26,7 @@ function Validation() {
     }
     refetch();
   };
-  console.log(data);
+  console.log("v", data);
   return (
     <div className="mt-11">
       <AddValidation refetch={refetch} />
@@ -61,16 +63,16 @@ function Validation() {
                 <tr key={idx}>
                   <th scope="row" className="col-2">
                     <Link to={`/validation/${validation.code_val}`}>
-                      {moment(validation.date).format("YYYY_MM_DD")}
+                      {moment(validation.date).format("YYYY-MM-DD")}
                     </Link>
                   </th>
 
                   <td className="col-2">
-                    {validation.decision_r ? "Refus" : "Accord"}
+                    {validation.decision_r ? "Accord" : "Refus"}
                   </td>
 
                   <td className="col-3">
-                    {validation.decision_f ? "Refus" : "Accord"}
+                    {validation.decision_f ? "Accord" : "Refus"}
                   </td>
 
                   <td className="col-1">

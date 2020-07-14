@@ -237,8 +237,8 @@ export const FichierSchema = Yup.object().shape({
     .required("Required"),
   url_fichier: Yup.string().required("Required"),
   nature_support: Yup.string()
-    .min(4, "Too Short!")
-    .max(10, "Too Long!")
+    .min(4, "Too Short! (Min 4")
+    .max(10, "Too Long!v(Max 10")
     .required("Required"),
   SupportCodeSupport: Yup.string()
     .matches(/^[0-9]/)
@@ -246,18 +246,15 @@ export const FichierSchema = Yup.object().shape({
 });
 export const ValidationSchema = Yup.object().shape({
   date_val: Yup.date().required("Required"),
-  decision_r: Yup.boolean().required("Required"),
-  decision_f: Yup.boolean().required("Required"),
+  decision_r: Yup.string().required("Required"),
+  decision_f: Yup.string().required("Required"),
   remarque: Yup.string(),
   IngenieurPedagogiqueCodeIP: Yup.string().required("Required"),
   FormateurCodeFormateur: Yup.string().required("Required"),
   SupportCodeSupport: Yup.string().required("Required"),
 });
 export const MotCleSchema = Yup.object().shape({
-  motcle: Yup.string()
-    .min(1, "Too Short!")
-    .max(10, "Too Long!")
-    .required("Required"),
+  motcle: Yup.string().max(10, "Too Long! (Max 10").required("Required"),
 
   FormationCIFormation: Yup.string().required("Required"),
 });

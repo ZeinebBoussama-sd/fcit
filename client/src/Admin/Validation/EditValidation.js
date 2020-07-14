@@ -12,14 +12,11 @@ import deepEqual from "lodash.isequal";
 import moment from "moment";
 
 function EditValidation(props) {
-  const [active, setactive] = useState(false);
-
   const [updateValidation] = useMutation(UPDATE_VALIDATION);
   const Getingenieurpedagogique = useQuery(GET_INGENIEUR_PEDAGOGIQUES);
   const GetFormateurs = useQuery(GET_FORMATEURS);
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
   const validation = props.validation ? props.validation : null;
-  const id = props.id ? props.id : null;
 
   return (
     <div className="card-body" id="navbarSupportedContent">
@@ -43,17 +40,18 @@ function EditValidation(props) {
             await new Promise((resolve) => setTimeout(resolve, 500));
             await updateValidation({
               variables: {
+                code_val: validation && validation.code_val,
                 date_val: values.date_val,
-                decision_r: values.decision_r ? " 1" : " 0",
-                decision_f: values.decision_f ? 1 : 0,
+                decision_r: Boolean(values.decision_r),
+                decision_f: Boolean(values.decision_f),
                 remarque: values.remarque,
-                IngenieurPedagogiqueCodeIP: values.IngenieurPedagogiqueCodeIP,
+                IngenieurPedagogiqueCodeIP: parseInt(
+                  values.IngenieurPedagogiqueCodeIP
+                ),
                 FormateurCodeFormateur: values.FormateurCodeFormateur,
-                SupportCodeSupport: values.SupportCodeSupport,
+                SupportCodeSupport: parseInt(values.SupportCodeSupport),
               },
             });
-            alert(JSON.stringify(values, null, 2));
-            setactive(false);
           } catch (e) {
             console.log("e", e);
           }
@@ -93,7 +91,7 @@ function EditValidation(props) {
                   type="date"
                 />
                 {errors.date_val && touched.date_val ? (
-                  <div>{errors.date_val}</div>
+                  <div className="text-danger">{errors.date_val}</div>
                 ) : null}
               </div>
               <div className="form-group">
@@ -113,13 +111,16 @@ function EditValidation(props) {
                 >
                   <option value="">---Choose décision---</option>
 
-                  <option key="0" value={0}>
+                  <option key={0} value={false}>
                     Refus
                   </option>
-                  <option key="1" value={1}>
-                    accord
+                  <option key={1} value={true}>
+                    Accord
                   </option>
                 </Field>
+                {errors.decision_r && touched.decision_r ? (
+                  <div className="text-danger">{errors.decision_r}</div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="decision_f" className="col-form-label">
@@ -138,14 +139,18 @@ function EditValidation(props) {
                 >
                   <option value="">---Choose décision---</option>
 
-                  <option key={0} value={0}>
+                  <option key={0} value={false}>
                     Refus
                   </option>
-                  <option key={1} value={1}>
-                    accord
+                  <option key={1} value={true}>
+                    Accord
                   </option>
                 </Field>
+                {errors.decision_f && touched.decision_f ? (
+                  <div className="text-danger">{errors.decision_f}</div>
+                ) : null}
               </div>
+
               <div className="form-group">
                 <label htmlFor="remarque" className="col-form-label">
                   remarque:
@@ -159,10 +164,10 @@ function EditValidation(props) {
                       : "form-control text-input"
                   }
                   name="remarque"
-                  type="number"
+                  type="text"
                 />
                 {errors.remarque && touched.remarque ? (
-                  <div>{errors.remarque}</div>
+                  <div className="text-danger">{errors.remarque}</div>
                 ) : null}
               </div>
 
@@ -193,6 +198,12 @@ function EditValidation(props) {
                       );
                     })}
                 </Field>
+                {errors.FormateurCodeFormateur &&
+                touched.FormateurCodeFormateur ? (
+                  <div className="text-danger">
+                    {errors.FormateurCodeFormateur}
+                  </div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Ingenieur Pedagogique">
@@ -211,7 +222,7 @@ function EditValidation(props) {
                   multiple={false}
                 >
                   <option value="">---choose ingenieur---</option>
-                  {Getingenieurpedagogique.date &&
+                  {Getingenieurpedagogique.data &&
                     Getingenieurpedagogique.data.allIngenieurPedagogiques.map(
                       (ingenieurpedagogique) => {
                         return (
@@ -225,6 +236,12 @@ function EditValidation(props) {
                       }
                     )}
                 </Field>
+                {errors.IngenieurPedagogiqueCodeIP &&
+                touched.IngenieurPedagogiqueCodeIP ? (
+                  <div className="text-danger">
+                    {errors.IngenieurPedagogiqueCodeIP}
+                  </div>
+                ) : null}
               </div>
               <div className="form-group">
                 <label htmlFor="Support ">Support:</label>
@@ -253,6 +270,9 @@ function EditValidation(props) {
                       );
                     })}
                 </Field>
+                {errors.SupportCodeSupport && touched.SupportCodeSupport ? (
+                  <div className="text-danger">{errors.SupportCodeSupport}</div>
+                ) : null}
               </div>
               <div className="modal-footer">
                 <button

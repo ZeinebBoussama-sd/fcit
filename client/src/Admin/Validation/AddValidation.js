@@ -84,9 +84,8 @@ function AddValidation(props) {
                         SupportCodeSupport: parseInt(values.SupportCodeSupport),
                       },
                     });
-                    //                    setactive(false);
                   } catch (e) {
-                    console.log("e", e);
+                    console.log("error", e);
                   }
                   props.refetch();
                 }}
@@ -97,10 +96,10 @@ function AddValidation(props) {
                     touched,
                     errors,
                     dirty,
+                    initialValues,
                     isSubmitting,
                     handleChange,
                     handleBlur,
-                    initialValues,
                     handleSubmit,
                     handleReset,
                   } = props;
@@ -124,7 +123,7 @@ function AddValidation(props) {
                           type="date"
                         />
                         {errors.date_val && touched.date_val ? (
-                          <div>{errors.date_val}</div>
+                          <div className="text-danger">{errors.date_val}</div>
                         ) : null}
                       </div>
                       <div className="form-group">
@@ -148,9 +147,12 @@ function AddValidation(props) {
                             Refus
                           </option>
                           <option key="1" value={1}>
-                            accord
+                            Accord
                           </option>
                         </Field>
+                        {errors.decision_r && touched.decision_r ? (
+                          <div className="text-danger">{errors.decision_r}</div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="decision_f" className="col-form-label">
@@ -173,9 +175,12 @@ function AddValidation(props) {
                             Refus
                           </option>
                           <option key="1" value={1}>
-                            accord
+                            Accord
                           </option>
                         </Field>
+                        {errors.decision_f && touched.decision_f ? (
+                          <div className="text-danger">{errors.decision_f}</div>
+                        ) : null}
                       </div>
 
                       <div className="form-group">
@@ -194,7 +199,7 @@ function AddValidation(props) {
                           type="text"
                         />
                         {errors.remarque && touched.remarque ? (
-                          <div>{errors.remarque}</div>
+                          <div className="text-danger">{errors.remarque}</div>
                         ) : null}
                       </div>
 
@@ -227,6 +232,12 @@ function AddValidation(props) {
                               }
                             )}
                         </Field>
+                        {errors.FormateurCodeFormateur &&
+                        touched.FormateurCodeFormateur ? (
+                          <div className="text-danger">
+                            {errors.FormateurCodeFormateur}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Ingenieur Pedagogique">
@@ -259,6 +270,12 @@ function AddValidation(props) {
                               }
                             )}
                         </Field>
+                        {errors.IngenieurPedagogiqueCodeIP &&
+                        touched.IngenieurPedagogiqueCodeIP ? (
+                          <div className="text-danger">
+                            {errors.IngenieurPedagogiqueCodeIP}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="form-group">
                         <label htmlFor="Support ">Support:</label>
@@ -287,6 +304,12 @@ function AddValidation(props) {
                               );
                             })}
                         </Field>
+                        {errors.SupportCodeSupport &&
+                        touched.SupportCodeSupport ? (
+                          <div className="text-danger">
+                            {errors.SupportCodeSupport}
+                          </div>
+                        ) : null}
                       </div>
                       <div className="modal-footer">
                         <button

@@ -849,6 +849,7 @@ export const ADD_VALIDATION = gql`
 `;
 export const UPDATE_VALIDATION = gql`
   mutation update_validation(
+    $code_val: Int!
     $date_val: Date!
     $remarque: String!
     $decision_r: Boolean!
@@ -858,6 +859,7 @@ export const UPDATE_VALIDATION = gql`
     $SupportCodeSupport: Int
   ) {
     updateValidation(
+      code_val: $code_val
       date_val: $date_val
       remarque: $remarque
       decision_r: $decision_r

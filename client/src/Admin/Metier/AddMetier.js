@@ -86,6 +86,7 @@ function AddMetier(props) {
                     handleReset,
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
+                  console.log(GetFormation.data);
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
@@ -119,17 +120,17 @@ function AddMetier(props) {
                                 : "form-control is-valid"
                               : "form-control text-input"
                           }
-                          multiple
                           component={"select"}
+                          multiple
                           name="FormationCIFormation"
                         >
-                          <option value="">---Choose Formation--</option>
+                          <option value="">---Choose Formation:--</option>
                           {GetFormation.data &&
                             GetFormation.data.allFormations.map((formation) => {
                               return (
                                 <option
-                                  key={formation.CI_formation}
-                                  value={formation.CI_formation}
+                                  key={formation.CI_Formation}
+                                  value={formation.CI_Formation}
                                 >
                                   {formation.intitule}
                                 </option>

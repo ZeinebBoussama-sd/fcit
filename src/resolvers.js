@@ -930,10 +930,11 @@ const resolvers = {
       });
       return this.deleteParticipant;
     },
-    async createMotCle(root, { motcle }, { models }) {
-      return models.MotCle.create({
-        motcle,
+    async createMotCle(root, args, { models }) {
+      const addmotcle = await models.MotCle.create({
+        motcle: args.motcle,
       });
+      return addmotcle;
     },
     async deleteMotCle(root, args, { models }) {
       const deleteMotCle = await models.MotCle.destroy({
@@ -1115,28 +1116,17 @@ const resolvers = {
       });
       return deleteTheme;
     },
-    async createValidation(
-      root,
-      {
-        date_val,
-        remarque,
-        decision_r,
-        decision_f,
-        FormateurCodeFormateur,
-        IngenieurPedagogiqueCodeIP,
-        SupportCodeSupport,
-      },
-      { models }
-    ) {
-      return models.Validation.create({
-        date_val,
-        remarque,
-        decision_r,
-        decision_f,
-        FormateurCodeFormateur,
-        IngenieurPedagogiqueCodeIP,
-        SupportCodeSupport,
+    async createValidation(root, args, { models }) {
+      const addValid = await models.Validation.create({
+        date_val: args.date_val,
+        remarque: args.remarque,
+        decision_r: args.decision_r,
+        decision_f: args.decision_f,
+        FormateurCodeFormateur: args.FormateurCodeFormateur,
+        IngenieurPedagogiqueCodeIP: args.IngenieurPedagogiqueCodeIP,
+        SupportCodeSupport: args.SupportCodeSupport,
       });
+      return addValid;
     },
     async updateValidation(root, args, { models }) {
       const updateValidation = await models.Validation.update(

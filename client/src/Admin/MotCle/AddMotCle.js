@@ -56,6 +56,7 @@ function AddMotCle(props) {
                 validationSchema={MotCleSchema}
                 onSubmit={async (values) => {
                   try {
+                    debugger;
                     await AddMotCle({
                       variables: {
                         motcle: values.motcle,
@@ -104,17 +105,22 @@ function AddMotCle(props) {
                           type="text"
                         />
                         {errors.motcle && touched.motcle ? (
-                          <div>{errors.motcle}</div>
+                          <div className="text-danger">{errors.motcle}</div>
                         ) : null}
                       </div>
-
                       <div className="form-group">
                         <label htmlFor="Formation">Formation:</label>
-                        <select
-                          className="form-control"
-                          onChange={handleChange}
-                          value={values.FormationCIFormation}
-                          id="FormationCIFormation"
+                        <Field
+                          className={
+                            hasChanged
+                              ? errors.FormationCIFormation
+                                ? "form-control is-invalid"
+                                : "form-control is-valid"
+                              : "form-control text-input"
+                          }
+                          component={"select"}
+                          multiple
+                          name="FormationCIFormation"
                         >
                           <option value="">---Choose Formation:--</option>
                           {GetFormation.data &&
@@ -128,9 +134,11 @@ function AddMotCle(props) {
                                 </option>
                               );
                             })}
-                        </select>
+                        </Field>
+                        {errors.motcle && touched.motcle ? (
+                          <div className="text-danger">{errors.motcle}</div>
+                        ) : null}
                       </div>
-
                       <div className="modal-footer">
                         <button
                           type="button"

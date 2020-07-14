@@ -732,8 +732,8 @@ const typeDefs = gql`
     updateValidation(
       code_val: Int
       date_val: Date!
-      decision_R: Boolean!
-      decision_F: Boolean!
+      decision_r: Boolean!
+      decision_f: Boolean!
       remarque: String!
       FormateurCodeFormateur: String
       IngenieurPedagogiqueCodeIP: Int

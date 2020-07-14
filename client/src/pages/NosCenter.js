@@ -6,7 +6,7 @@ import { faMapPin } from "@fortawesome/free-solid-svg-icons";
 function NosCenter() {
   const AnyReactComponent = () => (
     <div>
-      <FontAwesomeIcon size="9x" color={"red"} icon={faMapPin} />
+      <FontAwesomeIcon size="6x" color={"red"} icon={faMapPin} />
     </div>
   );
   return (

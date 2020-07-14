@@ -760,6 +760,10 @@ const resolvers = {
       return addFormateur;
     },
     async updateFormateur(root, args, { models }) {
+      const cv_f = await args.cv_f;
+      const copie_cin = await args.copie_cin;
+      const copie_passeport = await args.copie_passeport;
+      const copie_RIB = await args.copie_RIB;
       const updateFormateur = await models.Formateur.update(
         {
           nom_f: args.nom_f,
@@ -850,12 +854,18 @@ const resolvers = {
       },
       { models }
     ) {
+      const upload_cv_ing = await storeUpload(
+        cv_ing,
+        "cv_ing",
+        code_IP,
+        "IngenieurPedagogique"
+      );
       const hashedPassword = await hash(password, 12);
       const addIP = await models.IngenieurPedagogique.create({
         code_IP,
         nom_ing,
         prenom_ing,
-        cv_ing,
+        cv_ing: `${__dirname}/upload/${code_IP}/IngenieurPedagogique/cv_ing/${args.cv_ing.filename}`,
         email_ing,
         tel_ing,
         NSS_ing,
@@ -1126,6 +1136,15 @@ const resolvers = {
         IngenieurPedagogiqueCodeIP: args.IngenieurPedagogiqueCodeIP,
         SupportCodeSupport: args.SupportCodeSupport,
       });
+      const updatff = await models.Formateur_Formation.update(
+        { validation_f: args.decision_f },
+        {
+          where: {
+            FormationCIFormation: args.formation,
+            FormateurCodeFormateur: args.FormateurCodeFormateur,
+          },
+        }
+      );
       return addValid;
     },
     async updateValidation(root, args, { models }) {

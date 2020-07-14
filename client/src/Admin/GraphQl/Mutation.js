@@ -459,7 +459,7 @@ export const ADD_INGENIEURPEDAGOGIQUE = gql`
   mutation create_ingenieurpedagogique(
     $nom_ing: String!
     $prenom_ing: String!
-    $cv_ing: String!
+    $cv_ing: Upload!
     $email_ing: String!
     $tel_ing: String!
     $NSS_ing: Int!
@@ -500,7 +500,7 @@ export const UPDATE_INGENIEURPEDAGOGIQUE = gql`
     $code_IP: Int
     $nom_ing: String!
     $prenom_ing: String!
-    $cv_ing: String!
+    $cv_ing: Upload!
     $email_ing: String!
     $tel_ing: String!
     $NSS_ing: Int!
@@ -824,6 +824,7 @@ export const ADD_VALIDATION = gql`
     $remarque: String!
     $decision_r: Boolean!
     $decision_f: Boolean!
+    $formation: Int!
     $FormateurCodeFormateur: String
     $IngenieurPedagogiqueCodeIP: Int
     $SupportCodeSupport: Int
@@ -833,6 +834,7 @@ export const ADD_VALIDATION = gql`
       remarque: $remarque
       decision_r: $decision_r
       decision_f: $decision_f
+      formation: $formation
       FormateurCodeFormateur: $FormateurCodeFormateur
       IngenieurPedagogiqueCodeIP: $IngenieurPedagogiqueCodeIP
       SupportCodeSupport: $SupportCodeSupport
@@ -851,6 +853,7 @@ export const UPDATE_VALIDATION = gql`
   mutation update_validation(
     $code_val: Int!
     $date_val: Date!
+    $formation: Int!
     $remarque: String!
     $decision_r: Boolean!
     $decision_f: Boolean!
@@ -864,6 +867,7 @@ export const UPDATE_VALIDATION = gql`
       remarque: $remarque
       decision_r: $decision_r
       decision_f: $decision_f
+      formation: $formation
       FormateurCodeFormateur: $FormateurCodeFormateur
       IngenieurPedagogiqueCodeIP: $IngenieurPedagogiqueCodeIP
       SupportCodeSupport: $SupportCodeSupport

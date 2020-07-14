@@ -12,6 +12,7 @@ import deepEqual from "lodash.isequal";
 import moment from "moment";
 
 function EditValidation(props) {
+  const [idxFormateur, setIdxFormateur] = useState();
   const [updateValidation] = useMutation(UPDATE_VALIDATION);
   const Getingenieurpedagogique = useQuery(GET_INGENIEUR_PEDAGOGIQUES);
   const GetFormateurs = useQuery(GET_FORMATEURS);
@@ -28,6 +29,7 @@ function EditValidation(props) {
           decision_r: validation && validation.decision_r,
           decision_f: validation && validation.decision_f,
           remarque: validation && validation.remarque,
+          formation: undefined,
           IngenieurPedagogiqueCodeIP:
             validation && validation.ingenieurpedagogique.code_IP,
           FormateurCodeFormateur:
@@ -44,6 +46,7 @@ function EditValidation(props) {
                 date_val: values.date_val,
                 decision_r: Boolean(values.decision_r),
                 decision_f: Boolean(values.decision_f),
+                formation: values.formation,
                 remarque: values.remarque,
                 IngenieurPedagogiqueCodeIP: parseInt(
                   values.IngenieurPedagogiqueCodeIP
@@ -184,6 +187,10 @@ function EditValidation(props) {
                   }
                   name="FormateurCodeFormateur"
                   multiple={false}
+                  onChange={(e) => {
+                    handleChange();
+                    setIdxFormateur(e.currentTarget.selectedIndex - 1);
+                  }}
                 >
                   <option value="">---choose formateur----</option>
                   {GetFormateurs.data &&
@@ -203,6 +210,40 @@ function EditValidation(props) {
                   <div className="text-danger">
                     {errors.FormateurCodeFormateur}
                   </div>
+                ) : null}
+              </div>
+              <div className="form-group">
+                <label htmlFor="Formateur">Formation</label>
+                <Field
+                  component="select"
+                  className={
+                    hasChanged
+                      ? errors.formation
+                        ? "form-control is-invalid"
+                        : "form-control is-valid"
+                      : "form-control text-input"
+                  }
+                  name="formation"
+                  multiple={false}
+                >
+                  <option value="">---choose formation----</option>
+                  {GetFormateurs.data &&
+                    GetFormateurs.data.allFormateurs[idxFormateur] &&
+                    GetFormateurs.data.allFormateurs[
+                      idxFormateur
+                    ].formation.map((formation) => {
+                      return (
+                        <option
+                          key={formation.CI_formation}
+                          value={formation.CI_formation}
+                        >
+                          {formation.intitule}
+                        </option>
+                      );
+                    })}
+                </Field>
+                {errors.formation && touched.formation ? (
+                  <div className="text-danger">{errors.formation}</div>
                 ) : null}
               </div>
               <div className="form-group">

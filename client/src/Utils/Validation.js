@@ -249,6 +249,7 @@ export const ValidationSchema = Yup.object().shape({
   decision_r: Yup.string().required("Required"),
   decision_f: Yup.string().required("Required"),
   remarque: Yup.string(),
+  formation: Yup.string().required("Required"),
   IngenieurPedagogiqueCodeIP: Yup.string().required("Required"),
   FormateurCodeFormateur: Yup.string().required("Required"),
   SupportCodeSupport: Yup.string().required("Required"),

@@ -191,6 +191,10 @@ export const GET_FORMATEURS = gql`
       tarif_f
       RIB_f
       copie_RIB
+      formation {
+        CI_formation
+        intitule
+      }
     }
   }
 `;

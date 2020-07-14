@@ -80,7 +80,6 @@ function AddFormateur(props) {
                 validationSchema={FormateurSchema}
                 onSubmit={async (values) => {
                   try {
-                    console.log("v", values);
                     await AddFormateur({
                       variables: {
                         code_formateur: values.code_formateur,

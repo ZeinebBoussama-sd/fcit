@@ -593,7 +593,7 @@ const typeDefs = gql`
       code_IP: Int
       nom_ing: String!
       prenom_ing: String!
-      cv_ing: String!
+      cv_ing: Upload!
       email_ing: String!
       tel_ing: String!
       NSS_ing: Int!
@@ -608,7 +608,7 @@ const typeDefs = gql`
       code_IP: Int
       nom_ing: String!
       prenom_ing: String!
-      cv_ing: String!
+      cv_ing: Upload!
       email_ing: String!
       tel_ing: String!
       NSS_ing: Int!
@@ -724,6 +724,7 @@ const typeDefs = gql`
       decision_r: Boolean!
       decision_f: Boolean!
       remarque: String!
+      formation: Int!
       FormateurCodeFormateur: String
       IngenieurPedagogiqueCodeIP: Int
       SupportCodeSupport: Int
@@ -735,6 +736,7 @@ const typeDefs = gql`
       decision_r: Boolean!
       decision_f: Boolean!
       remarque: String!
+      formation: Int!
       FormateurCodeFormateur: String
       IngenieurPedagogiqueCodeIP: Int
       SupportCodeSupport: Int

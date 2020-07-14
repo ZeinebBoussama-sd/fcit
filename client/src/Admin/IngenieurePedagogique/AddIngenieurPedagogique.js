@@ -4,6 +4,7 @@ import { Formik, Field } from "formik";
 import { ADD_INGENIEURPEDAGOGIQUE } from "../GraphQl/Mutation";
 import deepEqual from "lodash.isequal";
 import { IngenieurPedagogiqueSchema } from "../../Utils/Validation";
+import { DropzoneField } from "../component/DropzoneField";
 function AddIngenieurPedagogique(props) {
   const [AddIngenieurPedagogique, res] = useMutation(ADD_INGENIEURPEDAGOGIQUE);
   return (
@@ -46,7 +47,7 @@ function AddIngenieurPedagogique(props) {
                 initialValues={{
                   nom_ing: "",
                   prenom_ing: "",
-                  cv_ing: undefined,
+                  cv_ing: [],
                   email_ing: undefined,
                   tel_ing: undefined,
                   NSS_ing: undefined,
@@ -148,7 +149,8 @@ function AddIngenieurPedagogique(props) {
                               : "form-control text-input"
                           }
                           name="cv_ing"
-                          type="text"
+                          type="file"
+                          component={DropzoneField}
                         />
                         {errors.cv_ing && touched.cv_ing ? (
                           <div className="text-danger">{errors.cv_ing}</div>

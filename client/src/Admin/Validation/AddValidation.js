@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import {
@@ -12,12 +12,14 @@ import deepEqual from "lodash.isequal";
 
 function AddValidation(props) {
   const [active, setactive] = useState(false);
-
+  const [idxFormateur, setIdxFormateur] = useState();
   const [addValidation] = useMutation(ADD_VALIDATION);
   const Getingenieurpedagogique = useQuery(GET_INGENIEUR_PEDAGOGIQUES);
   const GetFormateurs = useQuery(GET_FORMATEURS);
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
-
+  const sub = (e) => {
+    setIdxFormateur(e.currentTarget.selectedIndex - 1);
+  };
   return (
     <div>
       <button
@@ -63,6 +65,7 @@ function AddValidation(props) {
                   decision_r: undefined,
                   decision_f: undefined,
                   remarque: undefined,
+                  formation: undefined,
                   IngenieurPedagogiqueCodeIP: undefined,
                   FormateurCodeFormateur: undefined,
                   SupportCodeSupport: undefined,
@@ -70,12 +73,14 @@ function AddValidation(props) {
                 validationSchema={ValidationSchema}
                 onSubmit={async (values) => {
                   try {
+                    debugger;
                     await new Promise((resolve) => setTimeout(resolve, 500));
                     await addValidation({
                       variables: {
                         date_val: values.date_val,
                         decision_r: Boolean(parseInt(values.decision_r)),
                         decision_f: Boolean(parseInt(values.decision_f)),
+                        formation: parseInt(values.formation),
                         remarque: values.remarque,
                         IngenieurPedagogiqueCodeIP: parseInt(
                           values.IngenieurPedagogiqueCodeIP
@@ -104,7 +109,6 @@ function AddValidation(props) {
                     handleReset,
                   } = props;
                   const hasChanged = !deepEqual(values, initialValues);
-
                   return (
                     <form onSubmit={handleSubmit}>
                       <div className="form-group">
@@ -216,6 +220,10 @@ function AddValidation(props) {
                           }
                           name="FormateurCodeFormateur"
                           multiple={false}
+                          onChange={(e) => {
+                            handleChange(e);
+                            sub(e);
+                          }}
                         >
                           <option value="">---choose formateur----</option>
                           {GetFormateurs.data &&
@@ -239,6 +247,44 @@ function AddValidation(props) {
                           </div>
                         ) : null}
                       </div>
+                      {values.FormateurCodeFormateur && (
+                        <div className="form-group">
+                          <label htmlFor="formation">Formation</label>
+                          <Field
+                            component="select"
+                            className={
+                              hasChanged
+                                ? errors.formation
+                                  ? "form-control is-invalid"
+                                  : "form-control is-valid"
+                                : "form-control text-input"
+                            }
+                            name="formation"
+                            multiple={false}
+                          >
+                            <option value="">---choose formation----</option>
+                            {GetFormateurs.data &&
+                              GetFormateurs.data.allFormateurs[idxFormateur] &&
+                              GetFormateurs.data.allFormateurs[
+                                idxFormateur
+                              ].formation.map((formation) => {
+                                return (
+                                  <option
+                                    key={formation.CI_formation}
+                                    value={formation.CI_formation}
+                                  >
+                                    {formation.intitule}
+                                  </option>
+                                );
+                              })}
+                          </Field>
+                          {errors.formation && touched.formation ? (
+                            <div className="text-danger">
+                              {errors.formation}
+                            </div>
+                          ) : null}
+                        </div>
+                      )}
                       <div className="form-group">
                         <label htmlFor="Ingenieur Pedagogique">
                           Ingenieur Pédagogique:

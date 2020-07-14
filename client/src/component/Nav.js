@@ -52,7 +52,7 @@ function Nav() {
               A propos
             </NavLink>
           </li>
-          <li className="nav-item dropdown">
+          {/* <li className="nav-item dropdown">
             <NavLink
               className="nav-link dropdown-toggle"
               exact
@@ -134,18 +134,18 @@ function Nav() {
                 </ul>
               </li>
             </ul>
-          </li>
+          </li> */}
 
           <li className="nav-item">
             <NavLink className="nav-link" exact to="/nos_centres">
               Nos Centres
             </NavLink>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <NavLink className="nav-link" exact to="/contact">
               Contact
             </NavLink>
-          </li>
+          </li> */}
         </ul>
         <ul className="nav justify-content-end">
           {/* {auth !== null ? (

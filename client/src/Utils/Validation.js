@@ -202,7 +202,6 @@ export const SessionSchema = Yup.object().shape({
   hr_fin_j: Yup.string().max(5, "Too Long! (Max 5)").required("Required"),
   hr_j_session: Yup.string().max(2, "Too Long! (Max 2)").required("Required"),
   honoraire_sess: Yup.string().matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/),
-
   frais_sejour: Yup.string().matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/),
   frais_transport: Yup.string().matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/),
   perdiem: Yup.string().matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/),
@@ -210,14 +209,10 @@ export const SessionSchema = Yup.object().shape({
   note_eval_formateur: Yup.string().matches(/^[0-9]/),
   type_sess: Yup.string(),
   date_deb_sess: Yup.string().required("Required"),
-  lieu_sess: Yup.string()
-    .min(1, "Too Short! (Min 1)")
-    .max(30, "Too Long! (Max 30)")
-    .required("Required"),
+  lieu_sess: Yup.string().max(30, "Too Long! (Max 30)").required("Required"),
   prix_session: Yup.string()
     .matches(/^[0-9]{1,4}(?:\.[0-9]{1,3})?$/)
     .required("Required"),
-
   ClientCodeClient: Yup.string().required("Required"),
   FormationCIFormation: Yup.number().required("Required"),
   FormateurCodeFormateur: Yup.string().required("Required"),

@@ -6,6 +6,7 @@ import {
   GET_CLIENTS,
   GET_FORMATIONSOPTIONS,
   GET_FORMATEUR_FORMATIONS,
+  GET_DEMANDE_CLIENT,
 } from "../GraphQl/Query";
 import { UPDATE_SESSION } from "../GraphQl/Mutation";
 import { SessionSchema } from "../../Utils/Validation";
@@ -24,7 +25,7 @@ function EditSession(props) {
   });
   const [updateSession] = useMutation(UPDATE_SESSION);
 
-  const GetClients = useQuery(GET_CLIENTS);
+  const GetClients = useQuery(GET_DEMANDE_CLIENT);
   const GetFormations = useQuery(GET_FORMATIONSOPTIONS);
   const GetSupportMini = useQuery(GET_SUPPORT_MINI);
 
@@ -148,6 +149,14 @@ function EditSession(props) {
             handleReset,
           } = props;
           const hasChanged = !deepEqual(values, initialValues);
+          const demande_filter =
+            GetClients.data &&
+            GetClients.data.allDemandeFormations.filter((f) => {
+              return (
+                moment(f.date_demande).format("YYYY-MM-DD") ===
+                moment(values.date_deb_sess).format("YYYY-MM-DD")
+              );
+            });
 
           const filter_valid =
             formateur_formation &&
@@ -180,7 +189,7 @@ function EditSession(props) {
                   moment(values.date_deb_sess).format("YYYY-MM-DD")
               );
 
-              if (foundDate.length === 0) {
+              if (foundDate && foundDate.length === 0) {
                 for (let i = 0; i < filter_valid.length; i++) {
                   if (
                     filter_valid[i].FormateurCodeFormateur === a.code_formateur
@@ -196,6 +205,7 @@ function EditSession(props) {
                   Code Session:
                 </label>
                 <Field
+                  disabled
                   className={
                     hasChanged
                       ? errors.code_session
@@ -521,14 +531,14 @@ function EditSession(props) {
                   name="ClientCodeClient"
                 >
                   <option value="">---choose Client----</option>
-                  {GetClients.data &&
-                    GetClients.data.allClients.map((client) => {
+                  {demande_filter &&
+                    demande_filter.map((d) => {
                       return (
                         <option
-                          key={client.code_client}
-                          value={client.code_client}
+                          key={d.client.code_client}
+                          value={d.client.code_client}
                         >
-                          {client.nom_client}
+                          {d.client.nom_client}
                         </option>
                       );
                     })}

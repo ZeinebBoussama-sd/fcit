@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-
+  MotCle.associate = function (models) {
+    MotCle.belongsToMany(models.Formation, { through: "FormationMotCle" });
+  };
   return MotCle;
 };

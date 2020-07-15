@@ -2,27 +2,31 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import { UPDATE_MOT_CLE } from "../GraphQl/Mutation";
-import { GET_FORMATION } from "../GraphQl/Query";
+import { GET_FORMATIONSOPTIONS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
 
 import { MotCleSchema } from "../../Utils/Validation";
 
 function EditMotCle(props) {
-  const GetFormation = useQuery(GET_FORMATION);
+  const GetFormation = useQuery(GET_FORMATIONSOPTIONS);
   const [UpdateMotCle, res] = useMutation(UPDATE_MOT_CLE);
   const motcle = props.motcle ? props.motcle : null;
-  const id = props.id;
   const close = () => {
     props.setEdit(false);
   };
+  const formation =
+    motcle &&
+    motcle.formation &&
+    motcle.formation.map((f) => {
+      return f.CI_formation;
+    });
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
         enableReinitialize
         initialValues={{
           motcle: motcle && motcle.motcle,
-          FormationCIFormation:
-            motcle && motcle.formation && motcle.formation.CI_Formation,
+          FormationCIFormation: formation,
         }}
         validationSchema={MotCleSchema}
         onSubmit={async (values) => {
@@ -30,13 +34,16 @@ function EditMotCle(props) {
             await UpdateMotCle({
               variables: {
                 motcle: values.motcle,
-                FormationCIFormation: parseInt(values.FormationCIFormation),
+                FormationCIFormation: values.FormationCIFormation.map((f) => {
+                  return parseInt(f);
+                }),
               },
             });
           } catch (e) {
             console.error(e.message);
           }
           props.refetch();
+          close();
         }}
       >
         {(props) => {
@@ -53,7 +60,7 @@ function EditMotCle(props) {
             handleReset,
           } = props;
           const hasChanged = !deepEqual(values, initialValues);
-
+          console.log(" GetFormation.data.allFormations", GetFormation.data);
           return (
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -92,11 +99,12 @@ function EditMotCle(props) {
                 >
                   <option value="">---Choose Formation:--</option>
                   {GetFormation.data &&
+                    GetFormation.data.allFormations &&
                     GetFormation.data.allFormations.map((formation) => {
                       return (
                         <option
-                          key={formation.CI_Formation}
-                          value={formation.CI_Formation}
+                          key={formation.CI_formation}
+                          value={formation.CI_formation}
                         >
                           {formation.intitule}
                         </option>

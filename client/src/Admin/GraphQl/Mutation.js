@@ -926,7 +926,10 @@ export const UPDATE_METIER = gql`
       intitule_metier: $intitule_metier
       FormationCIFormation: $FormationCIFormation
     ) {
-      code
+      metier {
+        code_metier
+        intitule_metier
+      }
     }
   }
 `;
@@ -1004,22 +1007,28 @@ export const DELETE_PARTICIPER = gql`
   }
 `;
 export const ADD_MOTCLE = gql`
-  mutation create_motcle($motcle: String, $FormationCIFormation: Int) {
+  mutation create_motcle($motcle: String!, $FormationCIFormation: [Int]) {
     createMotCle(motcle: $motcle, FormationCIFormation: $FormationCIFormation) {
       motcle
-      FormationCIFormation
+      formation {
+        CI_formation
+      }
     }
   }
 `;
 export const UPDATE_MOT_CLE = gql`
-  mutation update_motcle($motcle: String!, $FormationCIFormation: Int) {
+  mutation update_motcle($motcle: String!, $FormationCIFormation: [Int]) {
     updateMotCle(motcle: $motcle, FormationCIFormation: $FormationCIFormation) {
-      code
+      motcle
+      formation {
+        CI_formation
+        intitule
+      }
     }
   }
 `;
 export const DELETE_MOTCLE = gql`
-  mutation deleteMotcle($motcle: Int!) {
+  mutation deleteMotcle($motcle: String!) {
     deleteMotCle(motcle: $motcle) {
       motcle {
         motcle

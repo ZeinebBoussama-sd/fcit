@@ -4,17 +4,22 @@ import { Formik, Field } from "formik";
 import { UPDATE_METIER } from "../GraphQl/Mutation";
 import { GET_FORMATIONSOPTIONS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
-
 import { MetierSchema } from "../../Utils/Validation";
 
 function EditMetier(props) {
   const GetFormation = useQuery(GET_FORMATIONSOPTIONS);
   const [updateMetier, res] = useMutation(UPDATE_METIER);
   const metier = props.metier ? props.metier : null;
-  const id = props.id;
   const close = () => {
     props.setEdit(false);
   };
+
+  const formation =
+    metier &&
+    metier.formation &&
+    metier.formation.map((f) => {
+      return f.CI_formation;
+    });
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -22,8 +27,7 @@ function EditMetier(props) {
         initialValues={{
           code_metier: metier && metier.code_metier,
           intitule_metier: metier && metier.intitule_metier,
-          FormationCIFormation:
-            metier && metier.formation && metier.formation.CI_formation,
+          FormationCIFormation: formation,
         }}
         validationSchema={MetierSchema}
         onSubmit={async (values) => {
@@ -41,6 +45,7 @@ function EditMetier(props) {
             console.error(e.message);
           }
           props.refetch();
+          close();
         }}
       >
         {(props) => {
@@ -94,6 +99,7 @@ function EditMetier(props) {
                 >
                   <option value="">---Choose Formation--</option>
                   {GetFormation.data &&
+                    GetFormation.data.allFormations &&
                     GetFormation.data.allFormations.map((formation) => {
                       return (
                         <option

@@ -622,7 +622,8 @@ const typeDefs = gql`
     deleteIngenieurPedagogique(
       code_IP: Int!
     ): DeleteIngenieurPedagogiqueMutationResponse
-    createMotCle(motcle: String!): MotCle!
+    createMotCle(motcle: String!, FormationCIFormation: [Int]): MotCle!
+    updateMotCle(motcle: String!, FormationCIFormation: [Int]): MotCle!
     deleteMotCle(motcle: String): DeleteMotCleMutationResponse
     createParticipant(
       nom_participant: String!

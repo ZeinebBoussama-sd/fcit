@@ -18,7 +18,7 @@ function Metier() {
     try {
       await deleteMetier({
         variables: {
-          code_metier: values,
+          code_metier: parseInt(values),
         },
       });
     } catch (error) {

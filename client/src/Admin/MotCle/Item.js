@@ -14,7 +14,11 @@ function Item(props) {
         <div className="row">
           <b className="col-3">Formation:</b>
           <p className="col">
-            {data && data.formation ? data.formation.intitule : "--"}
+            {data && data.formation
+              ? data.formation.map((f, idx) => {
+                  return <li key={idx}>{f.intitule}</li>;
+                })
+              : "--"}
           </p>
         </div>
       </div>

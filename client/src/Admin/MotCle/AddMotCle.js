@@ -51,18 +51,19 @@ function AddMotCle(props) {
                 enableReinitialize
                 initialValues={{
                   motcle: "",
-                  FormationCIFormation: undefined,
+                  FormationCIFormation: [],
                 }}
                 validationSchema={MotCleSchema}
                 onSubmit={async (values) => {
                   try {
-                    debugger;
+                    const f = values.FormationCIFormation.map((f) => {
+                      return parseInt(f);
+                    });
+                    console.log("f", f);
                     await AddMotCle({
                       variables: {
                         motcle: values.motcle,
-                        FormationCIFormation: parseInt(
-                          values.FormationCIFormation
-                        ),
+                        FormationCIFormation: f,
                       },
                     });
                   } catch (e) {
@@ -127,8 +128,8 @@ function AddMotCle(props) {
                             GetFormation.data.allFormations.map((formation) => {
                               return (
                                 <option
-                                  key={formation.CI_Formation}
-                                  value={formation.CI_Formation}
+                                  key={formation.CI_formation}
+                                  value={formation.CI_formation}
                                 >
                                   {formation.intitule}
                                 </option>

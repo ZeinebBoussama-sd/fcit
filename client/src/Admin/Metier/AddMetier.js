@@ -50,7 +50,6 @@ function AddMetier(props) {
               <Formik
                 enableReinitialize
                 initialValues={{
-                  code_metier: "",
                   intitule_metier: undefined,
                   FormationCIFormation: [],
                 }}
@@ -129,8 +128,8 @@ function AddMetier(props) {
                             GetFormation.data.allFormations.map((formation) => {
                               return (
                                 <option
-                                  key={formation.CI_Formation}
-                                  value={formation.CI_Formation}
+                                  key={formation.CI_formation}
+                                  value={formation.CI_formation}
                                 >
                                   {formation.intitule}
                                 </option>

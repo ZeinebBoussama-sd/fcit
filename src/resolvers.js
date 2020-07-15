@@ -215,7 +215,8 @@ const resolvers = {
       return models.MotCle.findByPk(motcle);
     },
     async allMotCles(root, args, { models }) {
-      return models.MotCle.findAll();
+      const allMoCle = await models.MotCle.findAll();
+      return allMoCle;
     },
     async participant(root, { code_participant }, { models }) {
       return models.Participant.findByPk(code_participant);
@@ -603,45 +604,54 @@ const resolvers = {
       return updateDemandeur;
     },
     async deleteDemandeur(root, args, { models }) {
-      const deleteDemandeur = await models.Demandeur.destroy({
+      await models.Demandeur.destroy({
         where: { code_demandeur: args.code_demandeur },
       });
     },
     async createMetier(root, args, { models }) {
-      const addMetie = await models.Metiers.create(
-        {
-          code_metier: args.code_metier,
-          intitule_metier: args.intitule_metier,
-        },
-        {
-          include: [
-            {
-              association: models.Metiers.Formations,
-            },
-          ],
-        }
-      );
-      const t = addMetie.createFormation();
-      const addDonne_lieu = args.FormationCIFormation.map(async (f) => {
-        await models.Donne_lieu.create({
-          FormationCIFormation: f,
-          MetierCodeMetier: args.code_metier,
-        });
+      const findFormations = await models.Formation.findAll({
+        where: { CI_formation: args.FormationCIFormation },
       });
+
+      const addMetie = await models.Metiers.create({
+        intitule_metier: args.intitule_metier,
+      });
+      await addMetie.addFormation(findFormations);
       return addMetie;
     },
     async updateMetier(root, args, { models }) {
-      const updateMetier = await models.Metiers.update(
+      const allFormations = await models.Formation.findAll();
+      const findFormations = await models.Formation.findAll({
+        where: { CI_formation: args.FormationCIFormation },
+      });
+      await models.Metiers.update(
         {
           code_metier: args.code_metier,
           intitule_metier: args.intitule_metier,
         },
         { where: { code_metier: args.code_metier } }
       );
-      return updateMetier;
+      const findMetier = await models.Metiers.findOne({
+        where: {
+          code_metier: args.code_metier,
+        },
+      });
+
+      await findMetier.removeFormations(allFormations);
+      await findMetier.addFormations(findFormations);
+
+      return findMetier;
     },
     async deleteMetier(root, args, { models }) {
-      const deletMetier = await models.Metiers.destroy({
+      const allFormations = await models.Formation.findAll();
+      const findMetier = await models.Metiers.findOne({
+        where: {
+          code_metier: args.code_metier,
+        },
+      });
+
+      await findMetier.removeFormations(allFormations);
+      await models.Metiers.destroy({
         where: { code_metier: args.code_metier },
       });
     },
@@ -938,19 +948,48 @@ const resolvers = {
       const deleteParticipant = await models.Participant.destroy({
         where: { code_participant: args.code_participant },
       });
-      return this.deleteParticipant;
+      return deleteParticipant;
     },
     async createMotCle(root, args, { models }) {
+      const findFormations = await models.Formation.findAll({
+        where: { CI_formation: args.FormationCIFormation },
+      });
       const addmotcle = await models.MotCle.create({
         motcle: args.motcle,
+        formation: [args.FormationCIFormation],
       });
+      await addmotcle.addFormations(findFormations);
       return addmotcle;
     },
+    async updateMotCle(root, args, { models }) {
+      const allFormations = await models.Formation.findAll();
+      const findFormations = await models.Formation.findAll({
+        where: { CI_formation: args.FormationCIFormation },
+      });
+      const findMotCle = await models.MotCle.findOne({
+        where: {
+          motcle: args.motcle,
+        },
+      });
+
+      await findMotCle.removeFormations(allFormations);
+      await findMotCle.addFormations(findFormations);
+
+      return findMotCle;
+    },
     async deleteMotCle(root, args, { models }) {
+      const allFormations = await models.Formation.findAll();
+      const findMotCle = await models.MotCle.findOne({
+        where: {
+          motcle: args.motcle,
+        },
+      });
+
+      await findMotCle.removeFormations(allFormations);
       const deleteMotCle = await models.MotCle.destroy({
         where: { motcle: args.motcle },
       });
-      return this.deleteMotCle;
+      return deleteMotCle;
     },
     async createParticiper(root, args, { models }) {
       const rapport_eval = await args.rapport_eval;
@@ -1221,6 +1260,11 @@ const resolvers = {
     },
   },
   Metier: {
+    async formation(metiers) {
+      return metiers.getFormations();
+    },
+  },
+  MotCle: {
     async formation(metiers) {
       return metiers.getFormations();
     },

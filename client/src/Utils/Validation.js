@@ -255,7 +255,6 @@ export const MotCleSchema = Yup.object().shape({
   FormationCIFormation: Yup.string().required("Required"),
 });
 export const MetierSchema = Yup.object().shape({
-  code_metier: Yup.string().max(5, "Too Long! (Max 5)").required("Required"),
   intitule_metier: Yup.string()
     .max(30, "Too Long! (Max 30)")
     .required("Required"),

@@ -414,16 +414,17 @@ function AddDemande(props) {
                           multiple
                           name="Date_Prevue"
                         >
-                          <option value="">---Choose Formation----</option>
+                          <option value="">---Choose Date----</option>
                           {GetDateprevue.data &&
                             GetDateprevue.data.allDatePrevues.map(
-                              (Date_Prevue) => {
+                              (Date_Prevue, idx) => {
+                                console.log("d", Date_Prevue);
                                 return (
                                   <option
-                                    key={Date_Prevue.Date_Prevue}
-                                    value={Date_Prevue.Date_Prevue}
+                                    key={idx}
+                                    value={Date_Prevue.date_prev}
                                   >
-                                    {moment(Date_Prevue.Date_Prevue).format(
+                                    {moment(Date_Prevue.date_prev).format(
                                       "YYYY-MM-DD"
                                     )}
                                   </option>

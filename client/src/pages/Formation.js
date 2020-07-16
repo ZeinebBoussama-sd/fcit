@@ -11,22 +11,41 @@ function Formation() {
   const alltheme = data ? data.allThemes : [];
   return (
     <div>
-      <div className="container mt-9 height-9 ">
-        {alltheme.map((t) => {
+      <div className="accordion minHeight-7 mt-8" id="accordionExample">
+        {alltheme.map((t, idx) => {
           return (
-            <div>
-              <b>{t.nom_theme}</b>
-              <ul>
+            <div className="card">
+              <div className="card-header" id="headingOne">
+                <h2 className="mb-0">
+                  <button
+                    className="btn btn-link btn-block text-left"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target={`#collapseOne${idx}`}
+                    aria-expanded="true"
+                    aria-controls={`collapseOne${idx}`}
+                  >
+                    {t.nom_theme}
+                  </button>
+                </h2>
+              </div>
+
+              <div
+                id={`collapseOne${idx}`}
+                className="collapse"
+                aria-labelledby="headingOne"
+                data-parent="#accordionExample"
+              >
                 {t.formation.map((f) => {
                   return (
-                    <li>
+                    <div className="card-body">
                       <Link to={`/formation/${f.CI_formation}`}>
                         {f.intitule}
-                      </Link>
-                    </li>
+                      </Link>{" "}
+                    </div>
                   );
                 })}
-              </ul>
+              </div>
             </div>
           );
         })}

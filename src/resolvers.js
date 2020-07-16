@@ -1382,7 +1382,7 @@ const resolvers = {
   },
   Theme: {
     async formation(theme) {
-      return theme.getFormation();
+      return theme.getFormations();
     },
   },
   Validation: {

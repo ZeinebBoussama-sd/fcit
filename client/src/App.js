@@ -22,6 +22,8 @@ import Login from "./pages/Login";
 import { getAccessToken } from "./Utils/AccessToken";
 import history from "./Utils/history";
 import NosCenter from "./pages/NosCenter";
+import Formation from "./pages/Formation";
+import FormationItem from "./component/Formation/FormationItem";
 
 function App() {
   const httpLink = createUploadLink({
@@ -78,6 +80,8 @@ function App() {
           <Route path="/apropos" exact component={Apropos} />
           <Route path="/admin" exact component={Admin} />
           <Route path="/login" exact component={Login} />
+          <Route path="/formation" exact component={Formation} />
+          <Route path="/formation/:id" exact component={FormationItem} />
           <Route path="/nos_centres" exact component={NosCenter} />
           <Route path="*" component={NotFound} />
         </Switch>

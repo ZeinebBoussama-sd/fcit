@@ -116,7 +116,25 @@ export const GET_CLIENT = gql`
     }
   }
 `;
-
+export const GET_THEME_FORMATION = gql`
+  {
+    allThemes {
+      code_theme
+      nom_theme
+      formation {
+        CI_formation
+        code_formation
+        intitule
+        duree_formation
+        nbre_min_part
+        description_formation
+        catagorie_formation
+        prix_formation
+        prerequis
+      }
+    }
+  }
+`;
 export const GET_THEMES = gql`
   {
     allThemes {

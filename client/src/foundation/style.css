@@ -173,6 +173,9 @@ table ::-webkit-scrollbar-thumb:hover {
 .height-10 {
   height: 103vh;
 }
+.minHeight-9 {
+  min-height: 93vh;
+}
 .height-9 {
   height: 93vh;
 }

@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-
+  Theme.associate = function (models) {
+    Theme.hasMany(models.Formation);
+  };
   return Theme;
 };

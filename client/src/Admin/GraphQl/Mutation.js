@@ -623,12 +623,12 @@ export const ADD_DEMANDE = gql`
     $etat_demande: String!
     $prix_prevu: Float!
     $lieu_prevu: String!
+    $Date_Prevue: [String]
     $duree_prevu: Int!
     $mode_demande: String!
     $hr_deb_j_prev: String!
     $hr_fin_j_prev: String!
     $hr_j_prev: Int!
-    $Date_Prevue: [Date]
     $ClientCodeClient: String
     $FormationCIFormation: Int
     $DemandeurCodeDemandeur: Int
@@ -678,7 +678,7 @@ export const UPDATE_DEMANDEfORMATION = gql`
     $hr_deb_j_prev: String!
     $hr_fin_j_prev: String!
     $hr_j_prev: Int!
-    $Date_Prevue: [Date]
+    $Date_Prevue: [String]
     $ClientCodeClient: String
     $FormationCIFormation: Int
     $DemandeurCodeDemandeur: Int

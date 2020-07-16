@@ -2,15 +2,14 @@ import React from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { Formik, Field } from "formik";
 import { ADD_PARTICIPER } from "../GraphQl/Mutation";
-import { GET_SESSIONS } from "../GraphQl/Query";
+import { GET_SESSIONS_OPTIONS } from "../GraphQl/Query";
 import deepEqual from "lodash.isequal";
 import { ParticiperSchema } from "../../Utils/Validation";
 import { DropzoneField } from "../component/DropzoneField";
 
 function AddParticiper(props) {
-  const GetSessions = useQuery(GET_SESSIONS);
+  const GetSessions = useQuery(GET_SESSIONS_OPTIONS);
   const [AddParticipant, res] = useMutation(ADD_PARTICIPER);
-  //console.log(GetClients);
   const code_participant = props.code_participant;
   return (
     <div>

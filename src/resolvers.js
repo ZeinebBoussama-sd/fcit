@@ -4,22 +4,17 @@ const { Kind } = require("graphql/language");
 const { ApolloError } = require("apollo-server-core");
 const fs = require("fs");
 const request = require("request");
-const formidable = require("formidable");
 const { Op } = require("sequelize");
 const sendRefreshToken = require("./sendRefreshToken");
 const { combineResolvers } = require("graphql-resolvers");
-const { sign } = require("jsonwebtoken");
 const createRefreshToken = require("./auth");
 const createAccessToken = require("./auth");
-const isAuth = require("./isAuth");
-const { verify } = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
-const { JSONCookie } = require("cookie-parser");
+const moment = require("moment");
 
 const storeUpload = (file, folder, ID, type) => {
   if (!!file) {
     const { filename, stream } = file;
-    const folderPath = `./src/upload/${ID}/${type}/${folder}`;
+    const folderPath = `./src/upload/${type}/${ID}/${folder}`;
     fs.access(folderPath, (error) => {
       if (!error) {
         try {
@@ -121,8 +116,8 @@ const resolvers = {
         where: { mat_fisc_sc: res.mat_fisc_sc },
       });
     },
-    async dateprevue(root, { date_prev }, { models }) {
-      return models.DatePrevue.findByPk(date_prev);
+    async dateprevue(root, { id }, { models }) {
+      return models.DatePrevue.findByPk(id);
     },
     async allDatePrevues(root, args, { models }) {
       return models.DatePrevue.findAll();
@@ -224,8 +219,17 @@ const resolvers = {
     async allParticipants(root, args, { models }) {
       return models.Participant.findAll();
     },
-    async participer(root, { id }, { models }) {
-      return models.Participer.findByPk(id);
+    async participer(
+      root,
+      { ParticipantCodeParticipant, SessionCISession },
+      { models }
+    ) {
+      return models.Participer.findAll({
+        where: {
+          ParticipantCodeParticipant: ParticipantCodeParticipant,
+          SessionCISession: SessionCISession,
+        },
+      });
     },
     async allParticipers(root, args, { models }) {
       return models.Participer.findAll();
@@ -462,42 +466,41 @@ const resolvers = {
         ClientCodeClient,
       });
     },
-    async createDemandeFormation(
-      root,
-      {
-        date_demande,
-        type_demande,
-        etat_demande,
-        prix_prevu,
-        lieu_prevu,
-        duree_prevu,
-        mode_demande,
-        hr_deb_j_prev,
-        hr_fin_j_prev,
-        hr_j_prev,
-        ClientCodeClient,
-        FormationCIFormation,
-        DemandeurCodeDemandeur,
-      },
-      { models }
-    ) {
-      return models.DemandeFormation.create({
-        date_demande,
-        type_demande,
-        etat_demande,
-        prix_prevu,
-        lieu_prevu,
-        duree_prevu,
-        mode_demande,
-        hr_deb_j_prev,
-        hr_fin_j_prev,
-        hr_j_prev,
-        ClientCodeClient,
-        FormationCIFormation,
-        DemandeurCodeDemandeur,
+    async createDemandeFormation(root, args, { models }) {
+      const IdDate = args.Date_Prevue.map((d) => {
+        return parseInt(d);
       });
+      const allDatePrevues = await models.DatePrevue.findAll({
+        where: {
+          id: IdDate,
+        },
+      });
+
+      const addDemande = await models.DemandeFormation.create({
+        date_demande: args.date_demande,
+        type_demande: args.type_demande,
+        etat_demande: args.etat_demande,
+        prix_prevu: args.prix_prevu,
+        lieu_prevu: args.lieu_prevu,
+        duree_prevu: args.duree_prevu,
+        mode_demande: args.mode_demande,
+        hr_deb_j_prev: args.hr_deb_j_prev,
+        hr_fin_j_prev: args.hr_fin_j_prev,
+        hr_j_prev: args.hr_j_prev,
+        ClientCodeClient: args.ClientCodeClient,
+        FormationCIFormation: args.FormationCIFormation,
+        DemandeurCodeDemandeur: args.DemandeurCodeDemandeur,
+      });
+      addDemande.addDatePrevue(allDatePrevues);
+      return addDemande;
     },
     async updateDemandeFormation(root, args, { models }) {
+      const allDatePrevues = await models.DatePrevue.findAll();
+      const DatePrevues = await models.DatePrevue.findAll({
+        where: {
+          id: args.Date_Prevue,
+        },
+      });
       const updateDemandeFormation = await models.DemandeFormation.update(
         {
           date_demande: args.date_demande,
@@ -516,10 +519,22 @@ const resolvers = {
         },
         { where: { code_demande: args.code_demande } }
       );
-      return updateDemandeFormation;
+      const findDemandeFormation = await models.DemandeFormation.findOne({
+        where: { code_demande: args.code_demande },
+      });
+      findDemandeFormation.removeDatePrevue(allDatePrevues);
+      findDemandeFormation.addDatePrevue(DatePrevues);
+      return findDemandeFormation;
     },
     async deleteDemande(root, args, { models }) {
-      const deleteDemande = await models.Demande.destroy({
+      const allDatePrevues = await models.DatePrevue.findAll();
+
+      const findDemande = await models.DemandeFormation.findOne({
+        where: { code_demande: args.code_demande },
+      });
+      findDemande.removeDatePrevue(allDatePrevues);
+
+      return await models.Demande.destroy({
         where: { code_demande: args.code_demande },
       });
     },
@@ -582,6 +597,14 @@ const resolvers = {
       });
     },
     async createDemandeur(root, args, { models }) {
+      const findTel = await models.Demandeur.findOne({
+        where: { tel_demandeur: args.tel_demandeur },
+      });
+      if (findTel) throw new ApolloError("This mobil number already used!!");
+      const findEmail = await models.Demandeur.findOne({
+        where: { email_demandeur: args.email_demandeur },
+      });
+      if (findEmail) throw new ApolloError("This Email already used!!");
       const addDemandeur = await models.Demandeur.create({
         code_demandeur: args.code_demandeur,
         nom_demandeur: args.nom_demandeur,
@@ -997,7 +1020,7 @@ const resolvers = {
         rapport_eval,
         "rapport_eval",
         args.ParticipantCodeParticipant,
-        "participert"
+        "participet"
       );
       const createParticiper = await models.Participer.create({
         rapport_eval: `${__dirname}/upload/${args.ParticipantCodeParticipant}/participert/rapport_eval/${rapport_eval.filename}`,
@@ -1246,7 +1269,7 @@ const resolvers = {
       return demandeformation.getDemandeur();
     },
     async dateprevue(demandeformation) {
-      return demandeformation.getDatePrevue();
+      return demandeformation.getDatePrevues();
     },
   },
   DatePrevue: {
@@ -1322,12 +1345,12 @@ const resolvers = {
     },
   },
   Participer: {
-    async participant(participer) {
-      return participer.getParticipant();
-    },
-    async session(participer) {
-      return participer.getSession();
-    },
+    // async participant(participer) {
+    //   return participer.getParticipant();
+    // },
+    // async session(participer) {
+    //   return participer.getSession();
+    // },
   },
   Session: {
     async formateur(session) {

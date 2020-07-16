@@ -112,7 +112,7 @@ function EditSupport(props) {
                   disabled={isSubmitting}
                   className="btn btn-primary"
                 >
-                  Add Support
+                  Update support
                 </button>
               </div>
             </form>

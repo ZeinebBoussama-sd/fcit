@@ -31,6 +31,7 @@ const typeDefs = gql`
     client: Client!
   }
   type DatePrevue {
+    id: Int
     date_prev: Date!
     demandeformation: [DemandeFormation]
   }
@@ -155,6 +156,7 @@ const typeDefs = gql`
     nom_participant: String
     prenom_participant: String
     carte_identite: Int!
+    participer: [Participer]
     client: Client
     session: [Session]
   }
@@ -259,7 +261,10 @@ const typeDefs = gql`
       FormationCIFormation: Int
     ): [Formateur_Formation]
     allFormateurs_Formations: [Formateur_Formation!]!
-    participer(id: ID): Participer
+    participer(
+      ParticipantCodeParticipant: Int
+      SessionCISession: Int
+    ): [Participer]
     allParticipers: [Participer!]!
   }
   interface MutationResponse {
@@ -408,7 +413,7 @@ const typeDefs = gql`
       ClientCodeClient: String
     ): Societe!
     createDatePrevue(date_prev: Date!): DatePrevue!
-    deleteDatePrevue(date_prev: Date!): DeleteDatePrevueMutationResponse
+    deleteDatePrevue(id: Int!): DeleteDatePrevueMutationResponse
 
     createDemandeFormation(
       code_demande: ID
@@ -422,7 +427,7 @@ const typeDefs = gql`
       hr_deb_j_prev: String!
       hr_fin_j_prev: String!
       hr_j_prev: Int!
-      Date_Prevue: [Date]
+      Date_Prevue: [String]
       ClientCodeClient: String
       FormationCIFormation: Int
       DemandeurCodeDemandeur: Int
@@ -431,7 +436,7 @@ const typeDefs = gql`
 
     updateDemandeFormation(
       code_demande: ID
-      Date_Prevue: [Date]
+      Date_Prevue: [String]
       date_demande: Date!
       type_demande: String!
       etat_demande: String!

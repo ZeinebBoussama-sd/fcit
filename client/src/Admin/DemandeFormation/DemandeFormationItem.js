@@ -17,7 +17,6 @@ function DemandeFormationItem() {
   const action = () => {
     edit ? setEdit(false) : setEdit(true);
   };
-  console.log(demandeformation);
   return (
     <div className=" mt-11 ">
       <div className="card bg-light border-light">
@@ -43,7 +42,7 @@ function DemandeFormationItem() {
             id="navbarSupportedContent"
             demandeformation={demandeformation}
             refetch={refetch}
-            setEdit={setEdit}
+            close={setEdit}
           />
         )}
       </div>

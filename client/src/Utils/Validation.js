@@ -173,7 +173,7 @@ export const DemandeSchema = Yup.object().shape({
     .min(2, "Too Short! (Min 2)")
     .max(30, "Too Long! (Max 30)")
     .required("Required"),
-  duree_prevu: Yup.number()
+  duree_prevu: Yup.string()
     .min(2, "Too Short! (Min 2)")
     .max(30, "Too Long! (Max 30)")
     .required("Required"),
@@ -189,7 +189,7 @@ export const DemandeSchema = Yup.object().shape({
     .min(2, "Too Short! (Min 2)")
     .max(30, "Too Long! (Max 30)")
     .required("Required"),
-  hr_j_prev: Yup.number().max(24, "Too Long! (Max 24)").required("Required"),
+  hr_j_prev: Yup.string().max(24, "Too Long! (Max 24)").required("Required"),
   ClientCodeClient: Yup.string().required("Required"),
   FormationCIFormation: Yup.number().required("Required"),
   DemandeurCodeDemandeur: Yup.number().required("Required"),

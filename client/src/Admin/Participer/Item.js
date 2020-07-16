@@ -1,4 +1,5 @@
 import React from "react";
+
 function Item(props) {
   const data = props.participer ? props.participer : null;
   console.log(data);

@@ -11,13 +11,24 @@ function Item(props) {
           <p className="col">{data && data.code_demande}</p>
         </div>
         <div className="row">
-          <b className="col-2">date_demande:</b>
+          <b className="col-2">date demande:</b>
           <p className="col">
             {data && moment(data.date_demande).format("yyyy-MM-DD")}
           </p>
         </div>
         <div className="row">
-          <b className="col-2">duree_prevu:</b>
+          <b className="col-2">date prevues:</b>
+          <p className="col">
+            {data &&
+              data.dateprevue.map((d, idx) => {
+                return (
+                  <li key={idx}>{moment(d.date_prev).format("YYYY-MM-DD")}</li>
+                );
+              })}
+          </p>
+        </div>
+        <div className="row">
+          <b className="col-2">duree prevu:</b>
           <p className="col">{data && data.duree_prevu}</p>
         </div>
         <div className="row">

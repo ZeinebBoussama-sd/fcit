@@ -66,7 +66,7 @@ function AddDemande(props) {
                   hr_deb_j_prev: undefined,
                   hr_fin_j_prev: undefined,
                   hr_j_prev: undefined,
-                  Date_Prevue: undefined,
+                  Date_Prevue: [],
                   ClientCodeClient: "",
                   FormationCIFormation: undefined,
                   DemandeurCodeDemandeur: undefined,
@@ -417,12 +417,11 @@ function AddDemande(props) {
                           <option value="">---Choose Date----</option>
                           {GetDateprevue.data &&
                             GetDateprevue.data.allDatePrevues.map(
-                              (Date_Prevue, idx) => {
-                                console.log("d", Date_Prevue);
+                              (Date_Prevue) => {
                                 return (
                                   <option
-                                    key={idx}
-                                    value={Date_Prevue.date_prev}
+                                    key={Date_Prevue.id}
+                                    value={Date_Prevue.id}
                                   >
                                     {moment(Date_Prevue.date_prev).format(
                                       "YYYY-MM-DD"

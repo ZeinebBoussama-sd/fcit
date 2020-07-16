@@ -19,10 +19,18 @@ function EditDemande(props) {
   const GetClient = useQuery(GET_CLIENTS);
   const GetDemandeur = useQuery(GET_DEMANDEURS);
   const GetDateprevue = useQuery(GET_DATE_PREVUES);
-
+  const close = () => {
+    props.close(false);
+  };
   const demandeformation = props.demandeformation
     ? props.demandeformation
     : null;
+  const Date_Prevue =
+    demandeformation &&
+    demandeformation.dateprevue &&
+    demandeformation.dateprevue.map((d) => {
+      return d.id.toString();
+    });
 
   return (
     <div className="card-body" id="navbarSupportedContent">
@@ -31,6 +39,7 @@ function EditDemande(props) {
           date_demande:
             demandeformation &&
             moment(demandeformation.date_demande).format("YYYY-MM-DD"),
+          Date_Prevue: Date_Prevue,
           type_demande: demandeformation && demandeformation.type_demande,
           etat_demande: demandeformation && demandeformation.etat_demande,
           prix_prevu: demandeformation && demandeformation.prix_prevu,
@@ -50,8 +59,8 @@ function EditDemande(props) {
         }}
         validationSchema={DemandeSchema}
         onSubmit={async (values) => {
+          console.log("v", values);
           try {
-            debugger;
             await updateDemande({
               variables: {
                 code_demande: demandeformation.code_demande,
@@ -81,7 +90,7 @@ function EditDemande(props) {
             console.error(e.message);
           }
           props.refetch();
-          props.setEdit(false);
+          close();
         }}
       >
         {(props) => {
@@ -352,7 +361,6 @@ function EditDemande(props) {
               <div className="form-group">
                 <label htmlFor="Formation">Date Prevue:</label>
                 <Field
-                  component="select"
                   className={
                     hasChanged
                       ? errors.Date_Prevue
@@ -361,17 +369,16 @@ function EditDemande(props) {
                       : "form-control text-input"
                   }
                   multiple
+                  component={"select"}
                   name="Date_Prevue"
                 >
                   <option value="">---Choose Date----</option>
                   {GetDateprevue.data &&
-                    GetDateprevue.data.allDatePrevues.map((Date_Prevue) => {
+                    GetDateprevue.data.allDatePrevues.map((df) => {
+                      console.log("Date_Prevue", df.id);
                       return (
-                        <option
-                          key={Date_Prevue.Date_Prevue}
-                          value={Date_Prevue.Date_Prevue}
-                        >
-                          {moment(Date_Prevue.Date_Prevue).format("YYYY-MM-DD")}
+                        <option key={df.id} value={df.id}>
+                          {moment(df.date_prev).format("YYYY-MM-DD")}
                         </option>
                       );
                     })}
@@ -411,7 +418,7 @@ function EditDemande(props) {
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  data-dismiss="modal"
+                  onClick={close}
                 >
                   Close
                 </button>

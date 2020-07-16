@@ -20,6 +20,7 @@ function EditMetier(props) {
     metier.formation.map((f) => {
       return f.CI_formation;
     });
+  console.log("formation", formation);
   return (
     <div className="card-body" id="navbarSupportedContent">
       <Formik
@@ -101,6 +102,7 @@ function EditMetier(props) {
                   {GetFormation.data &&
                     GetFormation.data.allFormations &&
                     GetFormation.data.allFormations.map((formation) => {
+                      console.log("f", formation.CI_formation);
                       return (
                         <option
                           key={formation.CI_formation}

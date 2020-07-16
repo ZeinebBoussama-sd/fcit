@@ -255,7 +255,11 @@ function EditFormateur(props) {
                   name="cv_f"
                   component={DropzoneField}
                 />
-                <b>{cv_F.replace(/^.*[\\\/]/, "")}</b>
+                <b>
+                  {values.cv_f.length !== 0
+                    ? values.cv_f.name
+                    : cv_F.replace(/^.*[\\\/]/, "")}
+                </b>
                 {errors.cv_f && touched.cv_f ? (
                   <div className="text-danger">{errors.cv_f}</div>
                 ) : null}
@@ -410,7 +414,11 @@ function EditFormateur(props) {
                   type="file"
                   component={DropzoneField}
                 />
-                <b>{copie_cin.replace(/^.*[\\\/]/, "")}</b>
+                <b>
+                  {values.copie_cin.length !== 0
+                    ? values.copie_cin.name
+                    : copie_cin.replace(/^.*[\\\/]/, "")}
+                </b>
                 {errors.copie_cin && touched.copie_cin ? (
                   <div className="text-danger">{errors.copie_cin}</div>
                 ) : null}
@@ -450,7 +458,11 @@ function EditFormateur(props) {
                   type="file"
                   component={DropzoneField}
                 />
-                <b>{copie_passeport.replace(/^.*[\\\/]/, "")}</b>
+                <b>
+                  {values.copie_passeport.length !== 0
+                    ? values.copie_passeport.name
+                    : copie_passeport.replace(/^.*[\\\/]/, "")}
+                </b>
                 {errors.copie_passeport && touched.copie_passeport ? (
                   <div className="text-danger">{errors.copie_passeport}</div>
                 ) : null}
@@ -547,7 +559,11 @@ function EditFormateur(props) {
                   type="file"
                   component={DropzoneField}
                 />
-                <b>{copie_RIB.replace(/^.*[\\\/]/, "")}</b>
+                <b>
+                  {values.copie_RIB.length !== 0
+                    ? values.copie_RIB.name
+                    : copie_RIB.replace(/^.*[\\\/]/, "")}
+                </b>
                 {errors.copie_RIB && touched.copie_RIB ? (
                   <div className="text-danger">{errors.copie_RIB}</div>
                 ) : null}

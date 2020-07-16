@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       date_prev: {
         type: DataTypes.DATE,
-        primaryKey: true,
         allowNull: false,
       },
     },

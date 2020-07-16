@@ -303,6 +303,14 @@ export const GET_SESSIONS = gql`
     }
   }
 `;
+export const GET_SESSIONS_OPTIONS = gql`
+  {
+    allSessions {
+      CI_session
+      code_session
+    }
+  }
+`;
 export const GET_SESSION = gql`
   query getsession($CI_session: ID) {
     session(CI_session: $CI_session) {
@@ -346,16 +354,17 @@ export const GET_SESSION = gql`
   }
 `;
 export const GET_DEMANDE_CLIENT = gql`
-{
-  allDemandeFormations {
-    code_demande
-    date_demande
-    client {
-      code_client
-      nom_client
+  {
+    allDemandeFormations {
+      code_demande
+      date_demande
+      client {
+        code_client
+        nom_client
+      }
     }
   }
-}`
+`;
 export const GET_DEMANDE_FORMATIONS = gql`
   {
     allDemandeFormations {
@@ -410,6 +419,10 @@ export const GET_DEMANDE_FORMATION = gql`
       demandeur {
         code_demandeur
         prenom_demandeur
+      }
+      dateprevue {
+        id
+        date_prev
       }
     }
   }
@@ -615,6 +628,7 @@ export const GET_MOTCLES = gql`
 export const GET_DATE_PREVUE = gql`
   query finddateprevue($date_prev: Date) {
     dateprevue(date_prev: $date_prev) {
+      id
       date_prev
     }
   }
@@ -622,6 +636,7 @@ export const GET_DATE_PREVUE = gql`
 export const GET_DATE_PREVUES = gql`
   {
     allDatePrevues {
+      id
       date_prev
     }
   }
@@ -631,7 +646,7 @@ export const GET_PARTICIPER = gql`
     $ParticipantCodeParticipant: Int
     $SessionCISession: Int
   ) {
-    paticiper(
+    participer(
       ParticipantCodeParticipant: $ParticipantCodeParticipant
       SessionCISession: $SessionCISession
     ) {

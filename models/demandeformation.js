@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     DemandeFormation.belongsTo(models.Formation);
     DemandeFormation.belongsTo(models.Client);
     DemandeFormation.belongsTo(models.Demandeur);
+    DemandeFormation.belongsToMany(models.DatePrevue, { through: "prevue" });
   };
   return DemandeFormation;
 };

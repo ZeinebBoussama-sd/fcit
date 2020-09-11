@@ -1,0 +1,11 @@
+{
+  "development": {
+    "username": null,
+    "password": null,
+    "database": "fcit",
+    "config": {
+      "dialect": "postgres",
+      "host": "localhost"
+    }
+  }
+}
